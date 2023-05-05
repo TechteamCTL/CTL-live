@@ -1,0 +1,284 @@
+/* *********      每天三个deal        ************ */
+.top3_cont {
+    /*     margin-left: 8%; */
+    padding-bottom: 0rem;
+    padding-top: 0rem;
+}
+
+.top3_img:hover {
+    border: 2px solid #1E4881;
+}
+
+.dealoftheday {
+    color: #1E4881;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.top3_img {
+    text-align: center;
+    border: 2px solid lightgray;
+    margin-top: 0;
+    /*     width: 70%; */
+}
+
+.top3_deal {
+    display: grid;
+    grid-template-columns: 15% 30% 38% 7%;
+}
+
+.ctd_timer {
+    text-align: right;
+    margin-top: 1rem;
+}
+
+.o_p {
+    color: #1E4881;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+}
+
+.o_p_box {
+ text-align: center;
+}
+
+
+
+
+
+
+/* *********      Register Page        ************ */
+.RegisterPage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /*     grid-column-gap: 0rem; */
+}
+
+/* *********      Hexagon       ************ */
+
+.box1,
+.box2,
+.box3 {
+    width: 200px;
+    height: 250px;
+    overflow: hidden;
+}
+
+.box1 {
+    transform: rotate(120deg);
+    margin-left: 10px;
+}
+
+.box2 {
+    transform: rotate(-60deg);
+}
+
+.box3 {
+    transform: rotate(-60deg);
+    text-align: center;
+    background-color: white;
+}
+
+.box3 img {
+    margin-top: 30%;
+}
+
+.box3 p {
+    margin-top: 10%;
+}
+
+.box3:hover {
+    background-image: linear-gradient(#68D4FE, #1E4881);
+    color: white;
+}
+
+.box3:hover .img_ppe {
+    content: url('../../public/images/products/PPEW.png');
+    animation: PPEchangeImage 2s infinite;
+}
+  
+@keyframes PPEchangeImage {
+    0% { background-image: url('../../public/images/products/PPEW.png'); }
+    33% { background-image: url('../../public/images/products/PPEWLine1.png'); }
+    66% { background-image: url('../../public/images/products/PPEWLine2.png'); }
+}
+
+.box3:hover .img_handtools {
+    content: url('../../public/images/products/handtoolsW.png');
+    animation: handtools 2s forwards;
+}
+
+@keyframes handtools {
+    from {
+        transform: rotateY(0deg);
+    }
+
+    to {
+        transform: rotateY(180deg);
+    }
+}
+
+.box3:hover .img_electrical {
+    content: url('../../public/images/products/electricalW.png');
+    animation: electrical 3s forwards;
+}
+
+@keyframes electrical {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.box3:hover .img_siteSafety {
+    content: url('../../public/images/products/siteSafetyWDrips1.png');
+    animation: changeImage 2s infinite;
+}
+  
+@keyframes changeImage {
+    /* 0% { background-image: url('../../public/images/products/siteSafety.png'); } */
+    0% { background-image: url('../../public/images/products/siteSafetyWDrips1.png'); }
+    33% { background-image: url('../../public/images/products/siteSafetyWDrips2.png'); }
+    66% { background-image: url('../../public/images/products/siteSafetyWDrips3.png'); }
+}
+
+.box3:hover .img_mechanical_up {
+    content: url('../../public/images/products/gearW.png');
+    transform: rotate(27deg);
+    animation-name: rotationUP;
+    animation-duration: 7s;
+}
+
+.box3:hover .img_mechanical_down {
+    content: url('../../public/images/products/gearW.png');
+    animation-name: rotationD;
+    animation-duration: 7s;
+}
+
+.allproducts {
+    border: none;
+    color: #1E4881;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 43%;
+    text-decoration: underline;
+}
+
+
+/* *******   animation    ******** */
+.img_mechanical_up {
+    width: 35%;
+    position: relative;
+    left: 5%;
+    top: -5%;
+    /*     transform: rotate(27deg);
+    animation-name: rotationUP;
+    animation-duration: 15s; */
+}
+
+@keyframes rotationUP {
+    from {
+        transform: rotate(27deg);
+    }
+
+    to {
+        transform: rotate(207deg);
+    }
+}
+
+.img_mechanical_down {
+    width: 45%;
+    position: relative;
+    top: 7%;
+    right: 3%;
+    /*     animation-name: rotationD;
+    animation-duration: 15s; */
+}
+
+@keyframes rotationD {
+    from {
+        transform: rotate(359deg);
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+.soldout {
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 60%;
+    transform: rotate(-20deg);
+}
+
+.ctdtm {
+    position: absolute;
+    right: 5%;
+    bottom: 0%;
+}
+
+.top3_text {
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.RRP {
+    padding-top: 0.5rem;
+    text-decoration: line-through;
+    font-size: 1vw;
+    padding-left: 10%;
+}
+
+.discounted_price {
+    font-size: 1.5vw;
+}
+
+.product_card_btn {
+    background-color: #073474;
+    color: white;
+    border: none;
+    font-size: 0.9vw;
+}
+
+.product_card_btn:hover {
+    background-color: #6aa5f8;
+    /*   background-image: linear-gradient(#68D4FE, #1E4881); */
+}
+
+.card-title {
+    text-align: center;
+    text-overflow: hidden;
+    color: #073474;
+    height: 3.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+
+
+.card-title:hover {
+    text-decoration: underline;
+}
+
+.card-price {
+    text-align: center;
+    text-overflow: hidden;
+    color: #073474;
+}
+
+.card-price:hover {
+    text-decoration: underline;
+}

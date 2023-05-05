@@ -1,0 +1,51 @@
+.invoicePDF {
+    display: none;
+}
+
+.hiden {
+    display: none;
+}
+
+.showingout {
+    animation: showingout 1s;
+}
+
+@keyframes showingout {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.button-shadow {
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    transition: all 0.5s ease-out;
+}
+
+.reorder-button {
+    animation: flyout 1s forwards;
+}
+
+@keyframes flyout {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: translate(90vw, -260vh);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(140vw, -520vh);
+    }
+}
