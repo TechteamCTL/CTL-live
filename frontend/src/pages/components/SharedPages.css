@@ -8,7 +8,41 @@
 }
 
 .PriceContact {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 
+/* preview product modal */
+/* bootstrap carousel */
+.preview_carousel .carousel-control-prev-icon,
+.preview_carousel .carousel-control-next-icon,
+.carousel-indicators .slide {
+  background-color: #1E4881;
+}
+
+.preview_carousel .carousel-control-prev,
+.preview_carousel .carousel-control-next {
+  color: #1E4881;
+}
+
+.preview_carousel .carousel-indicators> button {
+  background-color: #1E4881;
+}
+
+.preview_carousel .carousel-indicators .active {
+  background-color: #1E4881;
+}
+/* my-gallery */
+.my-gallery .image-gallery-thumbnail {
+    border: 2px solid #74bbf8;
+    width: 10%;
+}
+
+.my-gallery .active{
+    border: 2px solid #1E4881;
+}
+
+.my-gallery .image-gallery-thumbnail-image {
+    display: none;
+  }
+  

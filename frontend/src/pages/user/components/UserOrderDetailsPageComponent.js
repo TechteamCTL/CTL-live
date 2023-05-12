@@ -53,7 +53,7 @@ const UserOrderDetailsPageComponent = ({
       .then((data) => {
         setUserAddress({
           location: data.location,
-          city: data.city,
+          deliveryAddress: data.deliveryAddress,
           postCode: data.postCode,
           state: data.state,
           phone: data.phone,
@@ -153,17 +153,16 @@ const UserOrderDetailsPageComponent = ({
 
   const [finished, setFinished] = useState(false);
 
+  const onAnimationEnd = () => {
+    setFinished(true);
+  };
+
   const reOrderHandler = () => {
     reduxDispatch(reOrdertReduxAction(id));
     setTimeout(() => {
       window.location.href = "/user/cart-details";
-    }, 1000);
-    // funny things
+    }, 500);
     setClicked(true);
-  };
-
-  const onAnimationEnd = () => {
-    setFinished(true);
   };
 
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -181,11 +180,18 @@ const UserOrderDetailsPageComponent = ({
   };
 
   const handleConfirmationClose = (emptyCart) => {
-    setShowConfirmation(false);
     if (emptyCart) {
       removeAllItems();
+      setTimeout(() => {
+        reOrderHandler(id);
+      }, 500);
+    } else {
+      reOrderHandler(id);
     }
-    reOrderHandler(id);
+  };
+
+  const closeModal = () => {
+    setShowConfirmation(false);
   };
 
   const shippedAT = new Date(isDelivered).toLocaleString("en-AU", {
@@ -211,7 +217,7 @@ const UserOrderDetailsPageComponent = ({
               <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
               <b>Site</b>: {userAddress.location} <br />
               <b>Phone</b>: {userAddress.phone} <br />
-              <b>Address</b>: {userAddress.city} {userAddress.state}{" "}
+              <b>Address</b>: {userAddress.deliveryAddress} {userAddress.state}{" "}
               {userAddress.postCode}
             </Col>
             <Col md={6}>
@@ -363,35 +369,31 @@ const UserOrderDetailsPageComponent = ({
                     </Button>
                     <Modal
                       show={showConfirmation}
-                      onHide={() => handleConfirmationClose(false)}
+                      onHide={closeModal}
+                      className="Re_Order_Modal"
                     >
-                      <Modal.Body>
-                        Some items already in your cart !
-                        Do you want to empty your cart before re-ordering?
+                      <Modal.Header className="p-0 m-2 mb-0" closeButton>
+                        <span className="fw-bold p-0 m-0">Confirmation</span>
+                      </Modal.Header>
+                      <Modal.Body className="p-2 pt-0">
+                        Some items already in your cart! Do you want to empty
+                        your cart before re-ordering?
                       </Modal.Body>
-                      <Modal.Footer>
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
+                      <Modal.Footer className="p-0 d-flex justify-content-between">
+                        <Button
+                          variant="success"
+                          onClick={() => handleConfirmationClose(true)}
+                          className="ms-5 p-0 pe-1 ps-1 button-shadow"
                         >
-                          <Button
-                            variant="success"
-                            onClick={() => handleConfirmationClose(true)}
-                            className="m-0 p-0 pe-1 ps-1 button-shadow"
-                          >
-                            Empty Cart
-                          </Button>
-                          <Button
-                            variant="secondary"
-                            onClick={() => handleConfirmationClose(false)}
-                            className="m-0 p-0 pe-1 ps-1 button-shadow"
-                          >
-                            Keep Cart Items
-                          </Button>
-                        </div>
+                          Empty Cart
+                        </Button>
+                        <Button
+                          variant="secondary"
+                          onClick={() => handleConfirmationClose(false)}
+                          className="me-5 p-0 pe-1 ps-1 button-shadow"
+                        >
+                          Keep Cart Items
+                        </Button>
                       </Modal.Footer>
                     </Modal>
                   </div>
@@ -422,8 +424,9 @@ const UserOrderDetailsPageComponent = ({
               <b>Phone</b>: {userAddress.phone}
             </ListGroup.Item>
             <ListGroup.Item>
-              <b>Address</b>: {userAddress.city} {userAddress.state}{" "}
-              {userAddress.postCode}
+              <b>Address</b>: {userAddress.deliveryAddress}
+              {/*  {userAddress.state}{" "}
+              {userAddress.postCode} */}
             </ListGroup.Item>
             <ListGroup.Item>
               <Alert

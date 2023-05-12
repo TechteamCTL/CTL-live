@@ -11,7 +11,6 @@ const CartItemDropDown = ({
   changeCount = false,
 }) => {
 
-
   return (
     <>
       <ListGroup.Item className="mt-1">
@@ -21,7 +20,7 @@ const CartItemDropDown = ({
               {/* Image */}
               <img
                 crossOrigin="anonymous"
-                src={item.image ? item.image.path ?? null : null}
+                src={item.image ? item.image ?? null : null}
                 className="w-100"
                 alt="s"
               />
@@ -29,7 +28,7 @@ const CartItemDropDown = ({
             </div>
           </Col>
           <Col md={5}>
-            <a href={`/product-details/${item.productID}`}>
+            <a href={`/product-details/${item.productId}`}>
               <p className="" style={{color:"#1E4881"}}>
                 <span className="text-uppercase">{item.name}</span>
               </p>
@@ -53,7 +52,7 @@ const CartItemDropDown = ({
           <Col md={1} className="remove_from_cart_btn">
             <CartItemDropDownRemoveFromCart
               orderCreated={orderCreated}
-              productID={item.cartProducts[0]._id}
+              productId={item.cartProducts[0]._id}
               quantity={item.quantity}
               price={item.price}
               removeFromCartHandler={removeFromCartHandler ? removeFromCartHandler : undefined}

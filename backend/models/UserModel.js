@@ -42,7 +42,10 @@ const userSchema = mongoose.Schema(
     postCode: {
       type: String,
     },
-    city: {
+    deliveryAddress: {
+      type: String,
+    },
+    billAddress: {
       type: String,
     },
     state: {

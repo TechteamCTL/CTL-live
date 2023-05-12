@@ -11,6 +11,16 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+/* const transporter = nodemailer.createTransport({
+  host: 'mail.ctlservices.com.au',
+  port: 465,
+  secure: true, 
+  auth: {
+    user: 'no-reply@ctlservices.com.au',
+    pass: 'CTLadmin007'
+  },
+}); */
+
 const quoteProduct = async (req, res, next) => {
   try {
     const { from, productName, description } = req.body;
@@ -59,7 +69,7 @@ const quotePrice = async (req, res, next) => {
 
     I'm looking for: ${productName},
 
-    Please find out the price for me: ${description}`,
+    Please find out the price for me: <${process.env.BASE_URL}${description}>`,
 
     };
 

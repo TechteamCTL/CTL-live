@@ -17,7 +17,8 @@ const updateUserApiRequest = async (
   location,
   company,
   role,
-  city, 
+  deliveryAddress, 
+  billAddress,
   state,
   postCode
 ) => {
@@ -30,7 +31,8 @@ const updateUserApiRequest = async (
     location,
     company,
     role,
-    city,
+    deliveryAddress,
+    billAddress,
     state,
     postCode,
   });

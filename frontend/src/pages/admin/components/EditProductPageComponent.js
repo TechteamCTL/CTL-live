@@ -129,7 +129,7 @@ const AdminEditProductPage = ({
       name: form.name.value,
       description: form.description.value,
       count: currentCount,
-      min: form.Min.value,
+      saleunit: form.saleunit.value,
       max: form.Max.value,
 
       price: form.price.value,
@@ -227,7 +227,7 @@ const AdminEditProductPage = ({
     const formInputs = {
       name: form.name.value,
       description: form.description.value,
-      min: form.Min.value,
+      saleunit: form.saleunit.value,
       max: form.Max.value,
       purchaseprice: form.PurchasePrice.value,
       slrcurrentbuyingprice: form.SLRCurrentBuyingPrice.value,
@@ -790,14 +790,14 @@ const AdminEditProductPage = ({
                 as={Col}
                 md="3"
                 className="mb-3"
-                controlId="formBasicMin"
+                controlId="formBasicSaleunit"
               >
-                <Form.Label>Min</Form.Label>
+                <Form.Label>Sale Unit</Form.Label>
                 <Form.Control
-                  name="Min"
+                  name="saleunit"
                   required
                   type="number"
-                  defaultValue={product.min}
+                  defaultValue={product.saleunit}
                 />
               </Form.Group>
               <Form.Group

@@ -59,8 +59,8 @@ const UserCartDetailsPageComponent = ({
     reduxDispatch(editQuantity(id, qty));
   };
 
-  const removeFromCartHandler = (productID, quantity, price) => {
-    reduxDispatch(removeFromCart(productID, quantity, price));
+  const removeFromCartHandler = (productId, quantity, price) => {
+    reduxDispatch(removeFromCart(productId, quantity, price));
   };
 
   // 找出最大的invoice number，然后就可以+1了，开心
@@ -93,19 +93,19 @@ const UserCartDetailsPageComponent = ({
         });
         if (
           !data.location ||
-          !data.city ||
           !data.postCode ||
           !data.state ||
           !data.phone
         ) {
           setMissingAddress(
-            " In order to make order, fill out your profile with correct address, city etc."
+            " In order to make order, fill out your profile with correct site and personal information."
           );
         } else {
           /* 这些是再下方的userAddress.location之类的信息，读取地址的。 */
           setUserAddress({
             location: data.location,
-            city: data.city,
+            deliveryAddress: data.deliveryAddress,
+            billAddress: data.billAddress,
             postCode: data.postCode,
             state: data.state,
             phone: data.phone,
@@ -135,9 +135,9 @@ const UserCartDetailsPageComponent = ({
       },
       cartItems: cartItems.map((item) => {
         return {
-          productID: item.productID,
+          productId: item.productId,
           name: item.name,
-          image: { path: item.image ? item.image.path ?? null : null },
+          image: item.image ? item.image ?? null : null,
           cartProducts: [
             {
               attrs: item.cartProducts[0].attrs,
@@ -166,8 +166,10 @@ const UserCartDetailsPageComponent = ({
     createOrder(orderData)
       .then((data) => {
         if (data) {
-          navigate("/user/order-details/" + data._id);
           reduxDispatch(emptyCart());
+          setTimeout(() => {
+            navigate("/user/my-orders");
+          }, 1000);
         }
       })
       .catch((err) => console.log(err));
@@ -189,7 +191,9 @@ const UserCartDetailsPageComponent = ({
 
   const removeAllItems = () => {
     reduxDispatch(emptyCart());
-    window.location.href = "/product-list";
+    setTimeout(() => {
+      window.location.href = "/product-list";
+    }, 1000);
   };
 
   console.log("USERcartItems", cartItems);
@@ -207,7 +211,7 @@ const UserCartDetailsPageComponent = ({
                 <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
                 <b>Site Location</b>: {userAddress.location} <br />
                 <b>Phone</b>: {userAddress.phone} <br />
-                <b>Address</b>: {userAddress.city} {userAddress.state}{" "}
+                <b>Address</b>: {userAddress.deliveryAddress} {userAddress.state}{" "}
                 {userAddress.postCode}
               </Col>
               <Col md={5}>
@@ -362,8 +366,8 @@ const UserCartDetailsPageComponent = ({
                 <b>Phone</b>: {userAddress.phone}
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Address</b>: {userAddress.city} {userAddress.state}{" "}
-                {userAddress.postCode}
+                <b>Address</b>: {userAddress.deliveryAddress}{/*  {userAddress.state}{" "}
+                {userAddress.postCode} */}
               </ListGroup.Item>
             </ListGroup>
           </Col>

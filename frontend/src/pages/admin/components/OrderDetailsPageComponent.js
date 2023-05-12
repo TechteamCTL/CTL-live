@@ -48,7 +48,8 @@ const OrderDetailsPageComponent = ({
       .then((data) => {
         setUserAddress({
           location: data.location,
-          city: data.city,
+          deliveryAddress: data.deliveryAddress,
+          billAddress: data.billAddress,
           postCode: data.postCode,
           state: data.state,
           phone: data.phone,
@@ -86,18 +87,20 @@ const OrderDetailsPageComponent = ({
         )
       );
   }, [isDelivered, isPaid, id]);
+
+
+  console.log("admin管理订单 cartItems", cartItems);
   return (
     <Container>
       <Row className="mt-4">
         <h1>ORDER DETAILS</h1>
-        <Col md={8}>
+        <Col md={9}>
           <br />
           <Row>
             <Col md={6}>
               <h3>SHIPPING</h3>
               <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
-              <b>Address</b>: {userInfo.address} {userInfo.city}{" "}
-              {userInfo.state} {userInfo.zipCode} <br />
+              <b>Address</b>: {userInfo.deliveryAddress}<br />
               <b>Phone</b>: {userInfo.phone}
             </Col>
             <Col md={6}>
@@ -161,13 +164,13 @@ const OrderDetailsPageComponent = ({
               Item Price:{" "}
               <span className="fw-bold">
                 {" "}
-                $ {(cartSubtotal/1.1).toFixed(2).toLocaleString()}
+                $ {(cartSubtotal / 1.1).toFixed(2).toLocaleString()}
               </span>
             </ListGroup.Item>
             <ListGroup.Item>
               Total GST{" "}
               <span className="fw-bold">
-                $ {(cartSubtotal/1.1*0.1).toFixed(2).toLocaleString()}
+                $ {(cartSubtotal / 1.1 * 0.1).toFixed(2).toLocaleString()}
               </span>
             </ListGroup.Item>
             <ListGroup.Item>

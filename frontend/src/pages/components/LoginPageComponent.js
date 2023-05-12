@@ -3,15 +3,20 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 
-const LoginPageComponent = ({ loginUserApiRequest, reduxDispatch, setReduxUserState }) => {
+const LoginPageComponent = ({
+  loginUserApiRequest,
+  reduxDispatch,
+  setReduxUserState,
+  fetchCartItemsLogin
+}) => {
   const [validated, setValidated] = useState(false);
   const [loginUserResponseState, setLoginUserResponseState] = useState({
     success: "",
     error: "",
     loading: false,
   });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [ipAddress, setIpAddress] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [ipAddress, setIpAddress] = useState("");
 
   const navigate = useNavigate();
 
@@ -19,24 +24,35 @@ const LoginPageComponent = ({ loginUserApiRequest, reduxDispatch, setReduxUserSt
     event.preventDefault();
     event.stopPropagation();
     const form = event.currentTarget.elements;
-
+  
     const email = form.email.value;
     const password = form.password.value;
     const doNotLogout = form.doNotLogout.checked;
-
+  
     if (event.currentTarget.checkValidity() === true && email && password) {
       setLoginUserResponseState({ loading: true });
       loginUserApiRequest(email, password, doNotLogout, ipAddress)
         .then((res) => {
-          setLoginUserResponseState({ success: res.success, loading: false, error: "" });
-
+          setLoginUserResponseState({
+            success: res.success,
+            loading: false,
+            error: "",
+          });
+  
           if (res.userLoggedIn) {
             reduxDispatch(setReduxUserState(res.userLoggedIn));
+            
           }
-
-          if (res.success === "user logged in" && !res.userLoggedIn.isAdmin) window.location.assign('/')
-          else window.location.assign('/admin/orders')
-
+  
+          if (res.success === "user logged in" && !res.userLoggedIn.isAdmin) {
+            // Check if the response has the data property before calling fetchCartItemsLogin
+            if (res.data) {
+              reduxDispatch(fetchCartItemsLogin());
+            }
+            window.location.assign("/");
+          } else {
+            window.location.assign("/admin/orders");
+          }
         })
         .catch((er) => {
           const errorMessage = er.response.data.message || er.response.data;
@@ -44,22 +60,20 @@ const LoginPageComponent = ({ loginUserApiRequest, reduxDispatch, setReduxUserSt
           setErrorMessage(errorMessage);
         });
     }
-
+  
     setValidated(true);
-
+  
     event.preventDefault();
-
-    if (email.endsWith('@slrltd.com')) {
-      fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => setIpAddress(data.ip))
+  
+    if (email.endsWith("@slrltd.com")) {
+      fetch("https://api.ipify.org?format=json")
+        .then((response) => response.json())
+        .then((data) => setIpAddress(data.ip));
     } else {
-      setErrorMessage('You are not authorized to login!');
+      setErrorMessage("You are not authorized to login!");
     }
   };
-
-
-
+  
 
   return (
     <Container>
@@ -73,8 +87,8 @@ const LoginPageComponent = ({ loginUserApiRequest, reduxDispatch, setReduxUserSt
                 required
                 type="email"
                 placeholder="Enter email"
-              // pattern=".+@(slrltd.com|admin.com)"
-              // TODO 解锁上面
+                // pattern=".+@(slrltd.com|admin.com)"
+                // TODO 解锁上面
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -96,7 +110,7 @@ const LoginPageComponent = ({ loginUserApiRequest, reduxDispatch, setReduxUserSt
 
             <Button className="mb-3" variant="primary" type="submit">
               {loginUserResponseState &&
-                loginUserResponseState.loading === true ? (
+              loginUserResponseState.loading === true ? (
                 <Spinner
                   as="span"
                   animation="border"
@@ -114,7 +128,6 @@ const LoginPageComponent = ({ loginUserApiRequest, reduxDispatch, setReduxUserSt
                 loginUserResponseState &&
                 loginUserResponseState.error === "wrong credentials"
               }
-
               variant="danger"
             >
               Incorrect email or password!

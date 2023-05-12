@@ -23,6 +23,7 @@ import FilterComponent from "../../components/filterQueryResultOptions/FilterCom
 import BreadcrumbComponent from "../../components/filterQueryResultOptions/BreadcrumbComponent";
 import "./SharedPages.css";
 import QuotePriceComponent from "../../components/SendEmail/QuotePriceComponent";
+import { connect } from "react-redux";
 
 const ProductDetailsPageComponent = ({
   addToCartReduxAction,
@@ -43,6 +44,12 @@ const ProductDetailsPageComponent = ({
 
   const [userNameEmail, setUserNameEmail] = useState();
 
+  // 当product state update的时候，重置一下setQty
+  useEffect(() => {
+    if (product.saleunit) {
+      setQty(product.saleunit);
+    }
+  }, [product]);
 
   useEffect(() => {
     if (product.stock && product.stock.length === 1) {
@@ -73,9 +80,9 @@ const ProductDetailsPageComponent = ({
     stockCode = selectedStock.ctlsku;
   }
 
-  console.log("selectedStock", selectedStock);
+  // console.log("selectedStock", selectedStock);
 
-  console.log(product);
+  // console.log(product);
 
   const addToCartHandler = () => {
     reduxDispatch(addToCartReduxAction(id, qty, selectedStock));
@@ -98,6 +105,7 @@ const ProductDetailsPageComponent = ({
       .then((data) => {
         setProduct(data);
         setLoading(false);
+        setQty(product.saleunit)
       })
       .catch((er) =>
         setError(
@@ -155,13 +163,23 @@ const ProductDetailsPageComponent = ({
       .catch((err) => console.log(err));
   }, []);
 
-  const quotePriceData = { ...userNameEmail, productName: product.name };
+  const quotePriceData = {
+    ...userNameEmail,
+    productName: product.name,
+    productId: id,
+  };
+
+  const handleBlur = (e) => {
+    const newValue =
+      Math.round(e.target.value / product.saleunit) * product.saleunit;
+    setQty(newValue);
+  };
 
   return (
     <Container className="ms-3 " fluid>
       <BreadcrumbComponent />
-      <Row >
-        <Col xxl={2} xl={3} lg={3} md={3} >
+      <Row>
+        <Col xxl={2} xl={3} lg={3} md={3}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <FilterComponent />
@@ -251,17 +269,15 @@ const ProductDetailsPageComponent = ({
                       <Col>
                         <h6>PRODUCT CODE : {stockCode}</h6>
                         <h6>
-                          {
-                            price === 0 ? (
-                              <span className="fw-bold PriceContact">
-                                Contact us for a quote
-                              </span>
-                            ) : (
-                              <span className="fw-bold">
-                                Price: ${formattedPrice}
-                              </span>
-                            )
-                          }
+                          {price === 0 ? (
+                            <span className="fw-bold PriceContact">
+                              Contact us for a quote
+                            </span>
+                          ) : (
+                            <span className="fw-bold">
+                              Price: ${formattedPrice}
+                            </span>
+                          )}
                         </h6>
                         {/* <h6>
                           {
@@ -281,13 +297,15 @@ const ProductDetailsPageComponent = ({
                     {price === 0 ? null : <h6>Quantity :</h6>}
 
                     <Row>
-
                       {price === 0 ? (
                         <QuotePriceComponent quotePriceData={quotePriceData} />
                       ) : (
                         <>
                           <Col lg={3}>
-                            <div className="btn-group addToCartQty" role="group">
+                            <div
+                              className="btn-group addToCartQty"
+                              role="group"
+                            >
                               {/* <button
                             type="button"
                             className="btn_jj"
@@ -298,11 +316,15 @@ const ProductDetailsPageComponent = ({
                           </button> */}
                               <Form.Control
                                 type="number"
-                                min={1}
+                                min={product.saleunit}
                                 className="form-control col-0"
                                 value={qty}
+                                onBlur={handleBlur}
                                 onChange={(e) => setQty(e.target.value)}
+                                step={product.saleunit}
+                                disabled={selectedProduct === "choose-product"}
                               />
+
                               {/*                           <button
                             type="button"
                             className="btn_jj"
@@ -388,4 +410,4 @@ const ProductDetailsPageComponent = ({
   );
 };
 
-export default ProductDetailsPageComponent;
+export default connect()(ProductDetailsPageComponent);

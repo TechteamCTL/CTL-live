@@ -27,6 +27,14 @@ const productSchema = mongoose.Schema(
           type: String,
           required: true,
         },
+/*         saleUnits: [
+          {
+            unit: {
+              type: String,
+              required: true,
+            },   
+          },
+        ], */
         count: {
           type: Number,
           required: true,
@@ -79,7 +87,7 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    min: {
+    saleunit: {
       type: Number,
       required: true,
     },
@@ -108,11 +116,33 @@ const Product = mongoose.model("Product", productSchema);
 This is so called compound index.
 This index will be used when we query for name and or description of the product.
 This index will NOT be used when we only query description of the product. */
-productSchema.index(
+/* productSchema.index(
   // 会在productController里面，用$text
   // 添加之后新的search之后，要删除数据库 -> 重新写入数据 -> 重新运行backend
   { name: "text", description: "text", "stock.slrsku": "text", "stock.ctlsku": "text", supplier: "text" },
   { name: "TextIndex" }
+); */
+
+// 第二版的 searchQuery
+productSchema.index(
+  {
+    name: "text",
+    description: "text",
+    "stock.slrsku": "text",
+    "stock.ctlsku": "text",
+    supplier: "text",
+  },
+  {
+    name: "TextIndex",
+    default_language: "english",
+    weights: {
+      name: 5,
+      description: 2,
+      "stock.slrsku": 1,
+      "stock.ctlsku": 1,
+      supplier: 1,
+    },
+  }
 );
 
 /* productSchema.index({ slrsku: "text", name: "text"});

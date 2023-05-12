@@ -8,7 +8,7 @@ const BreadcrumbComponent = () => {
   const location = useLocation();
   const query = qs.parse(location.search, { ignoreQueryPrefix: true });
 
-  console.log("woshi query", query);
+  // console.log("woshi query", query);
 
   /* 下面这个就是拼接，非空判断，！！xxxxx,如果有值，就设置'' 如果没值就 hide it */
   return (

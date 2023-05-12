@@ -46,8 +46,8 @@ const UserProfilePageComponent = ({
     const location = form.location.value;
     const company = form.company.value;
     const role = form.role.value;
-    const city = form.location.value;
-    //TODO if need city again, change the value from location to city.
+    const deliveryAddress = form.deliveryAddress.value;
+    //TODO if need deliveryAddress again, change the value from location to deliveryAddress.
     const state = form.state.value;
     const postCode = form.postCode.value;
 
@@ -63,7 +63,7 @@ const UserProfilePageComponent = ({
         location,
         company,
         role,
-        city,
+        deliveryAddress,
         state,
         postCode
       )
@@ -221,13 +221,13 @@ const UserProfilePageComponent = ({
                 />
               </Form.Group> */}
 
-              <Form.Group as={Col} md="5" controlId="formBasicCity">
-                <Form.Label>City</Form.Label>
+              <Form.Group as={Col} md="5" controlId="formBasicdeliveryAddress">
+                <Form.Label>Delivery Address</Form.Label>
                 <Form.Control
                   type="text"
-                  name="city"
-                  placeholder="City"
-                  defaultValue={user.city}
+                  name="deliveryAddress"
+                  placeholder="Delivery Address"
+                  defaultValue={user.deliveryAddress}
                 />
               </Form.Group>
 

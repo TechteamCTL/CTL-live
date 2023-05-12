@@ -65,8 +65,9 @@ const RegisterPageComponent = ({
     const location = form.location.value;
     const company = form.company.value.toUpperCase();
     const role = form.role.value;
-    const city = form.location.value;
-    //TODO if need city again, change the value from location to city.
+    const deliveryAddress = "new user";
+    const billAddress = "new user";
+    //TODO if need deliveryAddress again, change the value from location to deliveryAddress.
     const state = form.state.value;
     const postCode = form.postCode.value;
   
@@ -82,7 +83,8 @@ const RegisterPageComponent = ({
       location &&
       company &&
       role &&
-      city &&
+      deliveryAddress &&
+      billAddress &&
       state &&
       postCode &&
       form.password.value === form.confirmPassword.value
@@ -99,7 +101,8 @@ const RegisterPageComponent = ({
         location,
         company,
         role,
-        city,
+        deliveryAddress,
+        billAddress,
         state,
         postCode
       )
@@ -126,7 +129,8 @@ const RegisterPageComponent = ({
             form.location.value = "";
             form.company.value = "";
             form.role.value = "";
-            form.city.value = "";
+            form.deliveryAddress.value = "";
+            form.billAddress.value = "";
             form.state.value = "";
             form.postCode.value = "";
             setValidated(false);
@@ -300,23 +304,23 @@ const RegisterPageComponent = ({
             </Row>
 
             <Row className="mb-3" style={{ display: "none" }}>
-              {/* <Form.Group as={Col} md="4" controlId="formBasicPostCode">
+              <Form.Group as={Col} md="4" controlId="formBasicBillAddress">
                 <Form.Control
                   type="text"
-                  name="postCode"
-                  placeholder="Postcode"
+                  name="billAddress"
+                  placeholder="billAddress"
                   required
                 />
                 <Form.Control.Feedback type="invalid">
                   {" "}
-                  Please provide a valid postcode.
+                  Please provide a valid billAddress.
                 </Form.Control.Feedback>
-              </Form.Group> */}
+              </Form.Group>
 
-              <Form.Group as={Col} md="4" controlId="formBasicCity">
-                <Form.Control type="text" name="city" placeholder="Suburb" />
+              <Form.Group as={Col} md="4" controlId="formBasicDeliveryAddress">
+                <Form.Control type="text" name="deliveryAddress" placeholder="delivery Address" />
                 <Form.Control.Feedback type="invalid">
-                  Please provide a valid city.
+                  Please provide a valid deliveryAddress.
                 </Form.Control.Feedback>
               </Form.Group>
 

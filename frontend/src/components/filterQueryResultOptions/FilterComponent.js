@@ -261,7 +261,7 @@ const FilterComponent = () => {
 
 
   var testaaa = ELECTRICAL1 + "&subCategoryName=ABCDEFG";
-  console.log("testaaaa", testaaa.slice(54));
+  // console.log("testaaaa", testaaa.slice(54));
 
   const location = useLocation();
   const query = qs.parse(location.search, { ignoreQueryPrefix: true });

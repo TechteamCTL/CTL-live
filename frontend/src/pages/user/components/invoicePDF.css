@@ -6,6 +6,11 @@
     display: none;
 }
 
+.Re_Order_Modal {
+    position: fixed;
+    top: 20%;
+}
+
 .showingout {
     animation: showingout 1s;
 }

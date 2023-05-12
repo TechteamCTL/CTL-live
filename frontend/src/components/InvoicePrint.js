@@ -121,7 +121,7 @@ const InvoicePrint = (cartItems) => {
     tableColHeader: {
       width: "33.33%",
       borderStyle: "solid",
-      marginTop: 5,
+      marginTop: 8,
       borderWidth: 0,
       borderLeftWidth: 0,
       borderTopWidth: 0,
@@ -141,7 +141,7 @@ const InvoicePrint = (cartItems) => {
     },
     tableColHeaderSideHead: {
       float: "left",
-      width: "20%",
+      width: "40%",
       borderStyle: "solid",
       borderRightWidth: 1,
       fontSize: 10,
@@ -150,13 +150,13 @@ const InvoicePrint = (cartItems) => {
     },
     tableColHeaderSide: {
       float: "left",
-      width: "20%",
+      width: "40%",
       borderStyle: "solid",
       borderRightWidth: 1,
       fontSize: 10,
       fontWeight: "bold",
       paddingLeft: 5,
-      paddingBottom: 5,
+      paddingBottom: 10,
       paddingTop: 5,
     },
     tableColHeaderSideTotal: {
@@ -306,7 +306,10 @@ const InvoicePrint = (cartItems) => {
   const InvAddress = cartItems.userAddress;
   var counter = 0;
 
-  console.log("Invoice cartItems", cartItems, typeof cartItems);
+  console.log("InvCartItems", InvCartItems);
+  console.log("InvUserInfo", InvUserInfo);
+  console.log("InvAddress", InvAddress);
+  console.log("cart items", cartItems);
 
   function splitArrayIntoChunks(arr, chunkSize) {
     const result = [];
@@ -334,7 +337,22 @@ const InvoicePrint = (cartItems) => {
     hour12: true,
   });
 
-  const deliveredDate = new Date(cartItems.deliveredDate).toLocaleString("en-AU", {
+  //Area needs editing in future as we get more clients -- starts here
+  const deliverDate = new Date(cartItems.invoiceDate)
+  if (InvUserInfo.email) {
+    if (InvUserInfo.email.split("@")[1] === "slrltd.com") {
+      if (cartItems.cartSubtotal < 20000) {
+        deliverDate.setDate(deliverDate.getDate() + 7)
+      }
+      else {
+        deliverDate.setDate(deliverDate.getDate() + 30)
+      }
+    }
+    else if (InvUserInfo.email.split("@")[1] === "focusminerals.com.au") {
+      deliverDate.setDate(deliverDate.getDate() + 30)
+    }
+  }
+  const deliveryDate = new Date(deliverDate).toLocaleString("en-AU", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -342,6 +360,7 @@ const InvoicePrint = (cartItems) => {
     minute: "numeric",
     hour12: true,
   });
+  //Area needs editing in future as we get more clients -- ends here
 
   return (
     <>
@@ -356,7 +375,7 @@ const InvoicePrint = (cartItems) => {
                   src="https://res.cloudinary.com/dxvwresim/image/upload/v1683083956/CTL%20Brand%20Images/CTL-blueDelivering_g3qe9u.png"
                 />
               </View>
-              <View style={styles.tableColHeader}>
+              {/* <View style={styles.tableColHeader}>
                 <Text style={styles.tableCellBill}>Perth</Text>
                 <Text style={styles.tableCellBill}>T : 0475448299</Text>
                 <Text style={styles.tableCellBill}>
@@ -365,37 +384,22 @@ const InvoicePrint = (cartItems) => {
                 <Text style={styles.tableCellBill}>
                   W : ctlaustralia.com.au
                 </Text>
-              </View>
+              </View> */}
               <View style={styles.tableColHeader}>
-                <Text style={styles.tableCellBill}>Perth</Text>
-                <Text style={styles.tableCellBill}>T : 0475448299</Text>
-                <Text style={styles.tableCellBill}>
-                  E : sales@ctlservices.com.au
-                </Text>
-                <Text style={styles.tableCellBill}>
-                  W : ctlaustralia.com.au
-                </Text>
+                <Text style={styles.tableCellBill}>CTL Australia</Text>
+                <Text style={styles.tableCellBill}>T : +61 498 139 213</Text>
+                <Text style={styles.tableCellBill}>E : sales@ctlservices.com.au</Text>
+                <Text style={styles.tableCellBill}>W : ctlaustralia.com.au</Text>
+                <Text style={styles.tableCellBill}>ABN : 12 609 518 809</Text>
               </View>
             </View>
-
-            {/* <View style={styles.tableRow}>
-              <View style={styles.tableColHeader}>
-                <Text>INVOICE #:</Text>
-              </View>
-              <View style={styles.tableColHeader}>
-                <Text>{cartItems.invoiceNumber} </Text>
-              </View>
-              <View style={styles.tableColHeader}>
-                <Text>SLR PO #: {cartItems.purchaseNumber}</Text>
-              </View>
-            </View> */}
           </View>
           {/* ******* header ******* */}
           <View style={styles.tableItem}>
             <View style={styles.tableBorder}>
               <View style={styles.tableRow1}>
                 <View style={styles.tableColHeaderSideHead}>
-                  <Text>Bill To</Text>
+                  <Text>Bill To :</Text>
                 </View>
                 <View style={styles.tableColHeaderCenter}>
                   <View style={styles.tableRow}>
@@ -408,21 +412,14 @@ const InvoicePrint = (cartItems) => {
                   </View>
                 </View>
                 <View style={styles.tableColHeaderSideHead}>
-                  <Text>Payable To</Text>
+                  <Text>Ship To :</Text>
                 </View>
               </View>
 
               <View style={styles.tableRow}>
                 <View style={styles.tableColHeaderSide}>
                   <Text style={styles.tableCellBill}>
-                    {InvUserInfo.name} {InvUserInfo.lastName}{" "}
-                  </Text>
-                  <Text style={styles.tableCellBill}>
-                    {InvAddress.location}{" "}
-                  </Text>
-                  <Text style={styles.tableCellBill}>{InvAddress.phone}</Text>
-                  <Text style={styles.tableCellBill}>
-                    {InvAddress.city} {InvAddress.state} {InvAddress.postCode}
+                    {InvUserInfo.billAddress ? (InvUserInfo.billAddress.replaceAll(',', '\n')) : ("")}
                   </Text>
                 </View>
                 <View style={styles.tableColHeaderCenter}>
@@ -442,56 +439,11 @@ const InvoicePrint = (cartItems) => {
                   </View>
                 </View>
                 <View style={styles.tableColHeaderSide}>
-                  <Text style={styles.tableCellBill}>Josh Collions</Text>
-                  <Text style={styles.tableCellBill}>CTL</Text>
                   <Text style={styles.tableCellBill}>
-                    30 XXXX STREET, PERTH
+                    {InvUserInfo.deliveryAddress ? (InvUserInfo.deliveryAddress.replaceAll(',', '\n')) : ("")}
                   </Text>
-                  <Text style={styles.tableCellBill}>ABN:XXXXXX</Text>
                 </View>
               </View>
-
-              {/* <View style={styles.tableRow}>
-                <View style={styles.tableColHeaderSide}></View>
-                <View style={styles.tableColHeaderCenter}>
-                  <View style={styles.tableRow1}>
-                    <View style={styles.tableCellHeaderLeft}>
-                      <Text>Invoice Date</Text>
-                    </View>
-                    <View style={styles.tableCellHeaderLeft}>
-                      <Text>Invoice Number</Text>
-                    </View>
-                    <View style={styles.tableCellHeaderSales}>
-                      <Text>Sales Order No.</Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.tableColHeaderSide}></View>
-              </View>
-
-              <View style={styles.tableRow}>
-                <View style={styles.tableColHeaderSide}></View>
-                <View style={styles.tableColHeaderCenter}>
-                  <View style={styles.tableRow2}>
-                    <View style={styles.tableCellHeaderLeft}>
-                      <View style={styles.tableCellBillBox}>
-                        <Text>{invoiceDate.split("at")[0]}</Text>
-                      </View>
-                    </View>
-                    <View style={styles.tableCellHeaderLeft}>
-                      <View style={styles.tableCellBillBox}>
-                        <Text>{cartItems.invoiceNumber}</Text>
-                      </View>
-                    </View>
-                    <View style={styles.tableCellHeaderSales}>
-                      <View style={styles.tableCellBillBox}>
-                        <Text></Text>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.tableColHeaderSide}></View>
-              </View> */}
 
               <View style={styles.tableRow1}>
                 <View style={styles.tableCellHeaderSide}>
@@ -512,9 +464,6 @@ const InvoicePrint = (cartItems) => {
                 <View style={styles.tableCellHeader}>
                   <Text style={styles.tableColBill}>Sales Order No.</Text>
                 </View>
-                <View style={styles.tableCellHeaderSide}>
-                  <Text style={styles.tableColBill}>Carrier</Text>
-                </View>
               </View>
 
               <View style={styles.tableRow}>
@@ -533,7 +482,8 @@ const InvoicePrint = (cartItems) => {
                 </View>
                 <View style={styles.tableCellHeader}>
                   <Text style={styles.tableCellBillBox}>
-                    {deliveredDate === "Invalid Date" ? ("") : (deliveredDate.split("at")[0])}
+                    {deliveryDate === "Invalid Date" ? ("15-30 days") : (deliveryDate.split("at")[0])}
+                    {/* {deliveryDate.split("at")[0]} */}
                   </Text>
                 </View>
                 <View style={styles.tableCellHeader}>
@@ -545,9 +495,6 @@ const InvoicePrint = (cartItems) => {
                   <Text style={styles.tableCellBillBox}>
                     {cartItems.purchaseNumber}
                   </Text>
-                </View>
-                <View style={styles.tableCellHeaderSide}>
-                  <Text style={styles.tableCellBillBox}>6062</Text>
                 </View>
               </View>
             </View>

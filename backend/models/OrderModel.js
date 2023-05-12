@@ -18,7 +18,7 @@ const orderSchema = mongoose.Schema(
     },
     cartItems: [
       {
-        productID: { type: String, required: false },
+        productId: { type: String, required: false },
         name: { type: String, required: true },
         cartProducts: [
           {
@@ -30,7 +30,7 @@ const orderSchema = mongoose.Schema(
             // ID: { type: String, required: false },
           },
         ],
-        image: { path: { type: String, required: true } },
+        image: {type: String, required: true},
       },
     ],
     paymentMethod: {

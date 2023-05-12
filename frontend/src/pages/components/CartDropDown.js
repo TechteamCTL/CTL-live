@@ -19,7 +19,7 @@ const CartDropDown = ({
     reduxDispatch(removeFromCart(id, qty, price));
   };
 
-  console.log("cartItems", cartItems);
+  console.log("下拉购物车cartItems", cartItems);
 
   function handleProceedToCheckout() {
     window.location.reload();
@@ -31,11 +31,11 @@ const CartDropDown = ({
   return (
     <Container>
       <Row className="mt-1 cart_items_map">
-        {cartItems.length === 0 ? (
+        {cartItems?.length === 0 ? (
           <Alert variant="info">Your Cart Is Empty</Alert>
         ) : (
           <ListGroup variant="flush">
-            {cartItems.map((item, idx) => (
+            {cartItems?.map((item, idx) => (
               <CartItemDropDown
                 item={item}
                 key={idx}

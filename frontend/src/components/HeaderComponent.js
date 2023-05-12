@@ -23,6 +23,9 @@ import {
   editQuantity,
 } from "../redux/actions/cartActions";
 import CartDropDown from "../pages/components/CartDropDown";
+import axios from "axios";
+import { fetchCartItemsLogin } from "../redux/actions/cartActions";
+
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
@@ -52,6 +55,23 @@ const HeaderComponent = () => {
   // const query = qs.parse(location.search, { ignoreQueryPrefix: true });
 
   // console.log('header query', location); */
+
+
+  /* 获取用户购物车信息 */
+  const getCart = async () => {
+    const { data } = await axios.get("/api/cart");
+    return data;
+  };
+  const [userCart, setUserCart] = useState([]);
+  useEffect(() => {
+    getCart()
+      .then(cart => setUserCart(cart.data.cart))
+      .catch((er) => console.log(er));
+      reduxDispatch(fetchCartItemsLogin())
+  }, [])
+  console.log("用户购物车",userCart);
+
+
 
   return (
     <>
@@ -99,8 +119,8 @@ const HeaderComponent = () => {
           </Nav>
 
           {/* ************   User and Carts  ***************  */}
-          {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
-          <Navbar.Collapse id="responsive-navbar-nav">
+          {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav"> */}
             {/* 折叠区间 */}
             <Nav>
               {userInfo.isAdmin ? (
@@ -169,7 +189,7 @@ const HeaderComponent = () => {
                           style={{ fontSize: "2rem" }}
                         />
                         <Badge pill bg="danger" style={{ fontSize: "0.6rem" }}>
-                          {itemsCount === 0 ? "" : cartItems.length}
+                          {itemsCount === 0 ? "" : cartItems?.length}
                         </Badge>
                       </a>
                     </div>
@@ -206,7 +226,7 @@ const HeaderComponent = () => {
                 </>
               )}
             </Nav>
-          </Navbar.Collapse>
+          {/* </Navbar.Collapse> */}
         </Container>
       </Navbar>
     </>

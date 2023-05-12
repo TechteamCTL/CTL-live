@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 
 
-const RemoveFromCartComponent = ({ productID, orderCreated, quantity, price, removeFromCartHandler = false }) => {
+const RemoveFromCartComponent = ({ productId, orderCreated, quantity, price, removeFromCartHandler = false }) => {
 
 
 
@@ -10,7 +10,7 @@ const RemoveFromCartComponent = ({ productID, orderCreated, quantity, price, rem
        disabled={orderCreated}
        type="button"
        variant="light"
-       onClick={removeFromCartHandler ? () => removeFromCartHandler(productID, quantity, price) : undefined}
+       onClick={removeFromCartHandler ? () => removeFromCartHandler(productId, quantity, price) : undefined}
        >
          <i className="bi bi-trash"></i>  
        </Button>  

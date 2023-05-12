@@ -303,8 +303,7 @@ const Navb = () => {
   /* SITE_SAFETY */
   var SITE_SAFETY = "/product-list?categoryName=SITE-SAFETY";
   // #region
-  var SS_DG_CABINETS =
-    SITE_SAFETY + "&subCategoryName=DG-CABINETS";
+  var SS_DG_CABINETS = SITE_SAFETY + "&subCategoryName=DG-CABINETS";
   var SS_DG_CABINETS3 = [
     { label: "DANGEROUS GOODS CABINETS", type: 2, link: SS_DG_CABINETS },
   ];
@@ -889,6 +888,7 @@ const Navb = () => {
   // ];
   //#endregion
 
+  /* ELECTRICAL */
   var ELECTRICAL = "/product-list?categoryName=ELECTRICAL";
   // #region
   var ELECTRICAL_LIGHTING = {
@@ -900,6 +900,11 @@ const Navb = () => {
     label: "MOTORS",
     type: 2,
     link: ELECTRICAL + "&subCategoryName=MOTORS",
+  };
+  var ELECTRICAL_WIRING_ACCESSORIES = {
+    label: "WIRING ACCESSORIES",
+    type: 2,
+    link: ELECTRICAL + "&subCategoryName=WIRING-ACCESSORIES",
   };
   var ELECTRICAL_CABLES = {
     label: "CABLES",
@@ -1112,8 +1117,6 @@ const Navb = () => {
   };
   //#endregion
 
-
-
   /* REAGENTS */
   var REAGENTS = "/product-list?categoryName=REAGENTS";
   // #region
@@ -1128,7 +1131,6 @@ const Navb = () => {
       type: 3,
       link: REAGENTS + "&subCategoryName=REAGENTS TWO",
     },
-
   ];
   var REAGENTS_2 = [
     {
@@ -1141,7 +1143,6 @@ const Navb = () => {
       type: 3,
       link: REAGENTS + "&subCategoryName=REAGENTS TWO",
     },
-
   ];
   var REAGENTS_3 = [
     {
@@ -1154,17 +1155,40 @@ const Navb = () => {
       type: 3,
       link: REAGENTS + "&subCategoryName=REAGENTS TWO",
     },
+  ];
+  //#endregion
 
+  /* LABORATORY */
+  var LABORATORY = "/product-list?categoryName=LABORATORY";
+  // #region
+  var LABORATORY_1 = [
+    {
+      label: "LAB EQUIPMENT",
+      type: 2,
+      link: REAGENTS + "&subCategoryName=LAB-EQUIPMENT",
+    },
+  ];
+  var LABORATORY_2 = [
+    {
+      label: "LAB CHEMICALS",
+      type: 2,
+      link: REAGENTS + "&subCategoryName=LAB-CHEMICALS",
+    },
   ];
 
-  // 
-  // //#endregion
+  //#endregion
 
+  /* INDUSTRIAL */
   var INDUSTRIAL = "/product-list?categoryName=INDUSTRIAL";
   // #region
-  var INDUSTRIAL_ABRASIVES_CUTTING = INDUSTRIAL + "&subCategoryName=ABRASIVES-CUTTING";
+  var INDUSTRIAL_ABRASIVES_CUTTING =
+    INDUSTRIAL + "&subCategoryName=ABRASIVES-CUTTING";
   var INDUSTRIAL_1 = [
-    { label: "ABRASIVES & CUTTING", type: 2, link: INDUSTRIAL_ABRASIVES_CUTTING },
+    {
+      label: "ABRASIVES & CUTTING",
+      type: 2,
+      link: INDUSTRIAL_ABRASIVES_CUTTING,
+    },
     {
       label: "BELTS",
       type: 3,
@@ -1188,7 +1212,8 @@ const Navb = () => {
     {
       label: "POLISHING & FINISHING",
       type: 3,
-      link: INDUSTRIAL_ABRASIVES_CUTTING + "&childCategoryName=POLISHING-FINISHING",
+      link:
+        INDUSTRIAL_ABRASIVES_CUTTING + "&childCategoryName=POLISHING-FINISHING",
     },
     {
       label: "SANDING",
@@ -1198,7 +1223,9 @@ const Navb = () => {
     {
       label: "SURFACE CONDITIONING",
       type: 3,
-      link: INDUSTRIAL_ABRASIVES_CUTTING + "&childCategoryName=SURFACE-CONDITIONING",
+      link:
+        INDUSTRIAL_ABRASIVES_CUTTING +
+        "&childCategoryName=SURFACE-CONDITIONING",
     },
   ];
   var INDUSTRIAL_DRILLING = INDUSTRIAL + "&subCategoryName=DRILLING";
@@ -1215,9 +1242,14 @@ const Navb = () => {
       link: INDUSTRIAL_DRILLING + "&childCategoryName=DRILL-SETS",
     },
   ];
-  var INDUSTRIAL_LUBRICATION_EQUIPMENT = INDUSTRIAL + "&subCategoryName=LUBRICATION-EQUIPMENT";
+  var INDUSTRIAL_LUBRICATION_EQUIPMENT =
+    INDUSTRIAL + "&subCategoryName=LUBRICATION-EQUIPMENT";
   var INDUSTRIAL_3 = [
-    { label: "LUBRICATION & EQUIPMENT", type: 2, link: INDUSTRIAL_LUBRICATION_EQUIPMENT },
+    {
+      label: "LUBRICATION & EQUIPMENT",
+      type: 2,
+      link: INDUSTRIAL_LUBRICATION_EQUIPMENT,
+    },
     {
       label: "GENERAL",
       type: 3,
@@ -1231,12 +1263,15 @@ const Navb = () => {
     {
       label: "CLEANERS & DISPERSANTS",
       type: 3,
-      link: INDUSTRIAL_LUBRICATION_EQUIPMENT + "&childCategoryName=CLEANERS-DISPERSANTS",
+      link:
+        INDUSTRIAL_LUBRICATION_EQUIPMENT +
+        "&childCategoryName=CLEANERS-DISPERSANTS",
     },
     {
       label: "CUTTING FLUIDS",
       type: 3,
-      link: INDUSTRIAL_LUBRICATION_EQUIPMENT + "&childCategoryName=CUTTING-FLUIDS",
+      link:
+        INDUSTRIAL_LUBRICATION_EQUIPMENT + "&childCategoryName=CUTTING-FLUIDS",
     },
     {
       label: "GREASES",
@@ -1244,18 +1279,26 @@ const Navb = () => {
       link: INDUSTRIAL_LUBRICATION_EQUIPMENT + "&childCategoryName=GREASES",
     },
   ];
-  var INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES = INDUSTRIAL + "&subCategoryName=PAINT-EQUIPMENT-SUPPLIES";
+  var INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES =
+    INDUSTRIAL + "&subCategoryName=PAINT-EQUIPMENT-SUPPLIES";
   var INDUSTRIAL_4 = [
-    { label: "PAINT,EQUIPMENT & SUPPLIES", type: 2, link: INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES },
+    {
+      label: "PAINT,EQUIPMENT & SUPPLIES",
+      type: 2,
+      link: INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES,
+    },
     {
       label: "MARKING PAINT",
       type: 3,
-      link: INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES + "&childCategoryName=MARKING-PAINT",
+      link:
+        INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES +
+        "&childCategoryName=MARKING-PAINT",
     },
     {
       label: "AUTOMOTIVE",
       type: 3,
-      link: INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES + "&childCategoryName=AUTOMOTIVE",
+      link:
+        INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES + "&childCategoryName=AUTOMOTIVE",
     },
     {
       label: "AEROSOLS",
@@ -1263,9 +1306,14 @@ const Navb = () => {
       link: INDUSTRIAL_PAINT_EQUIPMENT_SUPPLIES + "&childCategoryName=AEROSOLS",
     },
   ];
-  var INDUSTRIAL_PUMPS_VALVES_PARTS = INDUSTRIAL + "&subCategoryName=PUMPS-VALVES-PARTS";
+  var INDUSTRIAL_PUMPS_VALVES_PARTS =
+    INDUSTRIAL + "&subCategoryName=PUMPS-VALVES-PARTS";
   var INDUSTRIAL_5 = [
-    { label: "PUMPS,VALVES & PARTS", type: 2, link: INDUSTRIAL_PUMPS_VALVES_PARTS },
+    {
+      label: "PUMPS,VALVES & PARTS",
+      type: 2,
+      link: INDUSTRIAL_PUMPS_VALVES_PARTS,
+    },
     {
       label: "FITTINGS & PARTS",
       type: 3,
@@ -1277,7 +1325,8 @@ const Navb = () => {
       link: INDUSTRIAL_PUMPS_VALVES_PARTS + "&childCategoryName=VALVES",
     },
   ];
-  var INDUSTRIAL_HOSES_FITTINGS = INDUSTRIAL + "&subCategoryName=HOSES-FITTINGS";
+  var INDUSTRIAL_HOSES_FITTINGS =
+    INDUSTRIAL + "&subCategoryName=HOSES-FITTINGS";
   var INDUSTRIAL_6 = [
     { label: "HOSES & FITTINGS", type: 2, link: INDUSTRIAL_HOSES_FITTINGS },
     {
@@ -1316,22 +1365,15 @@ const Navb = () => {
       link: INDUSTRIAL_HOSES_FITTINGS + "&childCategoryName=THREADED-FITTINGS",
     },
   ];
+  //#endregion
 
-  console.log(EC_CONSTRUCTION_CABLES);
-  const location = useLocation();
+  // console.log(EC_CONSTRUCTION_CABLES);
 
   return (
-    <Navbar
-      className="nav_bgc w-100"/* {
-        location.pathname === "/login"
-          ? "loginHide nav_bgc w-100"
-          : "nav_bgc w-100"
-      } */
-      expand="lg"
-    >
+    <Navbar collapseOnSelect className="nav_bgc w-100" expand="lg">
       <Container className="w-100 navb" fluid>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="w-100 Navb_full">
+        <Navbar.Collapse id="basic-navbar-nav" className="w-100">
           {/* ************   Mega Menu  ***************  */}
           <Nav className="w3c_nav">
             {/* home icon              
@@ -1698,7 +1740,6 @@ const Navb = () => {
               </div>
             </div>
 
-
             <div className="w3c_dropdown">
               <div className="dropbtn">
                 <a href={INDUSTRIAL}>INDUSTRIAL</a>
@@ -1723,7 +1764,6 @@ const Navb = () => {
                     })}
                   </ul>
                   <ul className="column">
-
                     {INDUSTRIAL_3.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
@@ -1741,7 +1781,6 @@ const Navb = () => {
                     })}
                   </ul>
                   <ul className="column">
-
                     {INDUSTRIAL_5.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
@@ -1761,46 +1800,6 @@ const Navb = () => {
                 </div>
               </div>
             </div>
-
-            {/* REAGENTS */}
-            <div className="w3c_dropdown">
-              <div className="dropbtn">
-                <a href={REAGENTS}>REAGENTS</a>
-              </div>
-              <div className="dropdown-content">
-                <div className="row">
-                  <ul className="column">
-                    {REAGENTS_1.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {REAGENTS_2.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {REAGENTS_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-
-                </div>
-              </div>
-            </div>
-
 
             {/* ELECTRICAL */}
             <div className="w3c_dropdown">
@@ -1847,9 +1846,7 @@ const Navb = () => {
                               key={item.link}
                               className={nav_color[item.type]}
                             >
-                              <a href={item.link}>
-                                {item.label}{" "}
-                              </a>
+                              <a href={item.link}>{item.label} </a>
                             </li>
                           );
                         })}
@@ -1902,14 +1899,14 @@ const Navb = () => {
                         {ELECTRICAL_ENCLOSURES.label}
                       </a>
                     </li>
-                    <li >
+                    <li>
                       <a className="parentA" href={EE_COMBINATIONS.link}>
                         {EE_COMBINATIONS.label}
                         {/* <span className="expand ms-2"> »</span> */}
                       </a>
                     </li>
 
-                    <li >
+                    <li>
                       <a className="parentA" href={EE_BATTERY_CABINET.link}>
                         {EE_BATTERY_CABINET.label}
                         {/* <span className="expand ms-2"> »</span> */}
@@ -1946,9 +1943,7 @@ const Navb = () => {
                               key={item.link}
                               className={nav_color[item.type]}
                             >
-                              <a href={item.link}>
-                                {item.label}{" "}
-                              </a>
+                              <a href={item.link}>{item.label} </a>
                             </li>
                           );
                         })}
@@ -1973,7 +1968,6 @@ const Navb = () => {
                         })}
                       </ul>
                     </li>
-
                   </ul>
 
                   <ul className="column">
@@ -1989,6 +1983,91 @@ const Navb = () => {
                         {/* <span className="expand ms-2"> »</span> */}
                       </a>
                     </li>
+                    <li className="subCat">
+                      <a
+                        className="parentA"
+                        href={ELECTRICAL_WIRING_ACCESSORIES.link}
+                      >
+                        {ELECTRICAL_WIRING_ACCESSORIES.label}
+                        {/* <span className="expand ms-2"> »</span> */}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* REAGENTS */}
+            <div className="w3c_dropdown">
+              <div className="dropbtn">
+                <a href={REAGENTS}>REAGENTS</a>
+              </div>
+              <div className="dropdown-content">
+                <div className="row">
+                  <ul className="column">
+                    {REAGENTS_1.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {REAGENTS_2.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {REAGENTS_3.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* LABORATORY */}
+            <div className="w3c_dropdown">
+              <div className="dropbtn">
+                <a href={LABORATORY}>LABORATORY</a>
+              </div>
+              <div className="dropdown-content">
+                <div className="row">
+                  <ul className="column">
+                    {LABORATORY_1.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {LABORATORY_2.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {/* {LABORATORY_3.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })} */}
                   </ul>
                 </div>
               </div>

@@ -20,7 +20,7 @@ const CartItemComponent = ({
               {/* Image */}
               <img
                 crossOrigin="anonymous"
-                src={item.image ? item.image.path ?? null : null}
+                src={item.image ? item.image ?? null : null}
 
                 className="w-100 img_hovf"
                 alt="s"
@@ -28,14 +28,14 @@ const CartItemComponent = ({
               {/* Image */}
             </div>
           </Col>
-          <Col md={6}>
-            <a href={`/product-details/${item.productID}`}>
-              <p className="" style={{color:"#1E4881"}}>
+          <Col md={5}>
+            <a href={`/product-details/${item.productId}`}>
+              <p className="" style={{ color: "#1E4881" }}>
                 <strong className="text-uppercase">{item.name}</strong>
               </p>
             </a>
           </Col>
-          <Col md={2}>
+          <Col md={3}>
             <p className="m-0">Item: <span className="fw-bold">{item.cartProducts[0].attrs}</span></p>
             <p className="m-0">Unit Price: $<span className="fw-bold">{item.cartProducts[0].price}</span></p>
             {/*  */}
@@ -53,7 +53,7 @@ const CartItemComponent = ({
           <Col md={1}>
             <RemoveFromCartComponent
               orderCreated={orderCreated}
-              productID={item.cartProducts[0]._id}
+              productId={item.cartProducts[0]._id}
               quantity={item.quantity}
               price={item.price}
               removeFromCartHandler={removeFromCartHandler ? removeFromCartHandler : undefined}

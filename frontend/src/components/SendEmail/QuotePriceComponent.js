@@ -41,7 +41,7 @@ const QuotePriceComponent = (quotePriceData) => {
 
 
 
-console.log('quotePriceDataCCCCCCCompoent',quotePriceData);
+// console.log('quotePriceDataCCCCCCCompoent',quotePriceData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +53,7 @@ console.log('quotePriceDataCCCCCCCompoent',quotePriceData);
     const formDataToSend = new FormData();
     formDataToSend.append("from", `${quotePriceData.quotePriceData.name} <${quotePriceData.quotePriceData.email}>`);
     formDataToSend.append("productName", `${quotePriceData.quotePriceData.productName}`);
-    formDataToSend.append("description", `<${currentUrl}>`);
+    formDataToSend.append("description", `product-details/${quotePriceData.quotePriceData.productId}`);
     try {
       setIsSending(true);
       const res = await axios.post("/api/sendemail/quoteprice", formDataToSend, config);

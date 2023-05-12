@@ -30,7 +30,8 @@ const registerUserApiRequest = async (
     location,
     company,
     role,
-    city, 
+    deliveryAddress, 
+    billAddress,
     state,
     postCode
 ) => {
@@ -44,7 +45,8 @@ const registerUserApiRequest = async (
         location,
         company,
         role,
-        city,
+        deliveryAddress,
+        billAddress,
         state,
         postCode,
     });

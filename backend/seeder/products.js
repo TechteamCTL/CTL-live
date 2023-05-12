@@ -7,7 +7,12 @@ const products = [
       "Unvented for situations where full head enclosure is required",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 22,
         price: 666,
         barcode: "123456789",
@@ -53,7 +58,12 @@ const products = [
       "Hard hat brims are rated to UPF 50+ and provide excellent protection against solar ultraviolet radiation (UVR).",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "S",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 22,
         price: 13212,
         barcode: "123456789",
@@ -62,7 +72,12 @@ const products = [
         suppliersku: "SPLSKU02W",
       },
       {
-        attrs: "BLUE",
+        attrs: "M",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 15,
         price: 555,
         barcode: "456789123",
@@ -71,7 +86,12 @@ const products = [
         suppliersku: "SPLSKU02B",
       },
       {
-        attrs: "RED",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 17,
         price: 444,
         barcode: "789123456",
@@ -98,7 +118,12 @@ const products = [
       "Fitted with front adjustable lamp bracket attachment & rear cable guide (lamp not included)",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 22,
         price: 666,
         barcode: "123456789",
@@ -127,7 +152,12 @@ const products = [
       "One piece design offering 180 degree head protection made from Polyethylene",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 22,
         price: 666,
         barcode: "123456789",
@@ -153,7 +183,12 @@ const products = [
       "Eye and face protectors when used in conjunction with Pro Choice Safety Gear Visors.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 22,
         price: 666,
         barcode: "123456789",
@@ -180,7 +215,12 @@ const products = [
     description: "PowerSoft Foam Hybrid Plug technology",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 22,
         price: 666,
         barcode: "123456789",
@@ -206,7 +246,12 @@ const products = [
     description: "Hearing protection for noise levels to 100 dB(A)",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -231,7 +276,12 @@ const products = [
     description: "Metal free, dielectric earmuffs.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -257,7 +307,12 @@ const products = [
       "Dispenser holds 500 pairs of Powersoft Mega T-Fit Uncorded Earplugs.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -285,7 +340,12 @@ const products = [
       "Our FRONTSIDE TR90 Frame is extremely comfortable to wear. Highly flexible, they can bend under pressure which makes them resilient to damage",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -310,7 +370,12 @@ const products = [
     description: "Can be worn around neck for convenience",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -338,7 +403,12 @@ const products = [
       "All PRATT emergency showers and eye wash stations are designed and manufactured in an ISO 9001 accredited facility, with full conformance to both AS4775 and ANSI Z358.1 standard.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -364,13 +434,18 @@ const products = [
       "All PRATT emergency showers and eye wash stations are designed and manufactured in an ISO 9001 accredited facility, with full conformance to both AS4775 and ANSI Z358.1 standard.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
-        barcode: "123456789",    
+        barcode: "123456789",
         ctlsku: "CTL000012",
-    slrsku: "SLRSKU012",
-    suppliersku: "SPLSKU12",
+        slrsku: "SLRSKU012",
+        suppliersku: "SPLSKU12",
       },
     ],
     RRP: 9.99,
@@ -392,7 +467,12 @@ const products = [
       "All PRATT emergency showers and eye wash stations are designed and manufactured in an ISO 9001 accredited facility, with full conformance to both AS4775 and ANSI Z358.1 standard.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -419,7 +499,12 @@ const products = [
       "When working with small doses of dangerous substances, a spill or splash could still cause a serious injury.Â The handheld eye wash provides you with swift and effect decontamination for your eyes and body.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -445,7 +530,12 @@ const products = [
       "When working with small doses of dangerous substances, a spill or splash could still cause a serious injury.Â The handheld eye wash provides you with swift and effect decontamination for your eyes and body.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -471,7 +561,12 @@ const products = [
       "Providing aerated water stream. Suitable for eye wash, face wash or combined application.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -497,7 +592,12 @@ const products = [
       "For general industry and non-industry applications. Commonly used in the automotive, industrial, commercial markets, warehousing, waste management and manufacturing industries.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -523,7 +623,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -549,7 +654,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -575,7 +685,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -601,7 +716,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -627,7 +747,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -653,7 +778,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -679,7 +809,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -705,7 +840,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -731,7 +871,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -757,7 +902,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -783,7 +933,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -809,7 +964,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -835,7 +995,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        saleUnits: [
+          { unit: "per piece-1" },
+          { unit: "per pack-10" },
+          { unit: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -861,7 +1026,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -887,7 +1057,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -913,7 +1088,12 @@ const products = [
       "Economy Hazchem Spill Kits colour coded yellow for Hazchem liquid spill absorption.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",
@@ -940,7 +1120,12 @@ const products = [
       "For mains, sub mains and sub circuits unenclosed, enclosed in conduit buried direct or underground ducts for buildings and industrial plants where not subject to mechanical damage. Suitable for glanding.",
     stock: [
       {
-        attrs: "WHITE",
+        attrs: "L",
+        typeOfSale: [
+          { one: "per piece-1" },
+          { two: "per pack-10" },
+          { three: "per carton-100" },
+        ],
         count: 20,
         price: 666,
         barcode: "123456789",

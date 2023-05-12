@@ -6,57 +6,74 @@ import { useNavigate } from "react-router-dom";
 
 const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
   const [validated, setValidated] = useState(false);
-    const [user, setUser] = useState([]);
-    const [isAdminState, setIsAdminState] = useState(false);
-    const [updateUserResponseState, setUpdateUserResponseState] = useState({ message: "", error: "" }); // handling errors and messages
+  const [user, setUser] = useState([]);
+  const [isAdminState, setIsAdminState] = useState(false);
+  const [updateUserResponseState, setUpdateUserResponseState] = useState({
+    message: "",
+    error: "",
+  }); // handling errors and messages
 
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const form = event.currentTarget.elements;
+    const name = form.name.value;
+    const lastName = form.lastName.value;
+    const email = form.email.value;
+    const deliveryAddress = form.deliveryAddress.value;
+    const billAddress = form.billAddress.value;
+    let ipAddress = form.ipAddress.value;
+    const isAdmin = form.isAdmin.checked;
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      const form = event.currentTarget.elements;
-      const name = form.name.value;
-      const lastName = form.lastName.value;
-      const email = form.email.value;
-      let ipAddress = form.ipAddress.value;
-      const isAdmin = form.isAdmin.checked;
-    
-      // Set ipAddress to "" if "remove" is entered
-      if (ipAddress === "remove") {
-        ipAddress = '';
-      }
-    
-      if (event.currentTarget.checkValidity() === true) {
-        updateUserApiRequest(id, name, lastName, email, ipAddress, isAdmin)
-          .then((data) => {
-            if (data === "user updated") {
-              navigate("/admin/users");
-            }
-          })
-          .catch((er) => {
-            setUpdateUserResponseState({
-              error: er.response.data.message
-                ? er.response.data.message
-                : er.response.data,
-            });
-          });
-      }
-    
-      setValidated(true);
-    };
-    
+    // Set ipAddress to "" if "remove" is entered
+    if (ipAddress === "remove") {
+      ipAddress = "";
+    }
 
-    useEffect(() => {
-        fetchUser(id)
-        .then(data => {
-            setUser(data);
-            setIsAdminState(data.isAdmin);
+    if (event.currentTarget.checkValidity() === true) {
+      updateUserApiRequest(
+        id,
+        name,
+        lastName,
+        email,
+        ipAddress,
+        isAdmin,
+        deliveryAddress,
+        billAddress
+      )
+        .then((data) => {
+          if (data === "user updated") {
+            navigate("/admin/users");
+          }
         })
-        .catch((er) => console.log(er.response.data.message ? er.response.data.message : er.response.data));
-    }, [id])
+        .catch((er) => {
+          setUpdateUserResponseState({
+            error: er.response.data.message
+              ? er.response.data.message
+              : er.response.data,
+          });
+        });
+    }
+
+    setValidated(true);
+  };
+
+  useEffect(() => {
+    fetchUser(id)
+      .then((data) => {
+        setUser(data);
+        console.log("useruseruseruser", data);
+        setIsAdminState(data.isAdmin);
+      })
+      .catch((er) =>
+        console.log(
+          er.response.data.message ? er.response.data.message : er.response.data
+        )
+      );
+  }, [id]);
 
   return (
     <Container>
@@ -85,7 +102,7 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
                 name="lastName"
                 required
                 type="text"
-                defaultValue={user.lastName} 
+                defaultValue={user.lastName}
               />
             </Form.Group>
 
@@ -96,11 +113,34 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
                 required
                 type="email"
                 defaultValue={user.email}
+                disabled
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicDeliveryAddress">
+              <Form.Label>Delivery Address</Form.Label>
+              <Form.Control
+                name="deliveryAddress"
+                required
+                type="txt"
+                defaultValue={user.deliveryAddress}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicBillAddress">
+              <Form.Label>Bill Address</Form.Label>
+              <Form.Control
+                name="billAddress"
+                required
+                type="txt"
+                defaultValue={user.billAddress}
               />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicipAddress">
-              <Form.Label>IP Address (enter remove to remove IP address)</Form.Label>
+              <Form.Label>
+                IP Address (enter remove to remove IP address)
+              </Form.Label>
               <Form.Control
                 name="ipAddress"
                 required
@@ -110,7 +150,13 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check name="isAdmin" type="checkbox" label="Is admin" checked={isAdminState} onChange={(e) => setIsAdminState(e.target.checked)} />
+              <Form.Check
+                name="isAdmin"
+                type="checkbox"
+                label="Is admin"
+                checked={isAdminState}
+                onChange={(e) => setIsAdminState(e.target.checked)}
+              />
             </Form.Group>
 
             <Button variant="primary" type="submit">
@@ -125,4 +171,3 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
 };
 
 export default EditUserPageComponent;
-

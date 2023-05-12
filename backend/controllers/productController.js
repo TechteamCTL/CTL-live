@@ -3,10 +3,27 @@ const recordsPerPage = require("../config/pagination");
 const imageValidate = require("../utils/imageValidate");
 const pdfValidate = require("../utils/pdfValidate");
 
+const getCombinations = (array, length) => {
+  let result = [];
+  const f = (active, rest, length) => {
+    if (!active.length && !rest.length) return;
+    if (active.length === length) {
+      result.push(active);
+    } else {
+      if (rest.length) {
+        f(active.concat(rest[0]), rest.slice(1), length);
+        f(active, rest.slice(1), length);
+      }
+    }
+  };
+  f([], array, length);
+  return result;
+};
+
 const getProducts = async (req, res, next) => {
   try {
     let query = {};
-    let queryCondition = false; 
+    let queryCondition = false;
     let priceQueryCondition = {};
     // 如果query price存在，就pass小于等于XXX
     if (req.query.price) {
@@ -118,7 +135,9 @@ const getProducts = async (req, res, next) => {
       sort = { [sortOpt[0]]: Number(sortOpt[1]) };
     }
 
-    const searchQuery = req.params.searchQuery || "";
+    /* ******* search function ******* */
+    // 第一版 searchQuery
+    /* const searchQuery = req.params.searchQuery || "";
     let searchQueryCondition = {};
     let select = {};
     console.log("我是searchQuery", searchQuery);
@@ -126,16 +145,17 @@ const getProducts = async (req, res, next) => {
       queryCondition = true;
 
       // 新方法：在productModel里面靠下面的几行，把name和description 设了text，所以此处用$text会faster
-      /*       searchQueryCondition = { $text: { $search: searchQuery } };
+      // searchQueryCondition = { $text: { $search: searchQuery } };
+      // searchQueryCondition = { $text: { $search: searchQuery, $caseSensitive: false, $diacriticSensitive: true,},};
+      
       // score代表与 检索关键字 的匹配值，并设置按照score的高低排列
       // (注掉的，都是原代码，现在没有注掉了)现在因为要查找到slrsku，所以写了如下的or并列，比较老的写法，但是无敌管用
       // searchQueryCondition = { $or: [{ name: searchQuery }, { description: searchQuery }, { slrsku: searchQuery }, {supplier: searchQuery}] }
-      select = {
-        score: { $meta: "textScore" },
-      };
-      sort = { score: { $meta: "textScore" } }; */
+      // select = { score: { $meta: "textScore" },};
+      // sort = { score: { $meta: "textScore" } };
 
       // 旧方法，但好用
+      // bolt machine  --- machine bolt solve
       searchQueryCondition = {
         $or: [
           { name: { $regex: searchQuery, $options: "i" } },
@@ -143,8 +163,182 @@ const getProducts = async (req, res, next) => {
           { "stock.slrsku": { $regex: searchQuery, $options: "i" } },
           { "stock.ctlsku": { $regex: searchQuery, $options: "i" } },
           { supplier: { $regex: searchQuery, $options: "i" } },
+          { name: { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
+          { description: { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
+          { "stock.slrsku": { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
+          { "stock.ctlsku": { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
+          { supplier: { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
         ],
       };
+
+      searchQueryCondition = {
+        $or: [
+          { name: { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
+          { description: { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
+          { 'stock.slrsku': { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
+          { 'stock.ctlsku': { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
+          { supplier: { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
+          { name: { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } },
+          { description: { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } },
+          { 'stock.slrsku': { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } },
+          { 'stock.ctlsku': { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } },
+          { supplier: { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } }
+        ]
+      };      
+    } */
+
+    // 第二版 searchQuery
+    // 在ProductModel.js里面重设了 index
+    // 实现了 关键词 检索，但是必须按顺序
+    /* const searchQuery = req.params.searchQuery ? `"${req.params.searchQuery}"` : "";
+
+    let searchQueryCondition = {};
+    let select = {};
+    console.log("我是searchQuery", searchQuery);
+    if (searchQuery) {
+      queryCondition = true;
+      searchQueryCondition = {
+        $text: {
+          $search: searchQuery,
+          $caseSensitive: false,
+          $diacriticSensitive: false,
+        },
+      };           
+    } */
+
+    // 第二版 升级
+    // 实现了 关键词检索，不需要顺序
+    /* const searchQuery = req.params.searchQuery ? req.params.searchQuery : "";
+
+    let searchQueryCondition = {};
+    let select = {};
+    console.log("我是searchQuery", searchQuery);
+    if (searchQuery) {
+      queryCondition = true;
+      searchQueryCondition = {
+        $text: {
+          $search: searchQuery,
+          $caseSensitive: false,
+          $diacriticSensitive: false,
+        },
+      };
+      if (searchQuery.indexOf(" ") !== -1) {
+        const searchWords = searchQuery.split(" ");
+        searchWords.forEach((word) => {
+          searchQueryCondition.$text.$search += ` "${word}"`;
+        });
+      }
+    } */
+
+    // 第三版 searchQuery
+    // 关键词 检索，不需要顺序
+    /*  const searchQuery = req.params.searchQuery || "";
+    let searchQueryCondition = {};
+    let select = {};
+    console.log("我是searchQuery", searchQuery);
+    if (searchQuery) {
+      queryCondition = true;
+      const searchQueryWords = searchQuery.split(" ");
+      searchQueryCondition = {
+        $and: searchQueryWords.map((word) => {
+          return {
+            $or: [
+              { name: { $regex: word, $options: "i" } },
+              { description: { $regex: word, $options: "i" } },
+              { "stock.slrsku": { $regex: word, $options: "i" } },
+              { "stock.ctlsku": { $regex: word, $options: "i" } },
+              { supplier: { $regex: word, $options: "i" } },
+            ],
+          };
+        }),
+      };
+    }; */
+
+    // 第四版 searchQuery
+    // "progressive search"
+    /*  const searchQuery = req.params.searchQuery || "";
+    let searchQueryCondition = {};
+    let select = {};
+    console.log("我是searchQuery", searchQuery);
+    if (searchQuery) {
+      queryCondition = true;
+      const searchWords = searchQuery.split(" ");
+      let foundProducts = false;
+
+      for (let i = searchWords.length; i > 0 && !foundProducts; i--) {
+        const searchCombinations = getCombinations(searchWords, i);
+
+        for (const combination of searchCombinations) {
+          const searchPattern = combination.join(".*");
+          searchQueryCondition = {
+            name: {
+              $regex: searchPattern,
+              $options: "i",
+            },
+          };
+
+          const tempQuery = {
+            $and: [
+              priceQueryCondition,
+              ratingQueryCondition,
+              categoryQueryCondition,
+              searchQueryCondition,
+              ...attrsQueryCondition,
+            ],
+          };
+
+          const tempProducts = await Product.find(tempQuery);
+          if (tempProducts.length > 0) {
+            foundProducts = true;
+            query = tempQuery;
+            break;
+          }
+        }
+      }
+    } */
+
+    //第五版 searchQuery
+    // 集成 $text 1-2 与 $regex 大于3
+    const searchQuery = req.params.searchQuery || "";
+    let searchQueryCondition = {};
+    let select = {};
+    console.log("我是searchQuery", searchQuery);
+    if (searchQuery) {
+      queryCondition = true;
+      const searchWords = searchQuery.split(" ");
+
+      if (searchWords.length <= 2) {
+        searchQueryCondition = {
+          $text: {
+            $search: searchQuery,
+            $caseSensitive: false,
+            $diacriticSensitive: false,
+          },
+        };
+      } else {
+        let foundProducts = false;
+
+        for (let i = searchWords.length; i > 0 && !foundProducts; i--) {
+          const searchCombinations = getCombinations(searchWords, i);
+
+          for (const combination of searchCombinations) {
+            const searchPattern = combination.join(".*");
+            searchQueryCondition = {
+              name: {
+                $regex: searchPattern,
+                $options: "i",
+              },
+            };
+
+            const tempProducts = await Product.find(searchQueryCondition);
+            if (tempProducts.length > 0) {
+              foundProducts = true;
+              query = tempQuery;
+              break;
+            }
+          }
+        }
+      }
     }
 
     if (queryCondition) {
@@ -162,12 +356,32 @@ const getProducts = async (req, res, next) => {
     // 后面的limit（1）是：only one product fetched from the database. and this limit will be needed for pagination.
     // recordsPerPager 在config里有设置数字，就是每页显示几个product
     // 下面的skip（2）是指，first 2 records were skipped,然后算一下每个page显示的东西
+
+    // const sortCriteria = { category: 1 };
+    const sortCriteria = [
+      ["category", 1],
+      ["slrcurrentbuyingprice", 1],
+      ["name", 1],
+    ];
     const totalProducts = await Product.countDocuments(query);
-    const products = await Product.find(query)
+    let products = await Product.find(query)
       .select(select)
       .skip(recordsPerPage * (pageNum - 1))
-      .sort(sort)
+      .sort(sortCriteria)
       .limit(recordsPerPage);
+
+    if (searchQuery) {
+      const searchWords = searchQuery.split(" ");
+      products = products.sort((a, b) => {
+        const aMatchCount = searchWords.filter((word) =>
+          a.name.toLowerCase().includes(word.toLowerCase())
+        ).length;
+        const bMatchCount = searchWords.filter((word) =>
+          b.name.toLowerCase().includes(word.toLowerCase())
+        ).length;
+        return bMatchCount - aMatchCount;
+      });
+    }
 
     //  Math.ceil (x) 返回不小于x的最接近的整数
     res.json({
@@ -241,8 +455,6 @@ const adminDeleteProduct = async (req, res, next) => {
   }
 }; */
 
-
-
 /* const adminCreateProduct = async (req, res, next) => {
   try {
     const product = new Product();
@@ -250,7 +462,7 @@ const adminDeleteProduct = async (req, res, next) => {
       name,
       description,
       count,
-      min,
+      saleunit,
       max,
       price,
       purchaseprice,
@@ -266,7 +478,7 @@ const adminDeleteProduct = async (req, res, next) => {
     product.name = name;
     product.description = description;
     product.count = count;
-    product.min = min;
+    product.saleunit = saleunit;
     product.max = max;
     product.price = price;
     product.purchaseprice = purchaseprice;
@@ -299,7 +511,7 @@ const adminCreateProduct = async (req, res, next) => {
     const {
       name,
       description,
-      min,
+      saleunit,
       max,
       purchaseprice,
       slrcurrentbuyingprice,
@@ -311,7 +523,7 @@ const adminCreateProduct = async (req, res, next) => {
 
     product.name = name;
     product.description = description;
-    product.min = min;
+    product.saleunit = saleunit;
     product.max = max;
     product.purchaseprice = purchaseprice;
     product.slrcurrentbuyingprice = slrcurrentbuyingprice;
@@ -375,7 +587,7 @@ const adminCreateProduct = async (req, res, next) => {
     product.name = name || product.name;
     product.description = description || product.description;
     product.count = count || product.count;
-    product.min = min || product.min;
+    product.saleunit = saleunit || product.saleunit;
     product.max = max || product.max;
     product.price = price || product.price;
     product.purchaseprice = purchaseprice || product.purchaseprice;
@@ -417,7 +629,7 @@ const adminUpdateProduct = async (req, res, next) => {
       pdfs,
       purchaseprice,
       slrcurrentbuyingprice,
-      min,
+      saleunit,
       max,
       stock,
     } = req.body;
@@ -431,7 +643,7 @@ const adminUpdateProduct = async (req, res, next) => {
     product.purchaseprice = purchaseprice || product.purchaseprice;
     product.slrcurrentbuyingprice =
       slrcurrentbuyingprice || product.slrcurrentbuyingprice;
-    product.min = min || product.min;
+    product.saleunit = saleunit || product.saleunit;
     product.max = max || product.max;
     if (stock.length > 0) {
       product.stock = [];
@@ -469,7 +681,7 @@ const adminUpload = async (req, res, next) => {
     } catch (err) {
       next(err);
     }
-    return
+    return;
   }
   try {
     // 如果nothing in req.files ；  ！！非空判断
@@ -529,7 +741,7 @@ const adminUploadPdf = async (req, res, next) => {
     } catch (err) {
       next(err);
     }
-    return
+    return;
   }
   try {
     if (!req.files || !!req.files.pdfs === false) {

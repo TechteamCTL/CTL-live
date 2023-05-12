@@ -181,7 +181,7 @@ const ProductListPage = ({
                     key={product._id}
                     images={product.images}
                     name={product.name}
-                    price={product.stock[0].price}
+                    price={product.slrcurrentbuyingprice}
                     productId={product._id}
                     slrsku={product.slrsku}
                   />

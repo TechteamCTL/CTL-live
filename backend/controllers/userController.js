@@ -27,7 +27,8 @@ const registerUser = async (req, res, next) => {
       location,
       company,
       role,
-      city,
+      deliveryAddress,
+      billAddress,
       state,
       postCode,
     } = req.body;
@@ -42,7 +43,8 @@ const registerUser = async (req, res, next) => {
         location &&
         company &&
         role &&
-        city &&
+        deliveryAddress &&
+        billAddress &&
         state &&
         postCode
       )
@@ -66,7 +68,8 @@ const registerUser = async (req, res, next) => {
         location,
         company,
         role,
-        city,
+        deliveryAddress,
+        billAddress,
         state,
         postCode,
       });
@@ -114,7 +117,8 @@ const registerUser = async (req, res, next) => {
             location: user.mobile,
             company: user.company,
             role: user.role,
-            city: user.city,
+            deliveryAddress: user.deliveryAddress,
+            billAddress: user.billAddress,
             state: user.state,
             postCode: user.postCode,
           },
@@ -325,7 +329,8 @@ const updateUserProfile = async (req, res, next) => {
     user.mobile = req.body.mobile;
     user.location = req.body.location;
     user.postCode = req.body.postCode;
-    user.city = req.body.city;
+    user.deliveryAddress = req.body.deliveryAddress;
+    user.billAddress = req.body.billAddress;
     user.state = req.body.state;
     user.company = req.body.company;
     user.role = req.body.role;
@@ -338,6 +343,8 @@ const updateUserProfile = async (req, res, next) => {
         name: user.name,
         lastName: user.lastName,
         email: user.email,
+        deliveryAddress: user.deliveryAddress,
+        billAddress: user.billAddress,
         isAdmin: user.isAdmin,
       },
     });
@@ -381,7 +388,7 @@ const getUserProfile = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id)
-      .select("name lastName email ipAddress isAdmin")
+      .select("name lastName email ipAddress isAdmin deliveryAddress billAddress")
       .orFail();
     return res.send(user);
   } catch (err) {
@@ -396,6 +403,8 @@ const updateUser = async (req, res, next) => {
     user.name = req.body.name || user.name;
     user.lastName = req.body.lastName || user.lastName;
     user.email = req.body.email || user.email;
+    user.deliveryAddress = req.body.deliveryAddress || user.deliveryAddress;
+    user.billAddress = req.body.billAddress || user.billAddress;
 
     if (req.body.ipAddress === "") {
       user.ipAddress = "";

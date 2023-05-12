@@ -45,8 +45,10 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
+              <th><i class="bi bi-person-check"></i></th>
               <th>IP Address</th>
-              <th>Is Admin</th>
+              <th><i class="bi bi-truck"></i></th>
+              <th><i class="bi bi-receipt"></i></th>
               <th>Edit/Delete</th>
             </tr>
           </thead>
@@ -58,9 +60,15 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
                   <td>{user.name}</td>
                   <td>{user.lastName}</td>
                   <td>{user.email}</td>
-                  <td>{user.ipAddress}</td>
                   <td>
                     {user.isAdmin ? <i className="bi bi-check-lg text-success"></i> : <i className="bi bi-x-lg text-danger"></i>}
+                  </td>
+                  <td>{user.ipAddress}</td>
+                  <td>
+                    {user.deliveryAddress === "new user" ? <i className="bi bi-x-lg text-danger"></i> : <i className="bi bi-check-lg text-success"></i>}
+                  </td>
+                  <td>
+                    {user.billAddress === "new user" ? <i className="bi bi-x-lg text-danger"></i> : <i className="bi bi-check-lg text-success"></i>}
                   </td>
                   <td>
                     <LinkContainer to={`/admin/edit-user/${user._id}`}>

@@ -96,7 +96,7 @@ const CreateProductPageComponent = ({
     const formInputs = {
       name: form.name.value,
       description: form.description.value,
-      min: form.Min.value,
+      saleunit: form.saleunit.value,
       max: form.Max.value,
 
       purchaseprice: form.PurchasePrice.value,
@@ -310,6 +310,7 @@ const CreateProductPageComponent = ({
                         name={`count-${index}`}
                         required
                         type="number"
+                        value="300"
                       />
                     </Form.Group>
                     <Form.Group
@@ -323,6 +324,7 @@ const CreateProductPageComponent = ({
                         name={`attrs-${index}`}
                         required
                         type="text"
+
                       />
                     </Form.Group>
                     <Form.Group
@@ -407,6 +409,7 @@ const CreateProductPageComponent = ({
                         name={`suppliersku-${index}`}
                         required
                         type="text"
+
                       />
                     </Form.Group>
                   </React.Fragment>
@@ -470,7 +473,7 @@ const CreateProductPageComponent = ({
                 controlId="formBasicSupplier"
               >
                 <Form.Label>Supplier</Form.Label>
-                <Form.Control name="supplier" required type="text" />
+                <Form.Control name="supplier" required type="text" value="CARROLL" />
               </Form.Group>
             </Row>
 
@@ -479,10 +482,10 @@ const CreateProductPageComponent = ({
                 as={Col}
                 md="6"
                 className="mb-3"
-                controlId="formBasicMin"
+                controlId="formBasicSaleunit"
               >
-                <Form.Label>Min</Form.Label>
-                <Form.Control name="Min" type="text" />
+                <Form.Label>Sale Unit</Form.Label>
+                <Form.Control name="saleunit" type="text" value="100" />
               </Form.Group>
               <Form.Group
                 as={Col}
@@ -491,7 +494,7 @@ const CreateProductPageComponent = ({
                 controlId="formBasicMax"
               >
                 <Form.Label>Max</Form.Label>
-                <Form.Control name="Max" required type="text" />
+                <Form.Control name="Max" required type="text" value="400" />
               </Form.Group>
             </Row>
 

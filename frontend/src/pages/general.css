@@ -40,7 +40,7 @@
 }
 
 .o_p_box {
- text-align: center;
+    text-align: center;
 }
 
 
@@ -97,11 +97,19 @@
     content: url('../../public/images/products/PPEW.png');
     animation: PPEchangeImage 2s infinite;
 }
-  
+
 @keyframes PPEchangeImage {
-    0% { background-image: url('../../public/images/products/PPEW.png'); }
-    33% { background-image: url('../../public/images/products/PPEWLine1.png'); }
-    66% { background-image: url('../../public/images/products/PPEWLine2.png'); }
+    0% {
+        background-image: url('../../public/images/products/PPEW.png');
+    }
+
+    33% {
+        background-image: url('../../public/images/products/PPEWLine1.png');
+    }
+
+    66% {
+        background-image: url('../../public/images/products/PPEWLine2.png');
+    }
 }
 
 .box3:hover .img_handtools {
@@ -139,12 +147,21 @@
     content: url('../../public/images/products/siteSafetyWDrips1.png');
     animation: changeImage 2s infinite;
 }
-  
+
 @keyframes changeImage {
+
     /* 0% { background-image: url('../../public/images/products/siteSafety.png'); } */
-    0% { background-image: url('../../public/images/products/siteSafetyWDrips1.png'); }
-    33% { background-image: url('../../public/images/products/siteSafetyWDrips2.png'); }
-    66% { background-image: url('../../public/images/products/siteSafetyWDrips3.png'); }
+    0% {
+        background-image: url('../../public/images/products/siteSafetyWDrips1.png');
+    }
+
+    33% {
+        background-image: url('../../public/images/products/siteSafetyWDrips2.png');
+    }
+
+    66% {
+        background-image: url('../../public/images/products/siteSafetyWDrips3.png');
+    }
 }
 
 .box3:hover .img_mechanical_up {
@@ -243,11 +260,13 @@
     font-size: 1.5vw;
 }
 
+
+/* ****************** product card ****************** */
 .product_card_btn {
     background-color: #073474;
     color: white;
     border: none;
-    font-size: 0.9vw;
+    /* font-size: 0.9vw; */
 }
 
 .product_card_btn:hover {
@@ -267,8 +286,6 @@
     -webkit-box-orient: vertical;
 }
 
-
-
 .card-title:hover {
     text-decoration: underline;
 }
@@ -281,4 +298,54 @@
 
 .card-price:hover {
     text-decoration: underline;
+}
+
+/* Preview Product button */
+.Preview_Button {
+    position: absolute;
+    top: 6%;
+    /*     right: -38%; */
+    left: 50%;
+    width: 40%;
+    transform: translate(-50%, -50%);
+    /* padding: 10px 20px; */
+    /* font-size: 1vw; */
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+
+}
+
+.preview_button_img {
+    display: block;
+}
+
+/* Show Preview Product button on hover */
+/*   .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  } */
+
+.hover-zoom:hover .Preview_Button {
+    opacity: 1;
+    z-index: 99;
+}
+
+/* .hover-zoom:hover .img_hover {
+    opacity: 0.3;
+} */
+
+
+.preview_product_modal .modal-content {
+    width: 200%;
+    margin-top: 20%;
+    left: -40%;
 }

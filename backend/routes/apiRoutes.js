@@ -5,6 +5,7 @@ const categoryRoutes = require("./categoryRoutes")
 const userRoutes = require("./userRoutes")
 const orderRoutes = require("./orderRoutes")
 const sendEmailRoutes = require("./sendEmailRoutes")
+const cartRoutes = require("./cartRoutes")
 
 
 const jwt = require("jsonwebtoken");
@@ -31,5 +32,6 @@ app.use("/categories", categoryRoutes)
 app.use("/users", userRoutes)
 app.use("/orders", orderRoutes)
 app.use("/sendemail", sendEmailRoutes)
+app.use("/cart", cartRoutes)
 
 module.exports = app
