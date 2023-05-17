@@ -11,6 +11,8 @@ import { logout } from "../redux/actions/userActions";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Modal from "react-bootstrap/Modal";
+
 import "./page.css";
 
 import { LinkContainer } from "react-router-bootstrap";
@@ -25,14 +27,14 @@ import {
 import CartDropDown from "../pages/components/CartDropDown";
 import axios from "axios";
 import { fetchCartItemsLogin } from "../redux/actions/cartActions";
-
+import QuoteComponentHeader from "./SendEmail/QuoteComponentHeader";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
   const itemsCount = useSelector((state) => state.cart.itemsCount);
   const cartSubtotal = useSelector((state) => state.cart.cartSubtotal);
-
+console.log("userInfouserInfo",userInfo);
   // const { categories } = useSelector((state) => state.getCategories);
 
   // const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
@@ -56,22 +58,27 @@ const HeaderComponent = () => {
 
   // console.log('header query', location); */
 
-
   /* 获取用户购物车信息 */
   const getCart = async () => {
     const { data } = await axios.get("/api/cart");
     return data;
   };
+  
   const [userCart, setUserCart] = useState([]);
   useEffect(() => {
     getCart()
-      .then(cart => setUserCart(cart.data.cart))
+      .then((cart) => setUserCart(cart.data.cart))
       .catch((er) => console.log(er));
-      reduxDispatch(fetchCartItemsLogin())
-  }, [])
-  console.log("用户购物车",userCart);
+    reduxDispatch(fetchCartItemsLogin());
+  }, []);
+  console.log("用户购物车", userCart);
 
+  const [showModal, setShowModal] = useState(false);
+  const [product, setProduct] = useState(null);
 
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   return (
     <>
@@ -116,57 +123,80 @@ const HeaderComponent = () => {
                 <i className="search-icon bi bi-search "></i>
               </Button>
             </InputGroup>
+            <img
+              src="https://res.cloudinary.com/dxvwresim/image/upload/v1684231122/CTL%20Brand%20Images/red-search.png"
+              alt=""
+              className="red_search_img"
+              style={{ cursor: "pointer" }}
+              onClick={toggleModal}
+            ></img>
+            
           </Nav>
+          <Modal
+            show={showModal}
+            onHide={toggleModal}
+            className="quote_product_modal"
+          >
+            <Modal.Header className="m-0 p-2" closeButton>
+              <Modal.Title
+                style={{ textAlign: "center", width: "100%" }}
+                className="m-0 p-0"
+              >
+                We will find it for you!
+              </Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <QuoteComponentHeader userInfo={userInfo}/>
+            </Modal.Body>
+          </Modal>
 
           {/* ************   User and Carts  ***************  */}
           {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav"> */}
-            {/* 折叠区间 */}
-            <Nav>
-              {userInfo.isAdmin ? (
-                <LinkContainer to="/admin/orders">
-                  <Nav.Link>Admin: {userInfo.name}</Nav.Link>
-                </LinkContainer>
-              ) : userInfo.name && !userInfo.isAdmin ? (
-                <>
-                  <div className="users_initial_dropdown mt-2 pe-4">
-                    <div className="Avtbox">
-                      <a
-                        href="/user/my-orders"
-                        className="Avtbox_users_initial"
-                      >
-                        {`${userInfo.name.charAt(0)}${userInfo.lastName.charAt(
-                          0
-                        )}`}
-                      </a>
-                    </div>
-                    <div className="users_dropdown">
-                      <div className="users_row">
-                        <div className="users_column">
-                          <li>
-                            <a href="/user" className="hd_c">
-                              My Profile
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/user/my-orders" className="hd_c">
-                              Orders
-                            </a>
-                          </li>
-                          <li
-                            className="hd_c"
-                            onClick={() => dispatch(logout())}
-                            style={{ cursor: "pointer" }}
-                          >
-                            Log out
-                          </li>
-                        </div>
+          {/* 折叠区间 */}
+          <Nav className="user_cart">
+            {userInfo.isAdmin ? (
+              <LinkContainer to="/admin/orders">
+                <Nav.Link>Admin: {userInfo.name}</Nav.Link>
+              </LinkContainer>
+            ) : userInfo.name && !userInfo.isAdmin ? (
+              <>
+                <div className="users_initial_dropdown mt-2 pe-4">
+                  <div className="Avtbox">
+                    <a href="/user/my-orders" className="Avtbox_users_initial">
+                      {`${userInfo.name.charAt(0)}${userInfo.lastName.charAt(
+                        0
+                      )}`}
+                    </a>
+                  </div>
+                  <div className="users_dropdown">
+                    <div className="users_row">
+                      <div className="users_column">
+                        <li>
+                          <a href="/user" className="hd_c">
+                            My Profile
+                          </a>
+                        </li>
+                        <li>
+                          <a href="/user/my-orders" className="hd_c">
+                            Orders
+                          </a>
+                        </li>
+                        <li
+                          className="hd_c"
+                          onClick={() => dispatch(logout())}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Log out
+                        </li>
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  {/* ************   mining cart  ***************  */}
-                  {/*                   <LinkContainer className="hd_c mining_cart" to="/cart">
+                {/* ************   mining cart  ***************  */}
+                {/*                   <LinkContainer className="hd_c mining_cart" to="/cart">
                     <Nav.Link>
                       <GiMineWagon
                         className="mt-1"
@@ -180,33 +210,33 @@ const HeaderComponent = () => {
                     </Nav.Link>
                   </LinkContainer> */}
 
-                  {/* *********** for test *********** */}
-                  <div className="cart_dropdown mt-2 pe-4">
-                    <div className="miningCart">
-                      <a className="hd_c mining_cart" href="/user/cart-details">
-                        <GiMineWagon
-                          className="mt-1"
-                          style={{ fontSize: "2rem" }}
-                        />
-                        <Badge pill bg="danger" style={{ fontSize: "0.6rem" }}>
-                          {itemsCount === 0 ? "" : cartItems?.length}
-                        </Badge>
-                      </a>
-                    </div>
-                    <div className="cart_dropdown_box">
-                      <CartDropDown
-                        addToCart={addToCart}
-                        removeFromCart={removeFromCart}
-                        editQuantity={editQuantity}
-                        cartItems={cartItems}
-                        cartSubtotal={cartSubtotal}
-                        reduxDispatch={reduxDispatch}
+                {/* *********** for test *********** */}
+                <div className="cart_dropdown mt-2 pe-4">
+                  <div className="miningCart">
+                    <a className="hd_c mining_cart" href="/user/cart-details">
+                      <GiMineWagon
+                        className="mt-1"
+                        style={{ fontSize: "2rem" }}
                       />
-                    </div>
+                      <Badge pill bg="danger" style={{ fontSize: "0.6rem" }}>
+                        {itemsCount === 0 ? "" : cartItems?.length}
+                      </Badge>
+                    </a>
                   </div>
+                  <div className="cart_dropdown_box">
+                    <CartDropDown
+                      addToCart={addToCart}
+                      removeFromCart={removeFromCart}
+                      editQuantity={editQuantity}
+                      cartItems={cartItems}
+                      cartSubtotal={cartSubtotal}
+                      reduxDispatch={reduxDispatch}
+                    />
+                  </div>
+                </div>
 
-                  {/* ************   mining cart  ***************  */}
-                  {/*                   <LinkContainer className="hd_c" to="/cart">
+                {/* ************   mining cart  ***************  */}
+                {/*                   <LinkContainer className="hd_c" to="/cart">
                     <Nav.Link className="mining_cart">
                       <i
                         className="bi bi-minecart-loaded hd_c"
@@ -217,15 +247,15 @@ const HeaderComponent = () => {
                       </Badge>
                     </Nav.Link>
                   </LinkContainer> */}
-                </>
-              ) : (
-                <>
-                  <LinkContainer to="/login">
-                    <Nav.Link>Login</Nav.Link>
-                  </LinkContainer>
-                </>
-              )}
-            </Nav>
+              </>
+            ) : (
+              <>
+                <LinkContainer to="/login">
+                  <Nav.Link>Login</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
+          </Nav>
           {/* </Navbar.Collapse> */}
         </Container>
       </Navbar>

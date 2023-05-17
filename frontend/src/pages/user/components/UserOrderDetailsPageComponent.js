@@ -425,8 +425,6 @@ const UserOrderDetailsPageComponent = ({
             </ListGroup.Item>
             <ListGroup.Item>
               <b>Address</b>: {userAddress.deliveryAddress}
-              {/*  {userAddress.state}{" "}
-              {userAddress.postCode} */}
             </ListGroup.Item>
             <ListGroup.Item>
               <Alert

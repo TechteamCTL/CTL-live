@@ -36,7 +36,7 @@ const CartItemDropDown = ({
           </Col>
           <Col md={3}>
             <p className="m-0 cart_product_attr">Item: <span className="cart_product_detail">{item.cartProducts[0].attrs}</span></p>
-            <p className="m-0 cart_product_attr">Each: $<span className="cart_product_detail">{item.cartProducts[0].price}</span></p>
+            <p className="m-0 cart_product_attr">Each: $<span className="cart_product_detail">{(item.cartProducts[0].price).toFixed(2)}</span></p>
             {/*  */}
           </Col>
           <Col md={2}>

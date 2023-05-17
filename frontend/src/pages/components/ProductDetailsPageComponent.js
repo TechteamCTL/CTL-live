@@ -82,7 +82,9 @@ const ProductDetailsPageComponent = ({
 
   // console.log("selectedStock", selectedStock);
 
-  // console.log(product);
+  // console.log(product.description);
+  // const description[]=product.description.split('.');
+
 
   const addToCartHandler = () => {
     reduxDispatch(addToCartReduxAction(id, qty, selectedStock));
@@ -121,7 +123,7 @@ const ProductDetailsPageComponent = ({
 
   // 如果直接用toLocaleString() 报错的话，可能是value undefined了，那就format一下price， 然后再加上 toLocaleString
   const price = stockPrice;
-  const formattedPrice = price ? price.toLocaleString() : "";
+  const formattedPrice = price ? price.toFixed(2).toLocaleString() : "";
 
   // const products = useSelector((state) => state.cart.value);
 
@@ -141,9 +143,9 @@ const ProductDetailsPageComponent = ({
   if (product && product.images) {
     product.images.forEach((image) => {
       images.push({
-        original: image.path.replace(/^http:/, "https:"),
-        thumbnail: image.path.replace(/^http:/, "https:"),
-        url: image.path.replace(/^http:/, "https:"),
+        original: image.path?.replace(/^http:/, "https:"),
+        thumbnail: image.path?.replace(/^http:/, "https:"),
+        url: image.path?.replace(/^http:/, "https:"),
         title: image.title,
         caption: image.name,
       });
@@ -193,10 +195,10 @@ const ProductDetailsPageComponent = ({
           />
           <Row className="mt-4 ">
             {/* ************   Filter, has removed, now just take 1 space  ***************  */}
-            <Col lg={1}>{/* <FilterComponent /> */}</Col>
+
 
             {/* ************   Product Pictures Display Carousel  ***************  */}
-            <Col lg={3} className="m-2">
+            <Col lg={4} className="m-1">
               {/* <Carousel>
             {product.images &&
               product.images.map((image, idx) => (
@@ -213,7 +215,7 @@ const ProductDetailsPageComponent = ({
             </Col>
 
             {/* ************   Product Details  ***************  */}
-            <Col lg={5}>
+            <Col lg={6}>
               <Row>
                 <ListGroup variant="flush">
                   <ListGroup.Item>
@@ -364,14 +366,26 @@ const ProductDetailsPageComponent = ({
                       className="mb-3"
                     >
                       <Tab
-                        className="m-3"
+                        className="m-3 col-md-12"
                         eventKey="Description"
                         title="Specifications"
                       >
-                        <div
-                          style={{ whiteSpace: "pre-wrap", textAlign: "left" }}
-                        >
-                          {product.description}
+                        <div style={{ whiteSpace: "pre-wrap", textAlign: "left", width: "97%" }}>
+                          {/* {product.description} */}
+                          {(product.description) ? (
+
+                            product.description.split("*").map((item, index) => {
+                              return <div key={index}>
+                                {item.length > 200 ?
+                                  (<span>{item}</span>) :
+                                  (item.length > 90 ?
+                                    (<span>*{item.slice(0, 90)}-<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{item.slice(90)}</span>) :
+                                    (item.length > 2) ?
+                                      (<span>*{item}</span>) : (""))}
+                              </div>;
+                            }))
+                            : ("")}
+
                         </div>
                       </Tab>
                       {/* 看一下，如果pdfs 路径里面 没有值，就显示null，有的话，就map 一下 */}

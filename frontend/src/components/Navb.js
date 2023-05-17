@@ -6,57 +6,67 @@ import { useLocation } from "react-router-dom";
 import "./page.css";
 
 //categories。
-import { useDispatch } from "react-redux";
+// 这就是懒省事，直接在 navb里面 fetch 一下category，admin products会用到，但是如果user login了就会报错，因为没有权限
+/* import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { getCategories } from "../redux/actions/categoryActions";
+import { getCategories } from "../redux/actions/categoryActions"; */
 
 const Navb = () => {
   // DO NOT REMOVE OR COMMENT THE CATEGORIES PART, IT WILL USED IN OTHER FILES
   //categories
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
+  /*   const dispatch = useDispatch();
+  
+    useEffect(() => {
+      dispatch(getCategories());
+    }, [dispatch]); */
 
   /* ************** Brands ************* */
   var BRANDS = [
     {
       label: "Paramount Safety",
       type: 1,
-      link: "/product-list?searchQuery=PARAMOUNT-SAFETY",
-      Brand_Logo: "/images/Brands/PARAMOUNT-logo.jpg",
-    },
-    {
-      label: "WIHA TOOLS",
-      type: 1,
-      link: "/product-list?searchQuery=WIHA",
-      Brand_Logo: "/images/Brands/WIHA-logo.jpg",
-    },
-    {
-      label: "SWARTS TOOLS",
-      type: 1,
-      link: "/product-list?searchQuery=SWARTS-TOOLS",
-      Brand_Logo: "/images/Brands/SWARTS-logo.jpg",
-    },
-    // {
-    //   label: "MILWAUKEE",
-    //   type: 1,
-    //   link: "/product-list?searchQuery=MILWAUKEE",
-    //   Brand_Logo: "/images/Brands/MILWAUKEE-logo.jpg",
-    // },
-    {
-      label: "STARRETT",
-      type: 1,
-      link: "/product-list?searchQuery=STARRETT",
-      Brand_Logo: "/images/Brands/STARRETT-logo.jpg",
+      link: "/product-list?brandName=PARAMOUNT-SAFETY",
+      Brand_Logo: "/images/Brands/PARAMOUNT.jpg",
     },
     {
       label: "IP-ENCLOSURES",
       type: 1,
-      link: "/product-list?searchQuery=ip-enclosures",
-      Brand_Logo: "/images/Brands/ip-enclosures.png",
+      link: "/product-list?brandName=IP-ENCLOSURES",
+      Brand_Logo: "/images/Brands/IP-ENCLOSURES.png",
     },
+    {
+      label: "SWARTS TOOLS",
+      type: 1,
+      link: "/product-list?brandName=SWARTS-TOOLS",
+      Brand_Logo: "/images/Brands/SWARTS-logo.jpg",
+    },
+    {
+      label: "HOBSON",
+      type: 1,
+      link: "/product-list?brandName=HOBSON",
+      Brand_Logo: "/images/Brands/Hobson.png",
+    },
+    {
+      label: "MASTER LOCK",
+      type: 1,
+      link: "/product-list?brandName=MASTER-LOCK",
+      Brand_Logo: "/images/Brands/master-lock-vector.png",
+    },
+    {
+      label: "MINETECH TOOLS",
+      type: 1,
+      link: "/product-list?brandName=MINETECH-TOOLS",
+      Brand_Logo: "/images/Brands/MINTECH.jpg",
+    },
+    {
+      label: "INTEGRATED POWER",
+      type: 1,
+      link: "/product-list?brandName=INTEGRATED-POWER",
+      Brand_Logo: "/images/Brands/integrated-power.jpg",
+    },
+
+
+
   ];
 
   /* ************** Categories ************* */
@@ -332,9 +342,9 @@ const Navb = () => {
         "&childCategoryName=FIXED-PEDESTAL-MOUNTED-EYE-WASH-UNITS",
     },
     {
-      label: "ABORATORY UNITS",
+      label: "LABORATORY UNITS",
       type: 3,
-      link: SS_SHORES_EYEWASH + "&childCategoryName=ABORATORY-UNITS",
+      link: SS_SHORES_EYEWASH + "&childCategoryName=LABORATORY-UNITS",
     },
     {
       label: "PORTABLE EYE WASH UNITS",

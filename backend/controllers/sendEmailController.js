@@ -21,6 +21,7 @@ const transporter = nodemailer.createTransport({
   },
 }); */
 
+
 const quoteProduct = async (req, res, next) => {
   try {
     const { from, productName, description } = req.body;
@@ -89,13 +90,13 @@ const managementApproval = async (req, res, next) => {
     message = {
       from,
       to: `${managerEmail}`,
-      subject: `Please Approve a Purchase of $${totalPrice}`,
+      subject: `My shopping cart of $${totalPrice}`,
       text: `
     This is: ${from},
 
-    Could you please approve a purchase of: $${totalPrice},
+    The following is my current purchase of: $${totalPrice},
 
-    This is the purchase detail:     
+    Purchase detail:     
     ${description}`,
 
     };

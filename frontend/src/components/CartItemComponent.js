@@ -37,7 +37,7 @@ const CartItemComponent = ({
           </Col>
           <Col md={3}>
             <p className="m-0">Item: <span className="fw-bold">{item.cartProducts[0].attrs}</span></p>
-            <p className="m-0">Unit Price: $<span className="fw-bold">{item.cartProducts[0].price}</span></p>
+            <p className="m-0">Unit Price: $<span className="fw-bold">{(item.cartProducts[0].price).toFixed(2)}</span></p>
             {/*  */}
           </Col>
           <Col md={2}>

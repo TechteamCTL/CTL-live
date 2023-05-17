@@ -9,6 +9,7 @@ router.get("/category/:categoryName", getProducts) // 第100章
 /* router.get("/category/:categoryName/:subCategory", getProducts) // 第100章 新加的，不确定行不行，好像上面的categoryName可以带上subcategory
 router.get("/category/:categoryName/:subCategory/:childCategoryName", getProducts)  */
 router.get("/search/:searchQuery", getProducts)
+router.get("/brand/:brandName", getProducts)
 router.get("/", getProducts)
 router.get("/get-one/:id", getProductById)
 

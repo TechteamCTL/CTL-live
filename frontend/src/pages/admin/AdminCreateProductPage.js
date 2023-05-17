@@ -13,8 +13,12 @@ import {
   newCategory,
   deleteCategory,
   saveAttributeToCatDoc,
+  getCategories
 } from "../../redux/actions/categoryActions";
 import { useDispatch } from "react-redux";
+//categories。
+import { useEffect } from "react";
+
 
 const createProductApiRequest = async (formInputs) => {
   const { data } = await axios.post(`/api/products/admin`, { ...formInputs });
@@ -22,8 +26,14 @@ const createProductApiRequest = async (formInputs) => {
 };
 
 const AdminCreateProductPage = () => {
+      //categories
+      const dispatch = useDispatch();
+
+      useEffect(() => {
+        dispatch(getCategories());
+      }, [dispatch]);
+      
   const { categories } = useSelector((state) => state.getCategories);
-  const dispatch = useDispatch();
 
   return (
     <CreateProductPageComponent

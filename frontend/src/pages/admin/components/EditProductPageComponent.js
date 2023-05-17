@@ -682,7 +682,6 @@ const AdminEditProductPage = ({
                       <Form.Label>SLR SKU</Form.Label>
                       <Form.Control
                         name={`newSlrsku-${index}`}
-                        required
                         type="text"
                       />
                     </Form.Group>

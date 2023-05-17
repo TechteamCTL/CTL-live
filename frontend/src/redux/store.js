@@ -6,11 +6,10 @@ import { cartReducer } from "./reducers/cartReducers";
 import { userRegisterLoginReducer } from "./reducers/userReducers";
 import { getCategoriesReducer } from "./reducers/categoryReducers";
 
-
 const reducer = combineReducers({
   cart: cartReducer,
   userRegisterLogin: userRegisterLoginReducer,
-  getCategories: getCategoriesReducer, 
+  getCategories: getCategoriesReducer,
 });
 
 const cartItemsInLocalStorage = localStorage.getItem("cart")
@@ -24,39 +23,32 @@ const userInfoInLocalStorage = localStorage.getItem("userInfo")
   ? JSON.parse(sessionStorage.getItem("userInfo"))
   : {};
 
-  const INITIAL_STATE = {
-    cart: {
-      cartItems: cartItemsInLocalStorage,
-      itemsCount: cartItemsInLocalStorage
-      ? cartItemsInLocalStorage.reduce(
-          (totalQuantity, cartItem) => {
-            const productQuantity = cartItem.cartProducts.reduce(
-              (quantity, product) => quantity + Number(product.quantity),
-              0
-            );
-            return totalQuantity + productQuantity;
-          },
-          0
-        )
-      : 0,
-    
-      cartSubtotal: cartItemsInLocalStorage
-        ? cartItemsInLocalStorage.reduce(
-            (totalPrice, cartItem) => {
-              const productPrice = cartItem.cartProducts.reduce(
-                (price, product) => price + product.price * product.quantity,
-                0
-              );
-              return totalPrice + productPrice;
-            },
+const INITIAL_STATE = {
+  cart: {
+    cartItems: cartItemsInLocalStorage,
+    itemsCount: cartItemsInLocalStorage
+      ? cartItemsInLocalStorage.reduce((totalQuantity, cartItem) => {
+          const productQuantity = cartItem.cartProducts.reduce(
+            (quantity, product) => quantity + Number(product.quantity),
             0
-          )
-        : 0,
-    },
-    userRegisterLogin: { userInfo: userInfoInLocalStorage },
-  };
-  
-  
+          );
+          return totalQuantity + productQuantity;
+        }, 0)
+      : 0,
+
+    cartSubtotal: cartItemsInLocalStorage
+      ? cartItemsInLocalStorage.reduce((totalPrice, cartItem) => {
+          const productPrice = cartItem.cartProducts.reduce(
+            (price, product) => price + product.price * product.quantity,
+            0
+          );
+          return totalPrice + productPrice;
+        }, 0)
+      : 0,
+  },
+  userRegisterLogin: { userInfo: userInfoInLocalStorage },
+};
+
 // console.log('cartItemsInLocalStorage',cartItemsInLocalStorage);
 // console.log('INITIAL_STATE',INITIAL_STATE);
 

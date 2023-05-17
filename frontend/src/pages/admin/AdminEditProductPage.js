@@ -3,13 +3,18 @@ import EditProductPageComponent from "./components/EditProductPageComponent";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { saveAttributeToCatDoc } from "../../redux/actions/categoryActions";
+import { saveAttributeToCatDoc, getCategories } from "../../redux/actions/categoryActions";
 import {
   uploadImagesApiRequest,
   uploadImagesCloudinaryApiRequest,
   uploadPdfApiRequest,
   uploadPdfCloudinaryApiRequest,
 } from "./utils/utils";
+
+//categories。
+import { useEffect } from "react";
+
+
 
 const fetchProduct = async (productId) => {
   const { data } = await axios.get(`/api/products/get-one/${productId}`);
@@ -24,6 +29,13 @@ const updateProductApiRequest = async (productId, formInputs) => {
 };
 
 const AdminEditProductPage = () => {
+    //categories
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(getCategories());
+    }, [dispatch]);
+
   const { categories } = useSelector((state) => state.getCategories);
 
   const reduxDispatch = useDispatch();

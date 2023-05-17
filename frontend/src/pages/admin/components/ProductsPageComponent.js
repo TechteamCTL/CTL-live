@@ -18,7 +18,7 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
   const [sorting, setSorting] = useState({ field: "", order: "" });
 
   // items per page
-  const ITEMS_PER_PAGE_OPTIONS = [10, 20, 40, 60, 100]; // options for dropdown
+  const ITEMS_PER_PAGE_OPTIONS = [40, 60, 100, 200]; // options for dropdown
   const [itemsPerPage, setItemsPerPage] = useState(ITEMS_PER_PAGE_OPTIONS[2]); // set default items per page to 20
 
   const ITEMS_PER_PAGE = itemsPerPage;
@@ -42,7 +42,7 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
 
   const productsData = useMemo(() => {
     let computedProducts = products;
-    console.log("computedProducts", products);
+    // console.log("computedProducts", products);
 
     if (search) {
       computedProducts = computedProducts.filter(
@@ -127,7 +127,7 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
           </LinkContainer>
         </h1>
         <div className="row">
-          <div className="col-md-6 d-flex align-items-center">
+          <div className="col-md-6">
             <Pagination
               total={totalItems}
               itemsPerPage={ITEMS_PER_PAGE}
@@ -135,7 +135,7 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
               onPageChange={(page) => setCurrentPage(page)}
             />
             <select
-              className="ms-2"
+              className="ms-2 mt-1"
               value={itemsPerPage}
               onChange={handleItemsPerPageChange}
             >

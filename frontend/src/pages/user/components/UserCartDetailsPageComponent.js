@@ -91,12 +91,7 @@ const UserCartDetailsPageComponent = ({
           email: data.email,
           name: data.name,
         });
-        if (
-          !data.location ||
-          !data.postCode ||
-          !data.state ||
-          !data.phone
-        ) {
+        if (!data.location || !data.postCode || !data.state || !data.phone) {
           setMissingAddress(
             " In order to make order, fill out your profile with correct site and personal information."
           );
@@ -196,7 +191,9 @@ const UserCartDetailsPageComponent = ({
     }, 1000);
   };
 
-  console.log("USERcartItems", cartItems);
+  // const userEmail = userInfo.email?.split("@")[1]
+
+  // console.log("USERcartItems", userEmail);
 
   return (
     <>
@@ -205,14 +202,14 @@ const UserCartDetailsPageComponent = ({
           <h1>CART DETAILS</h1>
 
           <Col md={9}>
-            {/*             <Row style={{ display: "none" }}>
+            {/* <Row style={{ display: "none" }}>
               <Col md={5}>
                 <h3>SHIPPING</h3>
                 <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
                 <b>Site Location</b>: {userAddress.location} <br />
                 <b>Phone</b>: {userAddress.phone} <br />
-                <b>Address</b>: {userAddress.deliveryAddress} {userAddress.state}{" "}
-                {userAddress.postCode}
+                <b>Address</b>: {userAddress.deliveryAddress}{" "}
+                {userAddress.state} {userAddress.postCode}
               </Col>
               <Col md={5}>
                 <h3>PAYMENT METHOD</h3>
@@ -249,15 +246,15 @@ const UserCartDetailsPageComponent = ({
           </Col>
           <Col md={3}>
             <ListGroup hidden={cartItems.length === 0}>
-              <ListGroup.Item>
-                <h5 className="m-0">Need Management Approval?</h5>
-              </ListGroup.Item>
+              {/* <ListGroup.Item>
+                <h5 className="m-0">Email cart?</h5>
+              </ListGroup.Item> */}
               <ListGroup.Item controlId="validationMangerEmail">
                 <Form.Control
                   onChange={enterManagerEmail}
                   type="string"
                   name="MangerEmail"
-                  placeholder="Your Manager's Email"
+                  placeholder="Enter Email"
                   required
                 />
                 <Form.Control.Feedback type="invalid">
@@ -352,7 +349,7 @@ const UserCartDetailsPageComponent = ({
             </ListGroup>
             <br />
             {/* ******* shipping information ******* */}
-            <ListGroup>
+            {/*             <ListGroup>
               <ListGroup.Item>
                 <h5 className="m-0">Shipping Information</h5>
               </ListGroup.Item>
@@ -366,10 +363,9 @@ const UserCartDetailsPageComponent = ({
                 <b>Phone</b>: {userAddress.phone}
               </ListGroup.Item>
               <ListGroup.Item>
-                <b>Address</b>: {userAddress.deliveryAddress}{/*  {userAddress.state}{" "}
-                {userAddress.postCode} */}
+                <b>Address</b>: {userAddress.deliveryAddress}
               </ListGroup.Item>
-            </ListGroup>
+            </ListGroup> */}
           </Col>
         </Row>
       </Container>

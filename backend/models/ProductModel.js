@@ -128,9 +128,9 @@ productSchema.index(
   {
     name: "text",
     description: "text",
+    supplier: "text",
     "stock.slrsku": "text",
     "stock.ctlsku": "text",
-    supplier: "text",
   },
   {
     name: "TextIndex",
@@ -138,9 +138,9 @@ productSchema.index(
     weights: {
       name: 5,
       description: 2,
+      supplier: 1,
       "stock.slrsku": 1,
       "stock.ctlsku": 1,
-      supplier: 1,
     },
   }
 );

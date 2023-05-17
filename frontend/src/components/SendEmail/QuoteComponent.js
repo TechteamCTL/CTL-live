@@ -41,15 +41,12 @@ const QuoteComponent = (userNameEmail) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // image & drag box
   const handleImageChange = (e) => {
     const file = e.target.files[0];
   
-    // Check if file object is defined
     if (file) {
       setFormData({ ...formData, image: file });
   
-      // Display image if uploaded file is an image
       if (file.type && file.type.startsWith("image/")) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -70,7 +67,6 @@ const QuoteComponent = (userNameEmail) => {
     const file = e.dataTransfer.files[0];
     setFormData({ ...formData, image: file });
 
-    // Display image if dropped file is an image
     if (file.type && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -80,13 +76,7 @@ const QuoteComponent = (userNameEmail) => {
           imgPreview.src = reader.result;
         }
       };
-    } /* else {
-      // Display file name if uploaded file is not an image
-      const fileName = document.getElementById("file-name");
-      if (fileName) {
-        fileName.innerHTML = file.name;
-      }
-    } */
+    } 
   };
 
   const handleClick = () => {
@@ -99,8 +89,6 @@ const QuoteComponent = (userNameEmail) => {
     e.preventDefault();
     e.stopPropagation();
   };
-  // image & drag box END
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -141,13 +129,12 @@ const QuoteComponent = (userNameEmail) => {
   return (
     <>
       <div className="container border w-50 ms-5 p-3 mt-2">
-        <h3 className="text-center">Looking for somthing else?</h3>
+        <h3 className="text-center">Looking for something else?</h3>
         <h3 className="text-center">
-          Please fill in the form, We will find it for you!
+          We will find it for you!
         </h3>
         <br />
         <form onSubmit={handleSubmit} autoComplete="off">
-          {/* TODO: have user's name here as from */}
           <div className="form-group" style={{ display: "none" }}>
             <input
               className="form-control mb-3"
@@ -205,17 +192,6 @@ const QuoteComponent = (userNameEmail) => {
                     <p>Drag and drop your image here, or click to select image</p>
                   </>
                 )}
-                
-{/*                 (
-                  <>
-                    <p id="file-name">No file chosen</p>
-                  </>
-                )}
-                {formData.image && formData.image ? (
-                  ""
-                ) : (
-                  <p>Drag and drop your file here, or click to select file</p>
-                )} */}
 
                 <input
                   type="file"

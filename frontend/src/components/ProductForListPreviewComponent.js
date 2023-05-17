@@ -90,9 +90,9 @@ const ProductForListPreviewComponent = ({
   if (product && product.images) {
     product.images.forEach((image) => {
       images.push({
-        original: image.path.replace(/^http:/, "https:"),
-        thumbnail: image.path.replace(/^http:/, "https:"),
-        url: image.path.replace(/^http:/, "https:"),
+        original: image.path?.replace(/^http:/, "https:"),
+        thumbnail: image.path?.replace(/^http:/, "https:"),
+        url: image.path?.replace(/^http:/, "https:"),
         title: image.title,
         caption: image.name,
       });

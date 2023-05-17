@@ -8,6 +8,7 @@ const PaginationComponent = ({
   subCategoryName,
   childCategoryName,
   fourCategoryName,
+  brandName,
   searchQuery,
   paginationLinksNumber,
   pageNum,
@@ -15,13 +16,12 @@ const PaginationComponent = ({
   // 如果category name 是the such part of the path，otherwise empty string
   // const category = categoryName ? `category/${categoryName}/` : "";
   // const search = searchQuery ? `search/${searchQuery}/` : "";
-  const url = `/product-list?categoryName=${categoryName || ''}&subCategoryName=${subCategoryName || ''}&childCategoryName=${childCategoryName}&fourCategoryName=${fourCategoryName}&searchQuery=${searchQuery}&`;
+  const url = `/product-list?categoryName=${categoryName || ''}&subCategoryName=${subCategoryName || ''}&childCategoryName=${childCategoryName}&fourCategoryName=${fourCategoryName}&searchQuery=${searchQuery}&brandName=${brandName}&`;
   // return console.log(pageNum);
   // 如果上个return就不会走下面的了。而且这里是 pagination 这个的 to 不能解析？ query url
   return (
     <>
-      <Pagination className="ms-4 mb-4">
-
+      <Pagination className="ms-4 mb-1 pagination_productlist">
         <LinkContainer to={`${url}pageNum=${pageNum - 1}`}>
           <Pagination.Prev disabled={pageNum === 1} />
         </LinkContainer>

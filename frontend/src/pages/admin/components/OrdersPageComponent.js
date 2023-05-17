@@ -18,7 +18,7 @@ const OrdersPageComponent = ({ getOrders }) => {
   const [search, setSearch] = useState("");
   const [sorting, setSorting] = useState({ field: "", order: "" });
 
-  const ITEMS_PER_PAGE = 20;
+  const ITEMS_PER_PAGE = 40;
 
   const headers = [
     { name: "No#", field: "index", sortable: false },

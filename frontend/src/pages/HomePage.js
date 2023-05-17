@@ -42,7 +42,7 @@ getFingerprint()
       <ProductCarouselComponent />
 
       {/* ************   daily deal top3  ***************  */}
-      <ProductsPromotionComponent />
+      {/* <ProductsPromotionComponent /> */}
 
       {/* ************   Bottom Haxegon Categories  ***************  */}
       <div className="bg-light w-100">

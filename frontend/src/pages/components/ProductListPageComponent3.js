@@ -23,6 +23,7 @@ const ProductListPage = ({
   subCat = "",
   childCat = "",
   fourCat = "",
+  brandName = ""
 }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -107,7 +108,8 @@ const ProductListPage = ({
       sortOption,
       subCat,
       childCat,
-      fourCat
+      fourCat,
+      brandName
     )
       .then((products) => {
         setProducts(products.products);
@@ -156,17 +158,24 @@ const ProductListPage = ({
       <Row>
         <Col xxl={2} xl={3} lg={3} md={3}>
           <ListGroup variant="flush">
-            {/* 
-            <ListGroup.Item className="mb-3 mt-3">
-              <SortOptionsComponent setSortOption={setSortOption} />
-            </ListGroup.Item>
-            */}
             <ListGroup.Item>
               <FilterComponent />
             </ListGroup.Item>
           </ListGroup>
         </Col>
         <Col xxl={10} xl={9} lg={9} md={9}>
+        {paginationLinksNumber > 1 ? (
+            <PaginationComponent
+              categoryName={categoryName}
+              searchQuery={searchQuery}
+              subCategoryName={subCat}
+              childCategoryName={childCat}
+              fourCategoryName={fourCat}
+              brandName={brandName}
+              paginationLinksNumber={paginationLinksNumber}
+              pageNum={pageNum}
+            />
+          ) : null}
           <Row className="m-2" xs={1} md={2} lg={3} xl={4} xxl={6}>
             {loading ? (
               <img src="./loading-gif.gif"></img>
@@ -195,6 +204,7 @@ const ProductListPage = ({
               subCategoryName={subCat}
               childCategoryName={childCat}
               fourCategoryName={fourCat}
+              brandName={brandName}
               paginationLinksNumber={paginationLinksNumber}
               pageNum={pageNum}
             />

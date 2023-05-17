@@ -32,22 +32,23 @@ const proceedFilters = (filters) => {
     return filtersUrl;
 } */
 
-const getProducts = async (categoryName = "", pageNumParam = null, searchQuery = '', filters = {}, sortOption = "", subCategoryName = '', childCategoryName = '', fourCategoryName='') => {
+const getProducts = async (categoryName = "", pageNumParam = null, searchQuery = '', filters = {}, sortOption = "", subCategoryName = '', childCategoryName = '', fourCategoryName='', brandName= '') => {
     //   filtersUrl = "&price=60&rating=1,2,3&category=a,b,c,d&attrs=color-red-blue,size-1TB-2TB";
     // filtersUrl = proceedFilters(filters);
     let filtersUrl = "";
     // 下面的就是用来在搞一个新的url，来显示不同的category啥的
     const search = searchQuery ? `search/${searchQuery}/` : "";
     const category = categoryName ? `category/${categoryName}/` : "";
+    const brand = brandName ? `brand/${brandName}/` : "";
 
 
     // 好像 传到 backend的 query是这里的？
     // 查了一下，pageNumParam没有拿到数据
-    const url = `/api/products/${category}${search}?pageNum=${pageNumParam}${filtersUrl}&sort=${sortOption}&subCategoryName=${subCategoryName}&childCategoryName=${childCategoryName}&fourCategoryName=${fourCategoryName}`;
+    const url = `/api/products/${category}${search}${brand}?pageNum=${pageNumParam}${filtersUrl}&sort=${sortOption}&subCategoryName=${subCategoryName}&childCategoryName=${childCategoryName}&fourCategoryName=${fourCategoryName}&brandName=${brandName}`;
     var { data } = await axios.get(url);
 
     console.log('我是data,ProductListPage', data);
-    console.log('search', searchQuery);
+    console.log('search', categoryName);
 
     return data
 }
@@ -61,11 +62,14 @@ const ProductListPage = () => {
     var childCategoryName = params.get('childCategoryName')|| ""
     var fourCategoryName = params.get('fourCategoryName')|| ""
 
+    var brandName = params.get('brandName')|| ""
 
+
+    
 
     // 这里是useParams 找 route 就是url
     // var { childCategoryName, subCategoryName, categoryName } = useParams();
-    console.log("我是Params,ProductListPage",useParams())
+    console.log("我是Params,ProductListPage",brandName)
     // 这个就是从redux里面搞出来的所有categories？ 不懂啊
     const { categories } = useSelector((state) => state.getCategories);
     // 有subCategoryName请求的是2级的
@@ -82,7 +86,7 @@ const ProductListPage = () => {
     // query的法子就是：/product-list?categoryName=PPE&subCategoryName=PROTECTIVE-HEADWEAR&childCategoryName=HARD HATS  这里面的就是?key=value&key=value&key=value,这样重复。然后去nav里面map，写array map()不要写死，太麻烦
     // 忘记这里如果再加 key 和 value 的话，需不需要再去后端搞一搞了？ 我等下去看看
     // 看过了，必须要去后端搞一搞，不然的话，fourCateogryName传不进去，然后就会显示所有childCat里的东西
-    return <ProductListPageComponent3 getUser={getUser} getProducts={getProducts} categories={categories} subCat={subCategoryName} childCat={childCategoryName} fourCat={fourCategoryName} />;
+    return <ProductListPageComponent3 getUser={getUser} getProducts={getProducts} categories={categories} subCat={subCategoryName} childCat={childCategoryName} fourCat={fourCategoryName} brandName={brandName} />;
 
  
 };

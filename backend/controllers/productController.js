@@ -85,17 +85,17 @@ const getProducts = async (req, res, next) => {
       categoryQueryCondition = { category: regEx };
     }
 
-    // 在filter里选择category然后search
-    if (req.query.category) {
+    let brandQueryCondition = {};
+    const brandName = req.params.brandName || "";
+
+    if (brandName) {
       queryCondition = true;
-      // let 一个 array， 这个a和上面的a 是一个，可以相互over write，因为我们不会让filter search和 drop down search共存的
-      let a = req.query.category.split(",").map((item) => {
-        if (item) return new RegExp("^" + item);
-      });
-      categoryQueryCondition = {
-        category: { $in: a },
-      };
+      // 用, 去replace所有的-
+      let a = brandName.replace(/,/g, "-");
+      var regEx = new RegExp("^" + a);
+      brandQueryCondition = { supplier: regEx };
     }
+
 
     let attrsQueryCondition = [];
     if (req.query.attrs) {
@@ -136,207 +136,91 @@ const getProducts = async (req, res, next) => {
     }
 
     /* ******* search function ******* */
-    // 第一版 searchQuery
-    /* const searchQuery = req.params.searchQuery || "";
-    let searchQueryCondition = {};
-    let select = {};
-    console.log("我是searchQuery", searchQuery);
-    if (searchQuery) {
-      queryCondition = true;
 
-      // 新方法：在productModel里面靠下面的几行，把name和description 设了text，所以此处用$text会faster
-      // searchQueryCondition = { $text: { $search: searchQuery } };
-      // searchQueryCondition = { $text: { $search: searchQuery, $caseSensitive: false, $diacriticSensitive: true,},};
-      
-      // score代表与 检索关键字 的匹配值，并设置按照score的高低排列
-      // (注掉的，都是原代码，现在没有注掉了)现在因为要查找到slrsku，所以写了如下的or并列，比较老的写法，但是无敌管用
-      // searchQueryCondition = { $or: [{ name: searchQuery }, { description: searchQuery }, { slrsku: searchQuery }, {supplier: searchQuery}] }
-      // select = { score: { $meta: "textScore" },};
-      // sort = { score: { $meta: "textScore" } };
-
-      // 旧方法，但好用
-      // bolt machine  --- machine bolt solve
-      searchQueryCondition = {
-        $or: [
-          { name: { $regex: searchQuery, $options: "i" } },
-          { description: { $regex: searchQuery, $options: "i" } },
-          { "stock.slrsku": { $regex: searchQuery, $options: "i" } },
-          { "stock.ctlsku": { $regex: searchQuery, $options: "i" } },
-          { supplier: { $regex: searchQuery, $options: "i" } },
-          { name: { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
-          { description: { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
-          { "stock.slrsku": { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
-          { "stock.ctlsku": { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
-          { supplier: { $regex: searchQuery.split(" ").reverse().join(" "), $options: "i" } },
-        ],
-      };
-
-      searchQueryCondition = {
-        $or: [
-          { name: { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
-          { description: { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
-          { 'stock.slrsku': { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
-          { 'stock.ctlsku': { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
-          { supplier: { $regex: `\\b${searchQuery.split(' ').join('\\b|\\b')}\\b`, $options: 'i' } },
-          { name: { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } },
-          { description: { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } },
-          { 'stock.slrsku': { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } },
-          { 'stock.ctlsku': { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } },
-          { supplier: { $regex: `\\b${searchQuery.split(' ').reverse().join('\\b|\\b')}\\b`, $options: 'i' } }
-        ]
-      };      
-    } */
-
-    // 第二版 searchQuery
-    // 在ProductModel.js里面重设了 index
-    // 实现了 关键词 检索，但是必须按顺序
-    /* const searchQuery = req.params.searchQuery ? `"${req.params.searchQuery}"` : "";
-
-    let searchQueryCondition = {};
-    let select = {};
-    console.log("我是searchQuery", searchQuery);
-    if (searchQuery) {
-      queryCondition = true;
-      searchQueryCondition = {
-        $text: {
-          $search: searchQuery,
-          $caseSensitive: false,
-          $diacriticSensitive: false,
-        },
-      };           
-    } */
-
-    // 第二版 升级
-    // 实现了 关键词检索，不需要顺序
-    /* const searchQuery = req.params.searchQuery ? req.params.searchQuery : "";
-
-    let searchQueryCondition = {};
-    let select = {};
-    console.log("我是searchQuery", searchQuery);
-    if (searchQuery) {
-      queryCondition = true;
-      searchQueryCondition = {
-        $text: {
-          $search: searchQuery,
-          $caseSensitive: false,
-          $diacriticSensitive: false,
-        },
-      };
-      if (searchQuery.indexOf(" ") !== -1) {
-        const searchWords = searchQuery.split(" ");
-        searchWords.forEach((word) => {
-          searchQueryCondition.$text.$search += ` "${word}"`;
-        });
-      }
-    } */
-
-    // 第三版 searchQuery
-    // 关键词 检索，不需要顺序
-    /*  const searchQuery = req.params.searchQuery || "";
-    let searchQueryCondition = {};
-    let select = {};
-    console.log("我是searchQuery", searchQuery);
-    if (searchQuery) {
-      queryCondition = true;
-      const searchQueryWords = searchQuery.split(" ");
-      searchQueryCondition = {
-        $and: searchQueryWords.map((word) => {
-          return {
-            $or: [
-              { name: { $regex: word, $options: "i" } },
-              { description: { $regex: word, $options: "i" } },
-              { "stock.slrsku": { $regex: word, $options: "i" } },
-              { "stock.ctlsku": { $regex: word, $options: "i" } },
-              { supplier: { $regex: word, $options: "i" } },
-            ],
-          };
-        }),
-      };
-    }; */
-
-    // 第四版 searchQuery
-    // "progressive search"
-    /*  const searchQuery = req.params.searchQuery || "";
-    let searchQueryCondition = {};
-    let select = {};
-    console.log("我是searchQuery", searchQuery);
-    if (searchQuery) {
-      queryCondition = true;
-      const searchWords = searchQuery.split(" ");
-      let foundProducts = false;
-
-      for (let i = searchWords.length; i > 0 && !foundProducts; i--) {
-        const searchCombinations = getCombinations(searchWords, i);
-
-        for (const combination of searchCombinations) {
-          const searchPattern = combination.join(".*");
-          searchQueryCondition = {
-            name: {
-              $regex: searchPattern,
-              $options: "i",
-            },
-          };
-
-          const tempQuery = {
-            $and: [
-              priceQueryCondition,
-              ratingQueryCondition,
-              categoryQueryCondition,
-              searchQueryCondition,
-              ...attrsQueryCondition,
-            ],
-          };
-
-          const tempProducts = await Product.find(tempQuery);
-          if (tempProducts.length > 0) {
-            foundProducts = true;
-            query = tempQuery;
-            break;
-          }
-        }
-      }
-    } */
-
-    //第五版 searchQuery
-    // 集成 $text 1-2 与 $regex 大于3
+    // 第七版 searchQuery
     const searchQuery = req.params.searchQuery || "";
     let searchQueryCondition = {};
     let select = {};
     console.log("我是searchQuery", searchQuery);
-    if (searchQuery) {
-      queryCondition = true;
-      const searchWords = searchQuery.split(" ");
-
-      if (searchWords.length <= 2) {
-        searchQueryCondition = {
+    
+    const performSearch = async (query) => {
+      const searchWords = query.searchQuery.split(" ");
+    
+      if (searchWords.length <= 1) {
+        return {
           $text: {
-            $search: searchQuery,
+            $search: query.searchQuery,
             $caseSensitive: false,
             $diacriticSensitive: false,
           },
         };
       } else {
-        let foundProducts = false;
-
-        for (let i = searchWords.length; i > 0 && !foundProducts; i--) {
-          const searchCombinations = getCombinations(searchWords, i);
-
-          for (const combination of searchCombinations) {
-            const searchPattern = combination.join(".*");
-            searchQueryCondition = {
-              name: {
-                $regex: searchPattern,
-                $options: "i",
-              },
-            };
-
-            const tempProducts = await Product.find(searchQueryCondition);
-            if (tempProducts.length > 0) {
-              foundProducts = true;
-              query = tempQuery;
-              break;
-            }
-          }
+        const searchPattern = searchWords.map(word => `(?=.*${word})`).join("") + ".*";
+        const searchQueryCondition = {
+          name: {
+            $regex: searchPattern,
+            $options: "i",
+          },
+        };
+    
+        const tempProducts = query.productIds.length > 0 ? await Product.find({ _id: { $in: query.productIds }, ...searchQueryCondition }) : await Product.find(searchQueryCondition);
+        if (tempProducts.length > 0) {
+          return searchQueryCondition;
+        } else {
+          return null;
+        }
+      }
+    };
+    
+    const performIndividualSearches = async (searchWords, productIds) => {
+      const searchConditions = searchWords.map(word => ({
+        name: {
+          $regex: word,
+          $options: "i",
+        },
+      }));
+    
+      const query = productIds.length > 0 ? { _id: { $in: productIds }, $or: searchConditions } : { $or: searchConditions };
+    
+      const products = await Product.find(query);
+      return products;
+    };
+    
+    if (searchQuery) {
+      queryCondition = true;
+      const searchWords = searchQuery.split(" ");
+    
+      let categoryMatchedProducts = [];
+      const filteredSearchWords = searchWords.filter((word) => word.length > 1);
+    
+      for (const word of filteredSearchWords) {
+        const regex = new RegExp(`${word}s?`, "i");
+        const categoryMatch = await Product.find({
+          category: {
+            $regex: regex,
+          },
+        });
+        categoryMatchedProducts = categoryMatchedProducts.concat(categoryMatch);
+        console.log("categoryMatch是啥？", categoryMatchedProducts.length);
+      }
+    
+      const productIds = categoryMatchedProducts.map(p => p._id);
+    
+      if (categoryMatchedProducts.length > 0) {
+        searchQueryCondition = await performSearch({ searchQuery, productIds });
+    
+        if (searchQueryCondition === null) {
+          const products = await performIndividualSearches(filteredSearchWords, productIds);
+          searchQueryCondition = { _id: { $in: products.map(p => p._id) } };
+        } else {
+          searchQueryCondition = { _id: { $in: productIds }, ...searchQueryCondition };
+        }
+      } else {
+        searchQueryCondition = await performSearch({ searchQuery, productIds: [] });
+    
+        if (searchQueryCondition === null) {
+          const products = await performIndividualSearches(filteredSearchWords, []);
+          searchQueryCondition = { _id: { $in: products.map(p => p._id) } };
         }
       }
     }
@@ -347,6 +231,7 @@ const getProducts = async (req, res, next) => {
           priceQueryCondition,
           ratingQueryCondition,
           categoryQueryCondition,
+          brandQueryCondition,
           searchQueryCondition,
           ...attrsQueryCondition,
         ],

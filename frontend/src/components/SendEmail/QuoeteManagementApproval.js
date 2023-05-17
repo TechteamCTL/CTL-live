@@ -42,13 +42,16 @@ const QuoeteManagementApproval = (quotePriceData, cartItems) => {
     .map(
       (item, idx) =>
         `
-    ${idx + 1}. ${item.name} -Item: ${item.cartProducts[0].attrs} - Quantity: ${item.cartProducts[0].quantity
+    ${idx + 1}. ${item.name} -Item: ${item.cartProducts[0].attrs} - Quantity: ${
+          item.cartProducts[0].quantity
         } - Unit price: $${item.cartProducts[0].price}\n `
     )
     .join("");
 
-console.log("quotePriceDataCCCCCCCompoent", quotePriceData.quotePriceData);
+  const receiverEmail = quotePriceData.quotePriceData.managerEmail?.split("@")[1];
+  const senderEmail = quotePriceData.quotePriceData.email?.split("@")[1]
 
+  console.log("quotePriceDataCCCCCCCompoent", receiverEmail);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,15 +105,20 @@ console.log("quotePriceDataCCCCCCCompoent", quotePriceData.quotePriceData);
           <div className="form-group">
             <button
               className="btn btn-block btn-danger w-100 p-0"
-              disabled={isSending || successMessage || quotePriceData.quotePriceData.cartItems.length === 0}
+              disabled={
+                isSending ||
+                successMessage ||
+                receiverEmail !== senderEmail ||
+                quotePriceData.quotePriceData.cartItems.length === 0
+              }
             >
-              {isSending ? `Sending${dots}` : "Send"}
+              {isSending ? `Sending${dots}` : "Email Cart"}
             </button>
           </div>
         </form>
         {successMessage && (
           <div className="alert mt-2 p-1 managementAprroval_alert" role="alert">
-            <p className="m-1">Email has been sent to your manager.</p>
+            <p className="m-1">Email has been sent out.</p>
             <p className="m-1">Please ask him check email for that.</p>
           </div>
         )}

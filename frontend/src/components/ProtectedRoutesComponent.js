@@ -6,6 +6,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import SplashPage from "../pages/SplashPage";
 import ScrollButton from "./ScrollButton ";
+// import ScrollToTop from "../utils/ScrollToTop";
+
 
 const ProtectedRoutesComponent = ({ admin }) => {
   const [isAuth, setIsAuth] = useState(undefined);
@@ -47,6 +49,8 @@ const ProtectedRoutesComponent = ({ admin }) => {
         <Outlet />
         <FooterComponent />
         <ScrollButton/>
+        {/* <ScrollToTop /> */}
+
       </>
     );
   }

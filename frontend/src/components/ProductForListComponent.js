@@ -27,7 +27,7 @@ const ProductForListComponent = ({
     }
   };
 
-  console.log("preview prodcut", product);
+  // console.log("preview prodcut", product);
 
   const dispatch = useDispatch();
 
@@ -40,8 +40,8 @@ const ProductForListComponent = ({
   return (
     <>
       <div>
-        <div className="mb-4">
-          <div className="card mt-3">
+        <div className="mb-2">
+          <div className="card mt-1">
             <div
               className="bg-image hover-zoom ripple img_hovf"
               data-mdb-ripple-color="light"
@@ -66,7 +66,7 @@ const ProductForListComponent = ({
                   {price === 0 ? (
                     <span className="fw-bold">Contact Us</span>
                   ) : (
-                    <span className="">Price: ${price?.toLocaleString()}</span>
+                    <span className="">Price: ${price?.toFixed(2).toLocaleString()}</span>
                   )}
                 </h6>
 
