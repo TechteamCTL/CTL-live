@@ -75,7 +75,7 @@ const registerUser = async (req, res, next) => {
       });
 
       // verify email address if end with slrltd.com
-      if (email.endsWith('slrltd.com') || email.endsWith('ctlservices.com.au') || email.endsWith('@focusminerals.com')) {
+      if (email.endsWith('slrltd.com') || email.endsWith('ctlservices.com.au') || email.endsWith('@focusminerals.com.au')) {
         const token = await new Token({
           userId: user._id,
           token: crypto.randomBytes(32).toString("hex"),
