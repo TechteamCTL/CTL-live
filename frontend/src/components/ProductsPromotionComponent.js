@@ -12,8 +12,8 @@ const ProductsPromotionComponent = () => {
         <Card className="blocks_card h-100">
             <Card.Body className="blocks_card_body">
                 <a href="/product-list?categoryName=SITE-SAFETY&subCategoryName=EMERGENCY-SHOWERS-EYEWASH">
-                    <video className="w-100 promotional_video" autoPlay muted>
-                        <source src="images2/EMERGENCY_SAFETY_SHOWER_PRATT.mp4" type="video/mp4" />
+                    <video className="w-100 promotional_video" controls autoPlay muted>
+                        <source src="images2/SAFETY_SHOWER.mp4" type="video/mp4" />
                     </video>
                 </a>
             </Card.Body>
@@ -44,7 +44,7 @@ const ProductsPromotionComponent = () => {
         <Card className="blocks_card h-100">
             <Card.Body className="blocks_card_body">
                 <a href="/product-list?categoryName=HAND-TOOLS&subCategoryName=KNIVES">
-                    <video className="w-100 promotional_video" autoPlay muted>
+                    <video className="w-100 promotional_video" controls autoPlay muted>
                         <source src="images2/RONSTA_knif.mp4" type="video/mp4" />
                     </video>
                 </a>
