@@ -338,18 +338,16 @@ const InvoicePrint = (cartItems) => {
   });
 
   //Area needs editing in future as we get more clients -- starts here
-  const deliverDate = new Date(cartItems.invoiceDate)
+  const deliverDate = new Date(cartItems.invoiceDate);
   if (InvUserInfo.email) {
     if (InvUserInfo.email.split("@")[1] === "slrltd.com") {
       if (cartItems.cartSubtotal < 20000) {
-        deliverDate.setDate(deliverDate.getDate() + 7)
+        deliverDate.setDate(deliverDate.getDate() + 7);
+      } else {
+        deliverDate.setDate(deliverDate.getDate() + 30);
       }
-      else {
-        deliverDate.setDate(deliverDate.getDate() + 30)
-      }
-    }
-    else if (InvUserInfo.email.split("@")[1] === "focusminerals.com.au") {
-      deliverDate.setDate(deliverDate.getDate() + 30)
+    } else if (InvUserInfo.email.split("@")[1] === "focusminerals.com.au") {
+      deliverDate.setDate(deliverDate.getDate() + 30);
     }
   }
   const deliveryDate = new Date(deliverDate).toLocaleString("en-AU", {
@@ -388,8 +386,12 @@ const InvoicePrint = (cartItems) => {
               <View style={styles.tableColHeader}>
                 <Text style={styles.tableCellBill}>CTL Australia</Text>
                 <Text style={styles.tableCellBill}>T : +61 498 139 213</Text>
-                <Text style={styles.tableCellBill}>E : sales@ctlservices.com.au</Text>
-                <Text style={styles.tableCellBill}>W : ctlaustralia.com.au</Text>
+                <Text style={styles.tableCellBill}>
+                  E : sales@ctlservices.com.au
+                </Text>
+                <Text style={styles.tableCellBill}>
+                  W : ctlaustralia.com.au
+                </Text>
                 <Text style={styles.tableCellBill}>ABN : 12 609 518 809</Text>
               </View>
             </View>
@@ -419,7 +421,9 @@ const InvoicePrint = (cartItems) => {
               <View style={styles.tableRow}>
                 <View style={styles.tableColHeaderSide}>
                   <Text style={styles.tableCellBill}>
-                    {InvUserInfo.billAddress ? (InvUserInfo.billAddress.replaceAll(',', '\n')) : ("")}
+                    {InvUserInfo.billAddress
+                      ? InvUserInfo.billAddress.replaceAll(",", "\n")
+                      : ""}
                   </Text>
                 </View>
                 <View style={styles.tableColHeaderCenter}>
@@ -431,16 +435,20 @@ const InvoicePrint = (cartItems) => {
                     </View>
                     <View style={styles.tableCellHeaderSales}>
                       <View style={styles.tableCellBillBox}>
-                        <Text render={({ pageNumber, totalPages }) => (
-                          `${pageNumber} / ${totalPages}`
-                        )} />
+                        <Text
+                          render={({ pageNumber, totalPages }) =>
+                            `${pageNumber} / ${totalPages}`
+                          }
+                        />
                       </View>
                     </View>
                   </View>
                 </View>
                 <View style={styles.tableColHeaderSide}>
                   <Text style={styles.tableCellBill}>
-                    {InvUserInfo.deliveryAddress ? (InvUserInfo.deliveryAddress.replaceAll(',', '\n')) : ("")}
+                    {InvUserInfo.deliveryAddress
+                      ? InvUserInfo.deliveryAddress.replaceAll(",", "\n")
+                      : ""}
                   </Text>
                 </View>
               </View>
@@ -482,7 +490,9 @@ const InvoicePrint = (cartItems) => {
                 </View>
                 <View style={styles.tableCellHeader}>
                   <Text style={styles.tableCellBillBox}>
-                    {deliveryDate === "Invalid Date" ? ("15-30 days") : (deliveryDate.split("at")[0])}
+                    {deliveryDate === "Invalid Date"
+                      ? "15-30 days"
+                      : deliveryDate.split("at")[0]}
                     {/* {deliveryDate.split("at")[0]} */}
                   </Text>
                 </View>
@@ -507,7 +517,9 @@ const InvoicePrint = (cartItems) => {
                   <Text style={styles.tableColBillItemHeader}>Item Code</Text>
                 </View>
                 <View style={styles.tableColHeaderCenter}>
-                  <Text style={styles.tableColBillItemHeader}>Item Description</Text>
+                  <Text style={styles.tableColBillItemHeader}>
+                    Item Description
+                  </Text>
                 </View>
                 <View style={styles.tableColHeaderShort}>
                   <Text style={styles.tableColBillItemHeader}>Qty Order</Text>
@@ -525,157 +537,162 @@ const InvoicePrint = (cartItems) => {
                   <Text style={styles.tableColBillItemHeader}>GST</Text>
                 </View>
                 <View style={styles.tableColHeaderSideTotal}>
-                  <Text style={styles.tableColBillItemHeader}>Total Inc. GST</Text>
+                  <Text style={styles.tableColBillItemHeader}>
+                    Total Inc. GST
+                  </Text>
                 </View>
               </View>
               {firstItems.map((item, idx) => {
-                return (
-                  idx % 2 == 0 ? (
-                    <>
-                      <View style={styles.tableRowProducts} key={idx}>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            {item.cartProducts[0].ctlsku}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderCenter}>
-                          <Text style={styles.tableColBillItem}>{item.name}</Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            {item.cartProducts[0].quantity}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            {item.cartProducts[0].quantity}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            $
-                            {item.cartProducts[0].price
-                              ? item.cartProducts[0].price.toLocaleString()
-                              : ""}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            ${" "}
-                            {item.cartProducts[0].price
-                              ? (
+                return idx % 2 == 0 ? (
+                  <>
+                    <View style={styles.tableRowProducts} key={idx}>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          {item.cartProducts[0].ctlsku}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderCenter}>
+                        <Text style={styles.tableColBillItem}>{item.name}</Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          {item.cartProducts[0].quantity}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          {item.cartProducts[0].quantity}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          $
+                          {item.cartProducts[0].price
+                            ? item.cartProducts[0].price.toFixed(2).toLocaleString()
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          ${" "}
+                          {item.cartProducts[0].price
+                            ? (
                                 item.cartProducts[0].price *
                                 item.cartProducts[0].quantity
-                              ).toLocaleString()
-                              : ""}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            ${" "}
-                            {item.cartProducts[0].price
-                              ? (
-                                (item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity *
-                                  10) /
-                                100
-                              ).toLocaleString()
-                              : ""}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderSideTotal}>
-                          <Text style={styles.tableColBillItem}>
-                            ${" "}
-                            {item.cartProducts[0].price
-                              ? (
-                                item.cartProducts[0].price *
-                                item.cartProducts[0].quantity +
-                                (item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity *
-                                  10) /
-                                100
-                              ).toLocaleString()
-                              : ""}
-                          </Text>
-                        </View>
+                              ).toFixed(2).toLocaleString()
+                            : ""}
+                        </Text>
                       </View>
-                    </>) : (
-                    <>
-                      <View style={styles.tableRowProducts1} key={idx}>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            {item.cartProducts[0].ctlsku}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderCenter}>
-                          <Text style={styles.tableColBillItem}>{item.name}</Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            {item.cartProducts[0].quantity}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            {item.cartProducts[0].quantity}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            $
-                            {item.cartProducts[0].price
-                              ? item.cartProducts[0].price.toLocaleString()
-                              : ""}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            ${" "}
-                            {item.cartProducts[0].price
-                              ? (
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          ${" "}
+                          {item.cartProducts[0].price
+                            ? (
+                                (item.cartProducts[0].price *
+                                  item.cartProducts[0].quantity *
+                                  10) /
+                                100
+                              ).toFixed(2).toLocaleString()
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderSideTotal}>
+                        <Text style={styles.tableColBillItem}>
+                          ${" "}
+                          {item.cartProducts[0].price
+                            ? (
+                                item.cartProducts[0].price *
+                                  item.cartProducts[0].quantity +
+                                (item.cartProducts[0].price *
+                                  item.cartProducts[0].quantity *
+                                  10) /
+                                  100
+                              ).toFixed(2).toLocaleString()
+                            : ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </>
+                ) : (
+                  <>
+                    <View style={styles.tableRowProducts1} key={idx}>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          {item.cartProducts[0].ctlsku}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderCenter}>
+                        <Text style={styles.tableColBillItem}>{item.name}</Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          {item.cartProducts[0].quantity}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          {item.cartProducts[0].quantity}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          $
+                          {item.cartProducts[0].price
+                            ? item.cartProducts[0].price.toFixed(2).toLocaleString()
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          ${" "}
+                          {item.cartProducts[0].price
+                            ? (
                                 item.cartProducts[0].price *
                                 item.cartProducts[0].quantity
-                              ).toLocaleString()
-                              : ""}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderShort}>
-                          <Text style={styles.tableColBillItem}>
-                            ${" "}
-                            {item.cartProducts[0].price
-                              ? (
-                                (item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity *
-                                  10) /
-                                100
-                              ).toLocaleString()
-                              : ""}
-                          </Text>
-                        </View>
-                        <View style={styles.tableColHeaderSideTotal}>
-                          <Text style={styles.tableColBillItem}>
-                            ${" "}
-                            {item.cartProducts[0].price
-                              ? (
-                                item.cartProducts[0].price *
-                                item.cartProducts[0].quantity +
-                                (item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity *
-                                  10) /
-                                100
-                              ).toLocaleString()
-                              : ""}
-                          </Text>
-                        </View>
+                              ).toFixed(2).toLocaleString()
+                            : ""}
+                        </Text>
                       </View>
-                    </>)
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          ${" "}
+                          {item.cartProducts[0].price
+                            ? (
+                                (item.cartProducts[0].price *
+                                  item.cartProducts[0].quantity *
+                                  10) /
+                                100
+                              ).toFixed(2).toLocaleString()
+                            : ""}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderSideTotal}>
+                        <Text style={styles.tableColBillItem}>
+                          ${" "}
+                          {item.cartProducts[0].price
+                            ? (
+                                item.cartProducts[0].price *
+                                  item.cartProducts[0].quantity +
+                                (item.cartProducts[0].price *
+                                  item.cartProducts[0].quantity *
+                                  10) /
+                                  100
+                              ).toFixed(2).toLocaleString()
+                            : ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </>
                 );
               })}
             </View>
           </View>
-          <Text style={styles.pageNumbers} render={({ pageNumber, totalPages }) => (
-            `${pageNumber} / ${totalPages}`
-          )} />
+          <Text
+            style={styles.pageNumbers}
+            render={({ pageNumber, totalPages }) =>
+              `${pageNumber} / ${totalPages}`
+            }
+          />
 
           {/* bottom total price */}
           {otherChunks[0] ? (
@@ -693,7 +710,9 @@ const InvoicePrint = (cartItems) => {
                   <Text style={styles.tableCellBillBox}>
                     ${" "}
                     {cartItems.cartSubtotal
-                      ? cartItems.cartSubtotal.toLocaleString()
+                      ? (cartItems.cartSubtotal / 1.1)
+                          .toFixed(2)
+                          .toLocaleString()
                       : ""}
                   </Text>
                 </View>
@@ -706,7 +725,9 @@ const InvoicePrint = (cartItems) => {
                   <Text style={styles.tableCellBillBox}>
                     ${" "}
                     {cartItems.cartSubtotal
-                      ? (cartItems.cartSubtotal * 0.1).toLocaleString()
+                      ? ((cartItems.cartSubtotal / 1.1) * 0.1)
+                          .toFixed(2)
+                          .toLocaleString()
                       : ""}
                   </Text>
                 </View>
@@ -719,18 +740,13 @@ const InvoicePrint = (cartItems) => {
                   <Text style={styles.tableCellBillBox}>
                     ${" "}
                     {cartItems.cartSubtotal
-                      ? (
-                        cartItems.cartSubtotal * 0.1 +
-                        cartItems.cartSubtotal
-                      ).toLocaleString()
+                      ? cartItems.cartSubtotal.toLocaleString()
                       : ""}
                   </Text>
                 </View>
               </View>
             </>
           )}
-
-
         </Page>
 
         {/* ******* Product List (other pages) ******* */}
@@ -742,7 +758,9 @@ const InvoicePrint = (cartItems) => {
                   <View style={styles.tableBorder}>
                     <View style={styles.tableRow1}>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItemHeader}>Item Code</Text>
+                        <Text style={styles.tableColBillItemHeader}>
+                          Item Code
+                        </Text>
                       </View>
                       <View style={styles.tableColHeaderCenter}>
                         <Text style={styles.tableColBillItemHeader}>
@@ -750,16 +768,24 @@ const InvoicePrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItemHeader}>Qty Order</Text>
+                        <Text style={styles.tableColBillItemHeader}>
+                          Qty Order
+                        </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItemHeader}>Qty Supply</Text>
+                        <Text style={styles.tableColBillItemHeader}>
+                          Qty Supply
+                        </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItemHeader}>Unit Price</Text>
+                        <Text style={styles.tableColBillItemHeader}>
+                          Unit Price
+                        </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItemHeader}>Net Amount</Text>
+                        <Text style={styles.tableColBillItemHeader}>
+                          Net Amount
+                        </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
                         <Text style={styles.tableColBillItemHeader}>GST</Text>
@@ -771,82 +797,9 @@ const InvoicePrint = (cartItems) => {
                       </View>
                     </View>
                     {chunk.map((item, idx) => {
-                      return (
-                        idx % 2 == 0 ? (
-                          <>
-                            <View style={styles.tableRowProducts} key={idx}>
-                              <View style={styles.tableColHeaderShort}>
-                                <Text style={styles.tableColBillItem}>
-                                  {item.cartProducts[0].ctlsku}
-                                </Text>
-                              </View>
-                              <View style={styles.tableColHeaderCenter}>
-                                <Text style={styles.tableColBillItem}>
-                                  {item.name}
-                                </Text>
-                              </View>
-                              <View style={styles.tableColHeaderShort}>
-                                <Text style={styles.tableColBillItem}>
-                                  {item.cartProducts[0].quantity}
-                                </Text>
-                              </View>
-                              <View style={styles.tableColHeaderShort}>
-                                <Text style={styles.tableColBillItem}>
-                                  {item.cartProducts[0].quantity}
-                                </Text>
-                              </View>
-                              <View style={styles.tableColHeaderShort}>
-                                <Text style={styles.tableColBillItem}>
-                                  $
-                                  {item.cartProducts[0].price
-                                    ? item.cartProducts[0].price.toLocaleString()
-                                    : ""}
-                                </Text>
-                              </View>
-                              <View style={styles.tableColHeaderShort}>
-                                <Text style={styles.tableColBillItem}>
-                                  ${" "}
-                                  {item.cartProducts[0].price
-                                    ? (
-                                      item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity
-                                    ).toLocaleString()
-                                    : ""}
-                                </Text>
-                              </View>
-                              <View style={styles.tableColHeaderShort}>
-                                <Text style={styles.tableColBillItem}>
-                                  ${" "}
-                                  {item.cartProducts[0].price
-                                    ? (
-                                      (item.cartProducts[0].price *
-                                        item.cartProducts[0].quantity *
-                                        10) /
-                                      100
-                                    ).toLocaleString()
-                                    : ""}
-                                </Text>
-                              </View>
-                              <View style={styles.tableColHeaderSideTotal}>
-                                <Text style={styles.tableColBillItem}>
-                                  ${" "}
-                                  {item.cartProducts[0].price
-                                    ? (
-                                      item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity +
-                                      (item.cartProducts[0].price *
-                                        item.cartProducts[0].quantity *
-                                        10) /
-                                      100
-                                    ).toLocaleString()
-                                    : ""}
-                                </Text>
-                              </View>
-                            </View>
-
-                          </>
-                        ) : (
-                          <View style={styles.tableRowProducts1} key={idx}>
+                      return idx % 2 == 0 ? (
+                        <>
+                          <View style={styles.tableRowProducts} key={idx}>
                             <View style={styles.tableColHeaderShort}>
                               <Text style={styles.tableColBillItem}>
                                 {item.cartProducts[0].ctlsku}
@@ -871,7 +824,7 @@ const InvoicePrint = (cartItems) => {
                               <Text style={styles.tableColBillItem}>
                                 $
                                 {item.cartProducts[0].price
-                                  ? item.cartProducts[0].price.toLocaleString()
+                                  ? item.cartProducts[0].price.toFixed(2).toLocaleString()
                                   : ""}
                               </Text>
                             </View>
@@ -880,9 +833,9 @@ const InvoicePrint = (cartItems) => {
                                 ${" "}
                                 {item.cartProducts[0].price
                                   ? (
-                                    item.cartProducts[0].price *
-                                    item.cartProducts[0].quantity
-                                  ).toLocaleString()
+                                      item.cartProducts[0].price *
+                                      item.cartProducts[0].quantity
+                                    ).toFixed(2).toLocaleString()
                                   : ""}
                               </Text>
                             </View>
@@ -891,11 +844,11 @@ const InvoicePrint = (cartItems) => {
                                 ${" "}
                                 {item.cartProducts[0].price
                                   ? (
-                                    (item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity *
-                                      10) /
-                                    100
-                                  ).toLocaleString()
+                                      (item.cartProducts[0].price *
+                                        item.cartProducts[0].quantity *
+                                        10) /
+                                      100
+                                    ).toFixed(2).toLocaleString()
                                   : ""}
                               </Text>
                             </View>
@@ -904,26 +857,98 @@ const InvoicePrint = (cartItems) => {
                                 ${" "}
                                 {item.cartProducts[0].price
                                   ? (
-                                    item.cartProducts[0].price *
-                                    item.cartProducts[0].quantity +
-                                    (item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity *
-                                      10) /
-                                    100
-                                  ).toLocaleString()
+                                      item.cartProducts[0].price *
+                                        item.cartProducts[0].quantity +
+                                      (item.cartProducts[0].price *
+                                        item.cartProducts[0].quantity *
+                                        10) /
+                                        100
+                                    ).toFixed(2).toLocaleString()
                                   : ""}
                               </Text>
                             </View>
                           </View>
-                        )
+                        </>
+                      ) : (
+                        <View style={styles.tableRowProducts1} key={idx}>
+                          <View style={styles.tableColHeaderShort}>
+                            <Text style={styles.tableColBillItem}>
+                              {item.cartProducts[0].ctlsku}
+                            </Text>
+                          </View>
+                          <View style={styles.tableColHeaderCenter}>
+                            <Text style={styles.tableColBillItem}>
+                              {item.name}
+                            </Text>
+                          </View>
+                          <View style={styles.tableColHeaderShort}>
+                            <Text style={styles.tableColBillItem}>
+                              {item.cartProducts[0].quantity}
+                            </Text>
+                          </View>
+                          <View style={styles.tableColHeaderShort}>
+                            <Text style={styles.tableColBillItem}>
+                              {item.cartProducts[0].quantity}
+                            </Text>
+                          </View>
+                          <View style={styles.tableColHeaderShort}>
+                            <Text style={styles.tableColBillItem}>
+                              $
+                              {item.cartProducts[0].price
+                                ? item.cartProducts[0].price.toFixed(2).toLocaleString()
+                                : ""}
+                            </Text>
+                          </View>
+                          <View style={styles.tableColHeaderShort}>
+                            <Text style={styles.tableColBillItem}>
+                              ${" "}
+                              {item.cartProducts[0].price
+                                ? (
+                                    item.cartProducts[0].price *
+                                    item.cartProducts[0].quantity
+                                  ).toFixed(2).toLocaleString()
+                                : ""}
+                            </Text>
+                          </View>
+                          <View style={styles.tableColHeaderShort}>
+                            <Text style={styles.tableColBillItem}>
+                              ${" "}
+                              {item.cartProducts[0].price
+                                ? (
+                                    (item.cartProducts[0].price *
+                                      item.cartProducts[0].quantity *
+                                      10) /
+                                    100
+                                  ).toFixed(2).toLocaleString()
+                                : ""}
+                            </Text>
+                          </View>
+                          <View style={styles.tableColHeaderSideTotal}>
+                            <Text style={styles.tableColBillItem}>
+                              ${" "}
+                              {item.cartProducts[0].price
+                                ? (
+                                    item.cartProducts[0].price *
+                                      item.cartProducts[0].quantity +
+                                    (item.cartProducts[0].price *
+                                      item.cartProducts[0].quantity *
+                                      10) /
+                                      100
+                                  ).toFixed(2).toLocaleString()
+                                : ""}
+                            </Text>
+                          </View>
+                        </View>
                       );
                     })}
-
                   </View>
                 </View>
-                <Text style={styles.pageNumbers} render={({ pageNumber, totalPages }) => (
-                  `${pageNumber} / ${totalPages}`
-                )} />
+                <Text
+                  style={styles.pageNumbers}
+                  render={({ pageNumber, totalPages }) =>
+                    `${pageNumber} / ${totalPages}`
+                  }
+                />
 
                 {/* show total price in last page */}
                 {index === otherChunks.length - 1 && (
@@ -938,7 +963,9 @@ const InvoicePrint = (cartItems) => {
                         <Text style={styles.tableCellBillBox}>
                           ${" "}
                           {cartItems.cartSubtotal
-                            ? cartItems.cartSubtotal.toLocaleString()
+                            ? (cartItems.cartSubtotal / 1.1)
+                                .toFixed(2)
+                                .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -951,7 +978,9 @@ const InvoicePrint = (cartItems) => {
                         <Text style={styles.tableCellBillBox}>
                           ${" "}
                           {cartItems.cartSubtotal
-                            ? (cartItems.cartSubtotal * 0.1).toLocaleString()
+                            ? ((cartItems.cartSubtotal / 1.1) * 0.1)
+                                .toFixed(2)
+                                .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -966,10 +995,7 @@ const InvoicePrint = (cartItems) => {
                         <Text style={styles.tableCellBillBox}>
                           ${" "}
                           {cartItems.cartSubtotal
-                            ? (
-                              cartItems.cartSubtotal * 0.1 +
-                              cartItems.cartSubtotal
-                            ).toLocaleString()
+                            ? cartItems.cartSubtotal.toLocaleString()
                             : ""}
                         </Text>
                       </View>

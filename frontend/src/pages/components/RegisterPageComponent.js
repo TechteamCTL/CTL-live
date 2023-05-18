@@ -70,7 +70,7 @@ const RegisterPageComponent = ({
     //TODO if need deliveryAddress again, change the value from location to deliveryAddress.
     const state = form.state.value;
     const postCode = form.postCode.value;
-  
+
     /* 下面是一些form里面的判定 validation的判定 */
     if (
       event.currentTarget.checkValidity() === true &&
@@ -113,9 +113,13 @@ const RegisterPageComponent = ({
             loading: false,
           });
           reduxDispatch(setReduxUserState(data.userCreated));
-  
+
           // Check if the user's email ends with "@slrltd.com"
-          if (!email.endsWith("@slrltd.com") || !email.endsWith("@focusminerals.com.au") || !email.endsWith("@ctlservices.com.au")) {
+          if (
+            !email.endsWith("@slrltd.com") &&
+            !email.endsWith("@ctlservices.com.au") &&
+            !email.endsWith("@focusminerals.com.au")
+          ) {
             // If not, redirect to the /unfortunately page
             window.location.href = "/unfortunately";
           } else {
@@ -148,10 +152,9 @@ const RegisterPageComponent = ({
           })
         );
     }
-  
+
     setValidated(true);
   };
-  
 
   return (
     <Container>
@@ -318,7 +321,11 @@ const RegisterPageComponent = ({
               </Form.Group>
 
               <Form.Group as={Col} md="4" controlId="formBasicDeliveryAddress">
-                <Form.Control type="text" name="deliveryAddress" placeholder="delivery Address" />
+                <Form.Control
+                  type="text"
+                  name="deliveryAddress"
+                  placeholder="delivery Address"
+                />
                 <Form.Control.Feedback type="invalid">
                   Please provide a valid deliveryAddress.
                 </Form.Control.Feedback>
