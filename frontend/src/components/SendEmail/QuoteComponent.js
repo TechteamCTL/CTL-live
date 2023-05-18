@@ -43,10 +43,10 @@ const QuoteComponent = (userNameEmail) => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-  
+
     if (file) {
       setFormData({ ...formData, image: file });
-  
+
       if (file.type && file.type.startsWith("image/")) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -59,7 +59,6 @@ const QuoteComponent = (userNameEmail) => {
       }
     }
   };
-  
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -76,7 +75,7 @@ const QuoteComponent = (userNameEmail) => {
           imgPreview.src = reader.result;
         }
       };
-    } 
+    }
   };
 
   const handleClick = () => {
@@ -107,7 +106,11 @@ const QuoteComponent = (userNameEmail) => {
     formDataToSend.append("image", image);
     try {
       setIsSending(true);
-      const res = await axios.post("/api/sendemail/quoteproduct", formDataToSend, config);
+      const res = await axios.post(
+        "/api/sendemail/quoteproduct",
+        formDataToSend,
+        config
+      );
       console.log(res.data);
       setIsSending(false);
       setFormData({
@@ -123,17 +126,12 @@ const QuoteComponent = (userNameEmail) => {
     }
   };
 
-
-
   console.log("formDataformDataformDataformData", formData);
   return (
     <>
       <div className="container border w-50 ms-5 p-3 mt-2">
-        <h3 className="text-center">Looking for something else?</h3>
-        <h3 className="text-center">
-          We will find it for you!
-        </h3>
-        <br />
+        {/* <h3 className="text-center">Looking for something else?</h3> */}
+        <h3 className="text-center">REQUEST FOR QUOTE</h3>
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="form-group" style={{ display: "none" }}>
             <input
@@ -189,7 +187,9 @@ const QuoteComponent = (userNameEmail) => {
                 ) : (
                   <>
                     <p id="file-name">No image chosen</p>
-                    <p>Drag and drop your image here, or click to select image</p>
+                    <p>
+                      Drag and drop your image here, or click to select image
+                    </p>
                   </>
                 )}
 

@@ -142,7 +142,7 @@ console.log("userInfouserInfo",userInfo);
                 style={{ textAlign: "center", width: "100%" }}
                 className="m-0 p-0"
               >
-                We will find it for you!
+                REQUEST FOR QUOTE
               </Modal.Title>
             </Modal.Header>
 
