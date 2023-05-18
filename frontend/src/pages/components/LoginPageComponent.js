@@ -65,7 +65,7 @@ const LoginPageComponent = ({
   
     event.preventDefault();
   
-    if (email.endsWith("@slrltd.com")) {
+    if (email.endsWith("@slrltd.com") || email.endsWith("@focusminerals.com.au") || email.endsWith("@ctlservices.com.au")) {
       fetch("https://api.ipify.org?format=json")
         .then((response) => response.json())
         .then((data) => setIpAddress(data.ip));

@@ -16,7 +16,7 @@ const unfortunately = () => {
       </div>
 
       <div
-        className="modal fade"
+        className="modal fade unfortunately_modal"
         id="exampleModalCenter"
         tabindex="-1"
         role="dialog"
@@ -24,8 +24,8 @@ const unfortunately = () => {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-header p-1">
+          <div className="modal-content unfortunately_modal_content">
+            {/* <div className="modal-header p-1">
               <h5 className="modal-title ms-2" id="exampleModalLongTitle">
                 Thanks for register with us!
               </h5>
@@ -37,7 +37,7 @@ const unfortunately = () => {
               >
                 <span aria-hidden="true">&times;</span>
               </button>
-            </div>
+            </div> */}
             <div className="modal-body">
               <p className="">
                 {/* Thank you for your application to register your interest in our

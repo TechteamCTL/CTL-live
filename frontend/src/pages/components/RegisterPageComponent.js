@@ -115,7 +115,7 @@ const RegisterPageComponent = ({
           reduxDispatch(setReduxUserState(data.userCreated));
   
           // Check if the user's email ends with "@slrltd.com"
-          if (!email.endsWith("@slrltd.com")) {
+          if (!email.endsWith("@slrltd.com") || !email.endsWith("@focusminerals.com.au") || !email.endsWith("@ctlservices.com.au")) {
             // If not, redirect to the /unfortunately page
             window.location.href = "/unfortunately";
           } else {

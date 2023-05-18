@@ -42,10 +42,10 @@ getFingerprint()
       <ProductCarouselComponent />
 
       {/* ************   daily deal top3  ***************  */}
-      {/* <ProductsPromotionComponent /> */}
+      <ProductsPromotionComponent />
 
       {/* ************   Bottom Haxegon Categories  ***************  */}
-      <div className="bg-light w-100">
+      <div className="bg_our_products bg-light w-100">
         <Container>
           <div className="o_p_box">
             <h1 className="o_p">
