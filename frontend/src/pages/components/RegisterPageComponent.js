@@ -44,6 +44,7 @@ const RegisterPageComponent = ({
   const [password, setPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [emailSent, setEmailSent] = useState(false);
 
   const handleConfirmPassword = (e) => {
     const { value } = e.target;
@@ -138,6 +139,7 @@ const RegisterPageComponent = ({
             form.state.value = "";
             form.postCode.value = "";
             setValidated(false);
+            setEmailSent(true);
             setTimeout(() => {
               window.location.href = "/login";
             }, 2000);
@@ -312,7 +314,6 @@ const RegisterPageComponent = ({
                   type="text"
                   name="billAddress"
                   placeholder="billAddress"
-                  required
                 />
                 <Form.Control.Feedback type="invalid">
                   {" "}
@@ -429,6 +430,7 @@ const RegisterPageComponent = ({
                 registerUserResponseState.success === "User created"
               }
               variant="info"
+              hidden={emailSent === false}
             >
               An Email has been sent to your account please verify
             </Alert>
