@@ -15,10 +15,11 @@ import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import emailjs from "@emailjs/browser";
-
 import { useDispatch } from "react-redux";
 import QuoeteManagementApproval from "../../../components/SendEmail/QuoeteManagementApproval";
+import CartPrint from "../../../components/Pdfs/CartPrint";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import "./invoicePDF.css";
 
 const UserCartDetailsPageComponent = ({
   cartItems,
@@ -191,7 +192,7 @@ const UserCartDetailsPageComponent = ({
     }, 1000);
   };
 
-  // const userEmail = userInfo.email?.split("@")[1]
+  const userEmail = userInfo.email?.split("@")[1]
 
   // console.log("USERcartItems", userEmail);
 
@@ -199,8 +200,59 @@ const UserCartDetailsPageComponent = ({
     <>
       <Container>
         <Row className="mt-4">
-          <h1>CART DETAILS</h1>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <h1>CART DETAILS</h1>
 
+              {/* <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <div className="d-grid gap-2">
+                  <PDFDownloadLink
+                    document={
+                      <CartPrint
+                        cartItems={cartItems}
+                        userInfo={userInfo}
+                        userAddress={userAddress}
+                        purchaseNumber={purchaseNumber}
+                        cartSubtotal={cartSubtotal}
+                      />
+                    }
+                    fileName={userInfo.name + "'s Cart"}
+                    className="btn p-0 m-0"
+                  >
+                    {({ loading }) =>
+                      loading ? (
+                        <span className="btn btn-success p-0 ps-1 pe-1 download_cart_btn">
+                          Loading Cart...
+                        </span>
+                      ) : (
+                        <span className="btn btn-success p-0 ps-1 pe-1 download_cart_btn">
+                          Download Cart <i class="bi bi-file-earmark-pdf"></i>
+                        </span>
+                      )
+                    }
+                  </PDFDownloadLink>
+                </div>
+
+                <Button
+                  type="button"
+                  onClick={removeAllItems}
+                  className="p-0 ps-1 pe-1 empty_cart_btn"
+                >
+                  Empty Cart <i className="bi bi-trash" />
+                </Button>
+              </div> */}
+            </div>
           <Col md={9}>
             {/* <Row style={{ display: "none" }}>
               <Col md={5}>
@@ -243,20 +295,55 @@ const UserCartDetailsPageComponent = ({
                 />
               ))}
             </ListGroup>
+            <Button
+                type="button"
+                onClick={removeAllItems}
+                className="p-0 ps-1 pe-1 empty_cart_btn"
+              >
+                Empty Cart <i className="bi bi-trash" />
+              </Button>
           </Col>
-          <Col md={3}>
-            <ListGroup hidden={cartItems.length === 0}>
-              {/* <ListGroup.Item>
-                <h5 className="m-0">Email cart?</h5>
-              </ListGroup.Item> */}
+          <Col md={3} className="cart_detail_right">
+            <ListGroup>
+              <ListGroup.Item>
+                <div className="d-grid gap-2">
+                  <PDFDownloadLink
+                    document={
+                      <CartPrint
+                        cartItems={cartItems}
+                        userInfo={userInfo}
+                        userAddress={userAddress}
+                        purchaseNumber={purchaseNumber}
+                        cartSubtotal={cartSubtotal}
+                      />
+                    }
+                    fileName={userInfo.name + "'s Cart"}
+                    className="btn btn-success p-0 ps-1 pe-1 ms-3 me-3 download_cart_btn"
+                  >
+                    {({ loading }) =>
+                      loading ? (
+                        <span>Loading Cart...</span>
+                      ) : (
+                        <span>
+                          Download Cart <i class="bi bi-file-earmark-pdf"></i>
+                        </span>
+                      )
+                    }
+                  </PDFDownloadLink>
+                </div>
+              </ListGroup.Item>
+            </ListGroup>
+            <br />
+            {/* <ListGroup hidden={cartItems.length === 0}>
               <ListGroup.Item controlId="validationMangerEmail">
                 <Form.Control
+                className=""
                   onChange={enterManagerEmail}
                   type="string"
                   name="MangerEmail"
-                  placeholder="Enter Email"
+                  placeholder={`Enter email @${userEmail}`}
                   required
-                />
+                /> 
                 <Form.Control.Feedback type="invalid">
                   Please Enter Your Manager's Email.{" "}
                 </Form.Control.Feedback>
@@ -268,7 +355,7 @@ const UserCartDetailsPageComponent = ({
                 </div>
               </ListGroup.Item>
             </ListGroup>
-            <br />
+            <br /> */}
             <ListGroup className="">
               <ListGroup.Item>
                 <h4 className="m-0">Order Summary</h4>
@@ -285,14 +372,14 @@ const UserCartDetailsPageComponent = ({
                     Total: <span className="fw-bold">{cartItems.length}</span>{" "}
                     {cartItems.length === 1 ? "Product" : "Products"}
                   </p>
-                  <Button
+                  {/* <Button
                     type="button"
                     variant="secondary"
                     onClick={removeAllItems}
                     className="p-0 ps-1 pe-1"
                   >
                     Empty Cart <i className="bi bi-trash" />
-                  </Button>
+                  </Button> */}
                 </div>
               </ListGroup.Item>
 
@@ -335,15 +422,14 @@ const UserCartDetailsPageComponent = ({
 
               <ListGroup.Item>
                 <div className="d-grid gap-2">
-                  <Button
+                  <button
                     size="sm"
                     onClick={orderHandler}
-                    variant="danger"
-                    type="button"
-                    disabled={buttonDisabled}
+                    disabled={purchaseNumber?.length < 1}
+                    className="btn btn-success p-0 ps-1 pe-1 download_cart_btn"
                   >
                     Comfirm Order
-                  </Button>
+                  </button>
                 </div>
               </ListGroup.Item>
             </ListGroup>

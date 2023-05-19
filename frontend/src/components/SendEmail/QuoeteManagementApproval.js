@@ -104,7 +104,7 @@ const QuoeteManagementApproval = (quotePriceData, cartItems) => {
         <form onSubmit={handleSubmit} autoComplete="off">
           <div className="form-group">
             <button
-              className="btn btn-block btn-danger w-100 p-0"
+              className="btn btn-success p-0 ps-1 pe-1 w-100 download_cart_btn"
               disabled={
                 isSending ||
                 successMessage ||

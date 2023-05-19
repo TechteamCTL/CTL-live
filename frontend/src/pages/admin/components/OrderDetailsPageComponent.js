@@ -13,8 +13,8 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import { useReactToPrint } from "react-to-print";
-import DeliveryNotePrint from "../../../components/DeliveryNotePrint";
-import InvoicePrint from "../../../components/InvoicePrint";
+import DeliveryNotePrint from "../../../components/Pdfs/DeliveryNotePrint";
+import InvoicePrint from "../../../components/Pdfs/InvoicePrint";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
 // 如果要改markAsPaid的功能，不但需要在这里改，还需要去orderDetailsPage里添加paid的api和功能，因为在backend的order route和controller里面已经写过updateToPaid了，所以可以直接用。

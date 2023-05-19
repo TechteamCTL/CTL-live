@@ -54,3 +54,34 @@
         transform: translate(140vw, -520vh);
     }
 }
+
+.cart_detail_right {
+    margin-top: 0.7rem;
+}
+
+.empty_cart_btn {
+    border-radius: 0;
+    background-color: #1e4881;
+    border: 1px solid #1e4881;
+    color: white;
+    float: right;
+}
+
+.empty_cart_btn:hover {
+    color: #1e4881;
+    border: 1px solid #1e4881;
+    background-color: white;
+}
+
+
+.download_cart_btn {
+    color: white;
+    border-radius: 0;
+    margin-right: 0.5rem;
+}
+
+.download_cart_btn:hover {
+    color: #1e4881;
+    border: 1px solid #1e4881;
+    background-color: white;
+}

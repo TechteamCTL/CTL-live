@@ -14,7 +14,7 @@ import { useParams } from "react-router-dom";
 import "./invoicePDF.css";
 
 // import { useReactToPrint } from "react-to-print";
-import InvoicePrint from "../../../components/InvoicePrint";
+import InvoicePrint from "../../../components/Pdfs/InvoicePrint";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { emptyCart } from "../../../redux/actions/cartActions";
 import { useSelector } from "react-redux";
@@ -54,6 +54,7 @@ const UserOrderDetailsPageComponent = ({
         setUserAddress({
           location: data.location,
           deliveryAddress: data.deliveryAddress,
+          billAddress: data.billAddress,
           postCode: data.postCode,
           state: data.state,
           phone: data.phone,
@@ -332,32 +333,6 @@ const UserOrderDetailsPageComponent = ({
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
-                {/*                 <Col>
-                  <div>
-                    <Button
-                      onClick={() => reOrderHandler(id)}
-                      className={`pt-1 pb-1 ${
-                        clicked ? "reorder-button" : "button-shadow"
-                      }`}
-                      variant="success"
-                      onAnimationEnd={onAnimationEnd}
-                      style={finished ? { display: "none" } : { display: "" }}
-                    >
-                      Re-Order
-                    </Button>
-
-                    <Button
-                      className={`pt-1 pb-1 ${
-                        clicked ? "button-shadow showingout" : "hiden"
-                      }`}
-                      variant="success"
-                    >
-                      <a href="/user/cart-details" style={{ color: "white" }}>
-                        Go Shopping{" "}
-                      </a>
-                    </Button>
-                  </div>
-                </Col> */}
                 <Col>
                   <div>
                     <Button
@@ -423,9 +398,9 @@ const UserOrderDetailsPageComponent = ({
             <ListGroup.Item>
               <b>Phone</b>: {userAddress.phone}
             </ListGroup.Item>
-            <ListGroup.Item>
+{/*             <ListGroup.Item>
               <b>Address</b>: {userAddress.deliveryAddress}
-            </ListGroup.Item>
+            </ListGroup.Item> */}
             <ListGroup.Item>
               <Alert
                 className="m-0 lh-1 h-50 p-2"
