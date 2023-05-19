@@ -1132,40 +1132,85 @@ const Navb = () => {
   // #region
   var REAGENTS_1 = [
     {
-      label: "REAGENTS ONE",
+      label: "LIME",
       type: 3,
-      link: REAGENTS + "&subCategoryName=REAGENTS ONE",
+      link: REAGENTS + "&subCategoryName=LIME",
     },
     {
-      label: "REAGENTS TWO",
+      label: "HYDROCHLORIC ACID",
       type: 3,
-      link: REAGENTS + "&subCategoryName=REAGENTS TWO",
+      link: REAGENTS + "&subCategoryName=HYDROCHLORIC-ACID",
     },
+    {
+      label: "GOLD STANDARDS",
+      type: 3,
+      link: REAGENTS + "&subCategoryName=GOLD-STANDARDS",
+    },
+    {
+      label: "SILVER NITRATE",
+      type: 3,
+      link: REAGENTS + "&subCategoryName=SILVER-NITRATE",
+    },
+
   ];
   var REAGENTS_2 = [
     {
-      label: "REAGENTS ONE",
+      label: "CAUSTIC",
       type: 3,
-      link: REAGENTS + "&subCategoryName=REAGENTS ONE",
+      link: REAGENTS + "&subCategoryName=CAUSTIC",
     },
     {
-      label: "REAGENTS TWO",
+      label: "DIBK",
       type: 3,
-      link: REAGENTS + "&subCategoryName=REAGENTS TWO",
+      link: REAGENTS + "&subCategoryName=DIBK",
     },
+    {
+      label: "SODA",
+      type: 3,
+      link: REAGENTS + "&subCategoryName=SODA",
+    },
+    {
+      label: "ANTISCALANT",
+      type: 3,
+      link: REAGENTS + "&subCategoryName=ANTISCALANT",
+    },
+
   ];
   var REAGENTS_3 = [
     {
-      label: "REAGENTS ONE",
+      label: "BORAX",
       type: 3,
-      link: REAGENTS + "&subCategoryName=REAGENTS ONE",
+      link: REAGENTS + "&subCategoryName=BORAX",
     },
     {
-      label: "REAGENTS TWO",
+      label: "SILICA",
       type: 3,
-      link: REAGENTS + "&subCategoryName=REAGENTS TWO",
+      link: REAGENTS + "&subCategoryName=SILICA",
     },
+    {
+      label: "CARBON",
+      type: 3,
+      link: REAGENTS + "&subCategoryName=CARBON",
+    },
+    {
+      label: "LEACH AID",
+      type: 3,
+      link: REAGENTS + "&subCategoryName=LEACH-AID",
+    },
+
   ];
+  // var REAGENTS_3 = [
+  //   {
+  //     label: "REAGENTS ONE",
+  //     type: 3,
+  //     link: REAGENTS + "&subCategoryName=REAGENTS ONE",
+  //   },
+  //   {
+  //     label: "REAGENTS TWO",
+  //     type: 3,
+  //     link: REAGENTS + "&subCategoryName=REAGENTS TWO",
+  //   },
+  // ];
   //#endregion
 
   /* LABORATORY */
@@ -2015,6 +2060,15 @@ const Navb = () => {
               <div className="dropdown-content">
                 <div className="row">
                   <ul className="column">
+                    {REAGENTS_3.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
                     {REAGENTS_1.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
@@ -2032,15 +2086,7 @@ const Navb = () => {
                       );
                     })}
                   </ul>
-                  <ul className="column">
-                    {REAGENTS_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
+
                 </div>
               </div>
             </div>

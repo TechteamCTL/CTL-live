@@ -90,11 +90,13 @@ const getProducts = async (req, res, next) => {
 
     if (brandName) {
       queryCondition = true;
-      // 用, 去replace所有的-
+      // Use - to replace all ,
       let a = brandName.replace(/,/g, "-");
-      var regEx = new RegExp("^" + a);
+      // var regEx = new RegExp("^" + a); //敏感匹配
+      var regEx = new RegExp(a, "i"); // 不敏感匹配
       brandQueryCondition = { supplier: regEx };
     }
+    
 
 
     let attrsQueryCondition = [];

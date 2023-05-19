@@ -379,7 +379,7 @@ const ProductDetailsPageComponent = ({
                                 {item.length > 200 ?
                                   (<span> {item}</span>) :
                                   (item.length > 92 ?
-                                    (<span>*  {item.slice(0, 92)}-<br />&nbsp;&nbsp;&nbsp;&nbsp;{item.slice(92)}</span>) :
+                                    (<span>*  {item.slice(0, 92)}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{item.slice(92)}</span>) :
                                     (item.length > 2) ?
                                       (<span>*  {item}</span>) : (""))}
                               </div>;

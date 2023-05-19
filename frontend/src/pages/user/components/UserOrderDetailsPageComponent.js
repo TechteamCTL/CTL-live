@@ -300,7 +300,7 @@ const UserOrderDetailsPageComponent = ({
             <ListGroup.Item>
               PO Number: <span className="fw-bold">{purchaseNumber}</span>
             </ListGroup.Item>
-            {/*             <ListGroup.Item>
+            <ListGroup.Item>
               <div className="d-grid gap-2">
                 <PDFDownloadLink
                   document={
@@ -329,7 +329,7 @@ const UserOrderDetailsPageComponent = ({
               <div style={{ position: "relative", zIndex: 1 }}>
                 <div ref={paypalContainer} id="paypal-container-element"></div>
               </div>
-            </ListGroup.Item> */}
+            </ListGroup.Item>
             <ListGroup.Item>
               <Row>
                 {/*                 <Col>

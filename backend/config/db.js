@@ -12,6 +12,7 @@ const connectDB = async () => {
   } catch (error) {
     console.error("MongoDB connection FAIL");
     process.exit(1);
+    // 0 exit code means success, but 1 means that something went wrong and module exports connect
   }
 };
 
