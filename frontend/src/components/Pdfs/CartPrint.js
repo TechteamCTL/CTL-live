@@ -125,6 +125,16 @@ const CartPrint = (cartItems) => {
       borderTopWidth: 0,
       fontSize: 10,
     },
+    tableColDeiliveryHeader: {
+      width: "50%",
+      borderStyle: "solid",
+      marginTop: 8,
+      paddingLeft:"33%",
+      borderWidth: 0,
+      borderLeftWidth: 0,
+      borderTopWidth: 0,
+      fontSize: 10,
+    },
     tableColImageHeader: {
       width: "50%",
       height: "80px",
@@ -380,7 +390,7 @@ const CartPrint = (cartItems) => {
                   src="https://res.cloudinary.com/dxvwresim/image/upload/v1683083956/CTL%20Brand%20Images/CTL-blueDelivering_g3qe9u.png"
                 />
               </View>
-              <View style={styles.tableColHeader}>
+              <View style={styles.tableColDeiliveryHeader}>
                 <Text style={styles.tableCellBill}>CTL Australia</Text>
                 <Text style={styles.tableCellBill}>T : +61 498 139 213</Text>
                 <Text style={styles.tableCellBill}>
