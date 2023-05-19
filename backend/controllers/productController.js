@@ -257,7 +257,7 @@ const getProducts = async (req, res, next) => {
       .sort(sortCriteria)
       .limit(recordsPerPage);
 
-    if (searchQuery) {
+    /* if (searchQuery) {
       const searchWords = searchQuery.split(" ");
       products = products.sort((a, b) => {
         const aMatchCount = searchWords.filter((word) =>
@@ -268,7 +268,7 @@ const getProducts = async (req, res, next) => {
         ).length;
         return bMatchCount - aMatchCount;
       });
-    }
+    } */
 
     //  Math.ceil (x) 返回不小于x的最接近的整数
     res.json({
