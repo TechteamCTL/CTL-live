@@ -1,5 +1,7 @@
 import { Row, Col, ListGroup, Form } from "react-bootstrap";
 import RemoveFromCartComponent from "./RemoveFromCartComponent";
+import { useState, useEffect } from "react";
+
 
 import React from "react";
 
@@ -10,7 +12,19 @@ const CartItemComponent = ({
   changeCount = false,
 }) => {
 
+  const [qty, setQty] = useState(1);
 
+  useEffect(() => {
+    if (item.saleunit) {
+      setQty(item.cartProducts[0].quantity);
+    }
+  }, [item]);
+
+  const handleBlur = (e) => {
+    const newValue =
+      Math.round(e.target.value / item.saleunit) * item.saleunit;
+    setQty(newValue);
+  };
   return (
     <>
       <ListGroup.Item className="mt-1">
@@ -43,9 +57,12 @@ const CartItemComponent = ({
           <Col md={2}>
             <Form.Control
               type="number"
-              min={1}
+              min={item.saleunit}
+              step={item.saleunit}
+              onBlur={handleBlur}
               className="form-control"
-              value={item.cartProducts[0].quantity}
+              value={qty}
+
               onChange={changeCount ? (e) => changeCount(item.cartProducts[0]._id, e.target.value) : undefined} disabled={orderCreated}
             />
           </Col>

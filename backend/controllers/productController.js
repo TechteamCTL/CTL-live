@@ -257,7 +257,7 @@ const getProducts = async (req, res, next) => {
       .sort(sortCriteria)
       .limit(recordsPerPage);
 
-    /* if (searchQuery) {
+/*     if (searchQuery) {
       const searchWords = searchQuery.split(" ");
       products = products.sort((a, b) => {
         const aMatchCount = searchWords.filter((word) =>

@@ -1,16 +1,24 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema(
   {
     /* 
     因为跟addToCart(cartActions.js -> redux)的productId对不上，必须要把 productID 改为 productId， 要不然写不进去
     */
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     cartItems: [
       {
         productId: { type: String, required: false },
         name: { type: String, required: true },
         image: { type: String, required: true },
+        saleunit: {
+          type: Number,
+          required: true,
+        },
         cartProducts: [
           {
             price: { type: Number, required: true },
@@ -26,7 +34,7 @@ const cartSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Cart = mongoose.model('Cart', cartSchema);
+const Cart = mongoose.model("Cart", cartSchema);
 
 module.exports = Cart;
 

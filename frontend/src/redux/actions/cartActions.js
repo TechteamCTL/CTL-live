@@ -9,6 +9,7 @@ export const addToCart =
       {
         productId: data._id,
         name: data.name,
+        saleunit: data.saleunit,
         image: data.images[0].path ?? null,
         cartProducts: [{ ...selectedStock, quantity: qty }],
       },
@@ -36,6 +37,7 @@ export const reOrder = (orderId) => async (dispatch, getState) => {
   const reOrderProducts = cartItems.map((cartItem) => ({
     productId: cartItem.productId,
     name: cartItem.name,
+    saleunit: cartItem.saleunit,
     image: cartItem.image ?? null,
     cartProducts: [...cartItem.cartProducts],
   }));
@@ -47,6 +49,7 @@ export const reOrder = (orderId) => async (dispatch, getState) => {
         payload: {
           productId: product.productId,
           name: product.name,
+          saleunit: product.saleunit,
           image: product.image ?? null,
           cartProducts: product.cartProducts,
           ctlsku: product.ctlsku,
@@ -61,19 +64,20 @@ export const reOrder = (orderId) => async (dispatch, getState) => {
 };
 
 /* ****** REMOVE_ITEM ****** */
-export const removeFromCart = (id, qty, price) => async (dispatch, getState) => {
-  try {
-    const { data } = await axios.delete("/api/cart/delete/" + id);
-  // console.log("购物车-移除产品",id);
-    dispatch({
-      type: actionTypes.REMOVE_FROM_CART,
-      payload: { id: id, qty: qty, price: price },
-    });
-  } catch (error) {
-    console.log(error);
-  }
-  localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
-};
+export const removeFromCart =
+  (id, qty, price) => async (dispatch, getState) => {
+    try {
+      const { data } = await axios.delete("/api/cart/delete/" + id);
+      // console.log("购物车-移除产品",id);
+      dispatch({
+        type: actionTypes.REMOVE_FROM_CART,
+        payload: { id: id, qty: qty, price: price },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
+  };
 
 /* ****** EDIT_QUANTITY ****** */
 export const editQuantity = (id, qty) => (dispatch, getState) => {

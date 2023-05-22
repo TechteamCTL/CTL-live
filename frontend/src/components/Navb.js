@@ -816,9 +816,9 @@ const Navb = () => {
   var HAND_TOOLS_KNIVES_3 = [
     { label: "KNIVES", type: 2, link: HAND_TOOLS_KNIVES },
     {
-      label: "SAFTY KNIVES",
+      label: "SAFETY KNIVES",
       type: 3,
-      link: HAND_TOOLS_KNIVES + "&childCategoryName=SAFTY-KNIVES",
+      link: HAND_TOOLS_KNIVES + "&childCategoryName=SAFETY-KNIVES",
     },
     {
       label: "UTILITY KNIVES",

@@ -377,7 +377,7 @@ const ProductDetailsPageComponent = ({
                             product.description.split("*").map((item, index) => {
                               return <div key={index}>
                                 {item.length > 200 ?
-                                  (<span> {item}</span>) :
+                                  (<span>{item}</span>) :
                                   (item.length > 92 ?
                                     (<span>*  {item.slice(0, 92)}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{item.slice(92)}</span>) :
                                     (item.length > 2) ?
