@@ -24,10 +24,10 @@ import {
   removeFromCart,
   editQuantity,
 } from "../redux/actions/cartActions";
-import CartDropDown from "../pages/components/CartDropDown";
 import axios from "axios";
 import { fetchCartItemsLogin } from "../redux/actions/cartActions";
 import QuoteComponentHeader from "./SendEmail/QuoteComponentHeader";
+import CartDropDown from "../pages/user/components/CartDropDown";
 
 const HeaderComponent = () => {
   const dispatch = useDispatch();

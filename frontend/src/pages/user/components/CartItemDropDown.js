@@ -1,17 +1,15 @@
 import { Row, Col, ListGroup, Form } from "react-bootstrap";
-import RemoveFromCartComponent from "./RemoveFromCartComponent";
 import { useState, useEffect } from "react";
-
-
 import React from "react";
+import "./CartItemDropDown.css"
+import CartItemDropDownRemoveFromCart from "./CartItemDropDownRemoveFromCart";
 
-const CartItemComponent = ({
+const CartItemDropDown = ({
   item,
   removeFromCartHandler = false,
   orderCreated = false,
   changeCount = false,
 }) => {
-
   const [qty, setQty] = useState(1);
 
   useEffect(() => {
@@ -25,18 +23,18 @@ const CartItemComponent = ({
       Math.round(e.target.value / item.saleunit) * item.saleunit;
     setQty(newValue);
   };
+
   return (
-    <>
+    <> 
       <ListGroup.Item className="mt-1">
-        <Row>
+        <Row className="cartDropDownComponent_container">
           <Col md={1}>
             <div className="">
               {/* Image */}
               <img
                 crossOrigin="anonymous"
                 src={item.image ? item.image ?? null : null}
-
-                className="w-100 img_hovf"
+                className="w-100"
                 alt="s"
               />
               {/* Image */}
@@ -44,14 +42,14 @@ const CartItemComponent = ({
           </Col>
           <Col md={5}>
             <a href={`/product-details/${item.productId}`}>
-              <p className="" style={{ color: "#1E4881" }}>
-                <strong className="text-uppercase">{item.name}</strong>
+              <p className="" style={{color:"#1E4881"}}>
+                <span className="text-uppercase">{item.name}</span>
               </p>
             </a>
           </Col>
           <Col md={3}>
-            <p className="m-0">Item: <span className="fw-bold">{item.cartProducts[0].attrs}</span></p>
-            <p className="m-0">Unit Price: $<span className="fw-bold">{(item.cartProducts[0].price).toFixed(2)}</span></p>
+            <p className="m-0 cart_product_attr">Item: <span className="cart_product_detail">{item.cartProducts[0].attrs}</span></p>
+            <p className="m-0 cart_product_attr">Each: $<span className="cart_product_detail">{(item.cartProducts[0].price).toFixed(2)}</span></p>
             {/*  */}
           </Col>
           <Col md={2}>
@@ -66,8 +64,8 @@ const CartItemComponent = ({
             />
           </Col>
           {/* delete button trash */}
-          <Col md={1}>
-            <RemoveFromCartComponent
+          <Col md={1} className="remove_from_cart_btn">
+            <CartItemDropDownRemoveFromCart
               orderCreated={orderCreated}
               productId={item.cartProducts[0]._id}
               quantity={item.quantity}
@@ -81,4 +79,4 @@ const CartItemComponent = ({
   );
 };
 
-export default CartItemComponent;
+export default CartItemDropDown;

@@ -122,13 +122,61 @@ const removeAllItems = async (req, res) => {
   }
 };
 
+const updateItem = async (req, res) => {
+  try {
+    const cart = await Cart.findOne({ userId: req.user._id });
+
+    if (cart) {
+      for (let i = 0; i < cartItems.length; i++) {
+        let cartProduct = cart.cartItems.find(
+          (p) => p.cartProducts[0]._id == cartItems[i].cartProducts[0]._id
+        );
+        if (cartProduct) {
+          cartProduct.cartProducts[0].quantity +=
+            cartItems[i].cartProducts[0].quantity;
+        }
+      }
+
+      await cart.save();
+    }
+
+    const item = cart.items.id(req.params.itemId);
+
+    if (!item) {
+      throw new Error("Item not found");
+    }
+
+    if (req.body.productId) {
+      item.product = req.body.productId;
+    }
+
+    if (req.body.quantity) {
+      item.quantity = req.body.quantity;
+    }
+
+    await cart.save();
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        cart,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Unable to update item in cart",
+    });
+  }
+};
+
 module.exports = {
   getCart,
   addToCart,
   deleteItem,
   removeAllItems,
+  updateItem,
 };
-// updateItem,
 // createCart,
 // getUserCart,
 
@@ -169,39 +217,7 @@ const getUserCart = async (req, res) => {
   }
 };
 
-const updateItem = async (req, res) => {
-  try {
-    const cart = await Cart.findOne({ userId: req.user._id });
 
-    const item = cart.items.id(req.params.itemId);
-
-    if (!item) {
-      throw new Error("Item not found");
-    }
-
-    if (req.body.productId) {
-      item.product = req.body.productId;
-    }
-
-    if (req.body.quantity) {
-      item.quantity = req.body.quantity;
-    }
-
-    await cart.save();
-
-    res.status(200).json({
-      status: "success",
-      data: {
-        cart,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "error",
-      message: "Unable to update item in cart",
-    });
-  }
-};
 
 const deleteItem = async (req, res) => {
   try {
