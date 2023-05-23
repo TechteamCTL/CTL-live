@@ -2,7 +2,6 @@ import { Row, Col, ListGroup, Form } from "react-bootstrap";
 import RemoveFromCartComponent from "./RemoveFromCartComponent";
 import { useState, useEffect } from "react";
 
-
 import React from "react";
 
 const CartItemComponent = ({
@@ -11,9 +10,8 @@ const CartItemComponent = ({
   orderCreated = false,
   changeCount = false,
 }) => {
-
   const [qty, setQty] = useState(1);
-
+  
   useEffect(() => {
     if (item.saleunit) {
       setQty(item.cartProducts[0].quantity);
@@ -21,10 +19,20 @@ const CartItemComponent = ({
   }, [item]);
 
   const handleBlur = (e) => {
-    const newValue =
-      Math.round(e.target.value / item.saleunit) * item.saleunit;
+    const newValue = Math.round(e.target.value / item.saleunit) * item.saleunit;
     setQty(newValue);
+    if (changeCount) {
+      changeCount(item.cartProducts[0]._id, newValue);
+    }
   };
+
+  const handleChange = (e) => {
+    setQty(e.target.value);
+    if (changeCount) {
+      changeCount(item.cartProducts[0]._id, e.target.value);
+    }
+  };
+
   return (
     <>
       <ListGroup.Item className="mt-1">
@@ -35,7 +43,6 @@ const CartItemComponent = ({
               <img
                 crossOrigin="anonymous"
                 src={item.image ? item.image ?? null : null}
-
                 className="w-100 img_hovf"
                 alt="s"
               />
@@ -50,8 +57,16 @@ const CartItemComponent = ({
             </a>
           </Col>
           <Col md={3}>
-            <p className="m-0">Item: <span className="fw-bold">{item.cartProducts[0].attrs}</span></p>
-            <p className="m-0">Unit Price: $<span className="fw-bold">{(item.cartProducts[0].price).toFixed(2)}</span></p>
+            <p className="m-0">
+              Item:{" "}
+              <span className="fw-bold">{item.cartProducts[0].attrs}</span>
+            </p>
+            <p className="m-0">
+              Unit Price: $
+              <span className="fw-bold">
+                {item.cartProducts[0].price.toFixed(2)}
+              </span>
+            </p>
             {/*  */}
           </Col>
           <Col md={2}>
@@ -62,7 +77,8 @@ const CartItemComponent = ({
               onBlur={handleBlur}
               className="form-control"
               value={qty}
-              onChange={changeCount ? (e) => changeCount(item.cartProducts[0]._id, e.target.value) : undefined} disabled={orderCreated}
+              onChange={handleChange}
+              disabled={orderCreated}
             />
           </Col>
           {/* delete button trash */}
@@ -72,7 +88,9 @@ const CartItemComponent = ({
               productId={item.cartProducts[0]._id}
               quantity={item.quantity}
               price={item.price}
-              removeFromCartHandler={removeFromCartHandler ? removeFromCartHandler : undefined}
+              removeFromCartHandler={
+                removeFromCartHandler ? removeFromCartHandler : undefined
+              }
             />
           </Col>
         </Row>

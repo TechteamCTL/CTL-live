@@ -406,6 +406,7 @@ const adminCreateProduct = async (req, res, next) => {
       category,
       attributesTable,
       stock,
+      standards
     } = req.body;
 
     product.name = name;
@@ -416,6 +417,7 @@ const adminCreateProduct = async (req, res, next) => {
     product.slrcurrentbuyingprice = slrcurrentbuyingprice;
     product.supplier = supplier;
     product.category = category;
+    product.category = standards || "";
     if (stock.length > 0) {
       product.stock = [];
       stock.map((item) => {
@@ -519,6 +521,7 @@ const adminUpdateProduct = async (req, res, next) => {
       saleunit,
       max,
       stock,
+      standards
     } = req.body;
     product.name = name || product.name;
     product.description = description || product.description;
@@ -532,6 +535,7 @@ const adminUpdateProduct = async (req, res, next) => {
       slrcurrentbuyingprice || product.slrcurrentbuyingprice;
     product.saleunit = saleunit || product.saleunit;
     product.max = max || product.max;
+    product.standards = standards || product.standards;
     if (stock.length > 0) {
       product.stock = [];
       stock.map((item) => {

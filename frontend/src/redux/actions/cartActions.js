@@ -18,7 +18,6 @@ export const addToCart =
     try {
       const { data } = await axios.post(`/api/cart/add`, { cartItems });
       // console.log("cartDDDDDDAATTTTTTT", cartItems[0]);
-
       dispatch({
         type: actionTypes.ADD_TO_CART,
         payload: cartItems[0],
@@ -80,13 +79,21 @@ export const removeFromCart =
   };
 
 /* ****** EDIT_QUANTITY ****** */
-export const editQuantity = (id, qty) => (dispatch, getState) => {
-  dispatch({
-    type: actionTypes.EDIT_QUANTITY,
-    payload: { id: id, quantity: qty },
-  });
-  localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
+export const editQuantity = (id, qty) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: actionTypes.EDIT_QUANTITY,
+      payload: { id: id, quantity: qty },
+    });
+    
+    localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
+    const { data } = await axios.put("/api/cart/update/" + id, { quantity: qty });
+    console.log("cartAction的 编辑购物车 数据", data);
+  } catch (error) {
+    console.log(error);
+  }
 };
+
 
 /* ****** EMPTY_CART ****** */
 export const emptyCart = () => async (dispatch) => {

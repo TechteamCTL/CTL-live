@@ -8,16 +8,16 @@ const transporter = nodemailer.createTransport({
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
-  },
+  }, 
 });
 
 /* const transporter = nodemailer.createTransport({
-  host: 'mail.ctlservices.com.au',
+  host: 'ctlaustralia.com.au',
   port: 465,
   secure: true, 
   auth: {
-    user: 'no-reply@ctlservices.com.au',
-    pass: 'CTLadmin007'
+    user: process.env.TESTTEMAIL,
+    pass: process.env.TESTWORD,
   },
 }); */
 
@@ -32,7 +32,7 @@ const quoteProduct = async (req, res, next) => {
 
     message = {
       from,
-      to: process.env.QEMAIL,
+      to: process.env.EMAIL,
       subject: `Quote New Products: ${productName}`,
       text: `
     This is: ${from},
@@ -63,7 +63,7 @@ const quotePrice = async (req, res, next) => {
 
     message = {
       from,
-      to: process.env.QEMAIL,
+      to: process.env.EMAIL,
       subject: `Quote Price: ${productName}`,
       text: `
     This is: ${from},

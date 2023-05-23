@@ -126,32 +126,23 @@ const updateItem = async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.user._id });
 
-    if (cart) {
-      for (let i = 0; i < cartItems.length; i++) {
-        let cartProduct = cart.cartItems.find(
-          (p) => p.cartProducts[0]._id == cartItems[i].cartProducts[0]._id
-        );
-        if (cartProduct) {
-          cartProduct.cartProducts[0].quantity +=
-            cartItems[i].cartProducts[0].quantity;
+    let productIndex = -1;
+    let itemIndex = -1;
+    cart.cartItems.forEach((item, i) => {
+      item.cartProducts.forEach((product, j) => {
+        if (product._id.toString() === req.params.itemId) {
+          itemIndex = i;
+          productIndex = j;
         }
-      }
+      });
+    });
 
-      await cart.save();
-    }
-
-    const item = cart.items.id(req.params.itemId);
-
-    if (!item) {
+    if (itemIndex === -1 || productIndex === -1) {
       throw new Error("Item not found");
     }
 
-    if (req.body.productId) {
-      item.product = req.body.productId;
-    }
-
     if (req.body.quantity) {
-      item.quantity = req.body.quantity;
+      cart.cartItems[itemIndex].cartProducts[productIndex].quantity = req.body.quantity;
     }
 
     await cart.save();
@@ -169,6 +160,7 @@ const updateItem = async (req, res) => {
     });
   }
 };
+
 
 module.exports = {
   getCart,

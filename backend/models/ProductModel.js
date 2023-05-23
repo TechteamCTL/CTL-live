@@ -27,14 +27,6 @@ const productSchema = mongoose.Schema(
           type: String,
           required: true,
         },
-/*         saleUnits: [
-          {
-            unit: {
-              type: String,
-              required: true,
-            },   
-          },
-        ], */
         count: {
           type: Number,
           required: true,
@@ -95,12 +87,10 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-
-    // attrs: attributes, 这个网站里，有两个： color and ram
-    attrs: [
-      { key: { type: String }, value: { type: String } },
-      // [{ key: "color", value: "red" }, { key: "size", value: "1 TB" }]
-    ],
+    standards: {
+      type: String,
+      required: false,
+    }
   },
   {
     // 自动加时间戳

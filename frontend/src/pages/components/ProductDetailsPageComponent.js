@@ -85,7 +85,6 @@ const ProductDetailsPageComponent = ({
   // console.log(product.description);
   // const description[]=product.description.split('.');
 
-
   const addToCartHandler = () => {
     reduxDispatch(addToCartReduxAction(id, qty, selectedStock));
     setShowCartMessage(true);
@@ -107,7 +106,7 @@ const ProductDetailsPageComponent = ({
       .then((data) => {
         setProduct(data);
         setLoading(false);
-        setQty(product.saleunit)
+        setQty(product.saleunit);
       })
       .catch((er) =>
         setError(
@@ -177,6 +176,8 @@ const ProductDetailsPageComponent = ({
     setQty(newValue);
   };
 
+  
+
   return (
     <Container className="ms-3 " fluid>
       <BreadcrumbComponent />
@@ -195,7 +196,6 @@ const ProductDetailsPageComponent = ({
           />
           <Row className="mt-4 ">
             {/* ************   Filter, has removed, now just take 1 space  ***************  */}
-
 
             {/* ************   Product Pictures Display Carousel  ***************  */}
             <Col lg={4} className="m-1">
@@ -370,27 +370,67 @@ const ProductDetailsPageComponent = ({
                         eventKey="Description"
                         title="Specifications"
                       >
-                        <div style={{ whiteSpace: "pre-wrap", textAlign: "left", width: "97%" }}>
+                        <div
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            textAlign: "left",
+                            width: "97%",
+                          }}
+                        >
                           {/* {product.description} */}
-                          {(product.description) ? (
-
-                            product.description.split("*").map((item, index) => {
-                              return <div key={index}>
-                                {item.length > 200 ?
-                                  (<span>{item}</span>) :
-                                  (item.length > 92 ?
-                                    (<span>*  {item.slice(0, 92)}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{item.slice(92)}</span>) :
-                                    (item.length > 2) ?
-                                      (<span>*  {item}</span>) : (""))}
-                              </div>;
-                            }))
-                            : ("")}
-
+                          {product.description
+                            ? product.description
+                                .split("*")
+                                .map((item, index) => {
+                                  return (
+                                    <div key={index}>
+                                      {item.length > 200 ? (
+                                        <span>{item}</span>
+                                      ) : item.length > 98 ? (
+                                        <span>
+                                          * {item.slice(0, 98)}
+                                          <br />
+                                          &nbsp;&nbsp;&nbsp;&nbsp;
+                                          {item.slice(98)}
+                                        </span>
+                                      ) : item.length > 2 ? (
+                                        <span>* {item}</span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                  );
+                                })
+                            : ""}
                         </div>
                       </Tab>
                       {/* 看一下，如果pdfs 路径里面 没有值，就显示null，有的话，就map 一下 */}
                       {product.pdfs && product.pdfs.length > 0 ? (
                         <Tab eventKey="Download" title="Datasheet">
+                          {product.pdfs &&
+                            product.pdfs.map((pdf, idx) => {
+                              const pdfName = pdf.path.split("/").pop(); // Get the file name from the path
+                              return (
+                                <div
+                                  className="border border-light border-2 m-3 p-3"
+                                  key={idx}
+                                >
+                                  <a
+                                    href={pdf.path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    download
+                                  >
+                                    {pdfName}
+                                  </a>
+                                </div>
+                              );
+                            })}
+                        </Tab>
+                      ) : null}
+                      {/* Standards */}
+                      {product.pdfs && product.pdfs.length > 0 ? (
+                        <Tab eventKey="Standards" title="Standards">
                           {product.pdfs &&
                             product.pdfs.map((pdf, idx) => {
                               const pdfName = pdf.path.split("/").pop(); // Get the file name from the path
