@@ -429,7 +429,7 @@ const ProductDetailsPageComponent = ({
                         </Tab>
                       ) : null}
                       {/* Standards */}
-                      {product.pdfs && product.pdfs.length > 0 ? (
+                     {/*  {product.pdfs && product.pdfs.length > 0 ? (
                         <Tab eventKey="Standards" title="Standards">
                           {product.pdfs &&
                             product.pdfs.map((pdf, idx) => {
@@ -451,7 +451,7 @@ const ProductDetailsPageComponent = ({
                               );
                             })}
                         </Tab>
-                      ) : null}
+                      ) : null} */}
                     </Tabs>
                   </Container>
                 </Col>
