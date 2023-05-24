@@ -120,7 +120,7 @@ module.exports = async (email, subject, text) => {
                                       <span style="font-size:14px;font-weight:normal;color:#000000">
                                         <b>
                                         <br />
-                                        Welcome to register with us,
+                                        Thank you for registering with us,
                                         <br />
                                         </b>
                                         <br />
