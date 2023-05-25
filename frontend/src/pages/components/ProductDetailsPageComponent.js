@@ -176,7 +176,20 @@ const ProductDetailsPageComponent = ({
     setQty(newValue);
   };
 
+  const [standard, setStandard] = useState([]);
 
+  useEffect(() => {
+    if (product?.standards) {
+      if (product.standards.includes("/")) {
+        const splittedStandards = product.standards.split("/");
+        setStandard(splittedStandards);
+      } else {
+        setStandard([product.standards]);
+      }
+    }
+  }, [product]);
+
+  console.log("standard", standard);
 
   return (
     <Container className="ms-3 " fluid>
@@ -358,7 +371,7 @@ const ProductDetailsPageComponent = ({
               {/* ************   Product details with download pdf  ***************  */}
               <Row>
                 <Col className="mt-5">
-                  <Container className="border border-light border-5">
+                  <Container className="border border-light border-5" >
                     <Tabs
                       defaultActiveKey="Description"
                       transition={false}
@@ -370,22 +383,38 @@ const ProductDetailsPageComponent = ({
                         eventKey="Description"
                         title="Specifications"
                       >
-                        <div style={{ whiteSpace: "pre-wrap", textAlign: "left", width: "97%" }}>
+                        <div
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            textAlign: "left",
+                            width: "97%",
+                          }}
+                        >
                           {/* {product.description} */}
-                          {(product.description) ? (
-
-                            product.description.split("*").map((item, index) => {
-                              return <div key={index}>
-                                {item.length > 200 ?
-                                  (<span>{item}</span>) :
-                                  (item.length > 98 ?
-                                    (<span>*  {item.slice(0, 98)}<br />&nbsp;&nbsp;&nbsp;&nbsp;{item.slice(98)}</span>) :
-                                    (item.length > 2) ?
-                                      (<span>*  {item}</span>) : (""))}
-                              </div>;
-                            }))
-                            : ("")}
-
+                          {product.description
+                            ? product.description
+                                .split("*")
+                                .map((item, index) => {
+                                  return (
+                                    <div key={index}>
+                                      {item.length > 200 ? (
+                                        <span>{item}</span>
+                                      ) : item.length > 98 ? (
+                                        <span>
+                                          * {item.slice(0, 98)}
+                                          <br />
+                                          &nbsp;&nbsp;&nbsp;&nbsp;
+                                          {item.slice(98)}
+                                        </span>
+                                      ) : item.length > 2 ? (
+                                        <span>* {item}</span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </div>
+                                  );
+                                })
+                            : ""}
                         </div>
                       </Tab>
                       {/* 看一下，如果pdfs 路径里面 没有值，就显示null，有的话，就map 一下 */}
@@ -413,27 +442,22 @@ const ProductDetailsPageComponent = ({
                         </Tab>
                       ) : null}
                       {/* Standards */}
-                      {product.pdfs && product.pdfs.length > 0 ? (
+                      {product.standards && product.standards.length > 0 ? (
                         <Tab eventKey="Standards" title="Standards">
-                          {product.pdfs &&
-                            product.pdfs.map((pdf, idx) => {
-                              const pdfName = pdf.path.split("/").pop(); // Get the file name from the path
-                              return (
-                                <div
-                                  className="border border-light border-2 m-3 p-3"
-                                  key={idx}
-                                >
-                                  <a
-                                    href={pdf.path}
+                          <div className="border border-light border-2 m-3 p-3 d-flex justify-content-left">
+                            {standard &&
+                              standard.map((item, index) => {
+                                return (
+                                  <img
+                                    key={index}
+                                    src={`https://res.cloudinary.com/dxvwresim/image/upload/c_scale,h_120/STANDARDS/${item}.jpg`}
                                     target="_blank"
-                                    rel="noopener noreferrer"
-                                    download
-                                  >
-                                    {pdfName}
-                                  </a>
-                                </div>
-                              );
-                            })}
+                                    alt=""
+                                    style={{ maxWidth: "100%", height: "auto" }}
+                                  />
+                                );
+                              })}
+                          </div>
                         </Tab>
                       ) : null}
                     </Tabs>

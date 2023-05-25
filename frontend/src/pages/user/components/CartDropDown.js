@@ -19,7 +19,7 @@ const CartDropDown = ({
     reduxDispatch(removeFromCart(id, qty, price));
   };
 
-  console.log("下拉购物车cartItems", cartItems);
+  // console.log("下拉购物车cartItems", cartItems);
 
   function handleProceedToCheckout() {
     window.location.reload();

@@ -64,9 +64,6 @@ const Navb = () => {
       link: "/product-list?brandName=INTEGRATED-POWER",
       Brand_Logo: "/images/Brands/integrated-power.jpg",
     },
-
-
-
   ];
 
   /* ************** Categories ************* */
@@ -831,6 +828,7 @@ const Navb = () => {
       link: HAND_TOOLS_KNIVES + "&childCategoryName=BLADE-REPLACEMENT",
     },
   ];
+  // #endregion
 
   /* ELECTRICAL */
   var ELECTRICAL = "/product-list?categoryName=ELECTRICAL";
@@ -1085,7 +1083,6 @@ const Navb = () => {
       type: 3,
       link: REAGENTS + "&subCategoryName=SILVER-NITRATE",
     },
-
   ];
   var REAGENTS_2 = [
     {
@@ -1108,7 +1105,6 @@ const Navb = () => {
       type: 3,
       link: REAGENTS + "&subCategoryName=ANTISCALANT",
     },
-
   ];
   var REAGENTS_3 = [
     {
@@ -1131,7 +1127,6 @@ const Navb = () => {
       type: 3,
       link: REAGENTS + "&subCategoryName=LEACH-AID",
     },
-
   ];
   // var REAGENTS_3 = [
   //   {
@@ -1255,7 +1250,6 @@ const Navb = () => {
       type: 3,
       link: INDUSTRIAL_DRILLING + "&childCategoryName=HSS-BROACH-CUTTERS",
     },
-
   ];
   var INDUSTRIAL_LUBRICATION_EQUIPMENT =
     INDUSTRIAL + "&subCategoryName=LUBRICATION-EQUIPMENT";
@@ -1769,8 +1763,7 @@ const Navb = () => {
                         </li>
                       );
                     })}
-
-                    {INDUSTRIAL_2.map((item) => {
+                    {INDUSTRIAL_3.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
                           <a href={item.link}>{item.label} </a>
@@ -1779,7 +1772,7 @@ const Navb = () => {
                     })}
                   </ul>
                   <ul className="column">
-                    {INDUSTRIAL_3.map((item) => {
+                    {INDUSTRIAL_2.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
                           <a href={item.link}>{item.label} </a>
@@ -2046,7 +2039,6 @@ const Navb = () => {
                       );
                     })}
                   </ul>
-
                 </div>
               </div>
             </div>

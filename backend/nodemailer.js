@@ -1,3 +1,6 @@
+/* ------------ */
+
+
 /* const nodemailer = require('nodemailer');
 
 const sendQuoteEmail = async (to, subject, text, attachments) => {
@@ -9,21 +12,6 @@ const sendQuoteEmail = async (to, subject, text, attachments) => {
     },
   });
 
-  const mailOptions = {
-    from: 'techctlaustralia@gmail.com',
-    to,
-    subject,
-    text,
-    attachments,
-  };
-
-  try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`Email sent: ${info.messageId}`);
-  } catch (error) {
-    console.error('Error sending email:', error);
-  }
-};
  */
 
 let transporter = nodemailer.createTransport({
@@ -43,3 +31,4 @@ let transporter = nodemailer.createTransport({
       ? console.log(err)
       : console.log(`=== Server is ready to take messages: ${success} ===`);
    });
+   

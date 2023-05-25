@@ -11,7 +11,7 @@ const QuoteComponentHeader = (userInfo) => {
     image: null,
   });
 
-  console.log("userInfouserInfo",userInfo);
+  // console.log("userInfouserInfo",userInfo);
 
 
   const [isSending, setIsSending] = useState(false);

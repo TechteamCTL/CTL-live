@@ -34,7 +34,7 @@ const HeaderComponent = () => {
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
   const itemsCount = useSelector((state) => state.cart.itemsCount);
   const cartSubtotal = useSelector((state) => state.cart.cartSubtotal);
-console.log("userInfouserInfo",userInfo);
+// console.log("userInfouserInfo",userInfo);
   // const { categories } = useSelector((state) => state.getCategories);
 
   // const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
@@ -71,7 +71,8 @@ console.log("userInfouserInfo",userInfo);
       .catch((er) => console.log(er));
     reduxDispatch(fetchCartItemsLogin());
   }, []);
-  console.log("用户购物车", userCart);
+
+  // console.log("用户购物车", userCart);
 
   const [showModal, setShowModal] = useState(false);
   const [product, setProduct] = useState(null);
