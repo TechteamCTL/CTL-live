@@ -832,72 +832,6 @@ const Navb = () => {
     },
   ];
 
-  //#endregion
-
-  /* POWER TOOLS */
-  // var POWER_TOOLS = "/product-list?categoryName=POWER-TOOLS";
-  // // #region
-  // var POWER_TOOLS_1 = [
-  //   {
-  //     label: "POWER PACKS",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=POWER-PACKS",
-  //   },
-  //   { label: "DRILLS", type: 3, link: POWER_TOOLS + "&subCategoryName=DRILLS" },
-  //   {
-  //     label: "IMPACTS & FASTENING",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=IMPACTS-FASTENING",
-  //   },
-  //   {
-  //     label: "METAL WORKING",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=METAL-WORKING",
-  //   },
-  // ];
-
-  // var POWER_TOOLS_2 = [
-  //   {
-  //     label: "JOBSITE CLEAN UP",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=JOBSITE-CLEAN-UP",
-  //   },
-  //   {
-  //     label: "LIGHTING",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=LIGHTING",
-  //   },
-  //   {
-  //     label: "JOBSITE AUDIO",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=JOBSITE-AUDIO",
-  //   },
-  //   {
-  //     label: "ELECTRICAL",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=ELECTRICAL",
-  //   },
-  // ];
-  // var POWER_TOOLS_3 = [
-  //   {
-  //     label: "TEST & MEASURE",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=TEST-MEASURE",
-  //   },
-  //   { label: "LASERS", type: 3, link: POWER_TOOLS + "&subCategoryName=LASERS" },
-  //   {
-  //     label: "SPECIALITY TOOLS",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=SPECIALITY TOOLS",
-  //   },
-  //   {
-  //     label: "BATTERIES & CHARGERS",
-  //     type: 3,
-  //     link: POWER_TOOLS + "&subCategoryName=BATTERIES-CHARGERS",
-  //   },
-  // ];
-  //#endregion
-
   /* ELECTRICAL */
   var ELECTRICAL = "/product-list?categoryName=ELECTRICAL";
   // #region
@@ -1296,6 +1230,32 @@ const Navb = () => {
       type: 3,
       link: INDUSTRIAL_DRILLING + "&childCategoryName=DRILL-SETS",
     },
+    {
+      label: "TCT HOLESAWS",
+      type: 3,
+      link: INDUSTRIAL_DRILLING + "&childCategoryName=TCT-HOLESAWS",
+    },
+    {
+      label: "TCT HOLE CUTTER",
+      type: 3,
+      link: INDUSTRIAL_DRILLING + "&childCategoryName=TCT-HOLE-CUTTER",
+    },
+    {
+      label: "ARBORS",
+      type: 3,
+      link: INDUSTRIAL_DRILLING + "&childCategoryName=ARBORS",
+    },
+    {
+      label: "HSS HOLESAWS",
+      type: 3,
+      link: INDUSTRIAL_DRILLING + "&childCategoryName=HSS-HOLESAWS",
+    },
+    {
+      label: "HSS BROACH CUTTERS",
+      type: 3,
+      link: INDUSTRIAL_DRILLING + "&childCategoryName=HSS-BROACH-CUTTERS",
+    },
+
   ];
   var INDUSTRIAL_LUBRICATION_EQUIPMENT =
     INDUSTRIAL + "&subCategoryName=LUBRICATION-EQUIPMENT";

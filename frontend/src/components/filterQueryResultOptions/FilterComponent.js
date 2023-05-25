@@ -256,6 +256,7 @@ const FilterComponent = () => {
     { label: "ENCLOSURES", type: 2, link: ELECTRICAL1 + "&subCategoryName=ENCLOSURES" },
     { label: "LIGHTING", type: 2, link: ELECTRICAL1 + "&subCategoryName=LIGHTING" },
     { label: "MOTORS", type: 2, link: ELECTRICAL1 + "&subCategoryName=MOTORS" },
+    { label: "WIRING ACCESSORIES", type: 2, link: ELECTRICAL1 + "&subCategoryName=WIRING-ACCESSORIES" },
   ];
 
 
