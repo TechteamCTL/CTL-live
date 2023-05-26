@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
 // Nodemailer configuration
-const transporter = nodemailer.createTransport({
+/* const transporter = nodemailer.createTransport({
   host: "smtp.office365.com",
   port: 587,
   secure: false, 
@@ -9,9 +9,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
   }, 
-});
+});*/
 
-/* const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: 'smtp.office365.com',
   port: 587,
   secure: false, 
@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport({
     user: 'techteam@ctlservices.com.au',
     pass: 'CTLdevelopers!',
   },
-}); */
+});
 
 
 const quoteProduct = async (req, res, next) => {
