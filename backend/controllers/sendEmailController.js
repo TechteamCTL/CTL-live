@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 
 // Nodemailer configuration
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp.office365.com",
   port: 465,
   secure: true,
   auth: {
