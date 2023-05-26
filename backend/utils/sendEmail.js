@@ -4,8 +4,8 @@ module.exports = async (email, subject, text) => {
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.office365.com",
-      port: 465,
-      secure: true,
+  port: 587,
+  secure: false, 
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
