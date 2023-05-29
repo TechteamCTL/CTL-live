@@ -3,17 +3,17 @@ const nodemailer = require("nodemailer");
 module.exports = async (email, subject, text) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      host: 'smtp.office365.com',
+      port: 587,
+      secure: false, 
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
+        user: process.env.CTLEMAIL,
+        pass: process.env.CTLEMAILPASSWORD,
       },
     });
 
     await transporter.sendMail({
-      from: process.env.EMAIL,
+      from: process.env.CTLEMAIL,
       to: email,
       subject: subject,
       text: text,

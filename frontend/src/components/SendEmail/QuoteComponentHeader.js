@@ -198,7 +198,7 @@ const QuoteComponentHeader = (userInfo) => {
                   formData.image.name
                 ) : (
                   <>
-                    <p id="file-name">No image chosen</p>
+                    <p id="file-name" className="fw-bold">Please Upload Image or PDF</p>
                     <p>Drag and drop your image here, or click to select image</p>
                   </>
                 )}

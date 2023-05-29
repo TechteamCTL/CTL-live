@@ -1,25 +1,25 @@
 const nodemailer = require("nodemailer");
 
 // Nodemailer configuration
-const transporter = nodemailer.createTransport({
+/* const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
   auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
+    user: process.env.GMAIL,
+    pass: process.env.GMAILPASSWORD,
   }, 
-});
+}); */
 
-/* const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   host: 'smtp.office365.com',
   port: 587,
   secure: false, 
   auth: {
-    user: 'techteam@ctlservices.com.au',
-    pass: 'CTLdevelopers!',
+    user: process.env.CTLEMAIL,
+    pass: process.env.CTLEMAILPASSWORD,
   },
-}); */
+});
 
 
 const quoteProduct = async (req, res, next) => {
@@ -30,23 +30,26 @@ const quoteProduct = async (req, res, next) => {
       file = req.files.image;
     }
 
-    message = {
+    let message = {
       from,
-      to: process.env.QEMAIL,
+      to: process.env.GMAIL,
       subject: `Quote New Products: ${productName}`,
       text: `
     This is: ${from},
 
     Please find the product for us: ${productName},
 
-    Prodcut Description: ${description}`,
-      attachments: [
+    Product Description: ${description}`
+    };
+
+    if (file) {
+      message.attachments = [
         {
           filename: file.name,
           content: file.data,
-        },
-      ],
-    };
+        }
+      ]
+    }
 
     // Send email
     await transporter.sendMail(message);
@@ -56,6 +59,7 @@ const quoteProduct = async (req, res, next) => {
     next(error);
   }
 };
+
 
 const quotePrice = async (req, res, next) => {
   try {
