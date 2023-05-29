@@ -10,7 +10,7 @@ const CartItemComponent = ({
   orderCreated = false,
   changeCount = false,
 }) => {
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(item.cartProducts[0].quantity);
   
   useEffect(() => {
     if (item.saleunit) {

@@ -10,13 +10,11 @@ const CartItemDropDown = ({
   orderCreated = false,
   changeCount = false,
 }) => {
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(item.cartProducts[0].quantity);
   
   useEffect(() => {
-    if (item.saleunit) {
       setQty(item.cartProducts[0].quantity);
-    }
-  }, [item]);
+  }, [item.cartProducts[0].quantity]);
 
   const handleBlur = (e) => {
     const newValue = Math.round(e.target.value / item.saleunit) * item.saleunit;
