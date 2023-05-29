@@ -19,6 +19,7 @@ import { useDispatch } from "react-redux";
 import QuoeteManagementApproval from "../../../components/SendEmail/QuoeteManagementApproval";
 import CartPrint from "../../../components/Pdfs/CartPrint";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import axios from "axios";
 import "./invoicePDF.css";
 
 const UserCartDetailsPageComponent = ({
@@ -133,6 +134,7 @@ const UserCartDetailsPageComponent = ({
         return {
           productId: item.productId,
           name: item.name,
+          saleunit: item.saleunit,
           image: item.image ? item.image ?? null : null,
           cartProducts: [
             {
@@ -160,12 +162,14 @@ const UserCartDetailsPageComponent = ({
     };
 
     createOrder(orderData)
-      .then((data) => {
+      .then(async (data) => {
         if (data) {
           reduxDispatch(emptyCart());
           setTimeout(() => {
             navigate("/user/my-orders");
           }, 1000);
+          const res = await axios.post("/api/sendemail/newOrderRemind", {from: userInfo.email, PO:purchaseNumber, price:(cartSubtotal * 1.1).toFixed(2)});
+          console.log(res.data);
         }
       })
       .catch((err) => console.log(err));
@@ -194,7 +198,7 @@ const UserCartDetailsPageComponent = ({
 
   const userEmail = userInfo.email?.split("@")[1]
 
-  // console.log("USERcartItems", userEmail);
+  // console.log("????????cartItems", cartItems);
 
   return (
     <>
@@ -237,7 +241,7 @@ const UserCartDetailsPageComponent = ({
                         </span>
                       ) : (
                         <span className="btn btn-success p-0 ps-1 pe-1 download_cart_btn">
-                          Download Cart <i class="bi bi-file-earmark-pdf"></i>
+                          Download Cart <i className="bi bi-file-earmark-pdf"></i>
                         </span>
                       )
                     }
@@ -325,7 +329,7 @@ const UserCartDetailsPageComponent = ({
                         <span>Loading Cart...</span>
                       ) : (
                         <span>
-                          Download Cart <i class="bi bi-file-earmark-pdf"></i>
+                          Download Cart <i className="bi bi-file-earmark-pdf"></i>
                         </span>
                       )
                     }
@@ -361,44 +365,28 @@ const UserCartDetailsPageComponent = ({
                 <h4 className="m-0">Order Summary</h4>
               </ListGroup.Item>
               <ListGroup.Item>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
                   <p className="p-0 m-0">
-                    Total: <span className="fw-bold">{cartItems.length}</span>{" "}
-                    {cartItems.length === 1 ? "Product" : "Products"}
+                    Total: <span className="float-end"><span className="fw-bold ">{cartItems.length}</span>{" "}
+                    {cartItems.length === 1 ? "Product" : "Products"}</span>
                   </p>
-                  {/* <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={removeAllItems}
-                    className="p-0 ps-1 pe-1"
-                  >
-                    Empty Cart <i className="bi bi-trash" />
-                  </Button> */}
-                </div>
               </ListGroup.Item>
 
               <ListGroup.Item>
                 Item Price:{" "}
-                <span className="fw-bold">
+                <span className="fw-bold float-end">
                   {" "}
                   $ {cartSubtotal.toFixed(2).toLocaleString()}
                 </span>
               </ListGroup.Item>
               <ListGroup.Item>
                 Total GST{" "}
-                <span className="fw-bold">
+                <span className="fw-bold float-end">
                   $ {(cartSubtotal * 0.1).toFixed(2).toLocaleString()}
                 </span>
               </ListGroup.Item>
               <ListGroup.Item>
                 Invoice Amount:{" "}
-                <span className="fw-bold text-danger">
+                <span className="fw-bold text-danger float-end">
                   $ {(cartSubtotal * 1.1).toFixed(2).toLocaleString()}
                 </span>
               </ListGroup.Item>

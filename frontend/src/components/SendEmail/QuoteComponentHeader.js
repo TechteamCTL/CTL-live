@@ -109,7 +109,6 @@ const QuoteComponentHeader = (userInfo) => {
     const formDataToSend = new FormData();
     formDataToSend.append(
       "from",
-      // `no-reply@ctlservices.com.au`
       `${userInfo.userInfo.name} <${userInfo.userInfo.email}>`
     );
     formDataToSend.append("productName", productName);

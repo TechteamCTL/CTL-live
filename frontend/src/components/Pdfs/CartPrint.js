@@ -323,10 +323,10 @@ const CartPrint = (cartItems) => {
   const InvAddress = cartItems.userAddress;
   var counter = 0;
 
-  console.log("InvCartItems", InvCartItems);
+/*   console.log("InvCartItems", InvCartItems);
   console.log("InvUserInfo", InvUserInfo);
   console.log("InvAddress", InvAddress);
-  console.log("cart items", cartItems);
+  console.log("cart items", cartItems); */
 
   function splitArrayIntoChunks(arr, chunkSize) {
     const result = [];

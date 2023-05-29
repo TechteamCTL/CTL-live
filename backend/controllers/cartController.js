@@ -24,15 +24,17 @@ const getCart = async (req, res) => {
 
 
 const addToCart = async (req, res) => {
+  // const { cartItems } = req.body.product? req.body.product : req.body;
   const { cartItems } = req.body;
   const userId = req.user._id;
+  // console.log("REOOOOORDER ADDD",req.body);
 
   try {
     let cart = await Cart.findOne({ userId });
 
     if (cart) {
       // Update existing cart items
-      for (let i = 0; i < cartItems.length; i++) {
+      for (let i = 0; i < cartItems?.length; i++) {
         let cartProduct = cart.cartItems.find(
           (p) => p.cartProducts[0]._id == cartItems[i].cartProducts[0]._id
         );
@@ -60,6 +62,67 @@ const addToCart = async (req, res) => {
     res.status(500).json({ error: "Server Error" });
   }
 };
+
+const reOrder = async (req, res) => {
+  const { reOrderProducts } = req.body;
+  const userId = req.user._id;
+
+  try {
+    let cart = await Cart.findOne({ userId });
+
+    if (cart) {
+      for (let i = 0; i < reOrderProducts?.length; i++) {
+        let cartProduct = cart.cartItems.find(
+          (p) => p.cartProducts[0]._id == reOrderProducts[i].cartProducts[0]._id
+        );
+        if (cartProduct) {
+          cartProduct.cartProducts[0].quantity += reOrderProducts[i].cartProducts[0].quantity;
+        } else {
+          cart.cartItems.push(reOrderProducts[i]);
+        }
+      }
+      await cart.save();
+    } else {
+      cart = new Cart({
+        userId,
+        cartItems: reOrderProducts,
+      });
+      await cart.save();
+    }
+    res.json({ success: true, cart });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+};
+
+
+/* const reOrder = async (req, res) => {
+  const { reOrderProducts } = req.body;
+  console.log("REOOOOORDER",reOrderProducts);
+  const userId = req.user._id;
+
+  try {
+    let cart = await Cart.findOne({ userId });
+
+    if (cart) {
+      // Please Update here
+
+      await cart.save();
+    } else {
+      // Create new cart
+      cart = new Cart({
+        userId,
+        cartItems: reOrderProducts,
+      });
+      await cart.save();
+    }
+    res.json({ success: true, cart });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+}; */
 
 
 
@@ -165,6 +228,7 @@ const updateItem = async (req, res) => {
 module.exports = {
   getCart,
   addToCart,
+  reOrder,
   deleteItem,
   removeAllItems,
   updateItem,

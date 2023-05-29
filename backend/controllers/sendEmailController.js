@@ -114,4 +114,26 @@ const managementApproval = async (req, res, next) => {
   }
 };
 
-module.exports = { quoteProduct, quotePrice, managementApproval };
+const newOrderRemind = async (req, res, next) => {
+  try {
+    const { from, PO, price } = req.body;
+
+    message = {
+      from: process.env.CTLEMAIL,
+      to: process.env.QTEMAIL,
+      subject: `A new order has been placed by ${from}`,
+      text: `${from} has just placed an order for $${price}, PO#: ${PO}
+
+please check that <https://www.ctlservices.com.au/admin/orders>.`,
+    };
+
+    // Send email
+    await transporter.sendMail(message);
+
+    res.status(200).json({ message: "Email sent successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { quoteProduct, quotePrice, managementApproval, newOrderRemind };

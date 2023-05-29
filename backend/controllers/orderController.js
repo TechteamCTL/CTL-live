@@ -59,7 +59,7 @@ const createOrder = async (req, res, next) => {
       const product = await Product.findOne({
         "stock._id": productId,
       });
-      console.log("查sales的product", product.stock);
+      // console.log("查sales的product", product.stock);
       const stockItem = product.stock.find((stock) =>
         stock._id.equals(productId)
       );

@@ -20,6 +20,10 @@ const orderSchema = mongoose.Schema(
       {
         productId: { type: String, required: false },
         name: { type: String, required: true },
+        saleunit: {
+          type: Number,
+          required: true,
+        },
         cartProducts: [
           {
             price: { type: Number, required: true },
@@ -30,7 +34,7 @@ const orderSchema = mongoose.Schema(
             // ID: { type: String, required: false },
           },
         ],
-        image: {type: String, required: true},
+        image: { type: String, required: true },
       },
     ],
     paymentMethod: {

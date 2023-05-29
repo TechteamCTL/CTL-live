@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema(
   {
-    /* 
-    因为跟addToCart(cartActions.js -> redux)的productId对不上，必须要把 productID 改为 productId， 要不然写不进去
-    */
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

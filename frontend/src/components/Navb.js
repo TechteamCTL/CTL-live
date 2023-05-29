@@ -843,21 +843,47 @@ const Navb = () => {
     type: 2,
     link: ELECTRICAL + "&subCategoryName=MOTORS",
   };
+  var ELECTRICAL_MOTORS_1 = [
+    {
+      label: "VIBRATING MOTORS",
+      type: 3,
+      link: ELECTRICAL_MOTORS.link + "&childCategoryName=VIBRATING-MOTORS",
+    },
+    {
+      label: "415V MOTORS",
+      type: 3,
+      link: ELECTRICAL_MOTORS.link + "&childCategoryName=415V-MOTORS",
+    },
+  ];
+
+  var ELECTRICAL_BORE_PUMPS = {
+    label: "BORE PUMPS",
+    type: 2,
+    link: ELECTRICAL + "&subCategoryName=BORE-PUMPS",
+  };
+
+
+
+
+
   var ELECTRICAL_WIRING_ACCESSORIES = {
     label: "WIRING ACCESSORIES",
     type: 2,
     link: ELECTRICAL + "&subCategoryName=WIRING-ACCESSORIES",
   };
-  var EC_PVC_CONDUIT = {
-    label: "PVC CONDUIT FITTINGS",
-    type: 3,
-    link: ELECTRICAL_WIRING_ACCESSORIES.link + "&childCategoryName=PVC-CONDUIT-FITTINGS",
-  };
-  var EC_CORRUGATED_CONDUIT = {
-    label: "CORRUGATED CONDUIT",
-    type: 3,
-    link: ELECTRICAL_WIRING_ACCESSORIES.link + "&childCategoryName=CORRUGATED-CONDUIT",
-  };
+  var ELECTRICAL_WIRING_ACCESSORIES_1 = [
+    {
+      label: "PVC CONDUIT FITTINGS",
+      type: 3,
+      link: ELECTRICAL_WIRING_ACCESSORIES.link + "&childCategoryName=PVC-CONDUIT-FITTINGS",
+    },
+    {
+      label: "CORRUGATED CONDUIT",
+      type: 3,
+      link: ELECTRICAL_WIRING_ACCESSORIES.link + "&childCategoryName=CORRUGATED-CONDUIT",
+    },
+  ];
+
   var ELECTRICAL_CHARGERS = {
     label: "CHARGERS",
     type: 2,
@@ -1164,14 +1190,14 @@ const Navb = () => {
     {
       label: "LAB EQUIPMENT",
       type: 2,
-      link: REAGENTS + "&subCategoryName=LAB-EQUIPMENT",
+      link: LABORATORY + "&subCategoryName=LAB-EQUIPMENT",
     },
   ];
   var LABORATORY_2 = [
     {
       label: "LAB CHEMICALS",
       type: 2,
-      link: REAGENTS + "&subCategoryName=LAB-CHEMICALS",
+      link: LABORATORY + "&subCategoryName=LAB-CHEMICALS",
     },
   ];
 
@@ -1411,27 +1437,6 @@ const Navb = () => {
               <i className="bi bi-house-fill"></i>
             </Nav.Link> */}
 
-            {/* BRANDS */}
-            <div className="w3c_dropdown">
-              <div className="dropbtn">
-                <a href="/product-list">BRANDS</a>
-              </div>
-              <div className="dropdown-content-brand">
-                {BRANDS.map((item) => {
-                  return (
-                    <div className="img_hvf">
-                      <a key={item.link} href={item.link}>
-                        <img
-                          className="brand_img"
-                          src={item.Brand_Logo}
-                          alt=""
-                        />
-                      </a>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
 
             {/* PPE */}
             <div className="w3c_dropdown">
@@ -1942,38 +1947,12 @@ const Navb = () => {
                         })}
                       </ul>
                     </li>
-                  </ul>
-
-                  <ul className="column">
                     <li className="subCat">
                       <a className="parentA" href={ELECTRICAL_LIGHTING.link}>
                         {ELECTRICAL_LIGHTING.label}
                         {/* <span className="expand ms-2"> »</span> */}
                       </a>
                     </li>
-                    <li className="subCat">
-                      <a className="parentA" href={ELECTRICAL_MOTORS.link}>
-                        {ELECTRICAL_MOTORS.label}
-                        {/* <span className="expand ms-2"> »</span> */}
-                      </a>
-                    </li>
-                    <li className="subCat">
-                      <a className="parentA" href={ELECTRICAL_WIRING_ACCESSORIES.link}>
-                        {ELECTRICAL_WIRING_ACCESSORIES.label}
-                        {/* <span className="expand ms-2"> »</span> */}
-                      </a>
-                    </li>
-                    <li>
-                      <a className="parentA" href={EC_PVC_CONDUIT.link}>
-                        {EC_PVC_CONDUIT.label}
-                      </a>
-                    </li>
-                    <li>
-                      <a className="parentA" href={EC_CORRUGATED_CONDUIT.link}>
-                        {EC_CORRUGATED_CONDUIT.label}
-                      </a>
-                    </li>
-
                     <li className="subCat">
                       <a
                         className="parentA"
@@ -1983,6 +1962,46 @@ const Navb = () => {
                         {/* <span className="expand ms-2"> »</span> */}
                       </a>
                     </li>
+                  </ul>
+
+                  <ul className="column">
+
+                    <li className="subCat">
+                      <a className="parentA" href={ELECTRICAL_MOTORS.link}>
+                        {ELECTRICAL_MOTORS.label}
+                        {/* <span className="expand ms-2"> »</span> */}
+                      </a>
+                    </li>
+                    {ELECTRICAL_MOTORS_1.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+
+                    <li className="subCat">
+                      <a className="parentA" href={ELECTRICAL_BORE_PUMPS.link}>
+                        {ELECTRICAL_BORE_PUMPS.label}
+                        {/* <span className="expand ms-2"> »</span> */}
+                      </a>
+                    </li>
+
+
+                    <li className="subCat">
+                      <a className="parentA" href={ELECTRICAL_WIRING_ACCESSORIES.link}>
+                        {ELECTRICAL_WIRING_ACCESSORIES.label}
+                        {/* <span className="expand ms-2"> »</span> */}
+                      </a>
+                    </li>
+                    {ELECTRICAL_WIRING_ACCESSORIES_1.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+
                   </ul>
                 </div>
               </div>
@@ -2061,6 +2080,29 @@ const Navb = () => {
                     })} */}
                   </ul>
                 </div>
+              </div>
+            </div>
+
+            
+            {/* BRANDS */}
+            <div className="w3c_dropdown">
+              <div className="dropbtn">
+                <a href="/product-list">BRANDS</a>
+              </div>
+              <div className="dropdown-content-brand">
+                {BRANDS.map((item) => {
+                  return (
+                    <div className="img_hvf">
+                      <a key={item.link} href={item.link}>
+                        <img
+                          className="brand_img"
+                          src={item.Brand_Logo}
+                          alt=""
+                        />
+                      </a>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </Nav>

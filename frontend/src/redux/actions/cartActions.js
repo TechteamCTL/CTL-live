@@ -17,7 +17,7 @@ export const addToCart =
     // console.log("cartAction的 加入购物车 数据", cartItems[0]);
     try {
       const { data } = await axios.post(`/api/cart/add`, { cartItems });
-      // console.log("cartDDDDDDAATTTTTTT", cartItems[0]);
+      console.log("cartDDDDDDAATTTTTTT", cartItems);
       dispatch({
         type: actionTypes.ADD_TO_CART,
         payload: cartItems[0],
@@ -30,10 +30,45 @@ export const addToCart =
   };
 
 /* ****** RE_ORDER ****** */
+/* export const reOrder = (orderId) => async (dispatch, getState) => {
+  const { data } = await axios.get("/api/orders/user/" + orderId);
+  const reOrderProducts = data.cartItems.map((cartItem) => ({
+    productId: cartItem.productId,
+    name: cartItem.name,
+    saleunit: cartItem.saleunit,
+    image: cartItem.image ?? null,
+    cartProducts: [...cartItem.cartProducts],
+  }));
+
+  try {
+    for (const product of reOrderProducts) {
+      const { data } = await axios.post(`/api/cart/add`, { cartItems: [product] });
+      console.log("reOOOOOrder", product);
+      dispatch({
+        type: actionTypes.ADD_TO_CART,
+        payload: {
+          productId: product.productId,
+          name: product.name,
+          saleunit: product.saleunit,
+          image: product.image ?? null,
+          cartProducts: product.cartProducts,
+          ctlsku: product.ctlsku,
+        },
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
+}; */
+
+
+
 export const reOrder = (orderId) => async (dispatch, getState) => {
   const { data } = await axios.get("/api/orders/user/" + orderId);
-  const { cartItems } = data;
-  const reOrderProducts = cartItems.map((cartItem) => ({
+  // const { cartItems } = data;
+  const reOrderProducts = data.cartItems.map((cartItem) => ({
     productId: cartItem.productId,
     name: cartItem.name,
     saleunit: cartItem.saleunit,
@@ -41,7 +76,7 @@ export const reOrder = (orderId) => async (dispatch, getState) => {
     cartProducts: [...cartItem.cartProducts],
   }));
   try {
-    const { data } = await axios.post(`/api/cart/add`, { cartItems });
+    const { data } = await axios.post(`/api/cart/reOrder`, { reOrderProducts });
     reOrderProducts.forEach((product) => {
       dispatch({
         type: actionTypes.ADD_TO_CART,
@@ -59,8 +94,8 @@ export const reOrder = (orderId) => async (dispatch, getState) => {
     console.log(error);
   }
   localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
-  // console.log("reORDER-REORDER-data", cartItems);
 };
+
 
 /* ****** REMOVE_ITEM ****** */
 export const removeFromCart =

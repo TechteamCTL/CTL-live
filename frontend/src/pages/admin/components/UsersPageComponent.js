@@ -45,10 +45,10 @@ const UsersPageComponent = ({ fetchUsers, deleteUser }) => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
-              <th><i class="bi bi-person-check"></i></th>
+              <th><i className="bi bi-person-check"></i></th>
               <th>IP Address</th>
-              <th><i class="bi bi-truck"></i></th>
-              <th><i class="bi bi-receipt"></i></th>
+              <th><i className="bi bi-truck"></i></th>
+              <th><i className="bi bi-receipt"></i></th>
               <th>Edit/Delete</th>
             </tr>
           </thead>

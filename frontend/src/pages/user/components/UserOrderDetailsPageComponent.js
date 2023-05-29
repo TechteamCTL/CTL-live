@@ -75,7 +75,7 @@ const UserOrderDetailsPageComponent = ({
 
         setPurchaseNumber(data.purchaseNumber);
         setCartItems(data.cartItems);
-        console.log("praveen", data.cartItems);
+        // console.log("praveen", data.cartItems);
         setCartSubtotal(data.orderTotal.cartSubtotal);
         data.isDelivered
           ? setIsDelivered(data.deliveredAt)
@@ -98,9 +98,9 @@ const UserOrderDetailsPageComponent = ({
 
       .catch((err) => console.log(err));
   }, []);
-  console.log("OrderDetailPage cartItems", cartItems, typeof cartItems);
+  // console.log("OrderDetailPage cartItems", cartItems, typeof cartItems);
 
-  // a function, split array in to chunks
+/*   // a function, split array in to chunks
   function splitArrayIntoChunks(arr, chunkSize) {
     const result = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
@@ -121,12 +121,11 @@ const UserOrderDetailsPageComponent = ({
   const [firstNineItems, ...otherChunks] = splitCartItems(cartItems);
 
   // use otherChunks[] to pick array from chunks.
-  /* here is your code to use chunks[] */
   console.log("OrderDetailPage chunks", firstNineItems, otherChunks);
 
   if (otherChunks[2]) {
     console.log("我是chunks2", otherChunks[2]);
-  }
+  } */
 
   // 分隔一下，跟上面的
   const orderHandler = () => {
@@ -204,7 +203,7 @@ const UserOrderDetailsPageComponent = ({
     hour12: true,
   });
 
-  console.log("我也不知道这是啥ID", cartItems);
+  // console.log("我也不知道这是啥ID", cartItems);
 
   return (
     <Container>
@@ -281,20 +280,20 @@ const UserOrderDetailsPageComponent = ({
             </ListGroup.Item>
             <ListGroup.Item>
               Item Price:{" "}
-              <span className="fw-bold">
+              <span className="fw-bold float-end">
                 {" "}
                 $ {(cartSubtotal / 1.1).toFixed(2).toLocaleString()}
               </span>
             </ListGroup.Item>
             <ListGroup.Item>
               Total GST{" "}
-              <span className="fw-bold">
+              <span className="fw-bold float-end">
                 $ {((cartSubtotal / 1.1) * 0.1).toFixed(2).toLocaleString()}
               </span>
             </ListGroup.Item>
             <ListGroup.Item>
               Invoice Amount:{" "}
-              <span className="fw-bold text-danger">
+              <span className="fw-bold text-danger float-end">
                 $ {cartSubtotal.toFixed(2).toLocaleString()}
               </span>
             </ListGroup.Item>

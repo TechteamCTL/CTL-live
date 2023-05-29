@@ -18,16 +18,16 @@
   transition: 0.5s;
 }
 
-.form-control:focus{
-  color:#000000;
-  box-shadow: 0 0 0 0rem rgba(255, 255, 255, 0.25); 
+.form-control:focus {
+  color: #000000;
+  box-shadow: 0 0 0 0rem rgba(255, 255, 255, 0.25);
   text-decoration: none;
-  }
-.form-control:focus::-webkit-input-placeholder 
-{
-    color: transparent;
 }
-    
+
+.form-control:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
 
 
 /* ****************** Header ****************** */
@@ -39,11 +39,11 @@
   margin-left: 2%;
 }
 
-.user_cart{
+.user_cart {
   margin-right: 5rem;
 }
 
-.red_search{
+.red_search {
   width: 5%;
   margin-top: 0.5rem;
 }
@@ -90,7 +90,7 @@
   min-width: 92px;
 }
 
-.users_column > li {
+.users_column>li {
   margin: 0.3rem;
 }
 
@@ -142,7 +142,8 @@
   z-index: -1;
 } */
 
-.Avtbox, .Avtbox:before {
+.Avtbox,
+.Avtbox:before {
   -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 }
@@ -266,22 +267,27 @@
   height: 30%;
   margin-left: 10%;
 }
+
 .rotate {
   animation: rotation 8s linear;
   width: 15%;
   height: 15%;
 }
+
 @keyframes rotation {
   from {
     transform: rotateY(0deg);
   }
+
   to {
     transform: rotateY(350deg);
   }
 }
+
 .infinite {
   animation-iteration-count: infinite;
 }
+
 .rotate:hover {
   animation: normal;
 }
@@ -304,7 +310,7 @@
 .nav_c {
   color: white;
   font-weight: bold;
-   
+
 }
 
 #basic-navbar-nav {
@@ -339,7 +345,7 @@
   text-align: left;
 }
 
-.dropdown-menu > a {
+.dropdown-menu>a {
   display: inline-block;
 }
 
@@ -347,11 +353,11 @@
   display: block;
 }
 
-.dropdown-hover:hover > .dropdown-menu {
+.dropdown-hover:hover>.dropdown-menu {
   display: inline-block;
 }
 
-.dropdown-hover > .dropdown-toggle:active {
+.dropdown-hover>.dropdown-toggle:active {
   /*Without this, clicking will make it sticky*/
   pointer-events: none;
 }
@@ -383,22 +389,25 @@
 /* The dropdown container */
 .w3c_dropdown {
   float: left;
-  overflow: hidden;  
+  overflow: hidden;
   width: 12%;
 }
 
 /* Dropdown button */
 .dropbtn {
-  
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
   background-color: inherit;
   font: inherit;
-  border:#073474;
- border-width: 0.5px;
- border-bottom: 0px;
- border-style: solid;
+  border: #073474;
+  border-width: 0.5px;
+  border-bottom: 0px;
+  border-style: solid;
 }
 
-.dropbtn a{
+.dropbtn a {
   font-size: 16px;
   color: white;
   text-align: center;
@@ -408,22 +417,21 @@
 /* Add a red background color to navbar links on hover */
 
 
-.w3c_dropdown:hover .dropbtn{
- /* color: rgb(22, 220, 255); */
- 
- border:#ffffff;
- background-color: #032a61;
- border-width: 0.5px;
- border-bottom: 0px;
- border-style: solid;
+.w3c_dropdown:hover .dropbtn {
+  /* color: rgb(22, 220, 255); */
+
+  border: #ffffff;
+  background-color: #032a61;
+  border-width: 0.5px;
+  border-bottom: 0px;
+  border-style: solid;
 }
 
 /* Dropdown content (hidden by default) */
 .dropdown-content {
   display: none;
   position: absolute;
-  margin-left: 15.2%;
-  margin-right: 5%;
+  margin-left: 5.8%;
   top: 2.1rem;
   width: 76%;
   height: 100%;
@@ -499,7 +507,7 @@
 
 /* Add a background color on hover */
 .childCat a:hover,
-.subCat > a:hover{
+.subCat>a:hover {
   text-decoration: underline;
 }
 
@@ -518,7 +526,7 @@
   clear: both;
 }
 
-.column > li {
+.column>li {
   /*   line-height: 0.1rem; */
   margin: 0.5rem;
   list-style-type: none
@@ -527,27 +535,28 @@
 /* ****** multi level dropdown ****** */
 
 .parent {
-	display: block;
-	position: relative;
-	
+  display: block;
+  position: relative;
+
 }
 
 .parent:hover>.child {
-  display:list-item	;
-	position: absolute;
+  display: list-item;
+  position: absolute;
   width: 60%;
-  
+
 }
 
-.parent:hover{
+.parent:hover {
   background-color: #1e4881;
 }
-.parentA{
-  width:45%;
-  float:left;
+
+.parentA {
+  width: 45%;
+  float: left;
 }
 
-.parentA:hover{
+.parentA:hover {
   text-decoration: underline;
 }
 
@@ -557,35 +566,35 @@
 }
 
 .child {
-	display: none;
+  display: none;
   background-color: #1e4881;
   z-index: 5;
-  left:40%;
+  left: 40%;
 }
 
 .child li {
-	width: 100%;
+  width: 100%;
 }
 
 .child li a {
-	color: #ffffff;
+  color: #ffffff;
 }
 
 ul {
-	list-style: none;
-	margin: 0;
-	padding: 0px;
-	min-width: 14em;
+  list-style: none;
+  margin: 0;
+  padding: 0px;
+  min-width: 14em;
 }
 
 ul ul {
-	left: 100%;
-	top: 0;
-	
+  left: 100%;
+  top: 0;
+
 }
 
 li:hover {
-	color: white;
+  color: white;
 }
 
 .parent li:hover {
@@ -604,13 +613,14 @@ li:hover {
 
 /* ****************** Footer ****************** */
 
-.foot{
-   width: 100%;
-   height:auto;
-   
+.foot {
+  width: 100%;
+  height: auto;
+
 }
+
 .ft_bgc {
- background: #073474;
+  background: #073474;
   height: 20%;
 }
 
@@ -621,14 +631,17 @@ li:hover {
   color: #ffffff;
   text-align: left;
 }
-.first-col h6{
+
+.first-col h6 {
   text-decoration: underline;
 }
+
 .ft_c {
   color: white;
   font-weight: lighter;
 }
-.ft_c:hover{
+
+.ft_c:hover {
   text-decoration: underline;
 }
 
@@ -650,12 +663,13 @@ li:hover {
     margin-bottom: 10rem; */
   color: black;
 }
-.carousel{
+
+.carousel {
   padding-top: 1px;
   background-color: #dde4e9;
 }
 
-.carousel-inner > .item {
+.carousel-inner>.item {
   position: relative;
   max-height: 600px;
 }
@@ -672,11 +686,11 @@ aside {
 }
 
 /* *************    Pagination   ************ */
-.page-item > a {
+.page-item>a {
   color: #1e4881;
 }
 
-.pagination > .active > span {
+.pagination>.active>span {
   background-color: #5c8dd1 !important;
   border-color: #5c8dd1 !important;
 }
@@ -686,11 +700,13 @@ aside {
 }
 
 .pagination_productlist {
-  font-size: 0.5rem; /* Adjust the font size as needed */
+  font-size: 0.5rem;
+  /* Adjust the font size as needed */
 }
 
 .pagination_productlist .page-link {
-  padding: 0.1rem 0.5rem; /* Adjust the padding as needed */
+  padding: 0.1rem 0.5rem;
+  /* Adjust the padding as needed */
 }
 
 
@@ -702,6 +718,7 @@ aside {
 .btn-group {
   box-shadow: none;
 }
+
 .btn-group:hover {
   box-shadow: none;
 }
@@ -711,12 +728,12 @@ aside {
   background-color: transparent;
 }
 
-.color-pattern{
+.color-pattern {
   background-color: #e5e5f7;
-opacity: 0.2;
-background-image:  linear-gradient(30deg, #bee7fc 12%, transparent 12.5%, transparent 87%, #bee7fc 87.5%, #bee7fc), linear-gradient(150deg, #bee7fc 12%, transparent 12.5%, transparent 87%, #bee7fc 87.5%, #bee7fc), linear-gradient(30deg, #bee7fc 12%, transparent 12.5%, transparent 87%, #bee7fc 87.5%, #bee7fc), linear-gradient(150deg, #bee7fc 12%, transparent 12.5%, transparent 87%, #bee7fc 87.5%, #bee7fc), linear-gradient(60deg, #bee7fc77 25%, transparent 25.5%, transparent 75%, #bee7fc77 75%, #bee7fc77), linear-gradient(60deg, #bee7fc77 25%, transparent 25.5%, transparent 75%, #bee7fc77 75%, #bee7fc77);
-background-size: 80px 140px;
-background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  opacity: 0.2;
+  background-image: linear-gradient(30deg, #bee7fc 12%, transparent 12.5%, transparent 87%, #bee7fc 87.5%, #bee7fc), linear-gradient(150deg, #bee7fc 12%, transparent 12.5%, transparent 87%, #bee7fc 87.5%, #bee7fc), linear-gradient(30deg, #bee7fc 12%, transparent 12.5%, transparent 87%, #bee7fc 87.5%, #bee7fc), linear-gradient(150deg, #bee7fc 12%, transparent 12.5%, transparent 87%, #bee7fc 87.5%, #bee7fc), linear-gradient(60deg, #bee7fc77 25%, transparent 25.5%, transparent 75%, #bee7fc77 75%, #bee7fc77), linear-gradient(60deg, #bee7fc77 25%, transparent 25.5%, transparent 75%, #bee7fc77 75%, #bee7fc77);
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
 }
 
 
@@ -742,7 +759,7 @@ background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
 }
 
 
-.bi-arrow-up-circle-fill{
+.bi-arrow-up-circle-fill {
   font-size: 35px;
   color: #1e4881;
 }
