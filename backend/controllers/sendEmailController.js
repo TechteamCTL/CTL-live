@@ -32,7 +32,7 @@ const quoteProduct = async (req, res, next) => {
 
     let message = {
       from,
-      to: process.env.GMAIL,
+      to: process.env.QTEMAIL,
       subject: `Quote New Products: ${productName}`,
       text: `
     This is: ${from},
@@ -67,7 +67,7 @@ const quotePrice = async (req, res, next) => {
 
     message = {
       from,
-      to: process.env.QEMAIL,
+      to: process.env.QTEMAIL,
       subject: `Quote Price: ${productName}`,
       text: `
     This is: ${from},
