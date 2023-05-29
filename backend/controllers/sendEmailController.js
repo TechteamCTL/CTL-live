@@ -31,7 +31,7 @@ const quoteProduct = async (req, res, next) => {
     }
 
     let message = {
-      from,
+      from: process.env.CTLEMAIL,
       to: process.env.QTEMAIL,
       subject: `Quote New Products: ${productName}`,
       text: `
@@ -66,7 +66,7 @@ const quotePrice = async (req, res, next) => {
     const { from, productName, description } = req.body;
 
     message = {
-      from,
+      from: process.env.CTLEMAIL,
       to: process.env.QTEMAIL,
       subject: `Quote Price: ${productName}`,
       text: `
@@ -92,7 +92,7 @@ const managementApproval = async (req, res, next) => {
     const { from, managerEmail, totalPrice, description } = req.body;
 
     message = {
-      from,
+      from: process.env.CTLEMAIL,
       to: `${managerEmail}`,
       subject: `My shopping cart of $${totalPrice}`,
       text: `
