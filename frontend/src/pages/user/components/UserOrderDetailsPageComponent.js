@@ -161,7 +161,7 @@ const UserOrderDetailsPageComponent = ({
     reduxDispatch(reOrdertReduxAction(id));
     setTimeout(() => {
       window.location.href = "/user/cart-details";
-    }, 500);
+    }, 1000);
     setClicked(true);
   };
 
@@ -184,7 +184,7 @@ const UserOrderDetailsPageComponent = ({
       removeAllItems();
       setTimeout(() => {
         reOrderHandler(id);
-      }, 500);
+      }, 1000);
     } else {
       reOrderHandler(id);
     }
