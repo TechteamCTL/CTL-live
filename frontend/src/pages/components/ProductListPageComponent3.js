@@ -181,7 +181,7 @@ const ProductListPage = ({
               <img src="./loading-gif.gif"></img>
             ) : // <h1>Loading products ....</h1>
               error ? (
-                <h1>Error while loading products. Please try again later.</h1>
+                <h1 className="w-100">Error while loading products. Please refresh the page.</h1>
               ) : products.length === 0 ? (
                 <QuoteComponent userNameEmail={userNameEmail} />
               ) : (

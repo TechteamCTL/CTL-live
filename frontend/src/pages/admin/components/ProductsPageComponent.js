@@ -1,5 +1,3 @@
-/* 0【阅读进度，勿删！Reading progress, do not delete!】 */
-/* $ */
 
 import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";

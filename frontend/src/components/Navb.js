@@ -2087,7 +2087,7 @@ const Navb = () => {
             {/* BRANDS */}
             <div className="w3c_dropdown">
               <div className="dropbtn">
-                <a href="/product-list">BRANDS</a>
+                BRANDS
               </div>
               <div className="dropdown-content-brand">
                 {BRANDS.map((item) => {
