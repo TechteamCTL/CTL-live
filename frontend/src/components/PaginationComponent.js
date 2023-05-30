@@ -30,7 +30,8 @@ const PaginationComponent = ({
     <>
       <Pagination className="ms-4 mb-1 pagination_productlist">
         <LinkContainer to={`${url}pageNum=${Math.max(1, 10)}`}>
-          <Pagination.First disabled={pageNum <= 10} />
+          {/* <Pagination.First disabled={pageNum <= 10} /> */}
+          <Pagination.Item disabled={pageNum <= 10}>{"First"}</Pagination.Item>
         </LinkContainer>
         <LinkContainer to={`${url}pageNum=${Math.max(1, pageNum - 10)}`}>
           <Pagination.Prev disabled={pageNum <= 10} />
@@ -55,7 +56,8 @@ const PaginationComponent = ({
           <Pagination.Next disabled={pageNum > paginationLinksNumber - 10} />
         </LinkContainer>
         <LinkContainer to={`${url}pageNum=${paginationLinksNumber}`}>
-          <Pagination.Last disabled={pageNum > paginationLinksNumber - 10} />
+          {/* <Pagination.Last disabled={pageNum > paginationLinksNumber - 10} /> */}
+          <Pagination.Item disabled={pageNum > paginationLinksNumber - 10} >{"Last"}</Pagination.Item>
         </LinkContainer>
       </Pagination>
     </>

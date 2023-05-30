@@ -122,7 +122,7 @@ const ProductDetailsPageComponent = ({
 
   // 如果直接用toLocaleString() 报错的话，可能是value undefined了，那就format一下price， 然后再加上 toLocaleString
   const price = stockPrice;
-  const formattedPrice = price ? price.toFixed(2).toLocaleString() : "";
+  const formattedPrice = price ? price.toLocaleString() : "";
 
   // const products = useSelector((state) => state.cart.value);
 
@@ -189,7 +189,31 @@ const ProductDetailsPageComponent = ({
     }
   }, [product]);
 
-  console.log("standard", standard);
+  // console.log("standard", standard);
+
+  async function downloadPDF(pdfURL, pdfName) {
+    const response = await fetch(pdfURL);
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const blob = await response.blob();
+
+    const blobURL = window.URL.createObjectURL(blob);
+
+    const tempLink = document.createElement("a");
+    tempLink.style.display = "none";
+    tempLink.href = blobURL;
+
+    tempLink.setAttribute("download", pdfName);
+
+    document.body.appendChild(tempLink);
+
+    tempLink.click();
+
+    document.body.removeChild(tempLink);
+  }
 
   return (
     <Container className="ms-3 " fluid>
@@ -212,18 +236,6 @@ const ProductDetailsPageComponent = ({
 
             {/* ************   Product Pictures Display Carousel  ***************  */}
             <Col lg={4} className="m-1">
-              {/* <Carousel>
-            {product.images &&
-              product.images.map((image, idx) => (
-                <div key={idx} style={{ position: "relative" }}>
-                  <Image
-                    crossOrigin="anonymous"
-                    src={image.path ?? null}
-                    fluid
-                  />
-                </div>
-              ))}
-          </Carousel> */}
               <ImageGallery items={images} />
             </Col>
 
@@ -290,7 +302,7 @@ const ProductDetailsPageComponent = ({
                             </span>
                           ) : (
                             <span className="fw-bold">
-                              Price: ${formattedPrice}
+                              Price: ${(formattedPrice * qty).toFixed(2)}
                             </span>
                           )}
                         </h6>
@@ -371,12 +383,12 @@ const ProductDetailsPageComponent = ({
               {/* ************   Product details with download pdf  ***************  */}
               <Row>
                 <Col className="mt-5">
-                  <Container className="border border-light border-5" >
+                  <Container className="border border-light border-5">
                     <Tabs
                       defaultActiveKey="Description"
                       transition={false}
                       id="noanim-tab-example"
-                      className="mb-3"
+                      className="mb-3 product_description"
                     >
                       <Tab
                         className="m-3 col-md-12"
@@ -394,22 +406,18 @@ const ProductDetailsPageComponent = ({
                           {/* {product.description} */}
                           {product.description
                             ? product.description
-                              .split("*")
-                              .map((item, index) => {
-                                return (
-                                  index > 0 ? (
+                                .split("*")
+                                .map((item, index) => {
+                                  return index > 0 ? (
                                     <div key={index}>
                                       <span>* {item}</span>
                                     </div>
-
                                   ) : (
                                     <div key={index}>
                                       <span> {item}</span>
                                     </div>
-                                  )
-
-                                );
-                              })
+                                  );
+                                })
                             : ""}
                         </div>
                       </Tab>
@@ -421,17 +429,21 @@ const ProductDetailsPageComponent = ({
                               const pdfName = pdf.path.split("/").pop(); // Get the file name from the path
                               return (
                                 <div
-                                  className="border border-light border-2 m-3 p-3"
+                                  className="border border-light border-2 m-2 p-1"
                                   key={idx}
                                 >
-                                  <a
-                                    href={pdf.path}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    download
+                                  <button
+                                    onClick={() =>
+                                      downloadPDF(pdf.path, pdfName)
+                                    }
+                                    className="border-0"
+                                    key={idx}
+                                    style={{backgroundColor:"transparent", color:"#1e4881"}}
                                   >
-                                    {pdfName}
-                                  </a>
+                                    <i className="bi bi-file-earmark-pdf">
+                                      {" "}{pdfName}
+                                    </i>
+                                  </button>
                                 </div>
                               );
                             })}
