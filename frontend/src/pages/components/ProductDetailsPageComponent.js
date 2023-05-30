@@ -432,18 +432,14 @@ const ProductDetailsPageComponent = ({
                                   className="border border-light border-2 m-2 p-1"
                                   key={idx}
                                 >
-                                  <button
-                                    onClick={() =>
-                                      downloadPDF(pdf.path, pdfName)
-                                    }
-                                    className="border-0"
-                                    key={idx}
-                                    style={{backgroundColor:"transparent", color:"#1e4881"}}
+                                  <a
+                                    href={pdf.path}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    download
                                   >
-                                    <i className="bi bi-file-earmark-pdf">
-                                      {" "}{pdfName}
-                                    </i>
-                                  </button>
+                                    {pdfName}
+                                  </a>
                                 </div>
                               );
                             })}
