@@ -34,7 +34,8 @@ const PaginationComponent = ({
           <Pagination.Item disabled={pageNum <= 10}>{"First"}</Pagination.Item>
         </LinkContainer>
         <LinkContainer to={`${url}pageNum=${Math.max(1, pageNum - 10)}`}>
-          <Pagination.Prev disabled={pageNum <= 10} />
+          {/* <Pagination.Prev disabled={pageNum <= 10} /> */}
+          <Pagination.Item disabled={pageNum <= 10} >{"Prev"}</Pagination.Item>
         </LinkContainer>
 
         {Array.from(
@@ -53,7 +54,8 @@ const PaginationComponent = ({
         <LinkContainer
           to={`${url}pageNum=${Math.min(paginationLinksNumber, pageNum + 10)}`}
         >
-          <Pagination.Next disabled={pageNum > paginationLinksNumber - 10} />
+          {/* <Pagination.Next disabled={pageNum > paginationLinksNumber - 10} /> */}
+          <Pagination.Item disabled={Math.ceil(pageNum/10) === Math.ceil(paginationLinksNumber/10)} >{"Next"}</Pagination.Item>
         </LinkContainer>
         <LinkContainer to={`${url}pageNum=${paginationLinksNumber}`}>
           {/* <Pagination.Last disabled={pageNum > paginationLinksNumber - 10} /> */}

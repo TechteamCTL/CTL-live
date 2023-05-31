@@ -142,9 +142,12 @@ const ProductDetailsPageComponent = ({
   if (product && product.images) {
     product.images.forEach((image) => {
       images.push({
-        original: image.path?.replace(/^http:/, "https:"),
+/*         original: image.path?.replace(/^http:/, "https:"),
         thumbnail: image.path?.replace(/^http:/, "https:"),
-        url: image.path?.replace(/^http:/, "https:"),
+        url: image.path?.replace(/^http:/, "https:"), */
+        original: image.path,
+        thumbnail: image.path,
+        url: image.path,
         title: image.title,
         caption: image.name,
       });
@@ -432,14 +435,18 @@ const ProductDetailsPageComponent = ({
                                   className="border border-light border-2 m-2 p-1"
                                   key={idx}
                                 >
-                                  <a
-                                    href={pdf.path}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    download
+                                  <button
+                                    onClick={() =>
+                                      downloadPDF(pdf.path, pdfName)
+                                    }
+                                    className="border-0"
+                                    key={idx}
+                                    style={{backgroundColor:"transparent", color:"#1e4881"}}
                                   >
-                                    {pdfName}
-                                  </a>
+                                    <i className="bi bi-file-earmark-pdf">
+                                      {" "}{pdfName}
+                                    </i>
+                                  </button>
                                 </div>
                               );
                             })}
