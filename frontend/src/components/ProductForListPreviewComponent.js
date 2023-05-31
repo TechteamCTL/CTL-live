@@ -255,7 +255,22 @@ const ProductForListPreviewComponent = ({
                           className="m-1"
                           style={{ whiteSpace: "pre-wrap", textAlign: "left" }}
                         >
-                          {product && product.description}
+                          {product && product.description
+                                                      ? product.description
+                                                          .split("*")
+                                                          .map((item, index) => {
+                                                            return index > 0 ? (
+                                                              <div key={index}>
+                                                                <span><i class="bi bi-dot"/>{item}</span>
+                                                              </div>
+                                                            ) : (
+                                                              <div key={index}>
+                                                                <span> {item}</span>
+                                                              </div>
+                                                            );
+                                                          })
+                                                      : ""}
+                          
                         </div>
                       </div>
                     </Container>

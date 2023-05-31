@@ -413,7 +413,7 @@ const ProductDetailsPageComponent = ({
                                 .map((item, index) => {
                                   return index > 0 ? (
                                     <div key={index}>
-                                      <span>* {item}</span>
+                                      <span><i class="bi bi-dot"/>{item}</span>
                                     </div>
                                   ) : (
                                     <div key={index}>
