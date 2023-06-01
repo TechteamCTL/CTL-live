@@ -215,6 +215,7 @@ const UserCartDetailsPageComponent = ({
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64data = reader.result;
+        // console.log(base64data);
         setBase64Data({
           base64data,
         });
@@ -225,12 +226,10 @@ const UserCartDetailsPageComponent = ({
     }
   };
 
-  // 只加载一次，因为[]放的空的
   useEffect(() => {
-    setTimeout(() => {
-      generatePdf();
-    }, 2000);
-  }, []);
+    generatePdf();
+  }, [cartItems]);
+
 
   const quotePriceData = {
     ...userNameEmail,
