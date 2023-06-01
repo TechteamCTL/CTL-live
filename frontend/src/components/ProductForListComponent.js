@@ -37,6 +37,11 @@ const ProductForListComponent = ({
     return data;
   };
 
+  const formattedPrice = price?.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   return (
     <>
       <div>
@@ -66,7 +71,7 @@ const ProductForListComponent = ({
                   {price === 0 ? (
                     <span className="fw-bold">Contact Us</span>
                   ) : (
-                    <span className="">Price: ${price?.toFixed(2).toLocaleString()}</span>
+                    <span className="">Price: ${formattedPrice}</span>
                   )}
                 </h6>
 

@@ -205,6 +205,19 @@ const UserOrderDetailsPageComponent = ({
 
   // console.log("我也不知道这是啥ID", cartItems);
 
+  const nonGSTPrice = (cartSubtotal / 1.1).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const GST = ((cartSubtotal / 1.1) * 0.1).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const incGSTPrice = cartSubtotal.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
   return (
     <Container>
       <Row className="mt-4">
@@ -282,19 +295,19 @@ const UserOrderDetailsPageComponent = ({
               Item Price:{" "}
               <span className="fw-bold float-end">
                 {" "}
-                $ {(cartSubtotal / 1.1).toFixed(2).toLocaleString()}
+                $ {nonGSTPrice}
               </span>
             </ListGroup.Item>
             <ListGroup.Item>
               Total GST{" "}
               <span className="fw-bold float-end">
-                $ {((cartSubtotal / 1.1) * 0.1).toFixed(2).toLocaleString()}
+                $ {GST}
               </span>
             </ListGroup.Item>
             <ListGroup.Item>
               Invoice Amount:{" "}
               <span className="fw-bold text-danger float-end">
-                $ {cartSubtotal.toFixed(2).toLocaleString()}
+                $ {incGSTPrice}
               </span>
             </ListGroup.Item>
             <ListGroup.Item>

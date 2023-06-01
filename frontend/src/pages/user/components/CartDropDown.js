@@ -28,6 +28,13 @@ const CartDropDown = ({
   const removeAllItems = () => {
     reduxDispatch(emptyCart());
   };
+
+
+  const formattedPrice = (cartSubtotal * 1.1).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  
   return (
     <Container>
       <Row className="mt-1 cart_items_map">
@@ -78,7 +85,7 @@ const CartDropDown = ({
             <p className="align-middle m-0">
               Total:{" "}
               <span className="fw-bold">
-                ${(cartSubtotal * 1.1).toFixed(2).toLocaleString()}
+                ${formattedPrice}
               </span>
             </p>
           </div>

@@ -83,7 +83,10 @@ const ProductForListPreviewComponent = ({
 
   // 新的尺寸价格库存
   const price = stockPrice;
-  const formattedPrice = price ? price.toLocaleString() : "";
+  const formattedPrice = price?.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   //react-image-lightbox -starts here
   const images = [];

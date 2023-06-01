@@ -185,16 +185,22 @@ const ProductListPage = ({
               ) : products.length === 0 ? (
                 <QuoteComponent userNameEmail={userNameEmail} />
               ) : (
-                products.map((product) => (
-                  <ProductForListComponent
-                    key={product._id}
-                    images={product.images}
-                    name={product.name}
-                    price={product.slrcurrentbuyingprice}
-                    productId={product._id}
-                    slrsku={product.slrsku}
-                  />
-                ))
+                products.map((product) => {
+                  if (product.category === "QUOTE") {
+                    return null;
+                  }
+                  return (
+                    <ProductForListComponent
+                      key={product._id}
+                      images={product.images}
+                      name={product.name}
+                      price={product.slrcurrentbuyingprice}
+                      productId={product._id}
+                      slrsku={product.slrsku}
+                    />
+                  );
+                })
+                
               )}
           </Row>
           {paginationLinksNumber > 1 ? (

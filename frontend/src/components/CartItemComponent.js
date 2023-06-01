@@ -64,7 +64,7 @@ const CartItemComponent = ({
             <p className="m-0">
               Unit Price: $
               <span className="fw-bold">
-                {item.cartProducts[0].price.toFixed(2)}
+                {item.cartProducts[0].price.toLocaleString()}
               </span>
             </p>
             {/*  */}

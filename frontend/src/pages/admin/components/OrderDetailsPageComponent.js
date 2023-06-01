@@ -88,6 +88,18 @@ const OrderDetailsPageComponent = ({
       );
   }, [isDelivered, isPaid, id]);
 
+  const nonGSTPrice = (cartSubtotal / 1.1).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const GST = ((cartSubtotal / 1.1) * 0.1).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const incGSTPrice = cartSubtotal.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   console.log("admin管理订单 cartItems", cartItems);
   return (
@@ -100,7 +112,8 @@ const OrderDetailsPageComponent = ({
             <Col md={6}>
               <h3>SHIPPING</h3>
               <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
-              <b>Address</b>: {userInfo.deliveryAddress}<br />
+              <b>Address</b>: {userInfo.deliveryAddress}
+              <br />
               <b>Phone</b>: {userInfo.phone}
             </Col>
             <Col md={6}>
@@ -135,14 +148,21 @@ const OrderDetailsPageComponent = ({
               </Col>
               <Col>
                 <Alert className="mt-3" variant={isPaid ? "success" : "danger"}>
-                  {isPaid ? <>Paid on {new Date(isPaid).toLocaleString("en-AU", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "numeric",
-                    hour12: true,
-                  })}</> : <>Not paid yet</>}
+                  {isPaid ? (
+                    <>
+                      Paid on{" "}
+                      {new Date(isPaid).toLocaleString("en-AU", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      })}
+                    </>
+                  ) : (
+                    <>Not paid yet</>
+                  )}
                 </Alert>
               </Col>
             </Row>
@@ -162,21 +182,15 @@ const OrderDetailsPageComponent = ({
             </ListGroup.Item>
             <ListGroup.Item>
               Item Price:{" "}
-              <span className="fw-bold">
-                {" "}
-                $ {(cartSubtotal / 1.1).toFixed(2).toLocaleString()}
-              </span>
+              <span className="fw-bold float-end"> $ {nonGSTPrice}</span>
             </ListGroup.Item>
             <ListGroup.Item>
-              Total GST{" "}
-              <span className="fw-bold">
-                $ {(cartSubtotal / 1.1 * 0.1).toFixed(2).toLocaleString()}
-              </span>
+              Total GST <span className="fw-bold float-end">$ {GST}</span>
             </ListGroup.Item>
             <ListGroup.Item>
               Invoice Amount:{" "}
-              <span className="fw-bold text-danger">
-                $ {cartSubtotal.toFixed(2).toLocaleString()}
+              <span className="fw-bold text-danger float-end">
+                $ {incGSTPrice}
               </span>
             </ListGroup.Item>
             <ListGroup.Item>
@@ -185,6 +199,7 @@ const OrderDetailsPageComponent = ({
             <ListGroup.Item>
               <div className="d-grid gap-2">
                 <Button
+                 className="pt-0 pb-0 m-0"
                   size="lg"
                   onClick={() =>
                     markAsDelivered(id)
@@ -212,6 +227,7 @@ const OrderDetailsPageComponent = ({
             <ListGroup.Item>
               <div className="d-grid gap-2">
                 <Button
+                  className="p-0 m-0"
                   size="lg"
                   onClick={() =>
                     markAsPaid(id)
@@ -255,9 +271,11 @@ const OrderDetailsPageComponent = ({
                 >
                   {({ loading }) =>
                     loading ? (
-                      <Button size="lg">Loading Delivery Note...</Button>
+                      <Button className="p-0 m-0" size="lg">
+                        Loading Delivery Note...
+                      </Button>
                     ) : (
-                      <Button size="lg">Download Delivery Note</Button>
+                      <Button className="pt-0 pb-0 m-0" size="lg">Download Delivery Note</Button>
                     )
                   }
                 </PDFDownloadLink>
@@ -282,9 +300,9 @@ const OrderDetailsPageComponent = ({
                 >
                   {({ loading }) =>
                     loading ? (
-                      <Button size="lg">Loading Invoice...</Button>
+                      <Button className="pt-0 pb-0 m-0" size="lg">Loading Invoice...</Button>
                     ) : (
-                      <Button size="lg">
+                      <Button className="pt-0 pb-0 m-0" size="lg">
                         &nbsp; &nbsp; Download Invoice
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       </Button>
@@ -294,7 +312,11 @@ const OrderDetailsPageComponent = ({
               </div>
             </ListGroup.Item>
           </ListGroup>
-          <label><u><a href="/admin/orders">Go to All Orders </a></u></label>
+          <label>
+            <u>
+              <a href="/admin/orders">Go to All Orders </a>
+            </u>
+          </label>
         </Col>
       </Row>
     </Container>

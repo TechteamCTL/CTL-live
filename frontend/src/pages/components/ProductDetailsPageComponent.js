@@ -122,9 +122,12 @@ const ProductDetailsPageComponent = ({
 
   // 如果直接用toLocaleString() 报错的话，可能是value undefined了，那就format一下price， 然后再加上 toLocaleString
   const price = stockPrice;
-  const total = price ? (price * qty).toFixed(2) : "";
-  const formattedPrice = parseFloat(total).toLocaleString();
-  // const formattedPrice = price ? (price*qty).toFixed(2) : "";
+  // const total = price ? (price * qty).toFixed(2) : "";
+  // const formattedPrice = parseFloat(total).toLocaleString();
+  const formattedPrice = price ? (price*qty).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }) : "";
 
   // const products = useSelector((state) => state.cart.value);
 
@@ -301,7 +304,7 @@ const ProductDetailsPageComponent = ({
                       <Col>
                         <h6>PRODUCT CODE : {stockCode}</h6>
                         <h6>
-                          {price === 0 ? (
+                          {product.slrcurrentbuyingprice === 0 ? (
                             <span className="fw-bold PriceContact">
                               Contact us for a quote
                             </span>
@@ -326,10 +329,10 @@ const ProductDetailsPageComponent = ({
                         <br />
                       </Col>
                     </Row>
-                    {price === 0 ? null : <h6>Quantity :</h6>}
+                    {product.slrcurrentbuyingprice === 0 ? null : <h6>Quantity :</h6>}
 
                     <Row>
-                      {price === 0 ? (
+                      {product.slrcurrentbuyingprice === 0 ? (
                         <QuotePriceComponent quotePriceData={quotePriceData} />
                       ) : (
                         <>

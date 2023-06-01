@@ -21,6 +21,10 @@ const CartPageComponent = ({
 
   console.log('cartItems', cartItems);
 
+  const formattedPrice = cartSubtotal?.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   return (
     <Container>
@@ -48,7 +52,7 @@ const CartPageComponent = ({
               <h3>Subtotal ({cartItems.length} {cartItems.length === 1 ? "Product" : "Products"})</h3>
             </ListGroup.Item>
             <ListGroup.Item>
-              Price: <span className="fw-bold">$ {cartSubtotal.toLocaleString()}</span>
+              Price: <span className="fw-bold">$ {formattedPrice}</span>
             </ListGroup.Item>
             <ListGroup.Item>
               <LinkContainer to="/user/cart-details">

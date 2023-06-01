@@ -64,7 +64,7 @@ const CartItemDropDown = ({
             <p className="m-0 cart_product_attr">
               Each: $
               <span className="cart_product_detail">
-                {item.cartProducts[0].price.toFixed(2)}
+                {item.cartProducts[0].price.toLocaleString()}
               </span>
             </p>
             {/*  */}

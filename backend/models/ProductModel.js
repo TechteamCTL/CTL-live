@@ -117,22 +117,20 @@ This index will NOT be used when we only query description of the product. */
 productSchema.index(
   {
     name: "text",
-    description: "text",
-    supplier: "text",
+    // supplier: "text",
     "stock.slrsku": "text",
     "stock.ctlsku": "text",
   },
-  {
+/*   {
     name: "TextIndex",
     default_language: "english",
     weights: {
-      name: 5,
-      description: 2,
+      name: 7,
       supplier: 1,
       "stock.slrsku": 1,
       "stock.ctlsku": 1,
     },
-  }
+  } */
 );
 
 /* productSchema.index({ slrsku: "text", name: "text"});

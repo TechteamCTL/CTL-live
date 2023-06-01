@@ -12,15 +12,14 @@ const nodemailer = require("nodemailer");
 }); */
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.office365.com',
+  host: "smtp.office365.com",
   port: 587,
-  secure: false, 
+  secure: false,
   auth: {
     user: process.env.CTLEMAIL,
     pass: process.env.CTLEMAILPASSWORD,
   },
 });
-
 
 const quoteProduct = async (req, res, next) => {
   try {
@@ -39,7 +38,7 @@ const quoteProduct = async (req, res, next) => {
 
     Please find the product for us: ${productName},
 
-    Product Description: ${description}`
+    Product Description: ${description}`,
     };
 
     if (file) {
@@ -47,11 +46,9 @@ const quoteProduct = async (req, res, next) => {
         {
           filename: file.name,
           content: file.data,
-        }
-      ]
+        },
+      ];
     }
-
-    // Send email
     await transporter.sendMail(message);
 
     res.status(200).json({ message: "Email sent successfully" });
@@ -59,7 +56,6 @@ const quoteProduct = async (req, res, next) => {
     next(error);
   }
 };
-
 
 const quotePrice = async (req, res, next) => {
   try {
@@ -75,7 +71,6 @@ const quotePrice = async (req, res, next) => {
     I'm looking for: ${productName},
 
     Please find out the price for me: <${process.env.BASE_URL}${description}>`,
-
     };
 
     // Send email
@@ -89,9 +84,15 @@ const quotePrice = async (req, res, next) => {
 
 const managementApproval = async (req, res, next) => {
   try {
-    const { from, managerEmail, totalPrice, description } = req.body;
+    // 因为 后面可能要改动 base64data 所以要用 let，不能用 const
+    let { from, managerEmail, totalPrice, description, base64data } = req.body;
+    
+    const base64prefix = 'data:application/pdf;base64,';
+    if (base64data.startsWith(base64prefix)) {
+      base64data = base64data.slice(base64prefix.length);
+    }
 
-    message = {
+    const message = {
       from: process.env.CTLEMAIL,
       to: `${managerEmail}`,
       subject: `My shopping cart of $${totalPrice}`,
@@ -102,7 +103,13 @@ const managementApproval = async (req, res, next) => {
 
     Purchase detail:     
     ${description}`,
-
+      attachments: [
+        {
+          filename: 'Cart.pdf',
+          content: Buffer.from(base64data, 'base64'),
+          contentType: 'application/pdf'
+        }
+      ],
     };
 
     // Send email
@@ -113,6 +120,7 @@ const managementApproval = async (req, res, next) => {
     next(error);
   }
 };
+
 
 const newOrderRemind = async (req, res, next) => {
   try {
@@ -136,4 +144,9 @@ please check that <https://www.ctlservices.com.au/admin/orders>.`,
   }
 };
 
-module.exports = { quoteProduct, quotePrice, managementApproval, newOrderRemind };
+module.exports = {
+  quoteProduct,
+  quotePrice,
+  managementApproval,
+  newOrderRemind,
+};

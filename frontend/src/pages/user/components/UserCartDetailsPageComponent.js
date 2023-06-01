@@ -238,7 +238,24 @@ const UserCartDetailsPageComponent = ({
     base64Data,
   };
 
-  console.log("quotePriceData", quotePriceData);
+  // console.log("quotePriceData", quotePriceData);
+
+  const nonGSTPrice = parseFloat(
+    cartSubtotal.toFixed(2)
+  ).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const GST = parseFloat(
+    (cartSubtotal * 0.1).toFixed(2)
+  ).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const incGSTPrice = parseFloat((cartSubtotal * 1.1).toFixed(2)).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
   return (
     <>
@@ -368,19 +385,19 @@ const UserCartDetailsPageComponent = ({
                 Item Price:{" "}
                 <span className="fw-bold float-end">
                   {" "}
-                  $ {cartSubtotal.toFixed(2).toLocaleString()}
+                  $ {nonGSTPrice}
                 </span>
               </ListGroup.Item>
               <ListGroup.Item>
                 Total GST{" "}
                 <span className="fw-bold float-end">
-                  $ {(cartSubtotal * 0.1).toFixed(2).toLocaleString()}
+                  $ {GST}
                 </span>
               </ListGroup.Item>
               <ListGroup.Item>
                 Invoice Amount:{" "}
                 <span className="fw-bold text-danger float-end">
-                  $ {(cartSubtotal * 1.1).toFixed(2).toLocaleString()}
+                  $ {incGSTPrice}
                 </span>
               </ListGroup.Item>
 
