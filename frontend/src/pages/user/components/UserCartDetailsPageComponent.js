@@ -17,8 +17,9 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import QuoeteManagementApproval from "../../../components/SendEmail/QuoeteManagementApproval";
-import CartPrint from "../../../components/Pdfs/CartPrint";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
+import CartPrint from "../../../components/Pdfs/CartPrint";
 import axios from "axios";
 import "./invoicePDF.css";
 
@@ -52,6 +53,7 @@ const UserCartDetailsPageComponent = ({
 
   const [userNameEmail, setUserNameEmail] = useState();
   const [managerEmail, setManagerEmail] = useState();
+  const [base64Data, setBase64Data] = useState([]);
 
   /* const dispatch = useDispatch(); */
 
@@ -117,13 +119,6 @@ const UserCartDetailsPageComponent = ({
       );
   }, [userInfo._id]);
 
-  const quotePriceData = {
-    ...userNameEmail,
-    cartItems,
-    cartSubtotal,
-    managerEmail,
-  };
-
   const orderHandler = () => {
     const orderData = {
       orderTotal: {
@@ -168,7 +163,11 @@ const UserCartDetailsPageComponent = ({
           setTimeout(() => {
             navigate("/user/my-orders");
           }, 1000);
-          const res = await axios.post("/api/sendemail/newOrderRemind", {from: userInfo.email, PO:purchaseNumber, price:(cartSubtotal * 1.1).toFixed(2)});
+          const res = await axios.post("/api/sendemail/newOrderRemind", {
+            from: userInfo.email,
+            PO: purchaseNumber,
+            price: (cartSubtotal * 1.1).toFixed(2),
+          });
           console.log(res.data);
         }
       })
@@ -196,99 +195,65 @@ const UserCartDetailsPageComponent = ({
     }, 1000);
   };
 
-  const userEmail = userInfo.email?.split("@")[1]
+  const userEmail = userInfo.email?.split("@")[1];
 
   // console.log("????????cartItems", cartItems);
+
+  // attach pdf to email 因为不能直接attach一个pdf去后端，所以把pdf生成，然后转为 base64的代码，传送去后端，然后再decode
+  const generatePdf = async () => {
+    try {
+      const blob = await pdf(
+        <CartPrint
+          cartItems={cartItems}
+          userInfo={userInfo}
+          userAddress={userAddress}
+          purchaseNumber={purchaseNumber}
+          cartSubtotal={cartSubtotal}
+        />
+      ).toBlob();
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        setBase64Data({
+          base64data,
+        });
+      };
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      console.error("Failed to generate PDF:", error);
+    }
+  };
+
+  // 只加载一次，因为[]放的空的
+  useEffect(() => {
+    generatePdf();
+  }, []);
+
+  const quotePriceData = {
+    ...userNameEmail,
+    cartItems,
+    cartSubtotal,
+    managerEmail,
+    base64Data,
+  };
+
+  console.log("quotePriceData", quotePriceData);
 
   return (
     <>
       <Container>
         <Row className="mt-4">
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <h1>CART DETAILS</h1>
-
-              {/* <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <div className="d-grid gap-2">
-                  <PDFDownloadLink
-                    document={
-                      <CartPrint
-                        cartItems={cartItems}
-                        userInfo={userInfo}
-                        userAddress={userAddress}
-                        purchaseNumber={purchaseNumber}
-                        cartSubtotal={cartSubtotal}
-                      />
-                    }
-                    fileName={userInfo.name + "'s Cart"}
-                    className="btn p-0 m-0"
-                  >
-                    {({ loading }) =>
-                      loading ? (
-                        <span className="btn btn-success p-0 ps-1 pe-1 download_cart_btn">
-                          Loading Cart...
-                        </span>
-                      ) : (
-                        <span className="btn btn-success p-0 ps-1 pe-1 download_cart_btn">
-                          Download Cart <i className="bi bi-file-earmark-pdf"></i>
-                        </span>
-                      )
-                    }
-                  </PDFDownloadLink>
-                </div>
-
-                <Button
-                  type="button"
-                  onClick={removeAllItems}
-                  className="p-0 ps-1 pe-1 empty_cart_btn"
-                >
-                  Empty Cart <i className="bi bi-trash" />
-                </Button>
-              </div> */}
-            </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <h1>CART DETAILS</h1>
+          </div>
           <Col md={9}>
-            {/* <Row style={{ display: "none" }}>
-              <Col md={5}>
-                <h3>SHIPPING</h3>
-                <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
-                <b>Site Location</b>: {userAddress.location} <br />
-                <b>Phone</b>: {userAddress.phone} <br />
-                <b>Address</b>: {userAddress.deliveryAddress}{" "}
-                {userAddress.state} {userAddress.postCode}
-              </Col>
-              <Col md={5}>
-                <h3>PAYMENT METHOD</h3>
-                <Form.Select onChange={choosePayment} disabled>
-                  <option value="Invoice">Invoice</option>
-                  <option value="PayPal">PayPal</option>
-                </Form.Select>
-              </Col>
-              <Row>
-                <Col md={5}>
-                  <Alert className="mt-3 lh-1 h-50 pt-2" variant="danger">
-                    Not Delivered.
-                    {missingAddress}
-                  </Alert>
-                </Col>
-                &nbsp;&nbsp;&nbsp;
-                <Col md={5}>
-                  <Alert className="mt-3 lh-1 h-50 pt-2 pl-2" variant="danger">
-                    Not Paid Yet
-                  </Alert>
-                </Col>
-              </Row>
-            </Row> */}
             <ListGroup variant="flush">
               {cartItems.map((item, idx) => (
                 <CartItemComponent
@@ -300,12 +265,12 @@ const UserCartDetailsPageComponent = ({
               ))}
             </ListGroup>
             <Button
-                type="button"
-                onClick={removeAllItems}
-                className="p-0 ps-1 pe-1 empty_cart_btn"
-              >
-                Empty Cart <i className="bi bi-trash" />
-              </Button>
+              type="button"
+              onClick={removeAllItems}
+              className="p-0 ps-1 pe-1 empty_cart_btn"
+            >
+              Empty Cart <i className="bi bi-trash" />
+            </Button>
           </Col>
           <Col md={3} className="cart_detail_right">
             <ListGroup>
@@ -324,30 +289,55 @@ const UserCartDetailsPageComponent = ({
                     fileName={userInfo.name + "'s Cart"}
                     className="btn btn-success p-0 ps-1 pe-1 ms-3 me-3 download_cart_btn"
                   >
-                    {({ loading }) =>
+                    <span>
+                      Download Cart <i className="bi bi-file-earmark-pdf"></i>
+                    </span>
+                    {/* {({ loading }) =>
                       loading ? (
                         <span>Loading Cart...</span>
                       ) : (
                         <span>
-                          Download Cart <i className="bi bi-file-earmark-pdf"></i>
+                          Download Cart{" "}
+                          <i className="bi bi-file-earmark-pdf"></i>
                         </span>
                       )
-                    }
+                    } */}
                   </PDFDownloadLink>
                 </div>
               </ListGroup.Item>
             </ListGroup>
             <br />
-            {/* <ListGroup hidden={cartItems.length === 0}>
+            <ListGroup hidden={cartItems.length === 0}>
+              {/* <ListGroup.Item controlId="validationMangerEmail">
+                <Row>
+                  <Col xs={6} className="pe-0">
+                    <Form.Control
+                      value={managerEmail}
+                      onChange={enterManagerEmail}
+                      type="string"
+                      name="ManagerEmail"
+                      placeholder={`Enter email`}
+                      required
+                    />
+                  </Col>
+                  <Col xs={6} className="p-0">
+                    <Form.Control plaintext readOnly value={`@${userEmail}`} />
+                  </Col>
+                </Row>
+                <Form.Control.Feedback type="invalid">
+                  Please Enter Your Manager's Email.{" "}
+                </Form.Control.Feedback>
+              </ListGroup.Item> */}
+
               <ListGroup.Item controlId="validationMangerEmail">
                 <Form.Control
-                className=""
+                  className=""
                   onChange={enterManagerEmail}
                   type="string"
                   name="MangerEmail"
                   placeholder={`Enter email @${userEmail}`}
                   required
-                /> 
+                />
                 <Form.Control.Feedback type="invalid">
                   Please Enter Your Manager's Email.{" "}
                 </Form.Control.Feedback>
@@ -359,16 +349,19 @@ const UserCartDetailsPageComponent = ({
                 </div>
               </ListGroup.Item>
             </ListGroup>
-            <br /> */}
+            <br />
             <ListGroup className="">
               <ListGroup.Item>
                 <h4 className="m-0">Order Summary</h4>
               </ListGroup.Item>
               <ListGroup.Item>
-                  <p className="p-0 m-0">
-                    Total: <span className="float-end"><span className="fw-bold ">{cartItems.length}</span>{" "}
-                    {cartItems.length === 1 ? "Product" : "Products"}</span>
-                  </p>
+                <p className="p-0 m-0">
+                  Total:{" "}
+                  <span className="float-end">
+                    <span className="fw-bold ">{cartItems.length}</span>{" "}
+                    {cartItems.length === 1 ? "Product" : "Products"}
+                  </span>
+                </p>
               </ListGroup.Item>
 
               <ListGroup.Item>

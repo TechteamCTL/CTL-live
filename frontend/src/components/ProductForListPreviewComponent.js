@@ -90,9 +90,9 @@ const ProductForListPreviewComponent = ({
   if (product && product.images) {
     product.images.forEach((image) => {
       images.push({
-        original: image.path?.replace(/^http:/, "https:"),
-        thumbnail: image.path?.replace(/^http:/, "https:"),
-        url: image.path?.replace(/^http:/, "https:"),
+        original: image.path,
+        thumbnail: image.path,
+        url: image.path,
         title: image.title,
         caption: image.name,
       });
@@ -256,21 +256,23 @@ const ProductForListPreviewComponent = ({
                           style={{ whiteSpace: "pre-wrap", textAlign: "left" }}
                         >
                           {product && product.description
-                                                      ? product.description
-                                                          .split("*")
-                                                          .map((item, index) => {
-                                                            return index > 0 ? (
-                                                              <div key={index}>
-                                                                <span><i class="bi bi-dot"/>{item}</span>
-                                                              </div>
-                                                            ) : (
-                                                              <div key={index}>
-                                                                <span> {item}</span>
-                                                              </div>
-                                                            );
-                                                          })
-                                                      : ""}
-                          
+                            ? product.description
+                                .split("*")
+                                .map((item, index) => {
+                                  return index > 0 ? (
+                                    <div key={index}>
+                                      <span>
+                                        <i class="bi bi-dot" />
+                                        {item}
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <div key={index}>
+                                      <span> {item}</span>
+                                    </div>
+                                  );
+                                })
+                            : ""}
                         </div>
                       </div>
                     </Container>

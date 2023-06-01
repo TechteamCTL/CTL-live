@@ -8,6 +8,7 @@ const QuoeteManagementApproval = (quotePriceData, cartItems) => {
     managerEmail: "",
     totalPrice: "",
     description: "",
+    base64data: "",
   });
 
   const [isSending, setIsSending] = useState(false);
@@ -50,8 +51,10 @@ const QuoeteManagementApproval = (quotePriceData, cartItems) => {
 
   const receiverEmail = quotePriceData.quotePriceData.managerEmail?.split("@")[1];
   const senderEmail = quotePriceData.quotePriceData.email?.split("@")[1]
+  const base64data = quotePriceData.quotePriceData.base64Data.base64data
+  
 
-  console.log("quotePriceDataCCCCCCCompoent", receiverEmail);
+  // console.log("quotePriceDataCCCCCCCompoent", base64data);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,11 +77,13 @@ const QuoeteManagementApproval = (quotePriceData, cartItems) => {
       `${(quotePriceData.quotePriceData.cartSubtotal * 1.1).toFixed(2)}`
     );
     formDataToSend.append("description", `${cartItemsString}`);
+    formDataToSend.append("base64data", `${base64data}`);
     try {
       setIsSending(true);
       const res = await axios.post(
         "/api/sendemail/managementApproval",
         formDataToSend,
+
         config
       );
       console.log(res.data);

@@ -223,6 +223,16 @@ const CartPrint = (cartItems) => {
       paddingTop: 5,
       paddingBottom: 5,
     },
+    tableColBillItemRight: {
+      borderStyle: "solid",
+      borderWidth: 0,
+      borderLeftWidth: 0,
+      borderTopWidth: 0,
+      fontSize: 8,
+      textAlign: "right",
+      paddingTop: 5,
+      paddingRight: 15,
+    },
     tableColBillItemHeader: {
       borderStyle: "solid",
       borderWidth: 0,
@@ -289,6 +299,14 @@ const CartPrint = (cartItems) => {
       fontSize: 10,
       height: "15px",
       textAlign: "center",
+    },
+    tableCellBillBoxRight: {
+      paddingLeft: 5,
+      paddingRight: 25,
+      marginTop: 5,
+      fontSize: 10,
+      height: "15px",
+      textAlign: "right",
     },
     tableColOrderName: {
       width: "40%",
@@ -514,8 +532,8 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItem}>
-                          $
+                        <Text style={styles.tableColBillItemRight}>
+                          ${" "}
                           {item.cartProducts[0].price
                             ? item.cartProducts[0].price
                                 .toFixed(2)
@@ -524,7 +542,7 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItem}>
+                        <Text style={styles.tableColBillItemRight}>
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
@@ -537,7 +555,7 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItem}>
+                        <Text style={styles.tableColBillItemRight}>
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
@@ -552,7 +570,7 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderSideTotal}>
-                        <Text style={styles.tableColBillItem}>
+                        <Text style={styles.tableColBillItemRight}>
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
@@ -587,8 +605,8 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItem}>
-                          $
+                        <Text style={styles.tableColBillItemRight}>
+                          ${" "}
                           {item.cartProducts[0].price
                             ? item.cartProducts[0].price
                                 .toFixed(2)
@@ -597,7 +615,7 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItem}>
+                        <Text style={styles.tableColBillItemRight}>
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
@@ -610,7 +628,7 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
-                        <Text style={styles.tableColBillItem}>
+                        <Text style={styles.tableColBillItemRight}>
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
@@ -625,7 +643,7 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderSideTotal}>
-                        <Text style={styles.tableColBillItem}>
+                        <Text style={styles.tableColBillItemRight}>
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
@@ -667,7 +685,7 @@ const CartPrint = (cartItems) => {
                   </Text>
                 </View>
                 <View style={styles.tableCellBottom}>
-                  <Text style={styles.tableCellBillBox}>
+                  <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
                     {cartItems.cartSubtotal
                       ? (cartItems.cartSubtotal / 1.1)
@@ -682,7 +700,7 @@ const CartPrint = (cartItems) => {
                   <Text style={styles.tableCellBillBox}>Total GST</Text>
                 </View>
                 <View style={styles.tableCellBottom}>
-                  <Text style={styles.tableCellBillBox}>
+                  <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
                     {cartItems.cartSubtotal
                       ? ((cartItems.cartSubtotal / 1.1) * 0.1)
@@ -697,10 +715,10 @@ const CartPrint = (cartItems) => {
                   <Text style={styles.tableCellBillBox}>Invoice Amount</Text>
                 </View>
                 <View style={styles.tableCellBottom}>
-                  <Text style={styles.tableCellBillBox}>
+                  <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
                     {cartItems.cartSubtotal
-                      ? cartItems.cartSubtotal.toLocaleString()
+                      ? cartItems.cartSubtotal.toFixed(2).toLocaleString()
                       : ""}
                   </Text>
                 </View>
@@ -936,7 +954,7 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableCellBottom}>
-                        <Text style={styles.tableCellBillBox}>
+                        <Text style={styles.tableCellBillBoxRight}>
                           ${" "}
                           {cartItems.cartSubtotal
                             ? (cartItems.cartSubtotal / 1.1)
@@ -951,7 +969,7 @@ const CartPrint = (cartItems) => {
                         <Text style={styles.tableCellBillBox}>Total GST</Text>
                       </View>
                       <View style={styles.tableCellBottom}>
-                        <Text style={styles.tableCellBillBox}>
+                        <Text style={styles.tableCellBillBoxRight}>
                           ${" "}
                           {cartItems.cartSubtotal
                             ? ((cartItems.cartSubtotal / 1.1) * 0.1)
@@ -968,10 +986,10 @@ const CartPrint = (cartItems) => {
                         </Text>
                       </View>
                       <View style={styles.tableCellBottom}>
-                        <Text style={styles.tableCellBillBox}>
+                        <Text style={styles.tableCellBillBoxRight}>
                           ${" "}
                           {cartItems.cartSubtotal
-                            ? cartItems.cartSubtotal.toLocaleString()
+                            ? cartItems.cartSubtotal.toFixed(2).toLocaleString()
                             : ""}
                         </Text>
                       </View>

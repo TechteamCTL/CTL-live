@@ -80,7 +80,7 @@ const ProductDetailsPageComponent = ({
     stockCode = selectedStock.ctlsku;
   }
 
-  // console.log("selectedStock", selectedStock);
+  // console.log("selectedStock", stockPrice);
 
   // console.log(product.description);
   // const description[]=product.description.split('.');
@@ -122,7 +122,9 @@ const ProductDetailsPageComponent = ({
 
   // 如果直接用toLocaleString() 报错的话，可能是value undefined了，那就format一下price， 然后再加上 toLocaleString
   const price = stockPrice;
-  const formattedPrice = price ? price.toLocaleString() : "";
+  const total = price ? (price * qty).toFixed(2) : "";
+  const formattedPrice = parseFloat(total).toLocaleString();
+  // const formattedPrice = price ? (price*qty).toFixed(2) : "";
 
   // const products = useSelector((state) => state.cart.value);
 
@@ -142,7 +144,7 @@ const ProductDetailsPageComponent = ({
   if (product && product.images) {
     product.images.forEach((image) => {
       images.push({
-/*         original: image.path?.replace(/^http:/, "https:"),
+        /*         original: image.path?.replace(/^http:/, "https:"),
         thumbnail: image.path?.replace(/^http:/, "https:"),
         url: image.path?.replace(/^http:/, "https:"), */
         original: image.path,
@@ -305,7 +307,7 @@ const ProductDetailsPageComponent = ({
                             </span>
                           ) : (
                             <span className="fw-bold">
-                              Price: ${(formattedPrice * qty).toFixed(2)}
+                              Price: ${formattedPrice}
                             </span>
                           )}
                         </h6>
@@ -413,7 +415,10 @@ const ProductDetailsPageComponent = ({
                                 .map((item, index) => {
                                   return index > 0 ? (
                                     <div key={index}>
-                                      <span><i class="bi bi-dot"/>{item}</span>
+                                      <span>
+                                        <i class="bi bi-dot" />
+                                        {item}
+                                      </span>
                                     </div>
                                   ) : (
                                     <div key={index}>
@@ -441,10 +446,14 @@ const ProductDetailsPageComponent = ({
                                     }
                                     className="border-0"
                                     key={idx}
-                                    style={{backgroundColor:"transparent", color:"#1e4881"}}
+                                    style={{
+                                      backgroundColor: "transparent",
+                                      color: "#1e4881",
+                                    }}
                                   >
                                     <i className="bi bi-file-earmark-pdf">
-                                      {" "}{pdfName}
+                                      {" "}
+                                      {pdfName}
                                     </i>
                                   </button>
                                 </div>
