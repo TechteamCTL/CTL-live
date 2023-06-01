@@ -97,12 +97,12 @@ const managementApproval = async (req, res, next) => {
       to: `${managerEmail}`,
       subject: `My shopping cart of $${totalPrice}`,
       text: `
-    This is: ${from},
+    The email is from: ${from},
 
-    The following is my current purchase of: $${totalPrice},
+    This is my current purchase of: $${totalPrice},
+    
+    Please find the more details in attached PDF`,
 
-    Purchase detail:     
-    ${description}`,
       attachments: [
         {
           filename: 'Cart.pdf',

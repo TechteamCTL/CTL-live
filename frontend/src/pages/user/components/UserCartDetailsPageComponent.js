@@ -227,7 +227,9 @@ const UserCartDetailsPageComponent = ({
 
   // 只加载一次，因为[]放的空的
   useEffect(() => {
-    generatePdf();
+    setTimeout(() => {
+      generatePdf();
+    }, 2000);
   }, []);
 
   const quotePriceData = {
