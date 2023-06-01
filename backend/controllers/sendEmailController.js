@@ -101,7 +101,7 @@ const managementApproval = async (req, res, next) => {
 
     This is my current purchase of: $${totalPrice},
     
-    Please find the more details in attached PDF`,
+    Please find the more details in attached PDF.`,
 
       attachments: [
         {

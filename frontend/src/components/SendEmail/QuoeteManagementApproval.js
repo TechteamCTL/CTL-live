@@ -98,7 +98,7 @@ const QuoeteManagementApproval = (quotePriceData, cartItems) => {
 
       setTimeout(() => {
         setSuccessMessage(false);
-      }, 4000);
+      }, 2000);
     } catch (err) {
       console.error(err);
     }
@@ -121,12 +121,11 @@ const QuoeteManagementApproval = (quotePriceData, cartItems) => {
             </button>
           </div>
         </form>
-{/*         {successMessage && (
+        {successMessage && (
           <div className="alert mt-2 p-1 managementAprroval_alert" role="alert">
-            <p className="m-1">Email has been sent out.</p>
-            <p className="m-1">Please ask him check email for that.</p>
+            <p className="m-1">The cart has been successfully emailed.</p>
           </div>
-        )} */}
+        )}
       </div>
     </>
   );
