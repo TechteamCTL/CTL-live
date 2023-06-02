@@ -473,7 +473,7 @@ const CreateProductPageComponent = ({
                 controlId="formBasicSupplier"
               >
                 <Form.Label>Supplier</Form.Label>
-                <Form.Control name="supplier" required type="text" value="" />
+                <Form.Control name="supplier" required type="text" />
               </Form.Group>
             </Row>
 
