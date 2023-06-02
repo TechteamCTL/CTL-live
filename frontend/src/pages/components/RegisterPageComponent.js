@@ -119,7 +119,8 @@ const RegisterPageComponent = ({
           if (
             !email.endsWith("@slrltd.com") &&
             !email.endsWith("@ctlservices.com.au") &&
-            !email.endsWith("@focusminerals.com.au")
+            !email.endsWith("@focusminerals.com.au") &&
+            !email.endsWith("@evolutionmining.com")
           ) {
             // If not, redirect to the /unfortunately page
             window.location.href = "/unfortunately";
