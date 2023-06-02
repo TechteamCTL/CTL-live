@@ -409,6 +409,7 @@ const adminCreateProduct = async (req, res, next) => {
       standards
     } = req.body;
 
+    // console.log(req.body);
     product.name = name;
     product.description = description;
     product.saleunit = saleunit;
@@ -417,7 +418,7 @@ const adminCreateProduct = async (req, res, next) => {
     product.slrcurrentbuyingprice = slrcurrentbuyingprice;
     product.supplier = supplier;
     product.category = category;
-    product.category = standards || "";
+    product.standards = standards || "";
     if (stock.length > 0) {
       product.stock = [];
       stock.map((item) => {

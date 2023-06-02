@@ -23,6 +23,7 @@ const UserOrderDetailsPageComponent = ({
   userInfo,
   getUser,
   getOrder,
+  updateOrderNote,
   loadPayPalScript,
   reduxDispatch,
   reOrdertReduxAction,
@@ -30,6 +31,7 @@ const UserOrderDetailsPageComponent = ({
   const [userAddress, setUserAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("");
   const [purchaseNumber, setPurchaseNumber] = useState("");
+  const [orderNote, setOrderNote] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [isPaid, setIsPaid] = useState(false);
   const [orderButtonMessage, setOrderButtonMessage] = useState("");
@@ -75,6 +77,7 @@ const UserOrderDetailsPageComponent = ({
 
         setPurchaseNumber(data.purchaseNumber);
         setCartItems(data.cartItems);
+        setOrderNote(data.orderNote);
         // console.log("praveen", data.cartItems);
         setCartSubtotal(data.orderTotal.cartSubtotal);
         data.isDelivered
@@ -100,7 +103,7 @@ const UserOrderDetailsPageComponent = ({
   }, []);
   // console.log("OrderDetailPage cartItems", cartItems, typeof cartItems);
 
-/*   // a function, split array in to chunks
+  /*   // a function, split array in to chunks
   function splitArrayIntoChunks(arr, chunkSize) {
     const result = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
@@ -218,12 +221,13 @@ const UserOrderDetailsPageComponent = ({
     maximumFractionDigits: 2,
   });
 
+  console.log("orderNote", orderNote);
+
   return (
     <Container>
       <Row className="mt-4">
         <h1>ORDER DETAILS</h1>
         <Col md={9}>
-          <br />
           <Row style={{ display: "none" }}>
             <Col md={6}>
               <h3>SHIPPING</h3>
@@ -293,16 +297,10 @@ const UserOrderDetailsPageComponent = ({
             </ListGroup.Item>
             <ListGroup.Item>
               Item Price:{" "}
-              <span className="fw-bold float-end">
-                {" "}
-                $ {nonGSTPrice}
-              </span>
+              <span className="fw-bold float-end"> $ {nonGSTPrice}</span>
             </ListGroup.Item>
             <ListGroup.Item>
-              Total GST{" "}
-              <span className="fw-bold float-end">
-                $ {GST}
-              </span>
+              Total GST <span className="fw-bold float-end">$ {GST}</span>
             </ListGroup.Item>
             <ListGroup.Item>
               Invoice Amount:{" "}
@@ -396,6 +394,14 @@ const UserOrderDetailsPageComponent = ({
             </ListGroup.Item>
           </ListGroup>
           <br />
+          <ListGroup>
+            <ListGroup.Item>
+              <b>Order Note:</b> {orderNote ? null : "N/A"}
+            </ListGroup.Item>
+            {orderNote ? <ListGroup.Item>{orderNote}</ListGroup.Item> : null}
+          </ListGroup>
+
+          <br />
           {/* ******* shipping information ******* */}
           <ListGroup>
             <ListGroup.Item>
@@ -410,9 +416,6 @@ const UserOrderDetailsPageComponent = ({
             <ListGroup.Item>
               <b>Phone</b>: {userAddress.phone}
             </ListGroup.Item>
-{/*             <ListGroup.Item>
-              <b>Address</b>: {userAddress.deliveryAddress}
-            </ListGroup.Item> */}
             <ListGroup.Item>
               <Alert
                 className="m-0 lh-1 h-50 p-2"

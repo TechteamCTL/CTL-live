@@ -30,6 +30,7 @@ const orders = Array.from({length: 5}).map((_, idx) => {
         paymentMethod: "Invoice",
         purchaseNumber: `PO0000${idx+1}`,
         invoiceNumber:`SLR0000000${idx+1}`,
+        orderNote: "orderNote",
         isPaid: false,
         isDelivered: false,
         createdAt: `2022-03-${day}T${hour}:12:36.490+00:00`

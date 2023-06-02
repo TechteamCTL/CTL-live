@@ -104,7 +104,7 @@ const CreateProductPageComponent = ({
 
       supplier: form.supplier.value,
 
-      category: form.category.value,
+      category: categoryChoosen,
       attributesTable: attributesTable,
 
       stock: stock,
@@ -161,6 +161,7 @@ const CreateProductPageComponent = ({
               : er.response.data,
           });
         });
+        console.log(formInputs);
     }
 
     setValidated(true);
@@ -259,6 +260,7 @@ const CreateProductPageComponent = ({
   const [selectedCategory, setSelectedCategory] = useState("");
 
 
+console.log(categoryChoosen);
 
   return (
     <Container>

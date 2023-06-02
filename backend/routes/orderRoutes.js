@@ -12,6 +12,7 @@ const {
   createOrder,
   updateOrderToPaid,
   updateOrderToDelivered,
+  updateOrderNote,
   getOrders,
   getOrderForAnalysis,
   getOrdersInvNo,
@@ -24,6 +25,7 @@ router.get("/user/:id", getOrder);
 router.post("/", createOrder);
 router.put("/paid/:id", updateOrderToPaid);
 router.get("/invoiceNumber", getOrdersInvNo);
+router.put("/updateOrderNote/:id", updateOrderNote);
 
 // admin routes
 router.use(verifyIsAdmin);

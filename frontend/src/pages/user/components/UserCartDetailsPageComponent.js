@@ -48,6 +48,7 @@ const UserCartDetailsPageComponent = ({
   /* 这个支付方式，useState要用下面的下拉里面的一个，设置为默认，随后的语句可以修改 */
   const [paymentMethod, setPaymentMethod] = useState("Invoice");
   const [purchaseNumber, setPurchaseNumber] = useState("");
+  const [orderNote, setOrderNote] = useState("");
 
   const [largestInvoice, setLargestInvoice] = useState(0);
 
@@ -153,6 +154,7 @@ const UserCartDetailsPageComponent = ({
       }),
       paymentMethod: paymentMethod,
       purchaseNumber: purchaseNumber,
+      orderNote: orderNote,
       invoiceNumber: "SLR000" + (largestInvoice + 1),
     };
 
@@ -182,6 +184,10 @@ const UserCartDetailsPageComponent = ({
   const enterPurchaseNum = (e) => {
     setPurchaseNumber(e.target.value);
     setButtonDisabled(false);
+  };
+
+  const enterOrderNote = (e) => {
+    setOrderNote(e.target.value);
   };
 
   const enterManagerEmail = (e) => {
@@ -418,6 +424,22 @@ const UserCartDetailsPageComponent = ({
                 </Form.Control.Feedback>
                 {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </ListGroup.Item>
+
+              <ListGroup.Item controlId="validationOrderNote">
+                <Form.Label className="fw-bold">
+                  Order Name:
+                </Form.Label>
+                <Form.Control
+                  type="string"
+                  name="orderNote"
+                  placeholder="Order Name"
+                  onChange={enterOrderNote}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please Enter Your Note.{" "}
+                </Form.Control.Feedback>
+              </ListGroup.Item>
+              
 
               <ListGroup.Item>
                 <div className="d-grid gap-2">

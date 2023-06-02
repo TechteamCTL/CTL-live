@@ -13,7 +13,9 @@ const UserOrdersPageComponent = ({ getOrders }) => {
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [sorting, setSorting] = useState({ field: "", order: "" });
+  // const [sorting, setSorting] = useState({ field: "", order: "" });
+  const [sorting, setSorting] = useState({ field: "createdAt", order: "desc" });
+
 
   const ITEMS_PER_PAGE = 20;
 
@@ -24,6 +26,7 @@ const UserOrdersPageComponent = ({ getOrders }) => {
     { name: "Delivered", field: "isDelivered", sortable: true },
     { name: "Paid", field: "isPaid", sortable: true },
     { name: "PO#", field: "purchaseNumber", sortable: true },
+    { name: "Order Name", field: "orderNote", sortable: true },
     { name: "Order details", field: "_id", sortable: false }
 
   ];
@@ -36,8 +39,8 @@ const UserOrdersPageComponent = ({ getOrders }) => {
       computedOrders = computedOrders.filter(
         orders =>
           orders.createdAt.toUpperCase().includes(search.toUpperCase()) ||
-          orders.purchaseNumber.toUpperCase().includes(search.toUpperCase())
-
+          orders.purchaseNumber.toUpperCase().includes(search.toUpperCase()) ||
+          orders.orderNote?.toUpperCase().includes(search.toUpperCase())
       );
     }
 
@@ -128,6 +131,7 @@ const UserOrdersPageComponent = ({ getOrders }) => {
                     )}
                   </td>
                   <td>{order.purchaseNumber}</td>
+                  <td>{order.orderNote}</td>
                   <td>
                     <Link to={`/user/order-details/${order._id}`}>go to order</Link>
                   </td>

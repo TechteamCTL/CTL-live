@@ -34,7 +34,7 @@ const HeaderComponent = () => {
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
   const itemsCount = useSelector((state) => state.cart.itemsCount);
   const cartSubtotal = useSelector((state) => state.cart.cartSubtotal);
-// console.log("userInfouserInfo",userInfo);
+  // console.log("userInfouserInfo",userInfo);
   // const { categories } = useSelector((state) => state.getCategories);
 
   // const [searchCategoryToggle, setSearchCategoryToggle] = useState("All");
@@ -63,7 +63,7 @@ const HeaderComponent = () => {
     const { data } = await axios.get("/api/cart");
     return data;
   };
-  
+
   const [userCart, setUserCart] = useState([]);
   useEffect(() => {
     getCart()
@@ -131,7 +131,6 @@ const HeaderComponent = () => {
               style={{ cursor: "pointer" }}
               onClick={toggleModal}
             ></img>
-            
           </Nav>
           <Modal
             show={showModal}
@@ -148,7 +147,7 @@ const HeaderComponent = () => {
             </Modal.Header>
 
             <Modal.Body>
-              <QuoteComponentHeader userInfo={userInfo}/>
+              <QuoteComponentHeader userInfo={userInfo} />
             </Modal.Body>
           </Modal>
 
@@ -224,16 +223,18 @@ const HeaderComponent = () => {
                       </Badge>
                     </a>
                   </div>
-                  <div className="cart_dropdown_box">
-                    <CartDropDown
-                      addToCart={addToCart}
-                      removeFromCart={removeFromCart}
-                      editQuantity={editQuantity}
-                      cartItems={cartItems}
-                      cartSubtotal={cartSubtotal}
-                      reduxDispatch={reduxDispatch}
-                    />
-                  </div>
+                  {itemsCount === 0 ? null : (
+                    <div className="cart_dropdown_box">
+                      <CartDropDown
+                        addToCart={addToCart}
+                        removeFromCart={removeFromCart}
+                        editQuantity={editQuantity}
+                        cartItems={cartItems}
+                        cartSubtotal={cartSubtotal}
+                        reduxDispatch={reduxDispatch}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* ************   mining cart  ***************  */}

@@ -9,6 +9,11 @@ const getOrder = async (orderId) => {
   return data;
 };
 
+const updateOrderNote = async (orderId, orderNote) => {
+  const { data } = await axios.put("/api/orders/updateOrderNote/" + orderId, { orderNote: orderNote });
+  return data;
+};
+
 const loadPayPalScript = (
   cartSubtotal,
   cartItems,
@@ -110,6 +115,7 @@ const UserOrderDetailsPage = () => {
       userInfo={userInfo}
       getUser={getUser}
       getOrder={getOrder}
+      updateOrderNote={updateOrderNote}
       loadPayPalScript={loadPayPalScript}
       reOrdertReduxAction={reOrder}
       reduxDispatch={dispatch}

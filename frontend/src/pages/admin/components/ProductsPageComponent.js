@@ -13,7 +13,7 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [sorting, setSorting] = useState({ field: "", order: "" });
+  const [sorting, setSorting] = useState({ field: "category", order: "asc" });
 
   // items per page
   const ITEMS_PER_PAGE_OPTIONS = [40, 60, 100, 200]; // options for dropdown
@@ -171,7 +171,7 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
                 </td>
                 <td>
                   {item.stock.map((stockItem) => (
-                    <div key={stockItem.ctlsku}>${stockItem.price}</div>
+                    <div key={stockItem.ctlsku}>${stockItem.price?.toFixed(2)}</div>
                   ))}
                 </td>
                 <td>

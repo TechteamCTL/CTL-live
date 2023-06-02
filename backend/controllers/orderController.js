@@ -41,13 +41,14 @@ const createOrder = async (req, res, next) => {
       paymentMethod,
       purchaseNumber,
       invoiceNumber,
+      orderNote
     } = req.body;
     if (
       !cartItems ||
       !orderTotal ||
       !paymentMethod ||
       !purchaseNumber ||
-      !invoiceNumber
+      !invoiceNumber 
     ) {
       return res.status(400).send("All inputs are required");
     }
@@ -75,6 +76,7 @@ const createOrder = async (req, res, next) => {
       paymentMethod: paymentMethod,
       purchaseNumber: purchaseNumber,
       invoiceNumber: invoiceNumber,
+      orderNote: orderNote,
     });
     const createdOrder = await order.save();
     res.status(201).send(createdOrder);
@@ -122,6 +124,22 @@ const updateOrderToDelivered = async (req, res, next) => {
   }
 };
 
+
+const updateOrderNote = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id).orFail();
+    
+    if (req.body.orderNote) {
+      order.orderNote = req.body.orderNote;
+    }
+
+    const updatedOrder = await order.save();
+    res.send(updatedOrder);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({})
@@ -159,6 +177,7 @@ module.exports = {
   createOrder,
   updateOrderToPaid,
   updateOrderToDelivered,
+  updateOrderNote,
   getOrders,
   getOrderForAnalysis,
 };
