@@ -117,10 +117,13 @@ const RegisterPageComponent = ({
 
           // Check if the user's email ends with "@slrltd.com"
           if (
-            !email.endsWith("@slrltd.com") &&
-            !email.endsWith("@ctlservices.com.au") &&
-            !email.endsWith("@focusminerals.com.au") &&
-            !email.endsWith("@evolutionmining.com")
+            (!email.endsWith("@slrltd.com") &&
+              !email.endsWith("@ctlservices.com.au") &&
+              !email.endsWith("@focusminerals.com.au") &&
+              !email.endsWith("@evolutionmining.com")) ||
+            email === "Mekins@slrltd.com" ||
+            email === "Esmith@slrltd.com" ||
+            email === "enzo@ctlservices.com.au"
           ) {
             // If not, redirect to the /unfortunately page
             window.location.href = "/unfortunately";
@@ -300,7 +303,7 @@ const RegisterPageComponent = ({
                   type="text"
                   name="postCode"
                   placeholder="Postcode"
-                  value='6000'
+                  value="6000"
                   style={{ display: "none" }}
                   required
                 />

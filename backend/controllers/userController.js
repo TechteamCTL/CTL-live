@@ -75,7 +75,17 @@ const registerUser = async (req, res, next) => {
       });
 
       // verify email address if end with slrltd.com
-      if (email.endsWith('@slrltd.com') || email.endsWith('@ctlservices.com.au') || email.endsWith('@focusminerals.com.au') || email.endsWith('@evolutionmining.com')) {
+      if (
+        (
+          email.endsWith("@slrltd.com") ||
+          email.endsWith("@ctlservices.com.au") ||
+          email.endsWith("@focusminerals.com.au") ||
+          email.endsWith("@evolutionmining.com")
+        ) && 
+        email !== 'Mekins@slrltd.com' &&
+        email !== 'Esmith@slrltd.com' &&
+        email !== 'enzo@ctlservices.com.au'
+      ) {
         const token = await new Token({
           userId: user._id,
           token: crypto.randomBytes(32).toString("hex"),
@@ -83,10 +93,24 @@ const registerUser = async (req, res, next) => {
         const url = `${process.env.BASE_URL}user/${user.id}/verify/${token.token}`;
         await sendEmail(user.email, "Verify Email", url);
       }
+      
+/*       if (
+        email.endsWith("@slrltd.com") ||
+        email.endsWith("@ctlservices.com.au") ||
+        email.endsWith("@focusminerals.com.au") ||
+        email.endsWith("@evolutionmining.com")
+      ) {
+        const token = await new Token({
+          userId: user._id,
+          token: crypto.randomBytes(32).toString("hex"),
+        }).save();
+        const url = `${process.env.BASE_URL}user/${user.id}/verify/${token.token}`;
+        await sendEmail(user.email, "Verify Email", url);
+      } */
 
       res
         // cookie以后用户用这个访问过来,CTL不想要新注册的人有cookie，就给移除了
-/*         .cookie(
+        /*         .cookie(
           "access_token",
           generateAuthToken(
             user._id,
@@ -122,13 +146,12 @@ const registerUser = async (req, res, next) => {
             state: user.state,
             postCode: user.postCode,
           },
-        })
+        });
     }
   } catch (err) {
     next(err);
   }
 };
-
 
 /* const loginUser = async (req, res, next) => {
   try {
@@ -219,15 +242,21 @@ const loginUser = async (req, res, next) => {
     }
 
     // Get user's current public IP address
-    const ipAddress = req.headers["x-forwarded-for"]?.split(", ")[0] || req.connection.remoteAddress;
+    const ipAddress =
+      req.headers["x-forwarded-for"]?.split(", ")[0] ||
+      req.connection.remoteAddress;
 
     const user = await User.findOne({ email });
 
     // Compare passwords
     if (user && comparePasswords(password, user.password)) {
       // Skip IP address check for ctlservices.com.au emails
-      const skipIpAddressCheck = email.endsWith('ctlservices.com.au');
-      if (!skipIpAddressCheck && user.ipAddress && user.ipAddress !== ipAddress) {
+      const skipIpAddressCheck = email.endsWith("ctlservices.com.au");
+      if (
+        !skipIpAddressCheck &&
+        user.ipAddress &&
+        user.ipAddress !== ipAddress
+      ) {
         return res.status(403).send("Access denied from this IP address");
       }
 
@@ -281,7 +310,7 @@ const loginUser = async (req, res, next) => {
             lastName: user.lastName,
             email: user.email,
             isAdmin: user.isAdmin,
-            verified:user.verified,
+            verified: user.verified,
             doNotLogout,
           },
         });
@@ -293,30 +322,27 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-
-
 const verifyEmail = async (req, res) => {
-	try {
-		const user = await User.findOne({ _id: req.params.id });
-		if (!user) return res.status(400).send({ message: "Invalid link" });
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+    if (!user) return res.status(400).send({ message: "Invalid link" });
 
-    
-		const token = await Token.findOne({
+    const token = await Token.findOne({
       userId: user._id,
-			token: req.params.token,
-		});
-		if (!token) return res.status(400).send({ message: "Invalid link" });
-    
-		// await User.updateOne({ _id: user._id, verified: true });
+      token: req.params.token,
+    });
+    if (!token) return res.status(400).send({ message: "Invalid link" });
+
+    // await User.updateOne({ _id: user._id, verified: true });
     await User.updateOne({ _id: user._id }, { verified: true });
 
-		await token.remove();
+    await token.remove();
 
-		res.status(200).send({ message: "Email verified successfully" });
-	} catch (error) {
-		res.status(500).send({ message: "Internal Server Error" });
-	}
-}
+    res.status(200).send({ message: "Email verified successfully" });
+  } catch (error) {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
 
 const updateUserProfile = async (req, res, next) => {
   try {
@@ -388,7 +414,9 @@ const getUserProfile = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id)
-      .select("name lastName email ipAddress isAdmin deliveryAddress billAddress")
+      .select(
+        "name lastName email ipAddress isAdmin deliveryAddress billAddress"
+      )
       .orFail();
     return res.send(user);
   } catch (err) {
