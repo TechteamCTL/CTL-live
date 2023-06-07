@@ -70,7 +70,7 @@ const RegisterPageComponent = ({
     const billAddress = "new user";
     //TODO if need deliveryAddress again, change the value from location to deliveryAddress.
     const state = form.state.value;
-    const postCode = "6000";
+    const postCode = form.postCode.value;
 
     /* 下面是一些form里面的判定 validation的判定 */
     if (
@@ -295,17 +295,13 @@ const RegisterPageComponent = ({
                 </InputGroup>
               </Form.Group>
 
-              {/* post code hide */}
-              <Form.Group
-                as={Col}
-                md="3"
-                controlId="formBasicPostCode"
-                style={{ display: "none" }}
-              >
+              <Form.Group as={Col} md="3" controlId="formBasicPostCode">
                 <Form.Control
                   type="text"
                   name="postCode"
                   placeholder="Postcode"
+                  value='6000'
+                  style={{ display: "none" }}
                   required
                 />
                 <Form.Control.Feedback type="invalid">
