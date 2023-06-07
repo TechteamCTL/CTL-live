@@ -118,6 +118,7 @@ productSchema.index(
   {
     name: "text",
     // supplier: "text",
+    // description: "text",
     "stock.slrsku": "text",
     "stock.ctlsku": "text",
   },
@@ -126,6 +127,8 @@ productSchema.index(
     default_language: "english",
     weights: {
       name: 7,
+      name: 5,
+      // description: 2,
       supplier: 1,
       "stock.slrsku": 1,
       "stock.ctlsku": 1,

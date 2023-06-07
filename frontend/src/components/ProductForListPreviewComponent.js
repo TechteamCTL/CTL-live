@@ -265,7 +265,7 @@ const ProductForListPreviewComponent = ({
                                   return index > 0 ? (
                                     <div key={index}>
                                       <span>
-                                        <i class="bi bi-dot" />
+                                        <i className="bi bi-dot" />
                                         {item}
                                       </span>
                                     </div>

@@ -156,7 +156,7 @@ const OrdersPageComponent = ({ getOrders }) => {
                 <td>{order.orderNote}</td>
                 <td>
                   <Link to={`/admin/order-details/${order._id}`}>
-                    go to order
+                    Go to Order
                   </Link>
                 </td>
               </tr>

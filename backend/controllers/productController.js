@@ -63,13 +63,13 @@ const getProducts = async (req, res, next) => {
       if (fourCategoryName) {
         regEx = new RegExp(
           "^" +
-            a +
-            "/" +
-            subCategoryName +
-            "/" +
-            childCategoryName +
-            "/" +
-            fourCategoryName
+          a +
+          "/" +
+          subCategoryName +
+          "/" +
+          childCategoryName +
+          "/" +
+          fourCategoryName
         );
       } else if (childCategoryName) {
         regEx = new RegExp(
@@ -96,7 +96,7 @@ const getProducts = async (req, res, next) => {
       var regEx = new RegExp(a, "i"); // 不敏感匹配
       brandQueryCondition = { supplier: regEx };
     }
-    
+
 
 
     let attrsQueryCondition = [];
@@ -144,10 +144,11 @@ const getProducts = async (req, res, next) => {
     let searchQueryCondition = {};
     let select = {};
     console.log("我是searchQuery", searchQuery);
-    
+
     const performSearch = async (query) => {
       const searchWords = query.searchQuery.split(" ");
-    
+
+
       if (searchWords.length <= 1) {
         return {
           $text: {
@@ -164,7 +165,7 @@ const getProducts = async (req, res, next) => {
             $options: "i",
           },
         };
-    
+
         const tempProducts = query.productIds.length > 0 ? await Product.find({ _id: { $in: query.productIds }, ...searchQueryCondition }) : await Product.find(searchQueryCondition);
         if (tempProducts.length > 0) {
           return searchQueryCondition;
@@ -173,7 +174,7 @@ const getProducts = async (req, res, next) => {
         }
       }
     };
-    
+
     const performIndividualSearches = async (searchWords, productIds) => {
       const searchConditions = searchWords.map(word => ({
         name: {
@@ -181,22 +182,26 @@ const getProducts = async (req, res, next) => {
           $options: "i",
         },
       }));
-    
+
       const query = productIds.length > 0 ? { _id: { $in: productIds }, $or: searchConditions } : { $or: searchConditions };
-    
+
       const products = await Product.find(query);
       return products;
     };
-    
+
     if (searchQuery) {
       queryCondition = true;
       const searchWords = searchQuery.split(" ");
-    
+
       let categoryMatchedProducts = [];
       const filteredSearchWords = searchWords.filter((word) => word.length > 1);
-    
+      console.log(filteredSearchWords[0])
+
       for (const word of filteredSearchWords) {
-        const regex = new RegExp(`${word}s?`, "i");
+        const regex = new RegExp(`${word}`, "i");
+        const regexs = new RegExp(`${word}s`, "i");
+        console.log("regex", regex)
+        console.log("word", word)
         const categoryMatch = await Product.find({
           category: {
             $regex: regex,
@@ -204,13 +209,14 @@ const getProducts = async (req, res, next) => {
         });
         categoryMatchedProducts = categoryMatchedProducts.concat(categoryMatch);
         console.log("categoryMatch是啥？", categoryMatchedProducts.length);
+
       }
-    
+
       const productIds = categoryMatchedProducts.map(p => p._id);
-    
+
       if (categoryMatchedProducts.length > 0) {
         searchQueryCondition = await performSearch({ searchQuery, productIds });
-    
+
         if (searchQueryCondition === null) {
           const products = await performIndividualSearches(filteredSearchWords, productIds);
           searchQueryCondition = { _id: { $in: products.map(p => p._id) } };
@@ -219,7 +225,7 @@ const getProducts = async (req, res, next) => {
         }
       } else {
         searchQueryCondition = await performSearch({ searchQuery, productIds: [] });
-    
+
         if (searchQueryCondition === null) {
           const products = await performIndividualSearches(filteredSearchWords, []);
           searchQueryCondition = { _id: { $in: products.map(p => p._id) } };
@@ -257,18 +263,18 @@ const getProducts = async (req, res, next) => {
       .sort(sortCriteria)
       .limit(recordsPerPage);
 
-/*     if (searchQuery) {
-      const searchWords = searchQuery.split(" ");
-      products = products.sort((a, b) => {
-        const aMatchCount = searchWords.filter((word) =>
-          a.name.toLowerCase().includes(word.toLowerCase())
-        ).length;
-        const bMatchCount = searchWords.filter((word) =>
-          b.name.toLowerCase().includes(word.toLowerCase())
-        ).length;
-        return bMatchCount - aMatchCount;
-      });
-    } */
+    /*     if (searchQuery) {
+          const searchWords = searchQuery.split(" ");
+          products = products.sort((a, b) => {
+            const aMatchCount = searchWords.filter((word) =>
+              a.name.toLowerCase().includes(word.toLowerCase())
+            ).length;
+            const bMatchCount = searchWords.filter((word) =>
+              b.name.toLowerCase().includes(word.toLowerCase())
+            ).length;
+            return bMatchCount - aMatchCount;
+          });
+        } */
 
     //  Math.ceil (x) 返回不小于x的最接近的整数
     res.json({

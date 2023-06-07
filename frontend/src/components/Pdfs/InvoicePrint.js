@@ -39,7 +39,7 @@ const InvoicePrint = (cartItems) => {
       paddingRight: 50,
       paddingTop: 10,
       display: "table",
-      width: "95%",
+      width: "100%",
       borderStyle: "solid",
       borderWidth: 0,
     },
@@ -97,6 +97,7 @@ const InvoicePrint = (cartItems) => {
       flexDirection: "row",
       height: "auto",
       width: "100%",
+      borderBottom: 1,
     },
     tableRowProducts: {
       flexDirection: "row",
@@ -118,8 +119,9 @@ const InvoicePrint = (cartItems) => {
       borderWidth: 1,
     },
     tableColHeader: {
-      width: "33.33%",
+      width: "30%",
       borderStyle: "solid",
+      textAlign: "right",
       marginTop: 8,
       borderWidth: 0,
       borderLeftWidth: 0,
@@ -391,25 +393,14 @@ const InvoicePrint = (cartItems) => {
                   src="https://res.cloudinary.com/dxvwresim/image/upload/v1683083956/CTL%20Brand%20Images/CTL-blueDelivering_g3qe9u.png"
                 />
               </View>
-              {/* <View style={styles.tableColHeader}>
-                <Text style={styles.tableCellBill}>Perth</Text>
-                <Text style={styles.tableCellBill}>T : 0475448299</Text>
-                <Text style={styles.tableCellBill}>
-                  E : sales@ctlservices.com.au
-                </Text>
-                <Text style={styles.tableCellBill}>
-                  W : ctlaustralia.com.au
-                </Text>
-              </View> */}
+              <View style={styles.tableColHeader}>
+
+              </View>
               <View style={styles.tableColHeader}>
                 <Text style={styles.tableCellBill}>CTL Australia</Text>
                 <Text style={styles.tableCellBill}>T : +61 498 139 213</Text>
-                <Text style={styles.tableCellBill}>
-                  E : sales@ctlservices.com.au
-                </Text>
-                <Text style={styles.tableCellBill}>
-                  W : ctlaustralia.com.au
-                </Text>
+                <Text style={styles.tableCellBill}>E : sales@ctlservices.com.au</Text>
+                <Text style={styles.tableCellBill}>W : ctlaustralia.com.au</Text>
                 <Text style={styles.tableCellBill}>ABN : 12 609 518 809</Text>
               </View>
             </View>
@@ -424,7 +415,7 @@ const InvoicePrint = (cartItems) => {
                 <View style={styles.tableColHeaderCenter}>
                   <View style={styles.tableRow}>
                     <View style={styles.tableCellHeaderLeft}>
-                      <Text>Despatch From</Text>
+                      <Text>Despatch From </Text>
                     </View>
                     <View style={styles.tableCellHeaderSales}>
                       <Text>Page #</Text>
@@ -432,14 +423,14 @@ const InvoicePrint = (cartItems) => {
                   </View>
                 </View>
                 <View style={styles.tableColHeaderSideHead}>
-                  <Text>Ship To :</Text>
+                  <Text>Ship To </Text>
                 </View>
               </View>
 
               <View style={styles.tableRow}>
                 <View style={styles.tableColHeaderSide}>
                   <Text style={styles.tableCellBill}>
-                    {InvAddress.billAddress}
+                    {InvAddress.billAddress ? (InvAddress.billAddress.replaceAll(',', '\n')) : ("")}
                   </Text>
                 </View>
                 <View style={styles.tableColHeaderCenter}>
@@ -462,7 +453,7 @@ const InvoicePrint = (cartItems) => {
                 </View>
                 <View style={styles.tableColHeaderSide}>
                   <Text style={styles.tableCellBill}>
-                    {InvAddress.deliveryAddress}
+                    {InvAddress.deliveryAddress ? (InvAddress.deliveryAddress.replaceAll(',', '\n')) : ("")}
                   </Text>
                 </View>
               </View>
@@ -583,8 +574,8 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {item.cartProducts[0].price
                             ? item.cartProducts[0].price
-                                .toFixed(2)
-                                .toLocaleString()
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -593,11 +584,11 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
-                                item.cartProducts[0].price *
-                                item.cartProducts[0].quantity
-                              )
-                                .toFixed(2)
-                                .toLocaleString()
+                              item.cartProducts[0].price *
+                              item.cartProducts[0].quantity
+                            )
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -606,13 +597,13 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
-                                (item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity *
-                                  10) /
-                                100
-                              )
-                                .toFixed(2)
-                                .toLocaleString()
+                              (item.cartProducts[0].price *
+                                item.cartProducts[0].quantity *
+                                10) /
+                              100
+                            )
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -621,15 +612,15 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
-                                item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity +
-                                (item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity *
-                                  10) /
-                                  100
-                              )
-                                .toFixed(2)
-                                .toLocaleString()
+                              item.cartProducts[0].price *
+                              item.cartProducts[0].quantity +
+                              (item.cartProducts[0].price *
+                                item.cartProducts[0].quantity *
+                                10) /
+                              100
+                            )
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -661,8 +652,8 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {item.cartProducts[0].price
                             ? item.cartProducts[0].price
-                                .toFixed(2)
-                                .toLocaleString()
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -671,11 +662,11 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
-                                item.cartProducts[0].price *
-                                item.cartProducts[0].quantity
-                              )
-                                .toFixed(2)
-                                .toLocaleString()
+                              item.cartProducts[0].price *
+                              item.cartProducts[0].quantity
+                            )
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -684,13 +675,13 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
-                                (item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity *
-                                  10) /
-                                100
-                              )
-                                .toFixed(2)
-                                .toLocaleString()
+                              (item.cartProducts[0].price *
+                                item.cartProducts[0].quantity *
+                                10) /
+                              100
+                            )
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -699,15 +690,15 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {item.cartProducts[0].price
                             ? (
-                                item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity +
-                                (item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity *
-                                  10) /
-                                  100
-                              )
-                                .toFixed(2)
-                                .toLocaleString()
+                              item.cartProducts[0].price *
+                              item.cartProducts[0].quantity +
+                              (item.cartProducts[0].price *
+                                item.cartProducts[0].quantity *
+                                10) /
+                              100
+                            )
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -741,8 +732,8 @@ const InvoicePrint = (cartItems) => {
                     ${" "}
                     {cartItems.cartSubtotal
                       ? (cartItems.cartSubtotal / 1.1)
-                          .toFixed(2)
-                          .toLocaleString()
+                        .toFixed(2)
+                        .toLocaleString()
                       : ""}
                   </Text>
                 </View>
@@ -756,8 +747,8 @@ const InvoicePrint = (cartItems) => {
                     ${" "}
                     {cartItems.cartSubtotal
                       ? ((cartItems.cartSubtotal / 1.1) * 0.1)
-                          .toFixed(2)
-                          .toLocaleString()
+                        .toFixed(2)
+                        .toLocaleString()
                       : ""}
                   </Text>
                 </View>
@@ -855,8 +846,8 @@ const InvoicePrint = (cartItems) => {
                                 ${" "}
                                 {item.cartProducts[0].price
                                   ? item.cartProducts[0].price
-                                      .toFixed(2)
-                                      .toLocaleString()
+                                    .toFixed(2)
+                                    .toLocaleString()
                                   : ""}
                               </Text>
                             </View>
@@ -865,11 +856,11 @@ const InvoicePrint = (cartItems) => {
                                 ${" "}
                                 {item.cartProducts[0].price
                                   ? (
-                                      item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity
-                                    )
-                                      .toFixed(2)
-                                      .toLocaleString()
+                                    item.cartProducts[0].price *
+                                    item.cartProducts[0].quantity
+                                  )
+                                    .toFixed(2)
+                                    .toLocaleString()
                                   : ""}
                               </Text>
                             </View>
@@ -878,13 +869,13 @@ const InvoicePrint = (cartItems) => {
                                 ${" "}
                                 {item.cartProducts[0].price
                                   ? (
-                                      (item.cartProducts[0].price *
-                                        item.cartProducts[0].quantity *
-                                        10) /
-                                      100
-                                    )
-                                      .toFixed(2)
-                                      .toLocaleString()
+                                    (item.cartProducts[0].price *
+                                      item.cartProducts[0].quantity *
+                                      10) /
+                                    100
+                                  )
+                                    .toFixed(2)
+                                    .toLocaleString()
                                   : ""}
                               </Text>
                             </View>
@@ -893,15 +884,15 @@ const InvoicePrint = (cartItems) => {
                                 ${" "}
                                 {item.cartProducts[0].price
                                   ? (
-                                      item.cartProducts[0].price *
-                                        item.cartProducts[0].quantity +
-                                      (item.cartProducts[0].price *
-                                        item.cartProducts[0].quantity *
-                                        10) /
-                                        100
-                                    )
-                                      .toFixed(2)
-                                      .toLocaleString()
+                                    item.cartProducts[0].price *
+                                    item.cartProducts[0].quantity +
+                                    (item.cartProducts[0].price *
+                                      item.cartProducts[0].quantity *
+                                      10) /
+                                    100
+                                  )
+                                    .toFixed(2)
+                                    .toLocaleString()
                                   : ""}
                               </Text>
                             </View>
@@ -934,8 +925,8 @@ const InvoicePrint = (cartItems) => {
                               ${" "}
                               {item.cartProducts[0].price
                                 ? item.cartProducts[0].price
-                                    .toFixed(2)
-                                    .toLocaleString()
+                                  .toFixed(2)
+                                  .toLocaleString()
                                 : ""}
                             </Text>
                           </View>
@@ -944,11 +935,11 @@ const InvoicePrint = (cartItems) => {
                               ${" "}
                               {item.cartProducts[0].price
                                 ? (
-                                    item.cartProducts[0].price *
-                                    item.cartProducts[0].quantity
-                                  )
-                                    .toFixed(2)
-                                    .toLocaleString()
+                                  item.cartProducts[0].price *
+                                  item.cartProducts[0].quantity
+                                )
+                                  .toFixed(2)
+                                  .toLocaleString()
                                 : ""}
                             </Text>
                           </View>
@@ -957,13 +948,13 @@ const InvoicePrint = (cartItems) => {
                               ${" "}
                               {item.cartProducts[0].price
                                 ? (
-                                    (item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity *
-                                      10) /
-                                    100
-                                  )
-                                    .toFixed(2)
-                                    .toLocaleString()
+                                  (item.cartProducts[0].price *
+                                    item.cartProducts[0].quantity *
+                                    10) /
+                                  100
+                                )
+                                  .toFixed(2)
+                                  .toLocaleString()
                                 : ""}
                             </Text>
                           </View>
@@ -972,15 +963,15 @@ const InvoicePrint = (cartItems) => {
                               ${" "}
                               {item.cartProducts[0].price
                                 ? (
-                                    item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity +
-                                    (item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity *
-                                      10) /
-                                      100
-                                  )
-                                    .toFixed(2)
-                                    .toLocaleString()
+                                  item.cartProducts[0].price *
+                                  item.cartProducts[0].quantity +
+                                  (item.cartProducts[0].price *
+                                    item.cartProducts[0].quantity *
+                                    10) /
+                                  100
+                                )
+                                  .toFixed(2)
+                                  .toLocaleString()
                                 : ""}
                             </Text>
                           </View>
@@ -1010,8 +1001,8 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {cartItems.cartSubtotal
                             ? (cartItems.cartSubtotal / 1.1)
-                                .toFixed(2)
-                                .toLocaleString()
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>
@@ -1025,8 +1016,8 @@ const InvoicePrint = (cartItems) => {
                           ${" "}
                           {cartItems.cartSubtotal
                             ? ((cartItems.cartSubtotal / 1.1) * 0.1)
-                                .toFixed(2)
-                                .toLocaleString()
+                              .toFixed(2)
+                              .toLocaleString()
                             : ""}
                         </Text>
                       </View>

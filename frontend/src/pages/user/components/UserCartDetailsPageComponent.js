@@ -191,7 +191,7 @@ const UserCartDetailsPageComponent = ({
   };
 
   const enterManagerEmail = (e) => {
-    setManagerEmail(e.target.value);
+    setManagerEmail(e.target.value + `@${userEmail}`);
   };
 
   const removeAllItems = () => {
@@ -236,7 +236,6 @@ const UserCartDetailsPageComponent = ({
     generatePdf();
   }, [cartItems]);
 
-
   const quotePriceData = {
     ...userNameEmail,
     cartItems,
@@ -247,19 +246,23 @@ const UserCartDetailsPageComponent = ({
 
   // console.log("quotePriceData", quotePriceData);
 
-  const nonGSTPrice = parseFloat(
-    cartSubtotal.toFixed(2)
+  const nonGSTPrice = parseFloat(cartSubtotal.toFixed(2)).toLocaleString(
+    undefined,
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }
+  );
+  const GST = parseFloat((cartSubtotal * 0.1).toFixed(2)).toLocaleString(
+    undefined,
+    {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }
+  );
+  const incGSTPrice = parseFloat(
+    (cartSubtotal * 1.1).toFixed(2)
   ).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  const GST = parseFloat(
-    (cartSubtotal * 0.1).toFixed(2)
-  ).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-  const incGSTPrice = parseFloat((cartSubtotal * 1.1).toFixed(2)).toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
@@ -298,7 +301,7 @@ const UserCartDetailsPageComponent = ({
           </Col>
           <Col md={3} className="cart_detail_right">
             <ListGroup>
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <div className="d-grid gap-2">
                   <PDFDownloadLink
                     document={
@@ -353,21 +356,33 @@ const UserCartDetailsPageComponent = ({
                 </Form.Control.Feedback>
               </ListGroup.Item> */}
 
-              <ListGroup.Item controlId="validationMangerEmail">
-                <Form.Control
-                  className=""
-                  onChange={enterManagerEmail}
-                  type="string"
-                  name="MangerEmail"
-                  placeholder={`Enter email @${userEmail}`}
-                  required
-                />
+              <ListGroup.Item controlId="validationMangerEmail" className="p-0">
+                <InputGroup className="m-0 p-0">
+                  <Form.Control
+                    className="p-0 ps-2"
+                    onChange={enterManagerEmail}
+                    type="string"
+                    name="MangerEmail"
+                    placeholder={`Enter email`}
+                    required
+                    aria-label="Recipient's username"
+                    aria-describedby="basic-addon2"
+                    style={{ border: "none" }}
+                  />
+                  <InputGroup.Text
+                    id="basic-addon2"
+                    className="p-1"
+                    style={{ border: "none", borderRadius: "0" }}
+                  >
+                    @{userEmail}
+                  </InputGroup.Text>
+                </InputGroup>
                 <Form.Control.Feedback type="invalid">
                   Please Enter Your Manager's Email.{" "}
                 </Form.Control.Feedback>
               </ListGroup.Item>
 
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <div className="d-grid gap-2">
                   <QuoeteManagementApproval quotePriceData={quotePriceData} />
                 </div>
@@ -375,10 +390,10 @@ const UserCartDetailsPageComponent = ({
             </ListGroup>
             <br />
             <ListGroup className="">
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <h4 className="m-0">Order Summary</h4>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <p className="p-0 m-0">
                   Total:{" "}
                   <span className="float-end">
@@ -388,31 +403,29 @@ const UserCartDetailsPageComponent = ({
                 </p>
               </ListGroup.Item>
 
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 Item Price:{" "}
-                <span className="fw-bold float-end">
-                  {" "}
-                  $ {nonGSTPrice}
-                </span>
+                <span className="fw-bold float-end"> $ {nonGSTPrice}</span>
               </ListGroup.Item>
-              <ListGroup.Item>
-                Total GST{" "}
-                <span className="fw-bold float-end">
-                  $ {GST}
-                </span>
+              <ListGroup.Item className="p-1 ps-2">
+                Total GST <span className="fw-bold float-end">$ {GST}</span>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 Invoice Amount:{" "}
                 <span className="fw-bold text-danger float-end">
                   $ {incGSTPrice}
                 </span>
               </ListGroup.Item>
 
-              <ListGroup.Item controlId="validationSLRPurchaseNum">
+              <ListGroup.Item
+                controlId="validationSLRPurchaseNum"
+                className="p-1 ps-2"
+              >
                 <Form.Label className="fw-bold text-danger">
                   PO Number
                 </Form.Label>
                 <Form.Control
+                  className="p-0 ps-1"
                   onChange={enterPurchaseNum}
                   type="string"
                   name="SLRPurchaseNumber"
@@ -425,11 +438,13 @@ const UserCartDetailsPageComponent = ({
                 {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
               </ListGroup.Item>
 
-              <ListGroup.Item controlId="validationOrderNote">
-                <Form.Label className="fw-bold">
-                  Order Name:
-                </Form.Label>
+              <ListGroup.Item
+                controlId="validationOrderNote"
+                className="p-1 ps-2"
+              >
+                <Form.Label className="fw-bold">Order Name:</Form.Label>
                 <Form.Control
+                  className="p-0 ps-1"
                   type="string"
                   name="orderNote"
                   placeholder="Order Name"
@@ -439,9 +454,8 @@ const UserCartDetailsPageComponent = ({
                   Please Enter Your Note.{" "}
                 </Form.Control.Feedback>
               </ListGroup.Item>
-              
 
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <div className="d-grid gap-2">
                   <button
                     size="sm"
@@ -457,19 +471,19 @@ const UserCartDetailsPageComponent = ({
             <br />
             {/* ******* shipping information ******* */}
             {/*             <ListGroup>
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <h5 className="m-0">Shipping Information</h5>
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <b>Name</b>: {userInfo.name} {userInfo.lastName}
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <b>Site</b>: {userAddress.location}
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <b>Phone</b>: {userAddress.phone}
               </ListGroup.Item>
-              <ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
                 <b>Address</b>: {userAddress.deliveryAddress}
               </ListGroup.Item>
             </ListGroup> */}

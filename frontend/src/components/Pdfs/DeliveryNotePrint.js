@@ -39,7 +39,7 @@ const InvoicePrint = (cartItems) => {
             paddingRight: 50,
             paddingTop: 10,
             display: "table",
-            width: "95%",
+            width: "100%",
             borderStyle: "solid",
             borderWidth: 0,
         },
@@ -119,8 +119,9 @@ const InvoicePrint = (cartItems) => {
             borderWidth: 1,
         },
         tableColHeader: {
-            width: "33.33%",
+            width: "30%",
             borderStyle: "solid",
+            textAlign: "right",
             marginTop: 5,
             borderWidth: 0,
             borderLeftWidth: 0,
@@ -373,15 +374,16 @@ const InvoicePrint = (cartItems) => {
                                 />
                             </View>
                             <View style={styles.tableColHeader}>
-                                <Text style={styles.tableCellBill}>CTL services</Text>
+
+                            </View>
+                            <View style={styles.tableColHeader}>
+                                <Text style={styles.tableCellBill}>CTL Australia</Text>
                                 <Text style={styles.tableCellBill}>T : +61 498 139 213</Text>
                                 <Text style={styles.tableCellBill}>E : sales@ctlservices.com.au</Text>
                                 <Text style={styles.tableCellBill}>W : ctlaustralia.com.au</Text>
                                 <Text style={styles.tableCellBill}>ABN : 12 609 518 809</Text>
                             </View>
-
                         </View>
-
                     </View>
                     {/* ******* header ******* */}
                     <View style={styles.tableItem}>
@@ -393,7 +395,7 @@ const InvoicePrint = (cartItems) => {
                                 <View style={styles.tableColHeaderCenter}>
                                     <View style={styles.tableRow}>
                                         <View style={styles.tableCellHeaderLeft}>
-                                            <Text>Despatch From :</Text>
+                                            <Text>Despatch From </Text>
                                         </View>
                                         <View style={styles.tableCellHeaderSales}>
                                             <Text>Page #</Text>
@@ -401,7 +403,7 @@ const InvoicePrint = (cartItems) => {
                                     </View>
                                 </View>
                                 <View style={styles.tableColHeaderSideHead}>
-                                    <Text>Ship To :</Text>
+                                    <Text>Ship To </Text>
                                 </View>
                             </View>
 

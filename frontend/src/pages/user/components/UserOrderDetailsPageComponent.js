@@ -28,6 +28,7 @@ const UserOrderDetailsPageComponent = ({
   reduxDispatch,
   reOrdertReduxAction,
 }) => {
+  const [order, setOrder] = useState();
   const [userAddress, setUserAddress] = useState({});
   const [paymentMethod, setPaymentMethod] = useState("");
   const [purchaseNumber, setPurchaseNumber] = useState("");
@@ -68,6 +69,7 @@ const UserOrderDetailsPageComponent = ({
   useEffect(() => {
     getOrder(id)
       .then((data) => {
+        setOrder(data);
         setPaymentMethod(data.paymentMethod);
         setInvoiceNumber(data.invoiceNumber);
         setCreatedAt(data.createdAt);
@@ -102,33 +104,6 @@ const UserOrderDetailsPageComponent = ({
       .catch((err) => console.log(err));
   }, []);
   // console.log("OrderDetailPage cartItems", cartItems, typeof cartItems);
-
-  /*   // a function, split array in to chunks
-  function splitArrayIntoChunks(arr, chunkSize) {
-    const result = [];
-    for (let i = 0; i < arr.length; i += chunkSize) {
-      result.push(arr.slice(i, i + chunkSize));
-    }
-    return result;
-  }
-
-  // slice the first 10 into first array, rest in chunks
-  function splitCartItems(cartItems) {
-    const firstChunk = cartItems.slice(0, 10);
-    const remainingItems = cartItems.slice(10);
-    const chunks = splitArrayIntoChunks(remainingItems, 15);
-    return [firstChunk, ...chunks];
-  }
-
-  // const first array and rest chunks
-  const [firstNineItems, ...otherChunks] = splitCartItems(cartItems);
-
-  // use otherChunks[] to pick array from chunks.
-  console.log("OrderDetailPage chunks", firstNineItems, otherChunks);
-
-  if (otherChunks[2]) {
-    console.log("我是chunks2", otherChunks[2]);
-  } */
 
   // 分隔一下，跟上面的
   const orderHandler = () => {
@@ -221,7 +196,25 @@ const UserOrderDetailsPageComponent = ({
     maximumFractionDigits: 2,
   });
 
-  console.log("orderNote", orderNote);
+  // console.log("orderNote", order);
+
+  // edite order name modal
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+    setOrderNote(order.orderNote);
+  };
+  const handleShow = () => setShow(true);
+
+  const enterOrderName = (e) => {
+    setOrderNote(e.target.value);
+  };
+
+  const saveOrderName = () => {
+    setShow(false);
+    updateOrderNote(id, orderNote);
+  };
 
   return (
     <Container>
@@ -292,26 +285,26 @@ const UserOrderDetailsPageComponent = ({
         </Col>
         <Col md={3}>
           <ListGroup>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <h3>Order Summary</h3>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               Item Price:{" "}
               <span className="fw-bold float-end"> $ {nonGSTPrice}</span>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               Total GST <span className="fw-bold float-end">$ {GST}</span>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               Invoice Amount:{" "}
               <span className="fw-bold text-danger float-end">
                 $ {incGSTPrice}
               </span>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               PO Number: <span className="fw-bold">{purchaseNumber}</span>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <div className="d-grid gap-2">
                 <PDFDownloadLink
                   document={
@@ -341,13 +334,13 @@ const UserOrderDetailsPageComponent = ({
                 <div ref={paypalContainer} id="paypal-container-element"></div>
               </div>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <Row>
                 <Col>
                   <div>
                     <Button
                       onClick={handleReorderClick}
-                      className="button-shadow"
+                      className="button-shadow p-0 pe-2 ps-2 m-0"
                       variant="success"
                     >
                       Re-Order
@@ -384,7 +377,7 @@ const UserOrderDetailsPageComponent = ({
                   </div>
                 </Col>
                 <Col>
-                  <Button className="pt-1 pb-1 button-shadow" variant="light">
+                  <Button className="p-0 pe-2 ps-2 m-0 button-shadow" variant="light">
                     <a href="/user/my-orders" style={{ color: "#073474" }}>
                       My Orders{" "}
                     </a>
@@ -395,30 +388,69 @@ const UserOrderDetailsPageComponent = ({
           </ListGroup>
           <br />
           <ListGroup>
-            <ListGroup.Item>
-              <b>Order Note:</b> {orderNote ? null : "N/A"}
+            <ListGroup.Item className="p-1 ps-2">
+              <b>Order Name:</b> {orderNote ? null : "N/A"}
+              <i
+                onClick={handleShow}
+                className="bi bi-pencil-square"
+                style={{ cursor: "pointer" }}
+              ></i>
             </ListGroup.Item>
-            {orderNote ? <ListGroup.Item>{orderNote}</ListGroup.Item> : null}
+            {orderNote ? <ListGroup.Item className="p-1 ps-2">{orderNote}</ListGroup.Item> : null}
           </ListGroup>
+
+          {/* edit order name modal */}
+          <Modal show={show} onHide={handleClose} className="edite_order_name">
+            <Modal.Header className="p-1 ps-3 pe-3 m-0" closeButton>
+              <Modal.Title>Enter Order Name:</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="p-2 m-0">
+              <Form.Control
+                onChange={enterOrderName}
+                type="string"
+                name="MangerEmail"
+                defaultValue={orderNote}
+                required
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+              />
+            </Modal.Body>
+            <Modal.Footer className="p-0 m-0">
+              <Button
+                variant="secondary"
+                onClick={handleClose}
+                className="p-1 pt-0 pb-0 m-1"
+              >
+                Close
+              </Button>
+              <Button
+                variant="success"
+                onClick={saveOrderName}
+                className="p-1 pt-0 pb-0 m-1"
+              >
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
 
           <br />
           {/* ******* shipping information ******* */}
           <ListGroup>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <h5 className="m-0">Shipping Information</h5>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <b>Name</b>: {userInfo.name} {userInfo.lastName}
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <b>Site</b>: {userAddress.location}
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <b>Phone</b>: {userAddress.phone}
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <Alert
-                className="m-0 lh-1 h-50 p-2"
+                className="m-0 lh-1 h-50 p-1 ps-2"
                 variant={isDelivered ? "success" : "danger"}
               >
                 {isDelivered ? (

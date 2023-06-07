@@ -85,3 +85,8 @@
     border: 1px solid #1e4881;
     background-color: white;
 }
+
+/* ********* edit order name ********* */
+.edite_order_name .modal-content{
+ margin-top: 60%;
+}

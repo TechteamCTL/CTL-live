@@ -43,6 +43,7 @@ const ProductDetailsPageComponent = ({
   const [selectedStock, setSelectedStock] = useState(null);
 
   const [userNameEmail, setUserNameEmail] = useState();
+  const [userData, setUserData] = useState([]);
 
   // 当product state update的时候，重置一下setQty
   useEffect(() => {
@@ -124,7 +125,7 @@ const ProductDetailsPageComponent = ({
   const price = stockPrice;
   // const total = price ? (price * qty).toFixed(2) : "";
   // const formattedPrice = parseFloat(total).toLocaleString();
-  const formattedPrice = price ? (price*qty).toLocaleString(undefined, {
+  const formattedPrice = price ? (price * qty).toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }) : "";
@@ -168,6 +169,7 @@ const ProductDetailsPageComponent = ({
           email: data.email,
           name: data.name,
         });
+        setUserData(data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -177,6 +179,7 @@ const ProductDetailsPageComponent = ({
     productName: product.name,
     productId: id,
   };
+  // console.log("Product Detail Page -- user", userData.isAdmin);
 
   const handleBlur = (e) => {
     const newValue =
@@ -304,7 +307,11 @@ const ProductDetailsPageComponent = ({
                       <Col>
                         <h6>PRODUCT CODE : {stockCode}</h6>
                         <h6>
-                          {product.slrcurrentbuyingprice === 0 ? (
+                          {userData.isAdmin === true ? (
+                            <span className="fw-bold">
+                              Price: ${formattedPrice}
+                            </span>
+                          ) : product.slrcurrentbuyingprice === 0 ? (
                             <span className="fw-bold PriceContact">
                               Contact us for a quote
                             </span>
@@ -329,26 +336,18 @@ const ProductDetailsPageComponent = ({
                         <br />
                       </Col>
                     </Row>
-                    {product.slrcurrentbuyingprice === 0 ? null : <h6>Quantity :</h6>}
+                    {product.slrcurrentbuyingprice === 0 ? null : (
+                      <h6>Quantity :</h6>
+                    )}
 
                     <Row>
-                      {product.slrcurrentbuyingprice === 0 ? (
-                        <QuotePriceComponent quotePriceData={quotePriceData} />
-                      ) : (
+                      {userData.isAdmin === true ? (
                         <>
                           <Col lg={3}>
                             <div
                               className="btn-group addToCartQty"
                               role="group"
                             >
-                              {/* <button
-                            type="button"
-                            className="btn_jj"
-                            onClick={decNum}
-                          >
-                            {" "}
-                            -{" "}
-                          </button> */}
                               <Form.Control
                                 type="number"
                                 min={product.saleunit}
@@ -359,15 +358,38 @@ const ProductDetailsPageComponent = ({
                                 step={product.saleunit}
                                 disabled={selectedProduct === "choose-product"}
                               />
-
-                              {/*                           <button
-                            type="button"
-                            className="btn_jj"
-                            onClick={incNum}
-                          >
-                            {" "}
-                            +{" "}
-                          </button> */}
+                            </div>
+                          </Col>
+                          <Col lg={4}>
+                            <Button
+                              onClick={() => addToCartHandler(selectedStock)}
+                              className="btn_blue btn-ripple addToCartBtn"
+                              variant="success"
+                              disabled={selectedProduct === "choose-product"}
+                            >
+                              Add to cart
+                            </Button>
+                          </Col>
+                        </>
+                      ) : product.slrcurrentbuyingprice === 0 ? (
+                        <QuotePriceComponent quotePriceData={quotePriceData} />
+                      ) : (
+                        <>
+                          <Col lg={3}>
+                            <div
+                              className="btn-group addToCartQty"
+                              role="group"
+                            >
+                              <Form.Control
+                                type="number"
+                                min={product.saleunit}
+                                className="form-control col-0"
+                                value={qty}
+                                onBlur={handleBlur}
+                                onChange={(e) => setQty(e.target.value)}
+                                step={product.saleunit}
+                                disabled={selectedProduct === "choose-product"}
+                              />
                             </div>
                           </Col>
                           &nbsp;&nbsp;
@@ -406,7 +428,7 @@ const ProductDetailsPageComponent = ({
                         <div
                           style={{
                             whiteSpace: "pre-wrap",
-                            textAlign: "left",
+                            textAlign: "justify",
                             width: "97%",
                             overflowWrap: "break-word",
                           }}
@@ -414,21 +436,19 @@ const ProductDetailsPageComponent = ({
                           {/* {product.description} */}
                           {product.description
                             ? product.description
-                                .split("*")
-                                .map((item, index) => {
-                                  return index > 0 ? (
-                                    <div key={index}>
-                                      <span>
-                                        <i class="bi bi-dot" />
-                                        {item}
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <div key={index}>
-                                      <span> {item}</span>
-                                    </div>
-                                  );
-                                })
+                              .split("*")
+                              .map((item, index) => {
+                                return index > 0 ? (
+                                  <div key={index} style={{ textIndent: "-10px", paddingLeft: "15px", lineHeight: "1.6rem", }}>
+                                    <i class="bi bi-dot " />
+                                    {item}
+                                  </div>
+                                ) : (
+                                  <div key={index}>
+                                    {item}
+                                  </div>
+                                );
+                              })
                             : ""}
                         </div>
                       </Tab>

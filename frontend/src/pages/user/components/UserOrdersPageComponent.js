@@ -24,7 +24,7 @@ const UserOrdersPageComponent = ({ getOrders }) => {
     { name: "Date", field: "createdAt", sortable: true },
     { name: "Price", field: "cartSubtotal", sortable: false },
     { name: "Delivered", field: "isDelivered", sortable: true },
-    { name: "Paid", field: "isPaid", sortable: true },
+    // { name: "Paid", field: "isPaid", sortable: true },
     { name: "PO#", field: "purchaseNumber", sortable: true },
     { name: "Order Name", field: "orderNote", sortable: true },
     { name: "Order details", field: "_id", sortable: false }
@@ -123,17 +123,17 @@ const UserOrdersPageComponent = ({ getOrders }) => {
                   <td>
                     {order.isDelivered ? <i className="bi bi-check-lg text-success"></i> : <i className="bi bi-x-lg text-danger"></i>}
                   </td>
-                  <td>
+{/*                   <td>
                     {order.isPaid ? (
                       <i className="bi bi-check-lg text-success"></i>
                     ) : (
                       <i className="bi bi-x-lg text-danger"></i>
                     )}
-                  </td>
+                  </td> */}
                   <td>{order.purchaseNumber}</td>
                   <td>{order.orderNote}</td>
                   <td>
-                    <Link to={`/user/order-details/${order._id}`}>go to order</Link>
+                    <Link to={`/user/order-details/${order._id}`}>Go to Order <i className="bi bi-box-arrow-in-right"></i></Link>
                   </td>
                 </tr>
               )

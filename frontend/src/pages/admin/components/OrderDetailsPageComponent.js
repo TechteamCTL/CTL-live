@@ -126,7 +126,7 @@ const OrderDetailsPageComponent = ({
             <Row>
               <Col>
                 <Alert
-                  className="mt-3"
+                  className="mt-3 p-0 ps-2"
                   variant={isDelivered ? "success" : "danger"}
                 >
                   {isDelivered ? (
@@ -147,7 +147,7 @@ const OrderDetailsPageComponent = ({
                 </Alert>
               </Col>
               <Col>
-                <Alert className="mt-3" variant={isPaid ? "success" : "danger"}>
+                <Alert className="mt-3 p-0 ps-2" variant={isPaid ? "success" : "danger"}>
                   {isPaid ? (
                     <>
                       Paid on{" "}
@@ -177,30 +177,29 @@ const OrderDetailsPageComponent = ({
         </Col>
         <Col md={3}>
           <ListGroup>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <h3>ORDER SUMMARY</h3>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               Item Price:{" "}
               <span className="fw-bold float-end"> $ {nonGSTPrice}</span>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               Total GST <span className="fw-bold float-end">$ {GST}</span>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               Invoice Amount:{" "}
               <span className="fw-bold text-danger float-end">
                 $ {incGSTPrice}
               </span>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               PO Number: <span className="fw-bold">{purchaseNumber}</span>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <div className="d-grid gap-2">
                 <Button
-                 className="pt-0 pb-0 m-0"
-                  size="lg"
+                 className="p-0 m-0 w-50"
                   onClick={() =>
                     markAsDelivered(id)
                       .then((res) => {
@@ -224,11 +223,10 @@ const OrderDetailsPageComponent = ({
                 </Button>
               </div>
             </ListGroup.Item>
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <div className="d-grid gap-2">
                 <Button
-                  className="p-0 m-0"
-                  size="lg"
+                  className="p-0 m-0 w-50"
                   onClick={() =>
                     markAsPaid(id)
                       .then((res) => {
@@ -253,7 +251,7 @@ const OrderDetailsPageComponent = ({
               </div>
             </ListGroup.Item>
 
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <div className="d-grid gap-2">
                 <PDFDownloadLink
                   document={
@@ -271,18 +269,18 @@ const OrderDetailsPageComponent = ({
                 >
                   {({ loading }) =>
                     loading ? (
-                      <Button className="p-0 m-0" size="lg">
+                      <Button className="p-0 m-0 pe-2 ps-2">
                         Loading Delivery Note...
                       </Button>
                     ) : (
-                      <Button className="pt-0 pb-0 m-0" size="lg">Download Delivery Note</Button>
+                      <Button className="p-0 m-0 pe-2 ps-2">Download Delivery Note</Button>
                     )
                   }
                 </PDFDownloadLink>
               </div>
             </ListGroup.Item>
 
-            <ListGroup.Item>
+            <ListGroup.Item className="p-1 ps-2">
               <div className="d-grid gap-2">
                 <PDFDownloadLink
                   document={
@@ -300,11 +298,10 @@ const OrderDetailsPageComponent = ({
                 >
                   {({ loading }) =>
                     loading ? (
-                      <Button className="pt-0 pb-0 m-0" size="lg">Loading Invoice...</Button>
+                      <Button className="p-0 m-0 pe-2 ps-2">Loading Invoice...</Button>
                     ) : (
-                      <Button className="pt-0 pb-0 m-0" size="lg">
-                        &nbsp; &nbsp; Download Invoice
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <Button className="p-0 m-0 pe-2 ps-2">
+                      Download Invoice
                       </Button>
                     )
                   }

@@ -157,9 +157,74 @@ const HeaderComponent = () => {
           {/* 折叠区间 */}
           <Nav className="user_cart">
             {userInfo.isAdmin ? (
-              <LinkContainer to="/admin/orders">
-                <Nav.Link>Admin: {userInfo.name}</Nav.Link>
-              </LinkContainer>
+              <>
+                {/* <LinkContainer to="/admin/orders">
+                  <Nav.Link>Admin: {userInfo.name}</Nav.Link>
+                </LinkContainer> */}
+
+                <div className="users_initial_dropdown mt-2 pe-4">
+                  <div className="Avtbox_admin">
+                    <a href="/admin/orders" className="Avtbox_users_initial">
+                      {`${userInfo.name.charAt(0)}${userInfo.lastName.charAt(
+                        0
+                      )}`}
+                    </a>
+                  </div>
+                  <div className="users_dropdown">
+                    <div className="users_row">
+                      <div className="users_column">
+                        <li>
+                          <a href="/admin/orders" className="hd_c">
+                            Orders
+                          </a>
+                        </li>
+                        <li>
+                          <a href="/admin/products" className="hd_c">
+                            Products
+                          </a>
+                        </li>
+                        <li>
+                          <a href="/admin/users" className="hd_c">
+                            Users
+                          </a>
+                        </li>
+                        <li
+                          className="hd_c"
+                          onClick={() => dispatch(logout())}
+                          style={{ cursor: "pointer" }}
+                        >
+                          Log out
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="cart_dropdown mt-2 pe-4">
+                  <div className="miningCart">
+                    <a className="hd_c mining_cart" href="/user/cart-details">
+                      <GiMineWagon
+                        className="mt-1"
+                        style={{ fontSize: "2rem" }}
+                      />
+                      <Badge pill bg="danger" style={{ fontSize: "0.6rem" }}>
+                        {itemsCount === 0 ? "" : cartItems?.length}
+                      </Badge>
+                    </a>
+                  </div>
+                  {itemsCount === 0 ? null : (
+                    <div className="cart_dropdown_box">
+                      <CartDropDown
+                        addToCart={addToCart}
+                        removeFromCart={removeFromCart}
+                        editQuantity={editQuantity}
+                        cartItems={cartItems}
+                        cartSubtotal={cartSubtotal}
+                        reduxDispatch={reduxDispatch}
+                      />
+                    </div>
+                  )}
+                </div>
+              </>
             ) : userInfo.name && !userInfo.isAdmin ? (
               <>
                 <div className="users_initial_dropdown mt-2 pe-4">
