@@ -36,11 +36,13 @@ const updateBackOrder = async (orderId, itemId, suppliedQty) => {
 }
 
 const removeOrderItem = async (orderId, itemId) => {
-    const { data } = await axios.delete("/api/orders/delete/" + orderId + "/" + itemId);
+    const { data } = await axios.delete("/api/orders/removeItem/" + orderId + "/" + itemId);
     if (data) {
         return data;
     }
 }
+
+
 
 const AdminOrderDetailsPage = () => {
     const userInfo = useSelector((state) => state.userRegisterLogin.userInfo);

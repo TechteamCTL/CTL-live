@@ -93,20 +93,6 @@ const registerUser = async (req, res, next) => {
         const url = `${process.env.BASE_URL}user/${user.id}/verify/${token.token}`;
         await sendEmail(user.email, "Verify Email", url);
       }
-      
-/*       if (
-        email.endsWith("@slrltd.com") ||
-        email.endsWith("@ctlservices.com.au") ||
-        email.endsWith("@focusminerals.com.au") ||
-        email.endsWith("@evolutionmining.com")
-      ) {
-        const token = await new Token({
-          userId: user._id,
-          token: crypto.randomBytes(32).toString("hex"),
-        }).save();
-        const url = `${process.env.BASE_URL}user/${user.id}/verify/${token.token}`;
-        await sendEmail(user.email, "Verify Email", url);
-      } */
 
       res
         // cookie以后用户用这个访问过来,CTL不想要新注册的人有cookie，就给移除了
@@ -153,100 +139,21 @@ const registerUser = async (req, res, next) => {
   }
 };
 
-/* const loginUser = async (req, res, next) => {
-  try {
-    const { email, password, doNotLogout } = req.body;
-    if (!(email && password)) {
-      return res.status(400).send("All inputs are required");
-    }
-
-    // Get user's current public IP address
-    const ipAddress = req.headers["x-forwarded-for"]?.split(", ")[0] || req.connection.remoteAddress;
-
-
-    const user = await User.findOne({ email });
-    // compare passwords
-    if (user && comparePasswords(password, user.password)) {
-      // Check if user's IP matches the locked IP
-      if (user.ipAddress && user.ipAddress !== ipAddress) {
-        return res.status(403).send("Access denied from this IP address");
-      }
-
-      let cookieParams = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-      };
-      if (doNotLogout) {
-        cookieParams = { ...cookieParams, maxAge: 1000 * 60 * 60 * 24 * 9 }; // 1000=1ms
-      }
-
-      // Update user's IP address in the database
-      await User.updateOne({ _id: user._id }, { $set: { ipAddress } });
-
-      // Verify Email
-      if (!user.verified) {
-        let token = await Token.findOne({ userId: user._id });
-        if (!token) {
-          token = await new Token({
-            userId: user._id,
-            token: crypto.randomBytes(32).toString("hex"),
-          }).save();
-          const url = `${process.env.BASE_URL}user/${user.id}/verify/${token.token}`;
-          await sendEmail(user.email, "Verify Email", url);
-        }
-
-        return res
-          .status(400)
-          .send({ message: "An Email sent to your account please verify" });
-      }
-
-      return res
-        .cookie(
-          "access_token",
-          generateAuthToken(
-            user._id,
-            user.name,
-            user.lastName,
-            user.email,
-            user.isAdmin,
-            user.verified
-          ),
-          cookieParams
-        )
-        .json({
-          success: "user logged in",
-          userLoggedIn: {
-            _id: user._id,
-            name: user.name,
-            lastName: user.lastName,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            verified:user.verified,
-            doNotLogout,
-          },
-        });
-    } else {
-      return res.status(401).send("wrong credentials");
-    }
-  } catch (err) {
-    next(err);
-  }
-}; */
-
 const loginUser = async (req, res, next) => {
   try {
-    const { email, password, doNotLogout } = req.body;
-    if (!(email && password)) {
+    const { email: rawEmail, password, doNotLogout } = req.body;
+    if (!(rawEmail && password)) {
       return res.status(400).send("All inputs are required");
     }
 
+    const email = rawEmail.toLowerCase();
     // Get user's current public IP address
     const ipAddress =
       req.headers["x-forwarded-for"]?.split(", ")[0] ||
       req.connection.remoteAddress;
 
     const user = await User.findOne({ email });
+    
 
     // Compare passwords
     if (user && comparePasswords(password, user.password)) {

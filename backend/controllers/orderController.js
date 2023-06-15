@@ -287,7 +287,7 @@ const updateBackOrder = async (req, res) => {
 
 
 
-const deleteOrder = async (req, res) => {
+const deleteOrderItem = async (req, res) => {
   try {
     const orderId = req.params.orderId;
     if (!orderId) {
@@ -354,6 +354,16 @@ const updateOrderNote = async (req, res, next) => {
   }
 };
 
+const deleteOrder = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id).orFail();
+    await user.remove();
+    res.send("user removed");
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({})
@@ -395,5 +405,6 @@ module.exports = {
   getOrders,
   getOrderForAnalysis,
   updateBackOrder,
-  deleteOrder,
+  deleteOrderItem,
+  deleteOrder
 };

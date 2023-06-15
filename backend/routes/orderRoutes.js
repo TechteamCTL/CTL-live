@@ -17,6 +17,7 @@ const {
   getOrderForAnalysis,
   getOrdersInvNo,
   updateBackOrder,
+  deleteOrderItem,
   deleteOrder
 } = require("../controllers/orderController");
 
@@ -36,7 +37,8 @@ router.get("/admin", getOrders);
 router.get("/analysis/:date", getOrderForAnalysis);
 // router.put("/updateBackOrder/:itemId", updateBackOrder);
 router.put("/updateBackOrder/:orderId/:itemId", updateBackOrder);
-router.delete("/delete/:orderId/:itemId", deleteOrder);
+router.delete("/removeItem/:orderId/:itemId", deleteOrderItem);
+router.delete("/delete/:orderId", deleteOrderItem);
 
 
 module.exports = router;

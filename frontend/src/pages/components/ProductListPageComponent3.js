@@ -49,7 +49,6 @@ const ProductListPage = ({
   // const { pageNumParam } = useParams() || 1;
   // const { searchQuery } = useParams() || "";
 
-  console.log("woshi pageNumparam", useSearchParams());
   // 可以用来read path，然后可以判定，如果url是在 api/xxx/xxx/category/PPE之类的，就不显示 category filter
   const location = useLocation();
   const navigate = useNavigate();
