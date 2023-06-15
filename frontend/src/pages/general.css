@@ -351,3 +351,19 @@
     margin-top: 20%;
     left: -40%;
 }
+@media only screen and (max-width:800px) {
+  /* For tablets: */
+  .navbar {
+    width: 80%;
+    padding: 0;
+  }
+  .col-md-2 {
+    width: 100%;
+  }
+}
+@media only screen and (max-width:500px) {
+  /* For mobile phones: */
+  .navbar, .main, .col-md-2 {
+    width: 100%;
+  }
+}

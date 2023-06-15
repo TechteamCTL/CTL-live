@@ -307,7 +307,7 @@ const InvoicePrint = (cartItems) => {
     const InvAddress = cartItems.userAddress;
     var counter = 0;
 
-    console.log("Invoice cartItems", cartItems, typeof cartItems);
+    // console.log("Invoice cartItems", cartItems, typeof cartItems);
 
     function splitArrayIntoChunks(arr, chunkSize) {
         const result = [];
@@ -532,12 +532,12 @@ const InvoicePrint = (cartItems) => {
                                                 </View>
                                                 <View style={styles.tableColHeaderShort}>
                                                     <Text style={styles.tableColBillItem}>
-                                                        {item.cartProducts[0].quantity}
+                                                        {item.cartProducts[0].suppliedQty}
                                                     </Text>
                                                 </View>
                                                 <View style={styles.tableColHeaderShort}>
                                                     <Text style={styles.tableColBillItem}>
-
+                                                        {item.cartProducts[0].backOrder}
                                                     </Text>
                                                 </View>
 
@@ -560,12 +560,12 @@ const InvoicePrint = (cartItems) => {
                                                 </View>
                                                 <View style={styles.tableColHeaderShort}>
                                                     <Text style={styles.tableColBillItem}>
-                                                        {item.cartProducts[0].quantity}
+                                                        {item.cartProducts[0].suppliedQty}
                                                     </Text>
                                                 </View>
                                                 <View style={styles.tableColHeaderShort}>
                                                     <Text style={styles.tableColBillItem}>
-
+                                                        {item.cartProducts[0].backOrder}
                                                     </Text>
                                                 </View>
 
@@ -632,12 +632,12 @@ const InvoicePrint = (cartItems) => {
                                                             </View>
                                                             <View style={styles.tableColHeaderShort}>
                                                                 <Text style={styles.tableColBillItem}>
-                                                                    {item.cartProducts[0].quantity}
+                                                                    {item.cartProducts[0].suppliedQty}
                                                                 </Text>
                                                             </View>
                                                             <View style={styles.tableColHeaderShort}>
                                                                 <Text style={styles.tableColBillItem}>
-
+                                                                    {item.cartProducts[0].backOrder}
                                                                 </Text>
                                                             </View>
 
@@ -663,12 +663,12 @@ const InvoicePrint = (cartItems) => {
                                                         </View>
                                                         <View style={styles.tableColHeaderShort}>
                                                             <Text style={styles.tableColBillItem}>
-                                                                {item.cartProducts[0].quantity}
+                                                                {item.cartProducts[0].suppliedQty}
                                                             </Text>
                                                         </View>
                                                         <View style={styles.tableColHeaderShort}>
                                                             <Text style={styles.tableColBillItem}>
-
+                                                                {item.cartProducts[0].backOrder}
                                                             </Text>
                                                         </View>
 

@@ -4,32 +4,49 @@ import { logout } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
 
 const AdminLinksComponent = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
-    <Navbar bg="light" variant="light">
-      {/* bootstrap里Navs -> vertical 扒一个vertical的navbar */}
-      <Nav className="flex-column">
-        <LinkContainer to="/admin/orders">
-          <Nav.Link>Orders</Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/admin/products">
-          <Nav.Link>Products</Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/admin/users">
-          <Nav.Link>Users</Nav.Link>
-        </LinkContainer>
-{/*         <LinkContainer to="/admin/chats">
+    <>
+    Admin Part:
+      <Navbar bg="light" variant="light">
+        {/* bootstrap里Navs -> vertical 扒一个vertical的navbar */}
+        <Nav className="flex-column">
+          <LinkContainer to="/admin/orders">
+            <Nav.Link>Orders</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/admin/products">
+            <Nav.Link>Products</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/admin/users">
+            <Nav.Link>Users</Nav.Link>
+          </LinkContainer>
+          {/*         <LinkContainer to="/admin/chats">
           <Nav.Link>Chats</Nav.Link>
         </LinkContainer> */}
-        <LinkContainer to="/admin/analytics">
-          <Nav.Link>Analytics</Nav.Link>
-        </LinkContainer>
-        <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
-      </Nav>
-    </Navbar>
+          <LinkContainer to="/admin/analytics">
+            <Nav.Link>Analytics</Nav.Link>
+          </LinkContainer>
+        </Nav>
+      </Navbar>
+      Self Part:
+      <Navbar bg="light" variant="light">
+        <Nav className="flex-column">
+          <LinkContainer to="/user/my-orders">
+            <Nav.Link>Orders</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/user">
+            <Nav.Link>My Profile</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/user/password">
+            <Nav.Link>Change Password</Nav.Link>
+          </LinkContainer>
+
+          <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
+        </Nav>
+      </Navbar>
+    </>
   );
 };
 
 export default AdminLinksComponent;
-

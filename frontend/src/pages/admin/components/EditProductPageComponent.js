@@ -528,7 +528,7 @@ const AdminEditProductPage = ({
                           className="mb-3"
                           controlId={`formBasicPrice-${index}`}
                         >
-                          <Form.Label>SLR Price</Form.Label>
+                          <Form.Label>Product Price</Form.Label>
                           {/* <CurrencyInput
                             className={`form-control price-${index}`}
                             name={`price-${index}`}
@@ -656,7 +656,7 @@ const AdminEditProductPage = ({
                       className="mb-3"
                       controlId={`formBasicNewPrice-${index}`}
                     >
-                      <Form.Label>SLR Price</Form.Label>
+                      <Form.Label>Product Price</Form.Label>
                       {/* <CurrencyInput
                         className={`form-control newPrice-${index}`}
                         name={`newPrice-${index}`}

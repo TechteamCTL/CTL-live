@@ -256,25 +256,23 @@ const ProductForListPreviewComponent = ({
                         <span className="fw-bold m-1">DESCRIPTION:</span>
                         <div
                           className="m-1"
-                          style={{ whiteSpace: "pre-wrap", textAlign: "left" }}
+                          style={{ whiteSpace: "pre-wrap", textAlign: "justify", overflowWrap: "break-word", }}
                         >
                           {product && product.description
                             ? product.description
-                                .split("*")
-                                .map((item, index) => {
-                                  return index > 0 ? (
-                                    <div key={index}>
-                                      <span>
-                                        <i className="bi bi-dot" />
-                                        {item}
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    <div key={index}>
-                                      <span> {item}</span>
-                                    </div>
-                                  );
-                                })
+                              .split("*")
+                              .map((item, index) => {
+                                return index > 0 ? (
+                                  <div key={index} style={{ textIndent: "-12px", paddingLeft: "15px", lineHeight: "1.6rem", }}>
+                                    <i className="bi bi-dot" />
+                                    {item}
+                                  </div>
+                                ) : (
+                                  <div key={index}>
+                                    {item}
+                                  </div>
+                                );
+                              })
                             : ""}
                         </div>
                       </div>

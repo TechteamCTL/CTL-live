@@ -326,10 +326,10 @@ const InvoicePrint = (cartItems) => {
   const InvAddress = cartItems.userAddress;
   var counter = 0;
 
-  /*   console.log("InvCartItems", InvCartItems);
-    console.log("InvUserInfo", InvUserInfo);
-    console.log("InvAddress", InvAddress);
-    console.log("cart items", cartItems); */
+  console.log("InvCartItems", InvCartItems);
+  console.log("InvUserInfo", InvUserInfo);
+  console.log("InvAddress", InvAddress);
+  console.log("cart items", cartItems);
 
   function splitArrayIntoChunks(arr, chunkSize) {
     const result = [];
@@ -533,6 +533,9 @@ const InvoicePrint = (cartItems) => {
                   <Text style={styles.tableColBillItemHeader}>Qty Supply</Text>
                 </View>
                 <View style={styles.tableColHeaderShort}>
+                  <Text style={styles.tableColBillItemHeader}>Qty Back Order</Text>
+                </View>
+                <View style={styles.tableColHeaderShort}>
                   <Text style={styles.tableColBillItemHeader}>Unit Price</Text>
                 </View>
                 <View style={styles.tableColHeaderShort}>
@@ -566,7 +569,12 @@ const InvoicePrint = (cartItems) => {
                       </View>
                       <View style={styles.tableColHeaderShort}>
                         <Text style={styles.tableColBillItem}>
-                          {item.cartProducts[0].quantity}
+                          {item.cartProducts[0].suppliedQty}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          {item.cartProducts[0].backOrder}
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
@@ -585,7 +593,7 @@ const InvoicePrint = (cartItems) => {
                           {item.cartProducts[0].price
                             ? (
                               item.cartProducts[0].price *
-                              item.cartProducts[0].quantity
+                              item.cartProducts[0].suppliedQty
                             )
                               .toFixed(2)
                               .toLocaleString()
@@ -598,7 +606,7 @@ const InvoicePrint = (cartItems) => {
                           {item.cartProducts[0].price
                             ? (
                               (item.cartProducts[0].price *
-                                item.cartProducts[0].quantity *
+                                item.cartProducts[0].suppliedQty *
                                 10) /
                               100
                             )
@@ -613,9 +621,9 @@ const InvoicePrint = (cartItems) => {
                           {item.cartProducts[0].price
                             ? (
                               item.cartProducts[0].price *
-                              item.cartProducts[0].quantity +
+                              item.cartProducts[0].suppliedQty +
                               (item.cartProducts[0].price *
-                                item.cartProducts[0].quantity *
+                                item.cartProducts[0].suppliedQty *
                                 10) /
                               100
                             )
@@ -644,7 +652,12 @@ const InvoicePrint = (cartItems) => {
                       </View>
                       <View style={styles.tableColHeaderShort}>
                         <Text style={styles.tableColBillItem}>
-                          {item.cartProducts[0].quantity}
+                          {item.cartProducts[0].suppliedQty}
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItem}>
+                          {item.cartProducts[0].backOrder}
                         </Text>
                       </View>
                       <View style={styles.tableColHeaderShort}>
@@ -663,7 +676,7 @@ const InvoicePrint = (cartItems) => {
                           {item.cartProducts[0].price
                             ? (
                               item.cartProducts[0].price *
-                              item.cartProducts[0].quantity
+                              item.cartProducts[0].suppliedQty
                             )
                               .toFixed(2)
                               .toLocaleString()
@@ -676,7 +689,7 @@ const InvoicePrint = (cartItems) => {
                           {item.cartProducts[0].price
                             ? (
                               (item.cartProducts[0].price *
-                                item.cartProducts[0].quantity *
+                                item.cartProducts[0].suppliedQty *
                                 10) /
                               100
                             )
@@ -691,9 +704,9 @@ const InvoicePrint = (cartItems) => {
                           {item.cartProducts[0].price
                             ? (
                               item.cartProducts[0].price *
-                              item.cartProducts[0].quantity +
+                              item.cartProducts[0].suppliedQty +
                               (item.cartProducts[0].price *
-                                item.cartProducts[0].quantity *
+                                item.cartProducts[0].suppliedQty *
                                 10) /
                               100
                             )
@@ -800,6 +813,11 @@ const InvoicePrint = (cartItems) => {
                       </View>
                       <View style={styles.tableColHeaderShort}>
                         <Text style={styles.tableColBillItemHeader}>
+                          Qty Back Order
+                        </Text>
+                      </View>
+                      <View style={styles.tableColHeaderShort}>
+                        <Text style={styles.tableColBillItemHeader}>
                           Unit Price
                         </Text>
                       </View>
@@ -838,7 +856,12 @@ const InvoicePrint = (cartItems) => {
                             </View>
                             <View style={styles.tableColHeaderShort}>
                               <Text style={styles.tableColBillItem}>
-                                {item.cartProducts[0].quantity}
+                                {item.cartProducts[0].suppliedQty}
+                              </Text>
+                            </View>
+                            <View style={styles.tableColHeaderShort}>
+                              <Text style={styles.tableColBillItem}>
+                                {item.cartProducts[0].backOrder}
                               </Text>
                             </View>
                             <View style={styles.tableColHeaderShort}>
@@ -857,7 +880,7 @@ const InvoicePrint = (cartItems) => {
                                 {item.cartProducts[0].price
                                   ? (
                                     item.cartProducts[0].price *
-                                    item.cartProducts[0].quantity
+                                    item.cartProducts[0].suppliedQty
                                   )
                                     .toFixed(2)
                                     .toLocaleString()
@@ -870,7 +893,7 @@ const InvoicePrint = (cartItems) => {
                                 {item.cartProducts[0].price
                                   ? (
                                     (item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity *
+                                      item.cartProducts[0].suppliedQty *
                                       10) /
                                     100
                                   )
@@ -885,9 +908,9 @@ const InvoicePrint = (cartItems) => {
                                 {item.cartProducts[0].price
                                   ? (
                                     item.cartProducts[0].price *
-                                    item.cartProducts[0].quantity +
+                                    item.cartProducts[0].suppliedQty +
                                     (item.cartProducts[0].price *
-                                      item.cartProducts[0].quantity *
+                                      item.cartProducts[0].suppliedQty *
                                       10) /
                                     100
                                   )
@@ -917,7 +940,12 @@ const InvoicePrint = (cartItems) => {
                           </View>
                           <View style={styles.tableColHeaderShort}>
                             <Text style={styles.tableColBillItem}>
-                              {item.cartProducts[0].quantity}
+                              {item.cartProducts[0].suppliedQty}
+                            </Text>
+                          </View>
+                          <View style={styles.tableColHeaderShort}>
+                            <Text style={styles.tableColBillItem}>
+                              {item.cartProducts[0].backOrder}
                             </Text>
                           </View>
                           <View style={styles.tableColHeaderShort}>
@@ -936,7 +964,7 @@ const InvoicePrint = (cartItems) => {
                               {item.cartProducts[0].price
                                 ? (
                                   item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity
+                                  item.cartProducts[0].suppliedQty
                                 )
                                   .toFixed(2)
                                   .toLocaleString()
@@ -949,7 +977,7 @@ const InvoicePrint = (cartItems) => {
                               {item.cartProducts[0].price
                                 ? (
                                   (item.cartProducts[0].price *
-                                    item.cartProducts[0].quantity *
+                                    item.cartProducts[0].suppliedQty *
                                     10) /
                                   100
                                 )
@@ -964,9 +992,9 @@ const InvoicePrint = (cartItems) => {
                               {item.cartProducts[0].price
                                 ? (
                                   item.cartProducts[0].price *
-                                  item.cartProducts[0].quantity +
+                                  item.cartProducts[0].suppliedQty +
                                   (item.cartProducts[0].price *
-                                    item.cartProducts[0].quantity *
+                                    item.cartProducts[0].suppliedQty *
                                     10) /
                                   100
                                 )

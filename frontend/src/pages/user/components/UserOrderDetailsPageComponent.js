@@ -8,7 +8,7 @@ import {
   Button,
   Modal,
 } from "react-bootstrap";
-import CartItemComponent from "../../../components/CartItemComponent";
+import CartItemForUserOrderComponent from "../../../components/CartItemForUserOrderComponent";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "./invoicePDF.css";
@@ -278,9 +278,26 @@ const UserOrderDetailsPageComponent = ({
           <br />
           {/* <h3>ORDER ITEMS</h3> */}
           <ListGroup variant="flush">
-            {cartItems.map((item, idx) => (
-              <CartItemComponent item={item} key={idx} orderCreated={true} />
-            ))}
+            <table style={{ width: "100%" }} className="mt-1">
+              <thead>
+                <tr>
+                  <th style={{ width: "6%" }}></th>
+                  <th style={{ width: "42%" }}>Product</th>
+                  <th style={{ width: "13%" }}>Attrs</th>
+                  <th style={{ width: "10%" }}>Order Qty</th>
+                  <th style={{ width: "12%" }}>Supplied Qty</th>
+                  <th style={{ width: "10%" }}>Back Order</th>
+                </tr>
+              </thead>
+              {cartItems.map((item, idx) => (
+                <CartItemForUserOrderComponent
+                  key={idx}
+                  item={item}
+                  orderCreated={true}
+                  id={id}
+                />
+              ))}
+            </table>
           </ListGroup>
         </Col>
         <Col md={3}>
@@ -319,7 +336,7 @@ const UserOrderDetailsPageComponent = ({
                       deliveredDate={deliveredDate}
                     />
                   }
-                  fileName={"INV-" + invoiceNumber}
+                  fileName={invoiceNumber}
                 >
                   {({ loading }) =>
                     loading ? (

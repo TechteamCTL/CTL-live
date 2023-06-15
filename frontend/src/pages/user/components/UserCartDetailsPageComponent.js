@@ -74,19 +74,21 @@ const UserCartDetailsPageComponent = ({
       // Extract the invoiceNumber of each order
       const invoiceNumbers = orders.map((order) => order.invoiceNumber);
       // Find the largest invoiceNumber
-      // console.log('我是里面的, INV数组',invoiceNumbers);
+      console.log('我是里面的, INV数组',invoiceNumbers);
       // console.log('我是里面的, ODER',orders);
-
-      const newInvoiceNumbers = invoiceNumbers.map((item) => {
-        return item.slice(3);
-      });
+      if (invoiceNumbers.length > 0) {
+        const newInvoiceNumbers = invoiceNumbers.map((item) => {
+          return item;
+        });
+        setLargestInvoice(Math.max(...newInvoiceNumbers));
+      } else {
+        setLargestInvoice(100000)
+      }
       // console.log('我是没有SLR的',newInvoiceNumbers);
-
-      setLargestInvoice(Math.max(...newInvoiceNumbers));
     });
   }, []);
 
-  // console.log('我是外面的,最大的',largestInvoice);
+  console.log('我是外面的,最大的',largestInvoice);
 
   useEffect(() => {
     /* 下方的一系列判定，若有一个不符合，则get your quote的按钮就不可用 */
@@ -140,6 +142,8 @@ const UserCartDetailsPageComponent = ({
               ctlsku: item.cartProducts[0].ctlsku,
               price: item.cartProducts[0].price,
               quantity: item.cartProducts[0].quantity,
+              suppliedQty: item.cartProducts[0].quantity,
+              backOrder: 0,
               sales: item.cartProducts[0].sales ?? null,
               slrsku: item.cartProducts[0].slrsku,
               suppliersku: item.cartProducts[0].suppliersku,
@@ -155,7 +159,7 @@ const UserCartDetailsPageComponent = ({
       paymentMethod: paymentMethod,
       purchaseNumber: purchaseNumber,
       orderNote: orderNote,
-      invoiceNumber: "SLR000" + (largestInvoice + 1),
+      invoiceNumber: largestInvoice + 1,
     };
 
     createOrder(orderData)

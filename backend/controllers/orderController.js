@@ -1,6 +1,7 @@
 const Order = require("../models/OrderModel");
 const Product = require("../models/ProductModel");
 const ObjectId = require("mongodb").ObjectId;
+const mongoose = require("mongoose");
 
 const getUserOrders = async (req, res, next) => {
   try {
@@ -24,8 +25,9 @@ const getOrder = async (req, res, next) => {
 
 const getOrdersInvNo = async (req, res, next) => {
   try {
-    const orders = await Order.find({}, "invoiceNumber")
-      .sort({ createdAt: "asc" });
+    const orders = await Order.find({}, "invoiceNumber").sort({
+      createdAt: "asc",
+    });
     res.send(orders);
   } catch (err) {
     next(err);
@@ -41,31 +43,16 @@ const createOrder = async (req, res, next) => {
       paymentMethod,
       purchaseNumber,
       invoiceNumber,
-      orderNote
+      orderNote,
     } = req.body;
     if (
       !cartItems ||
       !orderTotal ||
       !paymentMethod ||
       !purchaseNumber ||
-      !invoiceNumber 
+      !invoiceNumber
     ) {
       return res.status(400).send("All inputs are required");
-    }
-
-    // TODO: add quanity on SALES
-// 这里有个error，TypeError: Cannot read properties of null (reading 'stock')
-    for (const item of cartItems) {
-      const productId = item.cartProducts[0]._id;
-      const product = await Product.findOne({
-        "stock._id": productId,
-      });
-      // console.log("查sales的product", product.stock);
-      const stockItem = product.stock.find((stock) =>
-        stock._id.equals(productId)
-      );
-      stockItem.sales += Number(item.cartProducts[0].quantity);
-      await product.save();
     }
 
     const order = new Order({
@@ -106,14 +93,27 @@ const updateOrderToDelivered = async (req, res, next) => {
 
     // Subtract the quantity of ordered products from the count in stock
     for (const item of order.cartItems) {
-      const productId = item.cartProducts[0]._id;
-      const product = await Product.findOne({
-        "stock._id": productId,
-      });
-      const stockItem = product.stock.find((stock) =>
-        stock._id.equals(productId)
-      );
-      stockItem.count -= Number(item.cartProducts[0].quantity);
+      const productId = item.productId;
+      const stockId = item.cartProducts[0]._id;
+
+      // Find the product using productId
+      const product = await Product.findById(productId);
+      if (!product) {
+        throw new Error(`Product with id ${productId} not found.`);
+      }
+
+      // Find the stock item using stockId
+      const stockItem = product.stock.id(stockId);
+      if (!stockItem) {
+        throw new Error(
+          `Stock item ${stockId} not found in product ${productId}.`
+        );
+      }
+
+      // Subtract suppliedQty from stock item count
+      stockItem.count -= Number(item.cartProducts[0].suppliedQty);
+
+      // Save changes to the product
       await product.save();
     }
 
@@ -124,11 +124,225 @@ const updateOrderToDelivered = async (req, res, next) => {
   }
 };
 
+/* const updateBackOrder = async (req, res) => {
+  try {
+    const order = await Order.findOne({ orderId: req.order._id })
+    	"orderId":"648048f6a348b96de87296f5"
+    let itemIndex = -1;
+    let productIndex = -1;
+    order.cartItems.forEach((item, i) => {
+      item.cartProducts.forEach((product, j) => {
+        if (product._id.toString() === req.params.itemId) {
+          itemIndex = i;
+          productIndex = j;
+        }
+      });
+    });
+
+    if (itemIndex !== -1) {
+      order.cartItems[itemIndex].cartProducts.suppliedQty = suppliedQty;
+      order.cartItems[itemIndex].cartProducts.backOrder = order.cartItems[itemIndex].cartProducts.quantity - suppliedQty;
+    }
+
+    await order.save();
+
+    res.json({
+      message: "order updated",
+    });
+  } catch (err) {
+    next(err);
+  }
+}; */
+
+/* const updateBackOrder = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const suppliedQty = req.body.suppliedQty;
+    if (!orderId) {
+      return res.status(400).json({
+        error: "Order ID not found in the request",
+      });
+    }
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        error: "Order not found",
+      });
+    }
+
+    let itemIndex = -1;
+    if (order.cartItems) {
+      order.cartItems.forEach((item, i) => {
+        const product = item.cartProducts[0];
+        if (product && product._id.toString() === req.params.itemId) {
+          itemIndex = i;
+        }
+      });
+    }
+
+    if (itemIndex !== -1) {
+      order.cartItems[itemIndex].cartProducts[0].suppliedQty = suppliedQty;
+      order.cartItems[itemIndex].cartProducts[0].backOrder =
+        order.cartItems[itemIndex].cartProducts[0].quantity - suppliedQty;
+      const backOrderQty =
+        order.cartItems[itemIndex].cartProducts[0].quantity - suppliedQty;
+      order.orderTotal.itemsCount -= Number(backOrderQty);
+      order.orderTotal.cartSubtotal -=
+      Number(backOrderQty * order.cartItems[itemIndex].cartProducts[0].price * 1.1);
+      console.log("backOrderQty:", backOrderQty);
+      console.log("suppliedQty:", suppliedQty);
+      console.log("cartSubtotal:", order.orderTotal.cartSubtotal);
+      console.log("itemsCount:", order.orderTotal.itemsCount);
+      try {
+        await order.save();
+        res.json({
+          message: "Order updated",
+        });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    } else {
+      res.status(404).json({
+        message: "Item not found",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}; */
+
+const updateBackOrder = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const suppliedQty = req.body.suppliedQty;
+
+    if (!orderId || suppliedQty === undefined) {
+      return res.status(400).json({
+        error: "Order ID or supplied quantity not found in the request",
+      });
+    }
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        error: "Order not found",
+      });
+    }
+
+    let itemIndex = -1;
+    if (order.cartItems) {
+      order.cartItems.forEach((item, i) => {
+        const product = item.cartProducts[0];
+        if (product && product._id.toString() === req.params.itemId) {
+          itemIndex = i;
+        }
+      });
+    }
+
+    if (itemIndex !== -1) {
+      const item = order.cartItems[itemIndex].cartProducts[0];
+
+      if (suppliedQty > item.quantity) {
+        return res.status(400).json({
+          error: "Supplied quantity cannot exceed the current quantity",
+        });
+      }
+
+      const oldBackOrderQty = item.backOrder;
+      item.suppliedQty = suppliedQty;
+      item.backOrder = item.quantity - suppliedQty;
+      const newBackOrderQty = item.backOrder;
+      const deltaBackOrderQty = newBackOrderQty - oldBackOrderQty;
+      
+      order.orderTotal.itemsCount -= deltaBackOrderQty;
+      order.orderTotal.cartSubtotal -=
+      deltaBackOrderQty * item.price * 1.1;
+
+      console.log("backOrderQty:", newBackOrderQty);
+      console.log("suppliedQty:", suppliedQty);
+      console.log("cartSubtotal:", order.orderTotal.cartSubtotal);
+      console.log("itemsCount:", order.orderTotal.itemsCount);
+
+      try {
+        await order.save();
+        res.json({
+          message: "Order updated",
+        });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    } else {
+      res.status(404).json({
+        message: "Item not found",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+
+const deleteOrder = async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    if (!orderId) {
+      return res.status(400).json({
+        error: "Order ID not found in the request",
+      });
+    }
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        error: "Order not found",
+      });
+    }
+
+    let itemIndex = -1;
+    if (order.cartItems) {
+      order.cartItems.forEach((item, i) => {
+        const product = item.cartProducts[0];
+        if (product && product._id.toString() === req.params.itemId) {
+          itemIndex = i;
+        }
+      });
+    }
+    if (itemIndex !== -1) {
+      const item = order.cartItems[itemIndex].cartProducts[0];
+      order.cartItems.splice(itemIndex, 1);
+
+      order.orderTotal.itemsCount -= item.suppliedQty;
+      order.orderTotal.cartSubtotal -=
+      item.suppliedQty * item.price * 1.1;
+
+      try {
+        await order.save();
+        res.json({
+          message: "Item Deleted",
+        });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    } else {
+      res.status(404).json({
+        message: "Item not found",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
 
 const updateOrderNote = async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.id).orFail();
-    
+
     if (req.body.orderNote) {
       order.orderNote = req.body.orderNote;
     }
@@ -180,4 +394,6 @@ module.exports = {
   updateOrderNote,
   getOrders,
   getOrderForAnalysis,
+  updateBackOrder,
+  deleteOrder,
 };

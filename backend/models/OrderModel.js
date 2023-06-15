@@ -28,9 +28,11 @@ const orderSchema = mongoose.Schema(
           {
             price: { type: Number, required: true },
             quantity: { type: Number, required: true },
+            suppliedQty: { type: Number, required: true },
+            backOrder: { type: Number, required: true },
             count: { type: Number, required: true },
             ctlsku: { type: String, required: false },
-            attrs: { type: String, required: false },
+            attrs: { type: String, required: true },
             // ID: { type: String, required: false },
           },
         ],

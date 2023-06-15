@@ -16,6 +16,8 @@ const {
   getOrders,
   getOrderForAnalysis,
   getOrdersInvNo,
+  updateBackOrder,
+  deleteOrder
 } = require("../controllers/orderController");
 
 // user routes
@@ -32,5 +34,9 @@ router.use(verifyIsAdmin);
 router.put("/delivered/:id", updateOrderToDelivered);
 router.get("/admin", getOrders);
 router.get("/analysis/:date", getOrderForAnalysis);
+// router.put("/updateBackOrder/:itemId", updateBackOrder);
+router.put("/updateBackOrder/:orderId/:itemId", updateBackOrder);
+router.delete("/delete/:orderId/:itemId", deleteOrder);
+
 
 module.exports = router;

@@ -7,7 +7,7 @@ import {
   ListGroup,
   Button,
 } from "react-bootstrap";
-import CartItemComponent from "../../../components/CartItemComponent";
+import CartItemForOrderComponent from "../../../components/CartItemForOrderComponent";
 
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -23,6 +23,8 @@ const OrderDetailsPageComponent = ({
   getUser,
   markAsDelivered,
   markAsPaid,
+  updateBackOrder,
+  removeOrderItem
 }) => {
   const { id } = useParams();
 
@@ -42,6 +44,11 @@ const OrderDetailsPageComponent = ({
     useState("Mark as delivered");
   const [orderPaidButton, setorderPaidButton] = useState("Mark as Paid");
   const [cartItems, setCartItems] = useState([]);
+  const [orderData, setOrderData] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [removed, setRemoved] = useState(false);
+
+
 
   useEffect(() => {
     getUser()
@@ -80,13 +87,14 @@ const OrderDetailsPageComponent = ({
           setpaidButtonDisabled(true);
         }
         setCartItems(order.cartItems);
+        setOrderData(order)
       })
       .catch((er) =>
         console.log(
           er.response.data.message ? er.response.data.message : er.response.data
         )
       );
-  }, [isDelivered, isPaid, id]);
+  }, [isDelivered, isPaid, id, edit, removed]);
 
   const nonGSTPrice = (cartSubtotal / 1.1).toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -102,8 +110,32 @@ const OrderDetailsPageComponent = ({
   });
 
   console.log("admin管理订单 cartItems", cartItems);
+
+  // edit order
+  const handleEdit = () => setEdit(true);
+
+  const saveEdit = () => {
+    setTimeout(() => {
+      setEdit(false);
+    }, 500)
+  };
+
+  const changeCount = (orderId, itemId, suppliedQty) => {
+    updateBackOrder(orderId, itemId, suppliedQty);
+  };
+
+  const removeFromOrderHandler = (orderId, itemId) => {
+    if (window.confirm("Want Remove the Item?")) {
+      removeOrderItem(orderId, itemId);
+      setRemoved(true)
+      setTimeout(() => {
+        setRemoved(false)
+      }, 100);
+    }
+  }
+
   return (
-    <Container>
+    <Container fluid style={{ width: "80%" }}>
       <Row className="mt-4">
         <h1>ORDER DETAILS</h1>
         <Col md={9}>
@@ -147,7 +179,10 @@ const OrderDetailsPageComponent = ({
                 </Alert>
               </Col>
               <Col>
-                <Alert className="mt-3 p-0 ps-2" variant={isPaid ? "success" : "danger"}>
+                <Alert
+                  className="mt-3 p-0 ps-2"
+                  variant={isPaid ? "success" : "danger"}
+                >
                   {isPaid ? (
                     <>
                       Paid on{" "}
@@ -168,11 +203,52 @@ const OrderDetailsPageComponent = ({
             </Row>
           </Row>
           <br />
-          <h3>ORDER ITEMS</h3>
+          <h3>
+            ORDER ITEMS
+            {edit === false ? (
+              <>
+                {" "}
+                <i
+                  onClick={handleEdit}
+                  className="bi bi-pencil-square"
+                  style={{ cursor: "pointer" }}
+                ></i>
+              </>
+            ) : (
+              <>
+                {" "}
+                <button className="pe-1 ps-1 p-0 m-0 fs-6" onClick={saveEdit}>
+                  save
+                </button>{" "}
+              </>
+            )}
+          </h3>
+
           <ListGroup variant="flush">
-            {cartItems.map((item, idx) => (
-              <CartItemComponent key={idx} item={item} orderCreated={true} />
-            ))}
+            <table style={{ width: "100%" }} className="mt-1">
+              <thead>
+                <tr>
+                  <th style={{ width: "6%" }}></th>
+                  <th style={{ width: "42%" }}>Product</th>
+                  <th style={{ width: "13%" }}>Attrs</th>
+                  <th style={{ width: "10%" }}>Order Qty</th>
+                  <th style={{ width: "12%" }}>Supplied Qty</th>
+                  <th style={{ width: "10%" }}>Back Order</th>
+                  <th style={{ width: "7%" }}>Delete</th>
+                </tr>
+              </thead>
+              {cartItems.map((item, idx) => (
+                <CartItemForOrderComponent
+                  key={idx}
+                  item={item}
+                  orderCreated={true}
+                  edit={edit}
+                  changeCount={changeCount}
+                  removeFromOrderHandler={removeFromOrderHandler}
+                  id={id}
+                />
+              ))}
+            </table>
           </ListGroup>
         </Col>
         <Col md={3}>
@@ -199,7 +275,7 @@ const OrderDetailsPageComponent = ({
             <ListGroup.Item className="p-1 ps-2">
               <div className="d-grid gap-2">
                 <Button
-                 className="p-0 m-0 w-50"
+                  className="p-0 m-0 w-50"
                   onClick={() =>
                     markAsDelivered(id)
                       .then((res) => {
@@ -265,7 +341,7 @@ const OrderDetailsPageComponent = ({
                       invoiceDate={createdAt}
                     />
                   }
-                  fileName={"PS-" + invoiceNumber}
+                  fileName={invoiceNumber}
                 >
                   {({ loading }) =>
                     loading ? (
@@ -273,7 +349,9 @@ const OrderDetailsPageComponent = ({
                         Loading Delivery Note...
                       </Button>
                     ) : (
-                      <Button className="p-0 m-0 pe-2 ps-2">Download Delivery Note</Button>
+                      <Button className="p-0 m-0 pe-2 ps-2">
+                        Download Delivery Note
+                      </Button>
                     )
                   }
                 </PDFDownloadLink>
@@ -294,14 +372,16 @@ const OrderDetailsPageComponent = ({
                       invoiceDate={createdAt}
                     />
                   }
-                  fileName={"INV-" + invoiceNumber}
+                  fileName={invoiceNumber}
                 >
                   {({ loading }) =>
                     loading ? (
-                      <Button className="p-0 m-0 pe-2 ps-2">Loading Invoice...</Button>
+                      <Button className="p-0 m-0 pe-2 ps-2">
+                        Loading Invoice...
+                      </Button>
                     ) : (
                       <Button className="p-0 m-0 pe-2 ps-2">
-                      Download Invoice
+                        Download Invoice
                       </Button>
                     )
                   }
