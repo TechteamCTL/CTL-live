@@ -21,7 +21,7 @@ const Navb = () => {
     }, [dispatch]); */
 
   /* ************** Brands ************* */
-  var BRANDS = [
+/*   var BRANDS = [
     {
       label: "Paramount Safety",
       type: 1,
@@ -64,7 +64,7 @@ const Navb = () => {
       link: "/product-list?brandName=INTEGRATED-POWER",
       Brand_Logo: "/images/Brands/integrated-power.jpg",
     },
-  ];
+  ]; */
 
   /* ************** Categories ************* */
   var nav_color = {
@@ -2085,7 +2085,7 @@ const Navb = () => {
 
             
             {/* BRANDS */}
-            <div className="w3c_dropdown">
+{/*             <div className="w3c_dropdown">
               <div className="dropbtn">
                 BRANDS
               </div>
@@ -2104,7 +2104,7 @@ const Navb = () => {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

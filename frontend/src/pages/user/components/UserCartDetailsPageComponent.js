@@ -28,6 +28,7 @@ const UserCartDetailsPageComponent = ({
   itemsCount,
   cartSubtotal,
   userInfo,
+  getdeliveryBooks,
   editQuantity,
   removeFromCart,
   reduxDispatch,
@@ -43,7 +44,7 @@ const UserCartDetailsPageComponent = ({
   const handleShow = () => setShow(true);
 
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [userAddress, setUserAddress] = useState(false);
+  const [userAddress, setUserAddress] = useState("");
   const [missingAddress, setMissingAddress] = useState("");
   /* 这个支付方式，useState要用下面的下拉里面的一个，设置为默认，随后的语句可以修改 */
   const [paymentMethod, setPaymentMethod] = useState("Invoice");
@@ -55,6 +56,8 @@ const UserCartDetailsPageComponent = ({
   const [userNameEmail, setUserNameEmail] = useState();
   const [managerEmail, setManagerEmail] = useState();
   const [base64Data, setBase64Data] = useState([]);
+  const [deliveryBooks, setDeliveryBooks] = useState();
+  const [selectedDeliverySite, setSelectedDeliverySite] = useState();
 
   /* const dispatch = useDispatch(); */
 
@@ -74,7 +77,7 @@ const UserCartDetailsPageComponent = ({
       // Extract the invoiceNumber of each order
       const invoiceNumbers = orders.map((order) => order.invoiceNumber);
       // Find the largest invoiceNumber
-      console.log('我是里面的, INV数组',invoiceNumbers);
+      // console.log('我是里面的, INV数组', invoiceNumbers);
       // console.log('我是里面的, ODER',orders);
       if (invoiceNumbers.length > 0) {
         const newInvoiceNumbers = invoiceNumbers.map((item) => {
@@ -82,13 +85,36 @@ const UserCartDetailsPageComponent = ({
         });
         setLargestInvoice(Math.max(...newInvoiceNumbers));
       } else {
-        setLargestInvoice(100000)
+        setLargestInvoice(100000);
       }
       // console.log('我是没有SLR的',newInvoiceNumbers);
     });
   }, []);
 
-  console.log('我是外面的,最大的',largestInvoice);
+  // console.log('我是外面的,最大的', largestInvoice);
+
+  //for delivery Book
+  useEffect(() => {
+    getdeliveryBooks()
+      .then((deliveryBooks) => setDeliveryBooks(deliveryBooks))
+      .catch((err) =>
+        console.log(
+          err.response.data.message
+            ? err.response.data.message
+            : err.response.data
+        )
+      );
+  }, []);
+
+  const deliverySites = deliveryBooks && deliveryBooks[0].sites;
+  console.log("user location", userAddress);
+
+
+  const changeDeliverySite = (e) => {
+    setSelectedDeliverySite(e.target.value);
+  };
+
+  console.log("delivery sites", selectedDeliverySite);
 
   useEffect(() => {
     /* 下方的一系列判定，若有一个不符合，则get your quote的按钮就不可用 */
@@ -104,14 +130,8 @@ const UserCartDetailsPageComponent = ({
           );
         } else {
           /* 这些是再下方的userAddress.location之类的信息，读取地址的。 */
-          setUserAddress({
-            location: data.location,
-            deliveryAddress: data.deliveryAddress,
-            billAddress: data.billAddress,
-            postCode: data.postCode,
-            state: data.state,
-            phone: data.phone,
-          });
+          setUserAddress(data.location);
+          setSelectedDeliverySite(data.location)
           setMissingAddress(false);
         }
       })
@@ -160,6 +180,7 @@ const UserCartDetailsPageComponent = ({
       purchaseNumber: purchaseNumber,
       orderNote: orderNote,
       invoiceNumber: largestInvoice + 1,
+      deliverySite:selectedDeliverySite,
     };
 
     createOrder(orderData)
@@ -174,7 +195,7 @@ const UserCartDetailsPageComponent = ({
             PO: purchaseNumber,
             price: (cartSubtotal * 1.1).toFixed(2),
           });
-          console.log(res.data);
+          // console.log(res.data);
         }
       })
       .catch((err) => console.log(err));
@@ -457,6 +478,35 @@ const UserCartDetailsPageComponent = ({
                 <Form.Control.Feedback type="invalid">
                   Please Enter Your Note.{" "}
                 </Form.Control.Feedback>
+              </ListGroup.Item>
+              <ListGroup.Item className="p-1 ps-2">
+                <Form.Label className="fw-bold">Delivery Site:</Form.Label>
+                <Form.Select
+                  required
+                  name="sites"
+                  aria-label="Default select example"
+                  onChange={changeDeliverySite}
+                  className="p-0 ps-2"
+                >
+                  {deliverySites &&
+                    deliverySites.map((site, idx) => {
+                      return site.name !== "" ? (
+                        userAddress === site.name ? (
+                          <option selected key={idx} value={site.name}>
+                            {site.name}
+                          </option>
+                        ) : (
+                          <option key={idx} value={site.name}>
+                            {site.name}
+                          </option>
+                        )
+                      ) : (
+                        <option key={idx} value={site.name}>
+                          {site.name}
+                        </option>
+                      );
+                    })}
+                </Form.Select>
               </ListGroup.Item>
 
               <ListGroup.Item className="p-1 ps-2">

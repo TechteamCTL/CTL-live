@@ -55,6 +55,10 @@ const orderSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    deliverySite: {
+      type: String,
+      required: false,
+    },
     transactionResult: {
       status: { type: String },
       createTime: { type: String },

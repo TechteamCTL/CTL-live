@@ -44,13 +44,15 @@ const createOrder = async (req, res, next) => {
       purchaseNumber,
       invoiceNumber,
       orderNote,
+      deliverySite
     } = req.body;
     if (
       !cartItems ||
       !orderTotal ||
       !paymentMethod ||
       !purchaseNumber ||
-      !invoiceNumber
+      !invoiceNumber ||
+      !deliverySite
     ) {
       return res.status(400).send("All inputs are required");
     }
@@ -64,6 +66,7 @@ const createOrder = async (req, res, next) => {
       purchaseNumber: purchaseNumber,
       invoiceNumber: invoiceNumber,
       orderNote: orderNote,
+      deliverySite:deliverySite,
     });
     const createdOrder = await order.save();
     res.status(201).send(createdOrder);

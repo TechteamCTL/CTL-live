@@ -11,7 +11,7 @@ const UserCartDetailsPage = () => {
   const cartSubtotal = useSelector((state) => state.cart.cartSubtotal);
   const userInfo = useSelector((state) => state.userRegisterLogin.userInfo);
 
-  // console.log('Page里的', cartItems); 
+
 
   const reduxDispatch = useDispatch();
 
@@ -26,16 +26,19 @@ const UserCartDetailsPage = () => {
   };
 
   const createOrder = async (orderData) => {
-      const { data } = await axios.post("/api/orders", { ...orderData });
-      return data;
+    const { data } = await axios.post("/api/orders", { ...orderData });
+    return data;
   }
 
   const getAllOrder = async () => {
     const { data } = await axios.get("/api/orders");
     return data;
   };
+  const getdeliveryBooks = async () => {
+    const { data } = await axios.get("/api/deliveryBooks/deliveryBook/" + userInfo.email);
+    return data;
+  };
 
-    
 
   return (
     <UserCartDetailsPageComponent
@@ -43,6 +46,7 @@ const UserCartDetailsPage = () => {
       itemsCount={itemsCount}
       cartSubtotal={cartSubtotal}
       userInfo={userInfo}
+      getdeliveryBooks={getdeliveryBooks}
       editQuantity={editQuantity}
       removeFromCart={removeFromCart}
       reduxDispatch={reduxDispatch}

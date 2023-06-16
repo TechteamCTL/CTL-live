@@ -6,13 +6,14 @@ const userRoutes = require("./userRoutes")
 const orderRoutes = require("./orderRoutes")
 const sendEmailRoutes = require("./sendEmailRoutes")
 const cartRoutes = require("./cartRoutes")
+const deliveryBookRoutes = require("./deliveryBookRoutes")
 
 
 const jwt = require("jsonwebtoken");
 /* logout */
 app.get("/logout", (req, res) => {
     return res.clearCookie("access_token").send("access token cleared");
-  });
+});
 /* login */
 app.get("/get-token", (req, res) => {
     try {
@@ -23,7 +24,7 @@ app.get("/get-token", (req, res) => {
         return res.status(401).send("Unauthorized. Invalid Token");
     }
 })
- 
+
 // this is going to be handled by product routes, that we declared above the cleared and imported above
 //用来整合上方，declared的以及imported
 // 如果访问进来的url，是/products，则被下面的handle
@@ -33,5 +34,6 @@ app.use("/users", userRoutes)
 app.use("/orders", orderRoutes)
 app.use("/sendemail", sendEmailRoutes)
 app.use("/cart", cartRoutes)
+app.use("/deliveryBooks", deliveryBookRoutes)
 
 module.exports = app

@@ -161,7 +161,7 @@ const CreateProductPageComponent = ({
               : er.response.data,
           });
         });
-        console.log(formInputs);
+      console.log(formInputs);
     }
 
     setValidated(true);
@@ -260,7 +260,7 @@ const CreateProductPageComponent = ({
   const [selectedCategory, setSelectedCategory] = useState("");
 
 
-console.log(categoryChoosen);
+  console.log(categoryChoosen);
 
   return (
     <Container>
@@ -475,7 +475,7 @@ console.log(categoryChoosen);
                 controlId="formBasicSupplier"
               >
                 <Form.Label>Supplier</Form.Label>
-                <Form.Control name="supplier" required type="text"/>
+                <Form.Control name="supplier" required type="text" />
               </Form.Group>
             </Row>
 

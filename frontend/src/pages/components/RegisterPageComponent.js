@@ -146,7 +146,7 @@ const RegisterPageComponent = ({
             setEmailSent(true);
             setTimeout(() => {
               window.location.href = "/login";
-            }, 2000);
+            }, 7000);
           }
         })
         // incase some error写一个catch error的function
@@ -438,7 +438,9 @@ const RegisterPageComponent = ({
               variant="info"
               hidden={emailSent === false}
             >
-              An Email has been sent to your account please verify
+              A verification email has been sent to your registered email
+              address. Please make sure to check your junk/spam folder as well.
+              Be aware that it might take a few minutes for the email to arrive.
             </Alert>
           </Form>
         </Col>

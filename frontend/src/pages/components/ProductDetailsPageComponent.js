@@ -10,7 +10,6 @@ import {
   Image,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import AddedToCartMessageComponent from "../../components/AddedToCartMessageComponent";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import ImageGallery from "react-image-gallery";
@@ -86,9 +85,19 @@ const ProductDetailsPageComponent = ({
   // console.log(product.description);
   // const description[]=product.description.split('.');
 
-  const addToCartHandler = () => {
-    reduxDispatch(addToCartReduxAction(id, qty, selectedStock));
-    setShowCartMessage(true);
+  const [buttonText, setButtonText] = useState("Add to cart");
+
+  const addToCartHandler = async () => {
+    setButtonText("Adding...");
+    try {
+      await reduxDispatch(addToCartReduxAction(id, qty, selectedStock));
+      setShowCartMessage(true);
+      setButtonText("Added!");
+      setTimeout(() => setButtonText("Add to cart"), 1000);
+    } catch (error) {
+      // handle error case
+      setButtonText("Add to cart");
+    }
   };
 
   /*   let incNum = () => {
@@ -240,10 +249,6 @@ const ProductDetailsPageComponent = ({
           </ListGroup>
         </Col>
         <Col xxl={10} xl={9} lg={9} md={9}>
-          <AddedToCartMessageComponent
-            showCartMessage={showCartMessage}
-            setShowCartMessage={setShowCartMessage}
-          />
           <Row className="mt-4 ">
             {/* ************   Filter, has removed, now just take 1 space  ***************  */}
 
@@ -260,7 +265,10 @@ const ProductDetailsPageComponent = ({
                     <h2 className="text-uppercase">{product.name}</h2>
 
                     <div>
-                      <div hidden={selectedProduct !== "Please-Select"} className="mt-5">
+                      <div
+                        hidden={selectedProduct !== "Please-Select"}
+                        className="mt-5"
+                      >
                         <label htmlFor="attrs">
                           Choose Product:&nbsp;&nbsp;&nbsp;{" "}
                         </label>
@@ -289,32 +297,32 @@ const ProductDetailsPageComponent = ({
                         </select>
                       </div>
                       <div hidden={selectedProduct === "Please-Select"}>
-                      <label htmlFor="attrs">
-                        Choose Product:&nbsp;&nbsp;&nbsp;{" "}
-                      </label>
-                      <select
-                        id="product-select"
-                        value={selectedProduct}
-                        onChange={handleProductChange}
-                      >
-                        {product.stock &&
-                          (product.stock.length === 1 ? (
-                            <option value={product.stock[0].attrs}>
-                              {product.stock[0].attrs}
-                            </option>
-                          ) : (
-                            <>
-                              <option value="Please-Select">
-                                <b>Please Select</b>
+                        <label htmlFor="attrs">
+                          Choose Product:&nbsp;&nbsp;&nbsp;{" "}
+                        </label>
+                        <select
+                          id="product-select"
+                          value={selectedProduct}
+                          onChange={handleProductChange}
+                        >
+                          {product.stock &&
+                            (product.stock.length === 1 ? (
+                              <option value={product.stock[0].attrs}>
+                                {product.stock[0].attrs}
                               </option>
-                              {product.stock.map((stock) => (
-                                <option key={stock.attrs} value={stock.attrs}>
-                                  {stock.attrs}
+                            ) : (
+                              <>
+                                <option value="Please-Select">
+                                  <b>Please Select</b>
                                 </option>
-                              ))}
-                            </>
-                          ))}
-                      </select>
+                                {product.stock.map((stock) => (
+                                  <option key={stock.attrs} value={stock.attrs}>
+                                    {stock.attrs}
+                                  </option>
+                                ))}
+                              </>
+                            ))}
+                        </select>
                       </div>
 
                       {stockCount !== null && (
@@ -383,11 +391,14 @@ const ProductDetailsPageComponent = ({
                           <Col lg={4}>
                             <Button
                               onClick={() => addToCartHandler(selectedStock)}
-                              className="btn_blue btn-ripple addToCartBtn"
+                              className="btn_blue btn-ripple                    "
                               variant="success"
-                              disabled={selectedProduct === "Please-Select"}
+                              disabled={
+                                selectedProduct === "Please-Select" ||
+                                buttonText !== "Add to cart"
+                              }
                             >
-                              Add to cart
+                              {buttonText}
                             </Button>
                           </Col>
                         </>
@@ -427,11 +438,14 @@ const ProductDetailsPageComponent = ({
                           >
                             <Button
                               onClick={() => addToCartHandler(selectedStock)}
-                              className="btn_blue btn-ripple addToCartBtn"
+                              className="btn_blue btn-ripple                    "
                               variant="success"
-                              disabled={selectedProduct === "Please-Select"}
+                              disabled={
+                                selectedProduct === "Please-Select" ||
+                                buttonText !== "Add to cart"
+                              }
                             >
-                              Add to cart
+                              {buttonText}
                             </Button>
                           </Col>
                         </>
@@ -490,7 +504,7 @@ const ProductDetailsPageComponent = ({
                       </Tab>
                       {/* 看一下，如果pdfs 路径里面 没有值，就显示null，有的话，就map 一下 */}
                       {product.pdfs && product.pdfs.length > 0 ? (
-                        <Tab eventKey="Download" title="Datasheet">
+                        <Tab eventKey="Download" title="Downloads">
                           {product.pdfs &&
                             product.pdfs.map((pdf, idx) => {
                               const pdfName = pdf.path.split("/").pop(); // Get the file name from the path

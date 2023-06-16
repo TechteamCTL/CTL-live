@@ -127,7 +127,10 @@ const OrderDetailsPageComponent = ({
   const removeFromOrderHandler = (orderId, itemId) => {
     if (window.confirm("Want Remove the Item?")) {
       removeOrderItem(orderId, itemId);
-      setRemoved(!removed)
+      setRemoved(true)
+      setTimeout(() => {
+        setRemoved(false)
+      }, 500);
     }
   }
 

@@ -94,7 +94,10 @@ const OrdersPageComponent = ({ getOrders, deleteOrder }) => {
   const deleteHandler = async (orderId) => {
     if (window.confirm("Are you sure?")) {
       deleteOrder(orderId);
-      setOrderDeleted(!orderDeleted);
+      setOrderDeleted(true);
+      setTimeout(() => {
+        setOrderDeleted(false)
+      }, 500);
     }
   };
 
