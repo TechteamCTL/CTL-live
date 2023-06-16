@@ -38,7 +38,7 @@ router.get("/analysis/:date", getOrderForAnalysis);
 // router.put("/updateBackOrder/:itemId", updateBackOrder);
 router.put("/updateBackOrder/:orderId/:itemId", updateBackOrder);
 router.delete("/removeItem/:orderId/:itemId", deleteOrderItem);
-router.delete("/delete/:orderId", deleteOrderItem);
+router.delete("/delete/:orderId", deleteOrder);
 
 
 module.exports = router;

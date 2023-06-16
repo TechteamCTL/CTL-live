@@ -39,7 +39,7 @@ const ProductDetailsPageComponent = ({
 
   const [qty, setQty] = useState(1);
 
-  const [selectedProduct, setSelectedProduct] = useState("choose-product");
+  const [selectedProduct, setSelectedProduct] = useState("Please-Select");
   const [selectedStock, setSelectedStock] = useState(null);
 
   const [userNameEmail, setUserNameEmail] = useState();
@@ -63,7 +63,7 @@ const ProductDetailsPageComponent = ({
     const attrs = event.target.value;
     setSelectedProduct(attrs);
 
-    if (attrs !== "choose-product") {
+    if (attrs !== "Please-Select") {
       const stockItem = product.stock.find((item) => item.attrs === attrs);
       setSelectedStock(stockItem);
     } else {
@@ -75,7 +75,7 @@ const ProductDetailsPageComponent = ({
   let stockPrice = null;
   let stockCode = null;
 
-  if (selectedProduct !== "choose-product" && selectedStock) {
+  if (selectedProduct !== "Please-Select" && selectedStock) {
     stockCount = selectedStock.count;
     stockPrice = selectedStock.price;
     stockCode = selectedStock.ctlsku;
@@ -125,10 +125,12 @@ const ProductDetailsPageComponent = ({
   const price = stockPrice;
   // const total = price ? (price * qty).toFixed(2) : "";
   // const formattedPrice = parseFloat(total).toLocaleString();
-  const formattedPrice = price ? (price * qty).toLocaleString(undefined, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }) : "";
+  const formattedPrice = price
+    ? (price * qty).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    : "";
 
   // const products = useSelector((state) => state.cart.value);
 
@@ -258,6 +260,35 @@ const ProductDetailsPageComponent = ({
                     <h2 className="text-uppercase">{product.name}</h2>
 
                     <div>
+                      <div hidden={selectedProduct !== "Please-Select"} className="mt-5">
+                        <label htmlFor="attrs">
+                          Choose Product:&nbsp;&nbsp;&nbsp;{" "}
+                        </label>
+                        <select
+                          id="product-select"
+                          value={selectedProduct}
+                          onChange={handleProductChange}
+                        >
+                          {product.stock &&
+                            (product.stock.length === 1 ? (
+                              <option value={product.stock[0].attrs}>
+                                {product.stock[0].attrs}
+                              </option>
+                            ) : (
+                              <>
+                                <option value="Please-Select">
+                                  <b>Please Select</b>
+                                </option>
+                                {product.stock.map((stock) => (
+                                  <option key={stock.attrs} value={stock.attrs}>
+                                    {stock.attrs}
+                                  </option>
+                                ))}
+                              </>
+                            ))}
+                        </select>
+                      </div>
+                      <div hidden={selectedProduct === "Please-Select"}>
                       <label htmlFor="attrs">
                         Choose Product:&nbsp;&nbsp;&nbsp;{" "}
                       </label>
@@ -273,8 +304,8 @@ const ProductDetailsPageComponent = ({
                             </option>
                           ) : (
                             <>
-                              <option value="choose-product">
-                                <b>Choose Product</b>
+                              <option value="Please-Select">
+                                <b>Please Select</b>
                               </option>
                               {product.stock.map((stock) => (
                                 <option key={stock.attrs} value={stock.attrs}>
@@ -284,6 +315,7 @@ const ProductDetailsPageComponent = ({
                             </>
                           ))}
                       </select>
+                      </div>
 
                       {stockCount !== null && (
                         <p>
@@ -303,7 +335,7 @@ const ProductDetailsPageComponent = ({
                       )}
                     </div>
                     <br />
-                    <Row hidden={selectedProduct === "choose-product"}>
+                    <Row hidden={selectedProduct === "Please-Select"}>
                       <Col>
                         <h6>PRODUCT CODE : {stockCode}</h6>
                         <h6>
@@ -321,28 +353,16 @@ const ProductDetailsPageComponent = ({
                             </span>
                           )}
                         </h6>
-                        {/* <h6>
-                          {
-                            price === 0 ? (
-                              <span className="fw-bold PriceContact">
-                                Contact us for a quote
-                              </span>
-                            ) : (
-                              <span className="fw-bold">
-                                Price: ${formattedPrice}
-                              </span>
-                            )}
-                        </h6> */}
                         <br />
                       </Col>
                     </Row>
-                    {product.slrcurrentbuyingprice === 0 ? null : (
-                      <h6>Quantity :</h6>
-                    )}
 
                     <Row>
                       {userData.isAdmin === true ? (
                         <>
+                          {product.slrcurrentbuyingprice === 0 ? null : (
+                            <h6>Quantity :</h6>
+                          )}
                           <Col lg={3}>
                             <div
                               className="btn-group addToCartQty"
@@ -356,7 +376,7 @@ const ProductDetailsPageComponent = ({
                                 onBlur={handleBlur}
                                 onChange={(e) => setQty(e.target.value)}
                                 step={product.saleunit}
-                                disabled={selectedProduct === "choose-product"}
+                                disabled={selectedProduct === "Please-Select"}
                               />
                             </div>
                           </Col>
@@ -365,7 +385,7 @@ const ProductDetailsPageComponent = ({
                               onClick={() => addToCartHandler(selectedStock)}
                               className="btn_blue btn-ripple addToCartBtn"
                               variant="success"
-                              disabled={selectedProduct === "choose-product"}
+                              disabled={selectedProduct === "Please-Select"}
                             >
                               Add to cart
                             </Button>
@@ -375,7 +395,15 @@ const ProductDetailsPageComponent = ({
                         <QuotePriceComponent quotePriceData={quotePriceData} />
                       ) : (
                         <>
-                          <Col lg={3}>
+                          {product.slrcurrentbuyingprice === 0 ? null : (
+                            <h6 hidden={selectedProduct === "Please-Select"}>
+                              Quantity :
+                            </h6>
+                          )}
+                          <Col
+                            lg={3}
+                            hidden={selectedProduct === "Please-Select"}
+                          >
                             <div
                               className="btn-group addToCartQty"
                               role="group"
@@ -388,17 +416,20 @@ const ProductDetailsPageComponent = ({
                                 onBlur={handleBlur}
                                 onChange={(e) => setQty(e.target.value)}
                                 step={product.saleunit}
-                                disabled={selectedProduct === "choose-product"}
+                                disabled={selectedProduct === "Please-Select"}
                               />
                             </div>
                           </Col>
                           &nbsp;&nbsp;
-                          <Col lg={4}>
+                          <Col
+                            lg={4}
+                            hidden={selectedProduct === "Please-Select"}
+                          >
                             <Button
                               onClick={() => addToCartHandler(selectedStock)}
                               className="btn_blue btn-ripple addToCartBtn"
                               variant="success"
-                              disabled={selectedProduct === "choose-product"}
+                              disabled={selectedProduct === "Please-Select"}
                             >
                               Add to cart
                             </Button>
@@ -436,19 +467,24 @@ const ProductDetailsPageComponent = ({
                           {/* {product.description} */}
                           {product.description
                             ? product.description
-                              .split("*")
-                              .map((item, index) => {
-                                return index > 0 ? (
-                                  <div key={index} style={{ textIndent: "-10px", paddingLeft: "15px", lineHeight: "1.6rem", }}>
-                                    <i class="bi bi-dot " />
-                                    {item}
-                                  </div>
-                                ) : (
-                                  <div key={index}>
-                                    {item}
-                                  </div>
-                                );
-                              })
+                                .split("*")
+                                .map((item, index) => {
+                                  return index > 0 ? (
+                                    <div
+                                      key={index}
+                                      style={{
+                                        textIndent: "-10px",
+                                        paddingLeft: "15px",
+                                        lineHeight: "1.6rem",
+                                      }}
+                                    >
+                                      <i class="bi bi-dot " />
+                                      {item}
+                                    </div>
+                                  ) : (
+                                    <div key={index}>{item}</div>
+                                  );
+                                })
                             : ""}
                         </div>
                       </Tab>

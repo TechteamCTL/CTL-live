@@ -356,9 +356,9 @@ const updateOrderNote = async (req, res, next) => {
 
 const deleteOrder = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id).orFail();
-    await user.remove();
-    res.send("user removed");
+    const order = await Order.findById(req.params.orderId).orFail();
+    await order.remove();
+    res.send("order deleted");
   } catch (err) {
     next(err);
   }

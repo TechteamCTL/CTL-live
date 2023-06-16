@@ -5,8 +5,9 @@ import { TableHeader, Pagination, Search } from "../../../components/DataTable";
 
 import { useEffect, useState, useMemo } from "react";
 
-const OrdersPageComponent = ({ getOrders }) => {
+const OrdersPageComponent = ({ getOrders, deleteOrder }) => {
   const [orders, setOrders] = useState([]);
+  const [orderDeleted, setOrderDeleted] = useState(false);
 
   // orders.push("cartSubtotal", orders.orderTotal.cartSubtotal);
   // orders.push("username", orders.user.name + orders.user.lastName);
@@ -30,32 +31,32 @@ const OrdersPageComponent = ({ getOrders }) => {
     { name: "Paid", field: "isPaid", sortable: true },
     { name: "PO#", field: "purchaseNumber", sortable: true },
     { name: "Order Name", field: "orderNote", sortable: true },
-    { name: "Order details", field: "_id", sortable: false }
-
+    { name: "Order details", field: "_id", sortable: false },
+    { name: "Delete", field: "", sortable: false },
   ];
-
 
   const ordersData = useMemo(() => {
     let computedOrders = orders;
     console.log("örders", orders);
     if (search) {
       computedOrders = computedOrders.filter(
-        orders =>
+        (orders) =>
           orders.createdAt.toUpperCase().includes(search.toUpperCase()) ||
           orders.purchaseNumber.toUpperCase().includes(search.toUpperCase()) ||
           orders.orderNote?.toUpperCase().includes(search.toUpperCase()) ||
-          (orders.user.name.toUpperCase() + " " + orders.user.lastName.toUpperCase()).includes(search.toUpperCase())
-
+          (
+            orders.user.name.toUpperCase() +
+            " " +
+            orders.user.lastName.toUpperCase()
+          ).includes(search.toUpperCase())
       );
     }
 
     setTotalItems(computedOrders.length);
 
-
     //Sorting products
     // as localeCompare only can compare String, we have to update it as below.
     if (sorting.field) {
-
       const reversed = sorting.order === "asc" ? 1 : -1;
       computedOrders = computedOrders.sort((a, b) => {
         const fieldA = a[sorting.field];
@@ -88,9 +89,14 @@ const OrdersPageComponent = ({ getOrders }) => {
           er.response.data.message ? er.response.data.message : er.response.data
         )
       );
-  }, []);
+  }, [orderDeleted]);
 
-
+  const deleteHandler = async (orderId) => {
+    if (window.confirm("Are you sure?")) {
+      deleteOrder(orderId);
+      setOrderDeleted(!orderDeleted);
+    }
+  };
 
   return (
     <Row className="m-5">
@@ -105,12 +111,12 @@ const OrdersPageComponent = ({ getOrders }) => {
               total={totalItems}
               itemsPerPage={ITEMS_PER_PAGE}
               currentPage={currentPage}
-              onPageChange={page => setCurrentPage(page)}
+              onPageChange={(page) => setCurrentPage(page)}
             />
           </div>
           <div className="col-md-6 d-flex flex-row-reverse">
             <Search
-              onSearch={value => {
+              onSearch={(value) => {
                 setSearch(value);
                 setCurrentPage(1);
               }}
@@ -120,9 +126,7 @@ const OrdersPageComponent = ({ getOrders }) => {
         <table className="table table-striped">
           <TableHeader
             headers={headers}
-            onSorting={(field, order) =>
-              setSorting({ field, order })
-            }
+            onSorting={(field, order) => setSorting({ field, order })}
           />
           <tbody>
             {ordersData.map((order, idx) => (
@@ -159,6 +163,16 @@ const OrdersPageComponent = ({ getOrders }) => {
                     Go to Order
                   </Link>
                 </td>
+                <td>
+                  <button
+                    variant="danger"
+                    className="btn-sm btn-light"
+                    onClick={() => deleteHandler(order._id)}
+                    style={{ border: "none" }}
+                  >
+                    <i className="bi bi-x-circle"></i>
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -169,4 +183,3 @@ const OrdersPageComponent = ({ getOrders }) => {
 };
 
 export default OrdersPageComponent;
-
