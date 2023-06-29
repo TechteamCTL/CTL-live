@@ -393,7 +393,7 @@ const ProductDetailsPageComponent = ({
                               <span className="fw-bold">
                                 Price: ${formattedPrice}
                               </span>
-                              <span className="text-danger ms-5" style={{fontSize:"0.9rem"}}>Price Valid Until: {formattedExpireDate}</span>
+                              <span className="text-danger ms-5" style={{fontSize:"0.9rem"}} hidden={!diff}>Price Valid Until: {formattedExpireDate}</span>
                             </>
                           )}
                         </h6>
