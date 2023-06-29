@@ -21,50 +21,50 @@ const Navb = () => {
     }, [dispatch]); */
 
   /* ************** Brands ************* */
-/*   var BRANDS = [
-    {
-      label: "Paramount Safety",
-      type: 1,
-      link: "/product-list?brandName=PARAMOUNT-SAFETY",
-      Brand_Logo: "/images/Brands/PARAMOUNT.jpg",
-    },
-    {
-      label: "IP-ENCLOSURES",
-      type: 1,
-      link: "/product-list?brandName=IP-ENCLOSURES",
-      Brand_Logo: "/images/Brands/IP-ENCLOSURES.png",
-    },
-    {
-      label: "SWARTS TOOLS",
-      type: 1,
-      link: "/product-list?brandName=SWARTS-TOOLS",
-      Brand_Logo: "/images/Brands/SWARTS-logo.jpg",
-    },
-    {
-      label: "HOBSON",
-      type: 1,
-      link: "/product-list?brandName=HOBSON",
-      Brand_Logo: "/images/Brands/Hobson.png",
-    },
-    {
-      label: "MASTER LOCK",
-      type: 1,
-      link: "/product-list?brandName=MASTER-LOCK",
-      Brand_Logo: "/images/Brands/master-lock-vector.png",
-    },
-    {
-      label: "MINETECH TOOLS",
-      type: 1,
-      link: "/product-list?brandName=MINETECH-TOOLS",
-      Brand_Logo: "/images/Brands/MINTECH.jpg",
-    },
-    {
-      label: "INTEGRATED POWER",
-      type: 1,
-      link: "/product-list?brandName=INTEGRATED-POWER",
-      Brand_Logo: "/images/Brands/integrated-power.jpg",
-    },
-  ]; */
+  /*   var BRANDS = [
+      {
+        label: "Paramount Safety",
+        type: 1,
+        link: "/product-list?brandName=PARAMOUNT-SAFETY",
+        Brand_Logo: "/images/Brands/PARAMOUNT.jpg",
+      },
+      {
+        label: "IP-ENCLOSURES",
+        type: 1,
+        link: "/product-list?brandName=IP-ENCLOSURES",
+        Brand_Logo: "/images/Brands/IP-ENCLOSURES.png",
+      },
+      {
+        label: "SWARTS TOOLS",
+        type: 1,
+        link: "/product-list?brandName=SWARTS-TOOLS",
+        Brand_Logo: "/images/Brands/SWARTS-logo.jpg",
+      },
+      {
+        label: "HOBSON",
+        type: 1,
+        link: "/product-list?brandName=HOBSON",
+        Brand_Logo: "/images/Brands/Hobson.png",
+      },
+      {
+        label: "MASTER LOCK",
+        type: 1,
+        link: "/product-list?brandName=MASTER-LOCK",
+        Brand_Logo: "/images/Brands/master-lock-vector.png",
+      },
+      {
+        label: "MINETECH TOOLS",
+        type: 1,
+        link: "/product-list?brandName=MINETECH-TOOLS",
+        Brand_Logo: "/images/Brands/MINTECH.jpg",
+      },
+      {
+        label: "INTEGRATED POWER",
+        type: 1,
+        link: "/product-list?brandName=INTEGRATED-POWER",
+        Brand_Logo: "/images/Brands/integrated-power.jpg",
+      },
+    ]; */
 
   /* ************** Categories ************* */
   var nav_color = {
@@ -72,6 +72,22 @@ const Navb = () => {
     3: "childCat",
     4: "fourCat",
   };
+
+  var POWER_AIR = "/product-list?categoryName=POWER-AIR";
+  var POWER_AIR_POWER = [
+    {
+      label: "POWER TOOLS",
+      type: 2,
+      link: POWER_AIR + "&subCategoryName=POWER",
+    },
+  ];
+  var POWER_AIR_AIR = [
+    {
+      label: "AIR TOOLS",
+      type: 2,
+      link: POWER_AIR + "&subCategoryName=AIR",
+    },
+  ];
 
   /* PPE */
   var PPE = "/product-list?categoryName=PPE";
@@ -1664,6 +1680,37 @@ const Navb = () => {
               </div>
             </div>
 
+
+            {/* POWER AIR */}
+            <div className="w3c_dropdown">
+              <div className="dropbtn">
+                <a href={POWER_AIR}>POWER/AIR</a>
+              </div>
+              <div className="dropdown-content">
+                <div className="row">
+                  <ul className="column">
+                    {POWER_AIR_POWER.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {POWER_AIR_AIR.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+
             {/* HAND TOOLS */}
             <div className="w3c_dropdown">
               <div className="dropbtn">
@@ -2083,9 +2130,9 @@ const Navb = () => {
               </div>
             </div>
 
-            
+
             {/* BRANDS */}
-{/*             <div className="w3c_dropdown">
+            {/*             <div className="w3c_dropdown">
               <div className="dropbtn">
                 BRANDS
               </div>

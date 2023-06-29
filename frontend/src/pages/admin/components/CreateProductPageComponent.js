@@ -98,15 +98,11 @@ const CreateProductPageComponent = ({
       description: form.description.value,
       saleunit: form.saleunit.value,
       max: form.Max.value,
-
       purchaseprice: form.PurchasePrice.value,
       slrcurrentbuyingprice: form.SLRCurrentBuyingPrice.value,
-
       supplier: form.supplier.value,
-
       category: categoryChoosen,
       attributesTable: attributesTable,
-
       stock: stock,
     };
     if (event.currentTarget.checkValidity() === true) {
@@ -422,9 +418,10 @@ const CreateProductPageComponent = ({
             <p
               onClick={handleNewProduct}
               style={{
-                cursor: "pointer",
+                cursor: "hand",
                 textAlign: "center",
                 fontStyle: "italic",
+
               }}
             >
               Add a New Product

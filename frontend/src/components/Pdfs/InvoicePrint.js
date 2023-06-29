@@ -323,13 +323,14 @@ const InvoicePrint = (cartItems) => {
 
   const InvCartItems = cartItems.cartItems;
   const InvUserInfo = cartItems.userInfo;
-  const InvAddress = cartItems.userAddress;
+  //const InvAddress = cartItems.userAddress;
+  const deliverySite = cartItems.selectedDeliverySite;
   var counter = 0;
 
-  console.log("InvCartItems", InvCartItems);
-  console.log("InvUserInfo", InvUserInfo);
-  console.log("InvAddress", InvAddress);
-  console.log("cart items", cartItems);
+  // console.log("InvCartItems", InvCartItems);
+  // console.log("InvUserInfo", InvUserInfo);
+  // //console.log("InvAddress", InvAddress);
+  // console.log("cart items", cartItems);
 
   function splitArrayIntoChunks(arr, chunkSize) {
     const result = [];
@@ -430,7 +431,7 @@ const InvoicePrint = (cartItems) => {
               <View style={styles.tableRow}>
                 <View style={styles.tableColHeaderSide}>
                   <Text style={styles.tableCellBill}>
-                    {InvAddress.billAddress ? (InvAddress.billAddress.replaceAll(',', '\n')) : ("")}
+                    {deliverySite?.billingAddress.replaceAll(',', '\n')}
                   </Text>
                 </View>
                 <View style={styles.tableColHeaderCenter}>
@@ -452,9 +453,14 @@ const InvoicePrint = (cartItems) => {
                   </View>
                 </View>
                 <View style={styles.tableColHeaderSide}>
+
                   <Text style={styles.tableCellBill}>
-                    {InvAddress.deliveryAddress ? (InvAddress.deliveryAddress.replaceAll(',', '\n')) : ("")}
+                    {deliverySite?.name}
                   </Text>
+                  <Text style={styles.tableCellBill}>
+                    {deliverySite?.deliveryAddress.replaceAll(',', '\n')}
+                  </Text>
+
                 </View>
               </View>
 

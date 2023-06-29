@@ -233,6 +233,7 @@ const AdminEditProductPage = ({
       slrcurrentbuyingprice: form.SLRCurrentBuyingPrice.value,
       supplier: form.supplier.value,
       category: form.category.value,
+      expireDate: form.expireDate.value,
       attributesTable: [],
       stock: [...stock, ...stockNew],
     };
@@ -555,7 +556,6 @@ const AdminEditProductPage = ({
                           <Form.Label>SLR SKU</Form.Label>
                           <Form.Control
                             name={`slrsku-${index}`}
-                            required
                             type="text"
                             defaultValue={item.slrsku}
                           />
@@ -768,7 +768,7 @@ const AdminEditProductPage = ({
                 className="mb-3"
                 controlId="formBasicSLRBuyingPrice"
               >
-                <Form.Label>SLR Buying Price</Form.Label>
+                <Form.Label>Display Price</Form.Label>
                 {/* <CurrencyInput
                   className={`form-control SLRCurrentBuyingPrice`}
                   name={`SLRCurrentBuyingPrice`}
@@ -828,6 +828,20 @@ const AdminEditProductPage = ({
                   required
                   type="text"
                   defaultValue={product.supplier}
+                />
+              </Form.Group>
+              <Form.Group
+                as={Col}
+                md="6"
+                className="mb-3"
+                controlId="formBasicExpireDate"
+              >
+                <Form.Label>Expire Date (hh:mm:ss 28/06/2023)</Form.Label>
+                <Form.Control
+                  name="expireDate"
+                  required
+                  type="string"
+                  defaultValue={product.expireDate}
                 />
               </Form.Group>
             </Row>

@@ -36,10 +36,13 @@ import EmailVerify from "./components/user/EmailVerify";
 
 // protected admin pages:
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import AdminDeliveryBook from "./pages/admin/AdminDeliveryBook";
 import AdminProductsPage from "./pages/admin/AdminProductsPage";
 import AdminCreateProductPage from "./pages/admin/AdminCreateProductPage";
+import AdminCreateDeliveryBookPage from "./pages/admin/AdminCreateDeliveryBookPage"
 import AdminEditProductPage from "./pages/admin/AdminEditProductPage";
 import AdminEditUserPage from "./pages/admin/AdminEditUserPage";
+import AdminEditDeliveryBook from "./pages/admin/AdminEditDeliveryBook";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import AdminOrderDetailsPage from "./pages/admin/AdminOrderDetailsPage";
 import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
@@ -105,6 +108,9 @@ function App() {
               path="/admin/edit-user/:id"
               element={<AdminEditUserPage />}
             />
+            <Route path="/admin/deliveryBooks" element={<AdminDeliveryBook />} />
+            <Route path="/admin/edit-deliveryBook/:id" element={<AdminEditDeliveryBook />} />
+            <Route path="/admin/create-new-deliveryBook" element={<AdminCreateDeliveryBookPage />} />
             <Route path="/admin/products" element={<AdminProductsPage />} />
             <Route
               path="/admin/create-new-product"

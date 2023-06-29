@@ -24,7 +24,8 @@ const OrderDetailsPageComponent = ({
   markAsDelivered,
   markAsPaid,
   updateBackOrder,
-  removeOrderItem
+  removeOrderItem,
+  getdeliveryBooks
 }) => {
   const { id } = useParams();
 
@@ -34,6 +35,7 @@ const OrderDetailsPageComponent = ({
   const [purchaseNumber, setPurchaseNumber] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [createdAt, setCreatedAt] = useState("");
+  const [deliveryBooks, setDeliveryBooks] = useState([]);
 
   const [isDelivered, setIsDelivered] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
@@ -47,6 +49,7 @@ const OrderDetailsPageComponent = ({
   const [orderData, setOrderData] = useState([]);
   const [edit, setEdit] = useState(false);
   const [removed, setRemoved] = useState(false);
+  const [selectedDeliverySite, setSelectedDeliverySite] = useState();
 
 
 
@@ -64,6 +67,7 @@ const OrderDetailsPageComponent = ({
       })
       .catch((err) => console.log(err));
   }, []);
+
 
   useEffect(() => {
     getOrder(id)
@@ -87,7 +91,7 @@ const OrderDetailsPageComponent = ({
           setpaidButtonDisabled(true);
         }
         setCartItems(order.cartItems);
-        setOrderData(order)
+        setOrderData(order);
       })
       .catch((er) =>
         console.log(
@@ -95,6 +99,34 @@ const OrderDetailsPageComponent = ({
         )
       );
   }, [isDelivered, isPaid, id, edit, removed]);
+
+
+
+
+
+  useEffect(() => {
+    getdeliveryBooks(userInfo.email)
+      .then((deliveryBooks) => setDeliveryBooks(deliveryBooks))
+      .catch((err) =>
+        console.log(
+          err.response.data.message
+            ? err.response.data.message
+            : err.response.data
+        )
+      );
+  }, [userInfo]);
+
+  const deliverySites = deliveryBooks[0]?.sites
+
+  useEffect(() => {
+    deliverySites &&
+      deliverySites.map((site, idx) => {
+        return site.name !== "" ? (
+          orderData.deliverySite === site.name ?
+            setSelectedDeliverySite(site) : ("")
+        ) : ("")
+      })
+  }, [orderData, deliveryBooks])
 
   const nonGSTPrice = (cartSubtotal / 1.1).toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -109,7 +141,6 @@ const OrderDetailsPageComponent = ({
     maximumFractionDigits: 2,
   });
 
-  console.log("admin管理订单 cartItems", cartItems);
 
   // edit order
   const handleEdit = () => setEdit(true);
@@ -134,6 +165,18 @@ const OrderDetailsPageComponent = ({
     }
   }
 
+  const changeDeliverySite = (e) => {
+    deliverySites &&
+      deliverySites.map((site, idx) => {
+        return site.name !== "" ? (
+          e.target.value === site.name ?
+            setSelectedDeliverySite(site) : ("")
+        ) : ("")
+      })
+  };
+
+
+
   return (
     <Container fluid style={{ width: "80%" }}>
       <Row className="mt-4">
@@ -144,7 +187,40 @@ const OrderDetailsPageComponent = ({
             <Col md={6}>
               <h3>SHIPPING</h3>
               <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
-              <b>Address</b>: {userInfo.deliveryAddress}
+              {/* <b>Site</b>: {orderData.deliverySite} */}
+
+              <ListGroup.Item className="p-1 ps-0 w-20">
+                <Form.Label className="fw-bold">Delivery Site:</Form.Label>
+                <Form.Select
+                  required
+                  name="sites"
+                  aria-label="Default select example"
+                  onChange={changeDeliverySite}
+                  className="p-0 ps-1"
+
+                >
+                  {deliverySites &&
+                    deliverySites.map((site, idx) => {
+                      return site.name !== "" ? (
+                        orderData.deliverySite === site.name ? (
+                          <option selected key={idx} value={site.name}>
+                            {site.name}
+                          </option>
+                        ) : (
+                          <option key={idx} value={site.name}>
+                            {site.name}
+                          </option>
+                        )
+                      ) : (
+                        <option key={idx} value={site.name}>
+                          {site.name}
+                        </option>
+                      );
+                    })}
+                </Form.Select>
+              </ListGroup.Item>
+
+
               <br />
               <b>Phone</b>: {userInfo.phone}
             </Col>
@@ -335,13 +411,14 @@ const OrderDetailsPageComponent = ({
                       cartItems={cartItems}
                       invoiceNumber={invoiceNumber}
                       userInfo={userInfo}
-                      userAddress={userAddress}
+                      //userAddress={userAddress}
                       purchaseNumber={purchaseNumber}
                       cartSubtotal={cartSubtotal}
                       invoiceDate={createdAt}
+                      selectedDeliverySite={selectedDeliverySite}
                     />
                   }
-                  fileName={invoiceNumber}
+                  fileName={"PN" + invoiceNumber}
                 >
                   {({ loading }) =>
                     loading ? (
@@ -366,21 +443,22 @@ const OrderDetailsPageComponent = ({
                       cartItems={cartItems}
                       invoiceNumber={invoiceNumber}
                       userInfo={userInfo}
-                      userAddress={userAddress}
+                      //userAddress={userAddress}
                       purchaseNumber={purchaseNumber}
                       cartSubtotal={cartSubtotal}
                       invoiceDate={createdAt}
+                      selectedDeliverySite={selectedDeliverySite}
                     />
                   }
                   fileName={invoiceNumber}
                 >
                   {({ loading }) =>
                     loading ? (
-                      <Button className="p-0 m-0 pe-2 ps-2">
+                      <Button className="p-0 m-0 pe-2 ps-2" >
                         Loading Invoice...
                       </Button>
                     ) : (
-                      <Button className="p-0 m-0 pe-2 ps-2">
+                      <Button className="p-0 m-0 pe-2 ps-2 w-50 ">
                         Download Invoice
                       </Button>
                     )

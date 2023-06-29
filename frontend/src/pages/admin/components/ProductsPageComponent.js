@@ -48,9 +48,9 @@ const ProductsPageComponent = ({ fetchProducts, deleteProduct }) => {
           products.name.toLowerCase().includes(search.toLowerCase()) ||
           products.category.toLowerCase().includes(search.toLowerCase()) ||
           products.stock.some(stockItem =>
-            stockItem.ctlsku.toLowerCase().includes(search.toLowerCase()) ||
-            stockItem.slrsku.toLowerCase().includes(search.toLowerCase()) ||
-            stockItem.barcode.toLowerCase().includes(search.toLowerCase())
+            stockItem.ctlsku?.toLowerCase().includes(search.toLowerCase()) ||
+            stockItem.slrsku?.toLowerCase().includes(search.toLowerCase()) ||
+            stockItem.barcode?.toLowerCase().includes(search.toLowerCase())
           )
       );
     }

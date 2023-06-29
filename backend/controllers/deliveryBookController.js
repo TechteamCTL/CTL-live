@@ -20,6 +20,15 @@ const getDeliveryBook = async (req, res, next) => {
     }
 };
 
+const getDeliveryBookById = async (req, res, next) => {
+    try {
+        const deliveryBook = await DeliveryBook.findById(req.params.id).orFail();
+        res.json(deliveryBook);
+    } catch (err) {
+        next(err);
+    }
+};
+
 const adminCreateDeliveryBook = async (req, res, next) => {
     try {
         const deliveryBook = new DeliveryBook();
@@ -46,7 +55,7 @@ const adminCreateDeliveryBook = async (req, res, next) => {
         await deliveryBook.save();
 
         res.json({
-            message: "Delivery Book created",
+            message: "Delivery Book Created",
             deliveryBookId: deliveryBook._id,
         });
     } catch (err) {
@@ -79,7 +88,7 @@ const adminUpdateDeliveryBook = async (req, res, next) => {
         }
         await deliveryBook.save();
         res.json({
-            message: "delivery Book updated",
+            message: "Delivery Book Updated",
         });
     } catch (err) {
         next(err);
@@ -91,10 +100,10 @@ const adminDeleteDeliveryBook = async (req, res, next) => {
     try {
         const deliveryBook = await DeliveryBook.findById(req.params.id).orFail();
         await deliveryBook.remove();
-        res.json({ message: "Delivery Book Removed" });
+        res.json({ message: "Delivery Book Deleted" });
     } catch (err) {
         next(err);
     }
 };
 
-module.exports = { adminCreateDeliveryBook, adminDeleteDeliveryBook, adminUpdateDeliveryBook, getDeliveryBook, getAdminDeliveryBook }
+module.exports = { adminCreateDeliveryBook, adminDeleteDeliveryBook, adminUpdateDeliveryBook, getDeliveryBook, getDeliveryBookById, getAdminDeliveryBook }

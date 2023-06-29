@@ -18,24 +18,22 @@ const PaginationComponent = ({
   // 如果category name 是the such part of the path，otherwise empty string
   // const category = categoryName ? `category/${categoryName}/` : "";
   // const search = searchQuery ? `search/${searchQuery}/` : "";
-  const url = `/product-list?categoryName=${
-    categoryName || ""
-  }&subCategoryName=${
-    subCategoryName || ""
-  }&childCategoryName=${childCategoryName}&fourCategoryName=${fourCategoryName}&searchQuery=${searchQuery}&brandName=${brandName}&`;
+  const url = `/product-list?categoryName=${categoryName || ""
+    }&subCategoryName=${subCategoryName || ""
+    }&childCategoryName=${childCategoryName}&fourCategoryName=${fourCategoryName}&searchQuery=${searchQuery}&brandName=${brandName}&`;
   // return console.log(pageNum);
   // 如果上个return就不会走下面的了。而且这里是 pagination 这个的 to 不能解析？ query url
 
   return (
     <>
       <Pagination className="ms-4 mb-1 pagination_productlist">
-        <LinkContainer to={`${url}pageNum=${Math.max(1, 10)}`}>
+        <LinkContainer to={`${url}pageNum=${Math.max(1, 0)}`}>
           {/* <Pagination.First disabled={pageNum <= 10} /> */}
-          <Pagination.Item disabled={pageNum <= 10}>{"First"}</Pagination.Item>
+          <Pagination.Item disabled={pageNum <= 10}><i class="bi bi-chevron-bar-left"></i></Pagination.Item>
         </LinkContainer>
-        <LinkContainer to={`${url}pageNum=${Math.max(1, pageNum - 10)}`}>
+        <LinkContainer to={`${url}pageNum=${Math.max(1, (Math.ceil(pageNum / 10) * 10 - 10))}`}>
           {/* <Pagination.Prev disabled={pageNum <= 10} /> */}
-          <Pagination.Item disabled={pageNum <= 10} >{"Prev"}</Pagination.Item>
+          <Pagination.Item disabled={pageNum <= 10} >{"...."}</Pagination.Item>
         </LinkContainer>
 
         {Array.from(
@@ -51,15 +49,16 @@ const PaginationComponent = ({
             </LinkContainer>
           ))}
 
+
         <LinkContainer
-          to={`${url}pageNum=${Math.min(paginationLinksNumber, pageNum + 10)}`}
+          to={`${url}pageNum=${Math.min(paginationLinksNumber, (Math.ceil(pageNum / 10) * 10 + 1))}`}
         >
           {/* <Pagination.Next disabled={pageNum > paginationLinksNumber - 10} /> */}
-          <Pagination.Item disabled={Math.ceil(pageNum/10) === Math.ceil(paginationLinksNumber/10)} >{"Next"}</Pagination.Item>
+          <Pagination.Item disabled={Math.ceil(pageNum / 10) === Math.ceil(paginationLinksNumber / 10)} >{"...."}</Pagination.Item>
         </LinkContainer>
         <LinkContainer to={`${url}pageNum=${paginationLinksNumber}`}>
           {/* <Pagination.Last disabled={pageNum > paginationLinksNumber - 10} /> */}
-          <Pagination.Item disabled={pageNum > paginationLinksNumber - 10} >{"Last"}</Pagination.Item>
+          <Pagination.Item disabled={Math.ceil(pageNum / 10) === Math.ceil(paginationLinksNumber / 10)} ><i class="bi bi-chevron-bar-right"></i></Pagination.Item>
         </LinkContainer>
       </Pagination>
     </>

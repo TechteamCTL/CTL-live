@@ -114,7 +114,7 @@ const UserCartDetailsPageComponent = ({
     setSelectedDeliverySite(e.target.value);
   };
 
-  console.log("delivery sites", selectedDeliverySite);
+  // console.log("delivery sites", selectedDeliverySite);
 
   useEffect(() => {
     /* 下方的一系列判定，若有一个不符合，则get your quote的按钮就不可用 */
@@ -180,7 +180,7 @@ const UserCartDetailsPageComponent = ({
       purchaseNumber: purchaseNumber,
       orderNote: orderNote,
       invoiceNumber: largestInvoice + 1,
-      deliverySite:selectedDeliverySite,
+      deliverySite: selectedDeliverySite,
     };
 
     createOrder(orderData)
@@ -479,6 +479,7 @@ const UserCartDetailsPageComponent = ({
                   Please Enter Your Note.{" "}
                 </Form.Control.Feedback>
               </ListGroup.Item>
+
               <ListGroup.Item className="p-1 ps-2">
                 <Form.Label className="fw-bold">Delivery Site:</Form.Label>
                 <Form.Select

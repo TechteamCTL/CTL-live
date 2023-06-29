@@ -21,8 +21,12 @@ import "react-medium-image-zoom/dist/styles.css";
 import FilterComponent from "../../components/filterQueryResultOptions/FilterComponent";
 import BreadcrumbComponent from "../../components/filterQueryResultOptions/BreadcrumbComponent";
 import "./SharedPages.css";
+import axios from "axios";
 import QuotePriceComponent from "../../components/SendEmail/QuotePriceComponent";
 import { connect } from "react-redux";
+import moment from 'moment-timezone';
+// import urlExist from "u"
+
 
 const ProductDetailsPageComponent = ({
   addToCartReduxAction,
@@ -136,9 +140,9 @@ const ProductDetailsPageComponent = ({
   // const formattedPrice = parseFloat(total).toLocaleString();
   const formattedPrice = price
     ? (price * qty).toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
     : "";
 
   // const products = useSelector((state) => state.cart.value);
@@ -155,22 +159,39 @@ const ProductDetailsPageComponent = ({
   // }
 
   //react-image-lightbox -starts here
-  const images = [];
-  if (product && product.images) {
-    product.images.forEach((image) => {
-      images.push({
-        /*         original: image.path?.replace(/^http:/, "https:"),
-        thumbnail: image.path?.replace(/^http:/, "https:"),
-        url: image.path?.replace(/^http:/, "https:"), */
-        original: image.path,
-        thumbnail: image.path,
-        url: image.path,
-        title: image.title,
-        caption: image.name,
-      });
-    });
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    async function handleImages() {
+      const imagesArray = [];
+      if (product && product.images) {
+        for (const image of product.images) {
+          const isExists = await fetchImage(image.path);
+          if (isExists.ok) {
+            imagesArray.push({
+              original: image.path,
+              thumbnail: image.path,
+              url: image.path,
+              title: image.title,
+              caption: image.name,
+            });
+          }
+        }
+      }
+      setImages(imagesArray);
+    }
+    handleImages();
+  }, [product]);
+
+  async function fetchImage(url) {
+    try {
+      const response = await fetch(url);
+      return response;
+    } catch (error) {
+      console.error("There has been a problem with your fetch operation:", error);
+    }
   }
-  //react-image-lightbox -ends here
+
+
 
   // quote price using
   useEffect(() => {
@@ -190,7 +211,6 @@ const ProductDetailsPageComponent = ({
     productName: product.name,
     productId: id,
   };
-  // console.log("Product Detail Page -- user", userData.isAdmin);
 
   const handleBlur = (e) => {
     const newValue =
@@ -211,7 +231,17 @@ const ProductDetailsPageComponent = ({
     }
   }, [product]);
 
-  // console.log("standard", standard);
+  const expireDate = product.expireDate
+  const formattedExpireDate = expireDate?.slice(9)
+
+  const dateCalculation = moment.tz(expireDate, "HH:mm:ss DD/MM/YYYY", "Australia/Perth");
+  
+  const currentDate = moment.tz("Australia/Perth");
+  
+  const diff = dateCalculation.diff(currentDate, 'days');
+
+  console.log(diff);
+
 
   async function downloadPDF(pdfURL, pdfName) {
     const response = await fetch(pdfURL);
@@ -348,17 +378,23 @@ const ProductDetailsPageComponent = ({
                         <h6>PRODUCT CODE : {stockCode}</h6>
                         <h6>
                           {userData.isAdmin === true ? (
-                            <span className="fw-bold">
-                              Price: ${formattedPrice}
-                            </span>
-                          ) : product.slrcurrentbuyingprice === 0 ? (
+                            <>
+                              <span className="fw-bold">
+                                Price: ${formattedPrice}
+                              </span>
+                              {diff<0 ? (<span className="text-danger ms-5">PRICE EXPIRED, PLEASE CHECK WITH SUPPLIER</span>):(<span className="ms-5" style={{fontSize:"0.9rem"}}>Price Valid Until: {formattedExpireDate}</span>)}
+                            </>
+                          ) : (product.slrcurrentbuyingprice === 0 || diff < 0) ? (
                             <span className="fw-bold PriceContact">
                               Contact us for a quote
                             </span>
                           ) : (
-                            <span className="fw-bold">
-                              Price: ${formattedPrice}
-                            </span>
+                            <>
+                              <span className="fw-bold">
+                                Price: ${formattedPrice}
+                              </span>
+                              <span className="text-danger ms-5" style={{fontSize:"0.9rem"}}>Price Valid Until: {formattedExpireDate}</span>
+                            </>
                           )}
                         </h6>
                         <br />
@@ -402,11 +438,11 @@ const ProductDetailsPageComponent = ({
                             </Button>
                           </Col>
                         </>
-                      ) : product.slrcurrentbuyingprice === 0 ? (
+                      ) : (product.slrcurrentbuyingprice === 0 || diff < 0) ? (
                         <QuotePriceComponent quotePriceData={quotePriceData} />
                       ) : (
                         <>
-                          {product.slrcurrentbuyingprice === 0 ? null : (
+                          {(product.slrcurrentbuyingprice === 0 || diff < 0) ? null : (
                             <h6 hidden={selectedProduct === "Please-Select"}>
                               Quantity :
                             </h6>
@@ -481,24 +517,24 @@ const ProductDetailsPageComponent = ({
                           {/* {product.description} */}
                           {product.description
                             ? product.description
-                                .split("*")
-                                .map((item, index) => {
-                                  return index > 0 ? (
-                                    <div
-                                      key={index}
-                                      style={{
-                                        textIndent: "-10px",
-                                        paddingLeft: "15px",
-                                        lineHeight: "1.6rem",
-                                      }}
-                                    >
-                                      <i class="bi bi-dot " />
-                                      {item}
-                                    </div>
-                                  ) : (
-                                    <div key={index}>{item}</div>
-                                  );
-                                })
+                              .split("*")
+                              .map((item, index) => {
+                                return index > 0 ? (
+                                  <div
+                                    key={index}
+                                    style={{
+                                      textIndent: "-10px",
+                                      paddingLeft: "15px",
+                                      lineHeight: "1.6rem",
+                                    }}
+                                  >
+                                    <i class="bi bi-dot " />
+                                    {item}
+                                  </div>
+                                ) : (
+                                  <div key={index}>{item}</div>
+                                );
+                              })
                             : ""}
                         </div>
                       </Tab>

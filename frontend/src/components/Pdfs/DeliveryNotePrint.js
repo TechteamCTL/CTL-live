@@ -304,10 +304,11 @@ const InvoicePrint = (cartItems) => {
 
     const InvCartItems = cartItems.cartItems;
     const InvUserInfo = cartItems.userInfo;
-    const InvAddress = cartItems.userAddress;
+    //const InvAddress = cartItems.userAddress;
+    const deliverySite = cartItems.selectedDeliverySite;
     var counter = 0;
 
-    // console.log("Invoice cartItems", cartItems, typeof cartItems);
+    console.log("Delivery Note selectedDeliverySite", deliverySite?.name);
 
     function splitArrayIntoChunks(arr, chunkSize) {
         const result = [];
@@ -410,7 +411,7 @@ const InvoicePrint = (cartItems) => {
                             <View style={styles.tableRow}>
                                 <View style={styles.tableColHeaderSide}>
                                     <Text style={styles.tableCellBill}>
-                                        {InvUserInfo.billAddress ? (InvUserInfo.billAddress.replaceAll(',', '\n')) : ("")}
+                                        {deliverySite?.billingAddress.replaceAll(',', '\n')}
                                     </Text>
                                 </View>
                                 <View style={styles.tableColHeaderCenter}>
@@ -431,7 +432,10 @@ const InvoicePrint = (cartItems) => {
                                 </View>
                                 <View style={styles.tableColHeaderSide}>
                                     <Text style={styles.tableCellBill}>
-                                        {InvUserInfo.deliveryAddress ? (InvUserInfo.deliveryAddress.replaceAll(',', '\n')) : ("")}
+                                        {deliverySite?.name}
+                                    </Text>
+                                    <Text style={styles.tableCellBill}>
+                                        {deliverySite?.deliveryAddress.replaceAll(',', '\n')}
                                     </Text>
                                 </View>
                             </View>

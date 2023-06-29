@@ -8,6 +8,7 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
   const [validated, setValidated] = useState(false);
   const [user, setUser] = useState([]);
   const [isAdminState, setIsAdminState] = useState(false);
+  const [verified, setVerified] = useState(false);
   const [updateUserResponseState, setUpdateUserResponseState] = useState({
     message: "",
     error: "",
@@ -27,6 +28,7 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
     const billAddress = form.billAddress.value;
     let ipAddress = form.ipAddress.value;
     const isAdmin = form.isAdmin.checked;
+    const verified = form.verified.checked;
 
     // Set ipAddress to "" if "remove" is entered
     if (ipAddress === "remove") {
@@ -41,8 +43,9 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
         email,
         ipAddress,
         isAdmin,
+        verified,
         deliveryAddress,
-        billAddress
+        billAddress,
       )
         .then((data) => {
           if (data === "user updated") {
@@ -67,6 +70,7 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
         setUser(data);
         console.log("useruseruseruser", data);
         setIsAdminState(data.isAdmin);
+        setVerified(data.verified);
       })
       .catch((er) =>
         console.log(
@@ -139,7 +143,7 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
 
             <Form.Group className="mb-3" controlId="formBasicipAddress">
               <Form.Label>
-                IP Address (enter remove to remove IP address)
+                IP Address (enter 'remove' to remove IP address)
               </Form.Label>
               <Form.Control
                 name="ipAddress"
@@ -149,13 +153,22 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3" controlId="formBasicIsAdmin">
               <Form.Check
                 name="isAdmin"
                 type="checkbox"
                 label="Is admin"
                 checked={isAdminState}
                 onChange={(e) => setIsAdminState(e.target.checked)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicVerified">
+              <Form.Check
+                name="verified"
+                type="checkbox"
+                label="Verified"
+                checked={verified}
+                onChange={(e) => setVerified(e.target.checked)}
               />
             </Form.Group>
 

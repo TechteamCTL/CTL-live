@@ -31,6 +31,8 @@
     "mdb-react-ui-kit": "^5.1.0",
     "mdb-ui-kit": "^6.0.0",
     "mdbreact": "^5.2.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
     "nodemailer": "^6.9.1",
     "qs": "^6.11.0",
     "react": "^18.2.0",

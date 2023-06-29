@@ -8,7 +8,7 @@ const AdminLinksComponent = () => {
 
   return (
     <>
-    Admin Part:
+      Admin Part:
       <Navbar bg="light" variant="light">
         {/* bootstrap里Navs -> vertical 扒一个vertical的navbar */}
         <Nav className="flex-column">
@@ -20,6 +20,9 @@ const AdminLinksComponent = () => {
           </LinkContainer>
           <LinkContainer to="/admin/users">
             <Nav.Link>Users</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/admin/deliveryBooks">
+            <Nav.Link>Delivery Books</Nav.Link>
           </LinkContainer>
           {/*         <LinkContainer to="/admin/chats">
           <Nav.Link>Chats</Nav.Link>

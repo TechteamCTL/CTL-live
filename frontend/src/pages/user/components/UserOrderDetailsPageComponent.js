@@ -37,6 +37,7 @@ const UserOrderDetailsPageComponent = ({
   const [isPaid, setIsPaid] = useState(false);
   const [orderButtonMessage, setOrderButtonMessage] = useState("");
   const [cartItems, setCartItems] = useState([]);
+  const [orderData, setOrderData] = useState([]);
   const [cartSubtotal, setCartSubtotal] = useState(0);
   const [isDelivered, setIsDelivered] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -76,7 +77,7 @@ const UserOrderDetailsPageComponent = ({
         if (data.deliveredAt) {
           setDeliveredDate(data.deliveredAt);
         }
-
+        setOrderData(data)
         setPurchaseNumber(data.purchaseNumber);
         setCartItems(data.cartItems);
         setOrderNote(data.orderNote);
@@ -181,7 +182,7 @@ const UserOrderDetailsPageComponent = ({
     hour12: true,
   });
 
-  // console.log("我也不知道这是啥ID", cartItems);
+  console.log("我也不知道这是啥ID", orderData);
 
   const nonGSTPrice = (cartSubtotal / 1.1).toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -225,7 +226,7 @@ const UserOrderDetailsPageComponent = ({
             <Col md={6}>
               <h3>SHIPPING</h3>
               <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
-              <b>Site</b>: {userAddress.location} <br />
+              <b>Site</b>: {orderData.deliverySite} <br />
               <b>Phone</b>: {userAddress.phone} <br />
               <b>Address</b>: {userAddress.deliveryAddress} {userAddress.state}{" "}
               {userAddress.postCode}
@@ -460,7 +461,7 @@ const UserOrderDetailsPageComponent = ({
               <b>Name</b>: {userInfo.name} {userInfo.lastName}
             </ListGroup.Item>
             <ListGroup.Item className="p-1 ps-2">
-              <b>Site</b>: {userAddress.location}
+              <b>Site</b>: {orderData.deliverySite}
             </ListGroup.Item>
             <ListGroup.Item className="p-1 ps-2">
               <b>Phone</b>: {userAddress.phone}

@@ -2,6 +2,8 @@ const Product = require("../models/ProductModel");
 const recordsPerPage = require("../config/pagination");
 const imageValidate = require("../utils/imageValidate");
 const pdfValidate = require("../utils/pdfValidate");
+const cron = require('node-cron');
+const moment = require('moment-timezone');
 
 const getCombinations = (array, length) => {
   let result = [];
@@ -497,6 +499,130 @@ const adminCreateProduct = async (req, res, next) => {
   }
 }; */
 
+
+
+/* const schedulePriceReset = async (productId, expireDate) => {
+  const [time, date] = expireDate.split(' ');
+  const [hour, minute, second] = time.split(':');
+  const [day, month, year] = date.split('/');
+
+  const expireDateTime = new Date(`${month}/${day}/${year} ${hour}:${minute}:${second}`);
+  
+  const cronExpression = `${expireDateTime.getSeconds()} ${expireDateTime.getMinutes()} ${expireDateTime.getHours()} ${expireDateTime.getDate()} ${expireDateTime.getMonth() + 1} *`;
+
+  cron.schedule(cronExpression, async () => {
+    const product = await Product.findById(productId);
+    product.slrcurrentbuyingprice = 0;
+    await product.save();
+  });
+}; */
+
+const schedulePriceReset = async (productId, expireDate) => {
+  const [time, date] = expireDate.split(' ');
+  const [hour, minute, second] = time.split(':');
+  const [day, month, year] = date.split('/');
+
+  const expireDateTimePerth = moment.tz(`${year}-${month}-${day} ${hour}:${minute}:${second}`, "Australia/Perth");
+
+  const expireDateTimeUTC = expireDateTimePerth.clone().tz('UTC');
+
+  const cronExpression = `${expireDateTimeUTC.seconds()} ${expireDateTimeUTC.minutes()} ${expireDateTimeUTC.hours()} ${expireDateTimeUTC.date()} ${expireDateTimeUTC.month() + 1} *`;
+
+  cron.schedule(cronExpression, async () => {
+    const product = await Product.findById(productId);
+    product.slrcurrentbuyingprice = 0;
+    await product.save();
+  });
+};
+
+
+
+
+
+
+
+/* const dailyPriceResetCheck = async () => {
+  console.log("1st");
+
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+
+  const options = { timeZone: 'Australia/Perth', year: 'numeric', month: '2-digit', day: '2-digit' };
+  const formatter = new Intl.DateTimeFormat('en-AU', options);
+  const [day, month, year] = formatter.format(now).split('/');
+  const formattedDate = new Date(`${month}/${day}/${year}`);
+  
+  console.log("2nd");
+
+  const products = await Product.find();
+
+  for (const product of products) {
+    if (!product.expireDate || product.expireDate === '00/00/00') continue;
+
+    const [expDay, expMonth, expYear] = product.expireDate.split('/');
+    const expireDate = new Date(`${expMonth}/${expDay}/${expYear}`);
+  
+    console.log("Date", expireDate);
+
+    if (expireDate <= formattedDate) {
+      if (product.slrcurrentbuyingprice !== 0) {
+        product.slrcurrentbuyingprice = 0;
+        await product.save();
+      }
+    }
+  }
+  console.log("3rd");
+};
+
+cron.schedule('10 13 28 6 *', dailyPriceResetCheck, {
+  scheduled: true,
+  timezone: "Australia/Perth"
+}); */
+
+const dailyPriceResetCheck = async () => {
+  console.log("1st");
+
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+
+  const options = { timeZone: 'Australia/Perth', year: 'numeric', month: '2-digit', day: '2-digit' };
+  const formatter = new Intl.DateTimeFormat('en-AU', options);
+  const [day, month, year] = formatter.format(now).split('/');
+  const formattedDate = new Date(`${month}/${day}/${year}`);
+  
+  console.log("2nd");
+
+  const products = await Product.find();
+
+  for (const product of products) {
+    if (!product.expireDate || product.expireDate === '00:00:00 00/00/00') continue;
+
+    const [time, date] = product.expireDate.split(' ');
+    const [expDay, expMonth, expYear] = date.split('/');
+    const expireDate = new Date(`${expMonth}/${expDay}/${expYear}`);
+
+    if (expireDate.setHours(0, 0, 0, 0) <= formattedDate.setHours(0, 0, 0, 0)) {
+      if (product.slrcurrentbuyingprice !== 0) {
+        product.slrcurrentbuyingprice = 0;
+        await product.save();
+      }
+    }
+  }
+  console.log("3rd");
+};
+
+/* cron.schedule('0 59 07 * * *', dailyPriceResetCheck, {
+  scheduled: true,
+  timezone: "UTC"
+}); */
+
+cron.schedule('0 10 16 * * *', dailyPriceResetCheck, {
+  scheduled: true,
+  timezone: "UTC"
+});
+
+
+
 const adminUpdateProduct = async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.id).orFail();
@@ -513,7 +639,8 @@ const adminUpdateProduct = async (req, res, next) => {
       saleunit,
       max,
       stock,
-      standards
+      standards,
+      expireDate  
     } = req.body;
     product.name = name || product.name;
     product.description = description || product.description;
@@ -528,6 +655,7 @@ const adminUpdateProduct = async (req, res, next) => {
     product.saleunit = saleunit || product.saleunit;
     product.max = max || product.max;
     product.standards = standards || product.standards;
+    product.expireDate = expireDate || product.expireDate;
     if (stock.length > 0) {
       product.stock = [];
       stock.map((item) => {
@@ -547,6 +675,11 @@ const adminUpdateProduct = async (req, res, next) => {
       product.stock = [];
     }
     await product.save();
+
+    if (expireDate) {
+      await schedulePriceReset(req.params.id, expireDate);
+    }
+
     res.json({
       message: "product updated",
     });
@@ -554,6 +687,7 @@ const adminUpdateProduct = async (req, res, next) => {
     next(err);
   }
 };
+
 
 const adminUpload = async (req, res, next) => {
   if (req.query.cloudinary === "true") {

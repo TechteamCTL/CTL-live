@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 const UserProfilePageComponent = ({
   updateUserApiRequest,
   fetchUser,
+  getdeliveryBooks,
   userInfoFromRedux,
   setReduxUserState,
   reduxDispatch,
@@ -25,12 +26,27 @@ const UserProfilePageComponent = ({
   });
   const [user, setUser] = useState({});
   const userInfo = userInfoFromRedux;
+  const [deliveryBooks, setDeliveryBooks] = useState();
+  console.log(user)
+  // console.log(deliveryBooks)
+
 
   useEffect(() => {
     fetchUser(userInfo._id)
       .then((data) => setUser(data))
       .catch((er) => console.log(er));
   }, [userInfo._id]);
+
+  //for delivery Book
+  useEffect(() => {
+    getdeliveryBooks().then((deliveryBooks) =>
+      setDeliveryBooks(deliveryBooks))
+      .catch((err) => console.log(err.response.data.message ? err.response.data.message : err.response.data
+      ));
+  },
+    []);
+
+  const deliverySites = deliveryBooks && deliveryBooks[0].sites;
 
 
   const handleSubmit = (event) => {
@@ -43,12 +59,14 @@ const UserProfilePageComponent = ({
     const email = form.email.value;
     const phone = form.phone.value;
     const mobile = form.mobile.value;
-    const location = form.location.value;
+    const location = form.sites.value;
+    // const location = form.location.value;
     const company = form.company.value;
     const role = form.role.value;
     const deliveryAddress = form.deliveryAddress.value;
     //TODO if need deliveryAddress again, change the value from location to deliveryAddress.
     const state = form.state.value;
+    // const verified = form.verified.value;
     const postCode = form.postCode.value;
 
     if (
@@ -65,6 +83,7 @@ const UserProfilePageComponent = ({
         role,
         deliveryAddress,
         state,
+        // verified,
         postCode
       )
         .then((data) => {
@@ -163,8 +182,34 @@ const UserProfilePageComponent = ({
                   defaultValue={user.mobile}
                 />
               </Form.Group>
-
               <Form.Group as={Col} md="4" controlId="formBasicLocation">
+                <Form.Label >Delivery Site:</Form.Label>
+                <Form.Select
+                  required
+                  name="sites"
+                  aria-label="Default select example"
+                >
+                  {deliverySites && deliverySites.map((site, idx) => {
+                    return site.name !== "" ?
+                      (
+                        user.location === site.name ?
+                          (<option selected key={idx} value={site.name}>
+                            {site.name}
+                          </option>) :
+                          (<option key={idx} value={site.name}>
+                            {site.name}
+                          </option>)
+                      ) :
+                      (
+                        <option key={idx} value={site.name}>
+                          {site.name}
+                        </option>
+                      );
+                  })}
+                </Form.Select>
+              </Form.Group>
+
+              {/* <Form.Group as={Col} md="4" controlId="formBasicLocation">
                 <Form.Label>Site Location</Form.Label>
                 <InputGroup hasValidation>
                   <Form.Control
@@ -174,7 +219,7 @@ const UserProfilePageComponent = ({
                     defaultValue={user.location}
                   />
                 </InputGroup>
-              </Form.Group>
+              </Form.Group> */}
             </Row>
 
             <Row className="mb-3">
@@ -241,6 +286,17 @@ const UserProfilePageComponent = ({
                 />
               </Form.Group>
             </Row>
+            {/* <Row className="mb-4" >
+              <Form.Group as={Col} md="5" controlId="formBasicverification">
+                <Form.Check
+                  type="switch"
+                  name="verified"
+                  label="Verify User"
+                // checked={user.verified}
+                />
+              </Form.Group>
+
+            </Row> */}
 
             <Row className="mt-1 ms-2 justify-content-md-left">
               <Button variant="primary" type="submit" className="w-auto">

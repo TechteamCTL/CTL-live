@@ -81,7 +81,7 @@ const registerUser = async (req, res, next) => {
           email.endsWith("@ctlservices.com.au") ||
           email.endsWith("@focusminerals.com.au") ||
           email.endsWith("@evolutionmining.com")
-        ) && 
+        ) &&
         email !== 'Mekins@slrltd.com' &&
         email !== 'Esmith@slrltd.com' &&
         email !== 'enzo@ctlservices.com.au'
@@ -153,7 +153,7 @@ const loginUser = async (req, res, next) => {
       req.connection.remoteAddress;
 
     const user = await User.findOne({ email });
-    
+
 
     // Compare passwords
     if (user && comparePasswords(password, user.password)) {
@@ -322,7 +322,7 @@ const getUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id)
       .select(
-        "name lastName email ipAddress isAdmin deliveryAddress billAddress"
+        "name lastName email ipAddress isAdmin verified deliveryAddress billAddress"
       )
       .orFail();
     return res.send(user);
@@ -348,6 +348,7 @@ const updateUser = async (req, res, next) => {
     }
 
     user.isAdmin = req.body.isAdmin;
+    user.verified = req.body.verified;
 
     await user.save();
 

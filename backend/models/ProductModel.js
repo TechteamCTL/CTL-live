@@ -88,6 +88,10 @@ const productSchema = mongoose.Schema(
     standards: {
       type: String,
       required: false,
+    },
+    expireDate: {
+      type: String, 
+      required: false,
     }
   },
   {

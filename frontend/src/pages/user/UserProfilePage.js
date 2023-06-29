@@ -5,7 +5,7 @@ import { setReduxUserState } from "../../redux/actions/userActions";
 import UserLinksComponent from "../../components/user/UserLinksComponent";
 import {
   Row,
-  Col, 
+  Col,
 } from "react-bootstrap";
 
 const updateUserApiRequest = async (
@@ -17,9 +17,10 @@ const updateUserApiRequest = async (
   location,
   company,
   role,
-  deliveryAddress, 
+  deliveryAddress,
   billAddress,
   state,
+  // verified,
   postCode
 ) => {
   const { data } = await axios.put("/api/users/profile", {
@@ -34,19 +35,29 @@ const updateUserApiRequest = async (
     deliveryAddress,
     billAddress,
     state,
+    // verified,
     postCode,
   });
   return data;
 };
 
-const fetchUser = async (id) => {
-  const { data } = await axios.get("/api/users/profile/" + id);
-  return data;
-};
 
 const UserProfilePage = () => {
   const reduxDispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userRegisterLogin);
+
+
+  const fetchUser = async (id) => {
+    const { data } = await axios.get("/api/users/profile/" + id);
+    return data;
+  };
+
+
+  const getdeliveryBooks = async () => {
+    const { data } = await axios.get("/api/deliveryBooks/deliveryBook/" + userInfo.email);
+    return data;
+  };
+
 
   return (
     <Row className="m-5">
@@ -57,6 +68,7 @@ const UserProfilePage = () => {
         <UserProfilePageComponent
           updateUserApiRequest={updateUserApiRequest}
           fetchUser={fetchUser}
+          getdeliveryBooks={getdeliveryBooks}
           userInfoFromRedux={userInfo}
           setReduxUserState={setReduxUserState}
           reduxDispatch={reduxDispatch}
