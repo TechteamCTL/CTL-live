@@ -179,6 +179,7 @@ const ProductDetailsPageComponent = ({
               title: image.title,
               caption: image.name,
             });
+            console.log(imagesArray);
           }
         }
       }
@@ -250,7 +251,7 @@ const ProductDetailsPageComponent = ({
 
   const diff = dateCalculation.diff(currentDate, "days");
 
-  console.log(diff);
+  // console.log(diff);
 
   async function downloadPDF(pdfURL, pdfName) {
     const response = await fetch(pdfURL);
