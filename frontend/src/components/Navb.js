@@ -74,18 +74,43 @@ const Navb = () => {
   };
 
   var POWER_AIR = "/product-list?categoryName=POWER-AIR";
-  var POWER_AIR_POWER = [
-    {
-      label: "POWER TOOLS",
-      type: 2,
-      link: POWER_AIR + "&subCategoryName=POWER",
-    },
-  ];
-  var POWER_AIR_AIR = [
+  var POWER_AIR_AIR = POWER_AIR + "&subCategoryName=AIR";
+  var POWER_AIR_AIR_SUB = [
     {
       label: "AIR TOOLS",
       type: 2,
-      link: POWER_AIR + "&subCategoryName=AIR",
+      link: POWER_AIR_AIR,
+
+    },
+    {
+      label: "IMPACT WRENCHES",
+      type: 3,
+      link: POWER_AIR_AIR + "&childCategoryName=IMPACT-WRENCHES",
+    },
+    {
+      label: "RATCHET WRENCHES",
+      type: 3,
+      link: POWER_AIR_AIR + "&childCategoryName=RATCHET-WRENCHES",
+    },
+    {
+      label: "DIE GRINDERS",
+      type: 3,
+      link: POWER_AIR_AIR + "&childCategoryName=DIE-GRINDERS",
+    },
+    {
+      label: "ANGLE DIE GRINDERS",
+      type: 3,
+      link: POWER_AIR_AIR + "&childCategoryName=ANGLE-DIE-GRINDERS",
+    },
+
+  ];
+
+  var POWER_AIR_POWER = POWER_AIR + "&subCategoryName=POWER";
+  var POWER_AIR_POWER_SUB = [
+    {
+      label: "POWER TOOLS",
+      type: 2,
+      link: POWER_AIR_POWER,
     },
   ];
 
@@ -1689,7 +1714,7 @@ const Navb = () => {
               <div className="dropdown-content">
                 <div className="row">
                   <ul className="column">
-                    {POWER_AIR_POWER.map((item) => {
+                    {POWER_AIR_AIR_SUB.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
                           <a href={item.link}>{item.label} </a>
@@ -1698,7 +1723,7 @@ const Navb = () => {
                     })}
                   </ul>
                   <ul className="column">
-                    {POWER_AIR_AIR.map((item) => {
+                    {POWER_AIR_POWER_SUB.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
                           <a href={item.link}>{item.label} </a>
@@ -1707,6 +1732,7 @@ const Navb = () => {
                     })}
                   </ul>
                 </div>
+
               </div>
             </div>
 

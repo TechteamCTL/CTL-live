@@ -38,6 +38,10 @@ const UserCartDetailsPage = () => {
     const { data } = await axios.get("/api/deliveryBooks/deliveryBook/" + userInfo.email);
     return data;
   };
+  const getAdminDeliveryBooks = async () => {
+    const { data } = await axios.get("/api/deliveryBooks/admin");
+    return data;
+  }
 
 
   return (
@@ -47,6 +51,7 @@ const UserCartDetailsPage = () => {
       cartSubtotal={cartSubtotal}
       userInfo={userInfo}
       getdeliveryBooks={getdeliveryBooks}
+      getAdminDeliveryBooks={getAdminDeliveryBooks}
       editQuantity={editQuantity}
       removeFromCart={removeFromCart}
       reduxDispatch={reduxDispatch}

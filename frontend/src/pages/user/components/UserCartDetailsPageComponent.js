@@ -29,6 +29,7 @@ const UserCartDetailsPageComponent = ({
   cartSubtotal,
   userInfo,
   getdeliveryBooks,
+  getAdminDeliveryBooks,
   editQuantity,
   removeFromCart,
   reduxDispatch,
@@ -57,7 +58,9 @@ const UserCartDetailsPageComponent = ({
   const [managerEmail, setManagerEmail] = useState();
   const [base64Data, setBase64Data] = useState([]);
   const [deliveryBooks, setDeliveryBooks] = useState();
+  const [adminDeliveryBooks, setAdminDeliveryBooks] = useState();
   const [selectedDeliverySite, setSelectedDeliverySite] = useState();
+  const [adminSelectedCompany, setAdminSelectedCompany] = useState();
 
   /* const dispatch = useDispatch(); */
 
@@ -106,13 +109,32 @@ const UserCartDetailsPageComponent = ({
       );
   }, []);
 
-  const deliverySites = deliveryBooks && deliveryBooks[0].sites;
-  console.log("user location", userAddress);
+  //Admin delivery Books
+  useEffect(() => {
+    getAdminDeliveryBooks()
+      .then((adminDeliveryBooks) => setAdminDeliveryBooks(adminDeliveryBooks))
+      .catch((err) =>
+        console.log(
+          err.response.data.message
+            ? err.response.data.message
+            : err.response.data
+        )
+      );
+  }, []);
+
+  var deliverySites = deliveryBooks && deliveryBooks[0].sites;
+
+  console.log("company", adminDeliveryBooks);
+  console.log("user Info", userInfo)
 
 
   const changeDeliverySite = (e) => {
     setSelectedDeliverySite(e.target.value);
   };
+  const changeCompanyName = (e) => {
+    setAdminSelectedCompany(e.target.value);
+
+  }
 
   // console.log("delivery sites", selectedDeliverySite);
 
@@ -292,6 +314,28 @@ const UserCartDetailsPageComponent = ({
     maximumFractionDigits: 2,
   });
 
+  // stock share
+  /*   const [stockData, setStockData] = useState(null);
+    const symbol = 'AAPL';
+  
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+              const response = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=D4YL0UP08IB4WLBT`);
+              const timeseries = response.data['Time Series (5min)'];
+              const latestTimestamp = Object.keys(timeseries)[0];
+              const latestData = timeseries[latestTimestamp];
+                setStockData(latestData);
+            } catch (error) {
+                console.error("Error fetching data", error);
+            }
+        };
+        fetchData();
+    }, [symbol]);
+    console.log('====================================');
+    console.log(stockData);
+    console.log('===================================='); */
+
   return (
     <>
       <Container>
@@ -304,6 +348,9 @@ const UserCartDetailsPageComponent = ({
             }}
           >
             <h1>CART DETAILS</h1>
+{/*             <div>
+              {stockData && <div>{symbol}: {stockData['1. open']}</div>}
+            </div> */}
           </div>
           <Col md={9}>
             <ListGroup variant="flush">
@@ -479,6 +526,30 @@ const UserCartDetailsPageComponent = ({
                   Please Enter Your Note.{" "}
                 </Form.Control.Feedback>
               </ListGroup.Item>
+
+              {/* {
+                userInfo.isAdmin?(
+                  <ListGroup.Item className="p-1 ps-2">
+                    <Form.Label className="fw-bold">Company Name:</Form.Label>
+                    <Form.Select
+                      required
+                      name="companies"
+                      aria-label="Default select example"
+                      onChange={changeCompanyName}
+                      className="p-0 ps-2"
+                    >
+
+                      {adminDeliveryBooks &&
+                        adminDeliveryBooks.map((adminDeliveryBook,idx)=>{
+                            <option key={idx} value={adminDeliveryBook.companyName}>
+                              {adminDeliveryBook.companyName}
+                            <option/> 
+                        })}
+                    </Form.Select>
+                  </ListGroup.Item>
+                ):("")
+
+              } */}
 
               <ListGroup.Item className="p-1 ps-2">
                 <Form.Label className="fw-bold">Delivery Site:</Form.Label>
