@@ -89,17 +89,45 @@ const ProductForListPreviewComponent = ({
   });
 
   //react-image-lightbox -starts here
-  const images = [];
-  if (product && product.images) {
-    product.images.forEach((image) => {
-      images.push({
-        original: image.path,
-        thumbnail: image.path,
-        url: image.path,
-        title: image.title,
-        caption: image.name,
-      });
-    });
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    async function handleImages() {
+      const imagesArray = [];
+      if (product && product.images) {
+        for (const image of product.images) {
+          const isExists = await fetchImage(image.path);
+          if (isExists.ok) {
+            let imagePath = image.path;
+          
+            if (imagePath.includes('http://')) {
+              imagePath = imagePath.replace('http://', 'https://');
+            }
+          
+            imagesArray.push({
+              original: imagePath,
+              thumbnail: imagePath,
+              url: imagePath,
+              title: image.title,
+              caption: image.name,
+            });
+          }
+        }
+      }
+      setImages(imagesArray);
+    }
+    handleImages();
+  }, [product]);
+
+  async function fetchImage(url) {
+    try {
+      const response = await fetch(url);
+      return response;
+    } catch (error) {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    }
   }
   //react-image-lightbox -ends here
   // quote price using

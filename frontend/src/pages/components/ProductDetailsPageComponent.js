@@ -166,10 +166,16 @@ const ProductDetailsPageComponent = ({
         for (const image of product.images) {
           const isExists = await fetchImage(image.path);
           if (isExists.ok) {
+            let imagePath = image.path;
+          
+            if (imagePath.includes('http://')) {
+              imagePath = imagePath.replace('http://', 'https://');
+            }
+          
             imagesArray.push({
-              original: image.path,
-              thumbnail: image.path,
-              url: image.path,
+              original: imagePath,
+              thumbnail: imagePath,
+              url: imagePath,
               title: image.title,
               caption: image.name,
             });

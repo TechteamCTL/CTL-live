@@ -314,27 +314,7 @@ const UserCartDetailsPageComponent = ({
     maximumFractionDigits: 2,
   });
 
-  // stock share
-  /*   const [stockData, setStockData] = useState(null);
-    const symbol = 'AAPL';
-  
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-              const response = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=D4YL0UP08IB4WLBT`);
-              const timeseries = response.data['Time Series (5min)'];
-              const latestTimestamp = Object.keys(timeseries)[0];
-              const latestData = timeseries[latestTimestamp];
-                setStockData(latestData);
-            } catch (error) {
-                console.error("Error fetching data", error);
-            }
-        };
-        fetchData();
-    }, [symbol]);
-    console.log('====================================');
-    console.log(stockData);
-    console.log('===================================='); */
+
 
   return (
     <>
@@ -348,9 +328,7 @@ const UserCartDetailsPageComponent = ({
             }}
           >
             <h1>CART DETAILS</h1>
-{/*             <div>
-              {stockData && <div>{symbol}: {stockData['1. open']}</div>}
-            </div> */}
+
           </div>
           <Col md={9}>
             <ListGroup variant="flush">
