@@ -164,13 +164,13 @@ const ProductDetailsPageComponent = ({
       const imagesArray = [];
       if (product && product.images) {
         for (const image of product.images) {
-          const isExists = await fetchImage(image.path);
+          let imagePath = image.path;
+        
+          if (imagePath.includes('http://')) {
+            imagePath = imagePath.replace('http://', 'https://');
+          }
+          const isExists = await fetchImage(imagePath);
           if (isExists.ok) {
-            let imagePath = image.path;
-          
-            if (imagePath.includes('http://')) {
-              imagePath = imagePath.replace('http://', 'https://');
-            }
           
             imagesArray.push({
               original: imagePath,
