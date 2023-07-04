@@ -559,198 +559,198 @@ const Navb = () => {
   ];
   //#endregion
 
-  /* HAND TOOLS */
-  var FASTENERS = "/product-list?categoryName=FASTENERS";
-  // #region
-  var FT_BOLTS = FASTENERS + "&subCategoryName=BOLTS";
-  var FT_BOLTS_3 = [
-    {
-      label: "BOLTS",
-      type: 2,
-      link: FT_BOLTS,
-    },
-    {
-      label: "PLAIN",
-      type: 3,
-      link: FT_BOLTS + "&childCategoryName=PLAIN",
-    },
-    {
-      label: "ZINC PLATED",
-      type: 3,
-      link: FT_BOLTS + "&childCategoryName=ZINC-PLATED",
-    },
-    {
-      label: "ZINC YELLOW PASSIVATE",
-      type: 3,
-      link: FT_BOLTS + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
-    },
-    {
-      label: "STAINLESS STEEL",
-      type: 3,
-      link: FT_BOLTS + "&childCategoryName=STAINLESS-STEEL",
-    },
-    {
-      label: "HOT DIP GALVANISED",
-      type: 3,
-      link: FT_BOLTS + "&childCategoryName=HOT-DIP-GALVANISED",
-    },
-    {
-      label: "MECHANICAL GALVANISED",
-      type: 3,
-      link: FT_BOLTS + "&childCategoryName=MECHANICAL-GALVANISED",
-    },
-  ];
-  var FT_NUTS = FASTENERS + "&subCategoryName=NUTS";
-  var FT_NUTS_3 = [
-    {
-      label: "NUTS",
-      type: 2,
-      link: FT_NUTS,
-    },
-    {
-      label: "PLAIN",
-      type: 3,
-      link: FT_NUTS + "&childCategoryName=PLAIN",
-    },
-    {
-      label: "ZINC PLATED",
-      type: 3,
-      link: FT_NUTS + "&childCategoryName=ZINC-PLATED",
-    },
-    {
-      label: "STAINLESS STEEL",
-      type: 3,
-      link: FT_NUTS + "&childCategoryName=STAINLESS-STEEL",
-    },
-    {
-      label: "MOLY(1PX1)",
-      type: 3,
-      link: FT_NUTS + "&childCategoryName=MOLY",
-    },
-  ];
-  var FT_SCREWS = FASTENERS + "&subCategoryName=SCREWS";
-  var FT_SCREWS_3 = [
-    {
-      label: "SCREWS",
-      type: 2,
-      link: FT_SCREWS,
-    },
-    {
-      label: "PLAIN",
-      type: 3,
-      link: FT_SCREWS + "&childCategoryName=PLAIN",
-    },
-    {
-      label: "ZINC PLATED",
-      type: 3,
-      link: FT_SCREWS + "&childCategoryName=ZINC-PLATED",
-    },
-    {
-      label: "ZINC YELLOW PASSIVATE",
-      type: 3,
-      link: FT_SCREWS + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
-    },
-    {
-      label: "STAINLESS STEEL",
-      type: 3,
-      link: FT_SCREWS + "&childCategoryName=STAINLESS-STEEL",
-    },
-    {
-      label: "BASALT CL4",
-      type: 3,
-      link: FT_SCREWS + "&childCategoryName=BASALT-CL4",
-    },
-  ];
-  var FT_WASHER_FLAT = FASTENERS + "&subCategoryName=WASHER-FLAT";
-  var FT_WASHER_FLAT_3 = [
-    {
-      label: "WASHER FLAT",
-      type: 2,
-      link: FT_WASHER_FLAT,
-    },
-    {
-      label: "PLAIN",
-      type: 3,
-      link: FT_WASHER_FLAT + "&childCategoryName=PLAIN",
-    },
-    {
-      label: "ZINC PLATED",
-      type: 3,
-      link: FT_WASHER_FLAT + "&childCategoryName=ZINC-PLATED",
-    },
-    {
-      label: "STAINLESS STEEL",
-      type: 3,
-      link: FT_WASHER_FLAT + "&childCategoryName=STAINLESS-STEEL",
-    },
-    {
-      label: "BASALT CL4",
-      type: 3,
-      link: FT_BOLTS + "&childCategoryName=BASALT-CL4",
-    },
-  ];
-  var FT_WASHER_SPRING = FASTENERS + "&subCategoryName=WASHER-SPRING";
-  var FT_WASHER_SPRING_3 = [
-    {
-      label: "WASHER SPRING",
-      type: 2,
-      link: FT_WASHER_SPRING,
-    },
-    {
-      label: "ZINC PLATED",
-      type: 3,
-      link: FT_WASHER_SPRING + "&childCategoryName=ZINC-PLATED",
-    },
-    {
-      label: "STAINLESS STEEL",
-      type: 3,
-      link: FT_WASHER_SPRING + "&childCategoryName=STAINLESS-STEEL",
-    },
-  ];
-  var FT_ROD = FASTENERS + "&subCategoryName=ROD-THREADED";
-  var FT_ROD_3 = [
-    {
-      label: "ROD",
-      type: 2,
-      link: FT_ROD,
-    },
-    {
-      label: "PLAIN",
-      type: 3,
-      link: FT_ROD + "&childCategoryName=PLAIN",
-    },
-  ];
-  var FT_STUD_CHEMSET = FASTENERS + "&subCategoryName=STUD-CHEMSET";
-  var FT_STUD_CHEMSET_3 = [
-    {
-      label: "STUD CHEMSET",
-      type: 2,
-      link: FT_STUD_CHEMSET,
-    },
-    {
-      label: "ZINC YELLOW PASSIVATE",
-      type: 3,
-      link: FT_STUD_CHEMSET + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
-    },
-  ];
-  var FT_HARDWARE = FASTENERS + "&subCategoryName=HARDWARE";
-  var FT_HARDWARE_3 = [
-    {
-      label: "HARDWARE",
-      type: 2,
-      link: FT_HARDWARE,
-    },
-    {
-      label: "ANCHORS",
-      type: 3,
-      link: FT_HARDWARE + "&childCategoryName=ANCHORS",
-    },
-    {
-      label: "TURN BUCKLE",
-      type: 3,
-      link: FT_HARDWARE + "&childCategoryName=TURN-BUCKLE",
-    },
-  ];
+  /* FASTENERS */
+  // var FASTENERS = "/product-list?categoryName=FASTENERS";
+  // // #region
+  // var FT_BOLTS = FASTENERS + "&subCategoryName=BOLTS";
+  // var FT_BOLTS_3 = [
+  //   {
+  //     label: "BOLTS",
+  //     type: 2,
+  //     link: FT_BOLTS,
+  //   },
+  //   {
+  //     label: "PLAIN",
+  //     type: 3,
+  //     link: FT_BOLTS + "&childCategoryName=PLAIN",
+  //   },
+  //   {
+  //     label: "ZINC PLATED",
+  //     type: 3,
+  //     link: FT_BOLTS + "&childCategoryName=ZINC-PLATED",
+  //   },
+  //   {
+  //     label: "ZINC YELLOW PASSIVATE",
+  //     type: 3,
+  //     link: FT_BOLTS + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
+  //   },
+  //   {
+  //     label: "STAINLESS STEEL",
+  //     type: 3,
+  //     link: FT_BOLTS + "&childCategoryName=STAINLESS-STEEL",
+  //   },
+  //   {
+  //     label: "HOT DIP GALVANISED",
+  //     type: 3,
+  //     link: FT_BOLTS + "&childCategoryName=HOT-DIP-GALVANISED",
+  //   },
+  //   {
+  //     label: "MECHANICAL GALVANISED",
+  //     type: 3,
+  //     link: FT_BOLTS + "&childCategoryName=MECHANICAL-GALVANISED",
+  //   },
+  // ];
+  // var FT_NUTS = FASTENERS + "&subCategoryName=NUTS";
+  // var FT_NUTS_3 = [
+  //   {
+  //     label: "NUTS",
+  //     type: 2,
+  //     link: FT_NUTS,
+  //   },
+  //   {
+  //     label: "PLAIN",
+  //     type: 3,
+  //     link: FT_NUTS + "&childCategoryName=PLAIN",
+  //   },
+  //   {
+  //     label: "ZINC PLATED",
+  //     type: 3,
+  //     link: FT_NUTS + "&childCategoryName=ZINC-PLATED",
+  //   },
+  //   {
+  //     label: "STAINLESS STEEL",
+  //     type: 3,
+  //     link: FT_NUTS + "&childCategoryName=STAINLESS-STEEL",
+  //   },
+  //   {
+  //     label: "MOLY(1PX1)",
+  //     type: 3,
+  //     link: FT_NUTS + "&childCategoryName=MOLY",
+  //   },
+  // ];
+  // var FT_SCREWS = FASTENERS + "&subCategoryName=SCREWS";
+  // var FT_SCREWS_3 = [
+  //   {
+  //     label: "SCREWS",
+  //     type: 2,
+  //     link: FT_SCREWS,
+  //   },
+  //   {
+  //     label: "PLAIN",
+  //     type: 3,
+  //     link: FT_SCREWS + "&childCategoryName=PLAIN",
+  //   },
+  //   {
+  //     label: "ZINC PLATED",
+  //     type: 3,
+  //     link: FT_SCREWS + "&childCategoryName=ZINC-PLATED",
+  //   },
+  //   {
+  //     label: "ZINC YELLOW PASSIVATE",
+  //     type: 3,
+  //     link: FT_SCREWS + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
+  //   },
+  //   {
+  //     label: "STAINLESS STEEL",
+  //     type: 3,
+  //     link: FT_SCREWS + "&childCategoryName=STAINLESS-STEEL",
+  //   },
+  //   {
+  //     label: "BASALT CL4",
+  //     type: 3,
+  //     link: FT_SCREWS + "&childCategoryName=BASALT-CL4",
+  //   },
+  // ];
+  // var FT_WASHER_FLAT = FASTENERS + "&subCategoryName=WASHER-FLAT";
+  // var FT_WASHER_FLAT_3 = [
+  //   {
+  //     label: "WASHER FLAT",
+  //     type: 2,
+  //     link: FT_WASHER_FLAT,
+  //   },
+  //   {
+  //     label: "PLAIN",
+  //     type: 3,
+  //     link: FT_WASHER_FLAT + "&childCategoryName=PLAIN",
+  //   },
+  //   {
+  //     label: "ZINC PLATED",
+  //     type: 3,
+  //     link: FT_WASHER_FLAT + "&childCategoryName=ZINC-PLATED",
+  //   },
+  //   {
+  //     label: "STAINLESS STEEL",
+  //     type: 3,
+  //     link: FT_WASHER_FLAT + "&childCategoryName=STAINLESS-STEEL",
+  //   },
+  //   {
+  //     label: "BASALT CL4",
+  //     type: 3,
+  //     link: FT_BOLTS + "&childCategoryName=BASALT-CL4",
+  //   },
+  // ];
+  // var FT_WASHER_SPRING = FASTENERS + "&subCategoryName=WASHER-SPRING";
+  // var FT_WASHER_SPRING_3 = [
+  //   {
+  //     label: "WASHER SPRING",
+  //     type: 2,
+  //     link: FT_WASHER_SPRING,
+  //   },
+  //   {
+  //     label: "ZINC PLATED",
+  //     type: 3,
+  //     link: FT_WASHER_SPRING + "&childCategoryName=ZINC-PLATED",
+  //   },
+  //   {
+  //     label: "STAINLESS STEEL",
+  //     type: 3,
+  //     link: FT_WASHER_SPRING + "&childCategoryName=STAINLESS-STEEL",
+  //   },
+  // ];
+  // var FT_ROD = FASTENERS + "&subCategoryName=ROD-THREADED";
+  // var FT_ROD_3 = [
+  //   {
+  //     label: "ROD",
+  //     type: 2,
+  //     link: FT_ROD,
+  //   },
+  //   {
+  //     label: "PLAIN",
+  //     type: 3,
+  //     link: FT_ROD + "&childCategoryName=PLAIN",
+  //   },
+  // ];
+  // var FT_STUD_CHEMSET = FASTENERS + "&subCategoryName=STUD-CHEMSET";
+  // var FT_STUD_CHEMSET_3 = [
+  //   {
+  //     label: "STUD CHEMSET",
+  //     type: 2,
+  //     link: FT_STUD_CHEMSET,
+  //   },
+  //   {
+  //     label: "ZINC YELLOW PASSIVATE",
+  //     type: 3,
+  //     link: FT_STUD_CHEMSET + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
+  //   },
+  // ];
+  // var FT_HARDWARE = FASTENERS + "&subCategoryName=HARDWARE";
+  // var FT_HARDWARE_3 = [
+  //   {
+  //     label: "HARDWARE",
+  //     type: 2,
+  //     link: FT_HARDWARE,
+  //   },
+  //   {
+  //     label: "ANCHORS",
+  //     type: 3,
+  //     link: FT_HARDWARE + "&childCategoryName=ANCHORS",
+  //   },
+  //   {
+  //     label: "TURN BUCKLE",
+  //     type: 3,
+  //     link: FT_HARDWARE + "&childCategoryName=TURN-BUCKLE",
+  //   },
+  // ];
   //#endregion
 
   /* HAND TOOLS */
@@ -879,6 +879,12 @@ const Navb = () => {
     type: 2,
     link: ELECTRICAL + "&subCategoryName=LIGHTING",
   };
+  var ELECTRICAL_SAFETY = {
+    label: "SAFETY",
+    type: 2,
+    link: ELECTRICAL + "&subCategoryName=SAFETY",
+  };
+
   var ELECTRICAL_MOTORS = {
     label: "MOTORS",
     type: 2,
@@ -1462,6 +1468,50 @@ const Navb = () => {
     { label: "PIPE REPAIR", type: 2, link: INDUSTRIAL_PIPE_REPAIR },
 
   ];
+  var INDUSTRIAL_FASTENERS = INDUSTRIAL + "&subCategoryName=FASTENERS";
+  var INDUSTRIAL_8 = [
+    { label: "FASTENERS", type: 2, link: INDUSTRIAL_FASTENERS },
+    {
+      label: "BOLTS",
+      type: 3,
+      link: INDUSTRIAL_FASTENERS + "&childCategoryName=BOLTS",
+    },
+    {
+      label: "NUTS",
+      type: 3,
+      link: INDUSTRIAL_FASTENERS + "&childCategoryName=NUTS",
+    },
+    {
+      label: "SCREWS",
+      type: 3,
+      link: INDUSTRIAL_FASTENERS + "&childCategoryName=SCREWS",
+    },
+    {
+      label: "WASHER FLAT",
+      type: 3,
+      link: INDUSTRIAL_FASTENERS + "&childCategoryName=WASHER-FLAT",
+    },
+    {
+      label: "WASHER SPRING",
+      type: 3,
+      link: INDUSTRIAL_FASTENERS + "&childCategoryName=WASHER-SPRING",
+    },
+    {
+      label: "ROD",
+      type: 3,
+      link: INDUSTRIAL_FASTENERS + "&childCategoryName=ROD-THREADED",
+    },
+    {
+      label: "STUD CHEMSET",
+      type: 3,
+      link: INDUSTRIAL_FASTENERS + "&childCategoryName=STUD-CHEMSET",
+    },
+    {
+      label: "HARDWARE",
+      type: 3,
+      link: INDUSTRIAL_FASTENERS + "&childCategoryName=HARDWARE",
+    },
+  ];
   //#endregion
 
   // console.log(EC_CONSTRUCTION_CABLES);
@@ -1633,7 +1683,7 @@ const Navb = () => {
 
 
             {/* FASTENERS */}
-            <div className="w3c_dropdown">
+            {/* <div className="w3c_dropdown">
               <div className="dropbtn">
                 <a href={FASTENERS}>FASTENERS</a>
               </div>
@@ -1703,7 +1753,7 @@ const Navb = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> */}
 
 
             {/* POWER AIR */}
@@ -1814,15 +1864,6 @@ const Navb = () => {
                         </li>
                       );
                     })}
-                  </ul>
-                  <ul className="column">
-                    {INDUSTRIAL_2.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
 
                     {INDUSTRIAL_4.map((item) => {
                       return (
@@ -1833,6 +1874,24 @@ const Navb = () => {
                     })}
                   </ul>
                   <ul className="column">
+                    {INDUSTRIAL_2.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+
+                    {INDUSTRIAL_8.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+
                     {INDUSTRIAL_5.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
@@ -1949,6 +2008,11 @@ const Navb = () => {
                           );
                         })}
                       </ul>
+                    </li>
+                    <li className="subCat">
+                      <a href={ELECTRICAL_SAFETY.link}>
+                        {ELECTRICAL_SAFETY.label}
+                      </a>
                     </li>
                   </ul>
 
