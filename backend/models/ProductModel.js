@@ -117,7 +117,6 @@ productSchema.index(
     },
   }
 );
-productSchema.index({ "attrs.key": 1, "attrs.value": 1 });
 
 const Product = mongoose.model("Product", productSchema);
 
