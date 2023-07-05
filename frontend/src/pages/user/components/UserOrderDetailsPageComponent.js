@@ -182,7 +182,6 @@ const UserOrderDetailsPageComponent = ({
     hour12: true,
   });
 
-  console.log("我也不知道这是啥ID", orderData);
 
   const nonGSTPrice = (cartSubtotal / 1.1).toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -248,7 +247,7 @@ const UserOrderDetailsPageComponent = ({
                   {isDelivered ? (
                     <>Shipped at {shippedAT.split("at")[0]}</>
                   ) : (
-                    <>Not delivered</>
+                    <>Not Sent Yet</>
                   )}
                 </Alert>
               </Col>
@@ -474,7 +473,7 @@ const UserOrderDetailsPageComponent = ({
                 {isDelivered ? (
                   <>Shipped at {shippedAT.split("at")[0]}</>
                 ) : (
-                  <>Not delivered</>
+                  <>Not Sent Yet</>
                 )}
               </Alert>
             </ListGroup.Item>

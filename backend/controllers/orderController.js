@@ -88,6 +88,19 @@ const updateOrderToPaid = async (req, res, next) => {
   }
 };
 
+const markInvAsSent = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id).orFail();
+    order.invSent = true;
+    order.invSentAt = Date.now();
+
+    const updatedOrder = await order.save();
+    res.send(updatedOrder);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const updateOrderToDelivered = async (req, res, next) => {
   try {
     const order = await Order.findById(req.params.id).orFail();
@@ -215,6 +228,46 @@ const updateOrderToDelivered = async (req, res, next) => {
     res.status(500).json({ error: err.message });
   }
 }; */
+
+/* const updateDeliverySite = async (req, res) => {
+  try {
+    const deliverySite = req.params.deliverySite
+    const orderId = req.params.orderId;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        error: "Order not found",
+      });
+    }
+
+    order.deliverySite = deliverySite
+    await order.save()
+    res.json({
+      message: "Order updated",
+    });
+
+  } catch (err){
+    res.status(500).json({ error: err.message });
+  }
+
+} */
+const updateDeliverySite = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id).orFail();
+
+    if (req.body.deliverySite) {
+      order.deliverySite = req.body.deliverySite;
+    }
+
+    const updatedOrder = await order.save();
+    res.send(updatedOrder);
+  } catch (err) {
+    next(err);
+  }
+};
+
 
 const updateBackOrder = async (req, res) => {
   try {
@@ -404,7 +457,9 @@ module.exports = {
   createOrder,
   updateOrderToPaid,
   updateOrderToDelivered,
+  markInvAsSent,
   updateOrderNote,
+  updateDeliverySite,
   getOrders,
   getOrderForAnalysis,
   updateBackOrder,

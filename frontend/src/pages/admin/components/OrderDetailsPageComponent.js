@@ -16,6 +16,10 @@ import { useReactToPrint } from "react-to-print";
 import DeliveryNotePrint from "../../../components/Pdfs/DeliveryNotePrint";
 import InvoicePrint from "../../../components/Pdfs/InvoicePrint";
 import { PDFDownloadLink } from "@react-pdf/renderer";
+import { pdf } from "@react-pdf/renderer";
+import SendInvoice from "../../../components/SendEmail/SendInvoice";
+import axios from "axios";
+
 
 // 如果要改markAsPaid的功能，不但需要在这里改，还需要去orderDetailsPage里添加paid的api和功能，因为在backend的order route和controller里面已经写过updateToPaid了，所以可以直接用。
 const OrderDetailsPageComponent = ({
@@ -23,9 +27,11 @@ const OrderDetailsPageComponent = ({
   getUser,
   markAsDelivered,
   markAsPaid,
+  sendInv,
   updateBackOrder,
   removeOrderItem,
-  getdeliveryBooks
+  getdeliveryBooks,
+  adminUpdateDeliverySite,
 }) => {
   const { id } = useParams();
 
@@ -38,19 +44,23 @@ const OrderDetailsPageComponent = ({
   const [deliveryBooks, setDeliveryBooks] = useState([]);
 
   const [isDelivered, setIsDelivered] = useState(false);
+  const [invoiceSent, setInvoiceSent] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   const [cartSubtotal, setCartSubtotal] = useState(0);
   const [deliveredButtonDisabled, setdeliveredButtonDisabled] = useState(false);
   const [paidButtonDisabled, setpaidButtonDisabled] = useState(false);
+  const [sentInvButtonDisabled, setSentInvButtonDisabled] = useState(false);
   const [orderDeliveredButton, setorderDeliveredButton] =
-    useState("Mark as delivered");
+    useState("Mark as sent");
+  const [invSentButton, setInvSentButton] =
+    useState("Send Invoice");
   const [orderPaidButton, setorderPaidButton] = useState("Mark as Paid");
   const [cartItems, setCartItems] = useState([]);
   const [orderData, setOrderData] = useState([]);
   const [edit, setEdit] = useState(false);
   const [removed, setRemoved] = useState(false);
   const [selectedDeliverySite, setSelectedDeliverySite] = useState();
-
+  const [editLocation, setEditLocation] = useState(false);
 
 
   useEffect(() => {
@@ -68,7 +78,6 @@ const OrderDetailsPageComponent = ({
       .catch((err) => console.log(err));
   }, []);
 
-
   useEffect(() => {
     getOrder(id)
       .then((order) => {
@@ -81,10 +90,17 @@ const OrderDetailsPageComponent = ({
         order.isDelivered
           ? setIsDelivered(order.deliveredAt)
           : setIsDelivered(false);
+        order.invSent
+          ? setInvoiceSent(order.invSentAt)
+          : setInvoiceSent(false);
         setCartSubtotal(order.orderTotal.cartSubtotal);
         if (order.isDelivered) {
-          setorderDeliveredButton("Order is Delivered");
+          setorderDeliveredButton("Order has been sent");
           setdeliveredButtonDisabled(true);
+        }
+        if (order.invSent) {
+          setInvSentButton("Invoice has Sent");
+          setSentInvButtonDisabled(true);
         }
         if (order.isPaid) {
           setorderPaidButton("Order is Paid");
@@ -98,11 +114,7 @@ const OrderDetailsPageComponent = ({
           er.response.data.message ? er.response.data.message : er.response.data
         )
       );
-  }, [isDelivered, isPaid, id, edit, removed]);
-
-
-
-
+  }, [isDelivered, isPaid, invoiceSent, id, edit, removed, editLocation]);
 
   useEffect(() => {
     getdeliveryBooks(userInfo.email)
@@ -116,17 +128,18 @@ const OrderDetailsPageComponent = ({
       );
   }, [userInfo]);
 
-  const deliverySites = deliveryBooks[0]?.sites
+  const deliverySites = deliveryBooks[0]?.sites;
 
   useEffect(() => {
     deliverySites &&
       deliverySites.map((site, idx) => {
-        return site.name !== "" ? (
-          orderData.deliverySite === site.name ?
-            setSelectedDeliverySite(site) : ("")
-        ) : ("")
-      })
-  }, [orderData, deliveryBooks])
+        return site.name !== ""
+          ? orderData.deliverySite === site.name
+            ? setSelectedDeliverySite(site)
+            : ""
+          : "";
+      });
+  }, [orderData, deliveryBooks]);
 
   const nonGSTPrice = (cartSubtotal / 1.1).toLocaleString(undefined, {
     minimumFractionDigits: 2,
@@ -141,14 +154,13 @@ const OrderDetailsPageComponent = ({
     maximumFractionDigits: 2,
   });
 
-
   // edit order
   const handleEdit = () => setEdit(true);
 
   const saveEdit = () => {
     setTimeout(() => {
       setEdit(false);
-    }, 500)
+    }, 500);
   };
 
   const changeCount = (orderId, itemId, suppliedQty) => {
@@ -158,23 +170,132 @@ const OrderDetailsPageComponent = ({
   const removeFromOrderHandler = (orderId, itemId) => {
     if (window.confirm("Want Remove the Item?")) {
       removeOrderItem(orderId, itemId);
-      setRemoved(true)
+      setRemoved(true);
       setTimeout(() => {
-        setRemoved(false)
+        setRemoved(false);
       }, 500);
     }
-  }
+  };
 
   const changeDeliverySite = (e) => {
     deliverySites &&
       deliverySites.map((site, idx) => {
-        return site.name !== "" ? (
-          e.target.value === site.name ?
-            setSelectedDeliverySite(site) : ("")
-        ) : ("")
-      })
+        return site.name !== ""
+          ? e.target.value === site.name
+            ? setSelectedDeliverySite(site)
+            : ""
+          : "";
+      });
   };
 
+
+  const handleEditLocation = () => setEditLocation(true);
+
+  const saveEditLocation = () => {
+    adminUpdateDeliverySite(id, selectedDeliverySite?.name);
+    setTimeout(() => {
+      setEditLocation(false);
+    }, 500);
+  };
+
+  // email invoice to client's account team
+  const [base64Data, setBase64Data] = useState([]);
+
+  const generatePdf = async () => {
+    try {
+      const blob = await pdf(
+        <InvoicePrint
+          cartItems={cartItems}
+          invoiceNumber={invoiceNumber}
+          userInfo={userInfo}
+          purchaseNumber={purchaseNumber}
+          cartSubtotal={cartSubtotal}
+          invoiceDate={createdAt}
+          selectedDeliverySite={selectedDeliverySite}
+        />
+      ).toBlob();
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        // console.log(base64data);
+        setBase64Data({
+          base64data,
+        });
+      };
+      reader.readAsDataURL(blob);
+    } catch (error) {
+      console.error("Failed to generate PDF:", error);
+    }
+  };
+
+  const [invDate, setInvDate] = useState()
+  useEffect(() => {
+    generatePdf();
+    setInvDate({ sentInvButtonDisabled, billingEmail: deliveryBooks[0]?.billingEmail, invoiceNumber: invoiceNumber, base64data: base64Data.base64data, cartSubtotal, purchaseNumber })
+  }, [orderData, isDelivered, isPaid, invoiceSent, id, edit, removed, editLocation, editLocation, deliveryBooks]);
+
+  console.log('====================================');
+  console.log(invDate);
+  console.log('====================================');
+
+  const sendInvoiceEmail = async (invDate) => {
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const formDataToSend = new FormData();
+    formDataToSend.append(
+      "billingEmail",
+      `${deliveryBooks[0]?.billingEmail}`
+    );
+    formDataToSend.append(
+      "purchaseNumber",
+      `${invDate.purchaseNumber}`
+    );
+    formDataToSend.append(
+      "totalPrice",
+      `${(invDate.cartSubtotal).toFixed(2)}`
+    );
+    formDataToSend.append(
+      "invoiceNumber",
+      `${(invDate.invoiceNumber)}`
+    );
+    formDataToSend.append("base64data", `${invDate.base64data}`);
+    try {
+      const res = await axios.post(
+        "/api/sendemail/emailInv",
+        formDataToSend,
+        config
+      );
+      console.log(res.data);
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  };
+
+  const handleSentInv = async () => {
+    if (await sendInvoiceEmail(invDate)) {
+      sendInv(id)
+        .then((res) => {
+          if (res) {
+            setInvoiceSent(true);
+          }
+        })
+        .catch((er) =>
+          console.log(
+            er.response.data.message
+              ? er.response.data.message
+              : er.response.data
+          ),
+        )
+    } else {
+      setInvSentButton("Something Went Wrong! Contact Tech Team!!!")
+    }
+  };
 
 
   return (
@@ -188,16 +309,37 @@ const OrderDetailsPageComponent = ({
               <h3>SHIPPING</h3>
               <b>Name</b>: {userInfo.name} {userInfo.lastName} <br />
               {/* <b>Site</b>: {orderData.deliverySite} */}
-
               <ListGroup.Item className="p-1 ps-0 w-20">
-                <Form.Label className="fw-bold">Delivery Site:</Form.Label>
+                <Form.Label className="fw-bold">
+                  Delivery Site:
+                  {editLocation === false ? (
+                    <>
+                      {" "}
+                      <i
+                        onClick={handleEditLocation}
+                        className="bi bi-pencil-square"
+                        style={{ cursor: "pointer" }}
+                      ></i>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <i
+                        class="bi bi-folder-check"
+                        onClick={saveEditLocation}
+                        style={{ cursor: "pointer" }}
+                      ></i>{" "}
+                    </>
+                  )}
+                </Form.Label>
+
                 <Form.Select
                   required
                   name="sites"
                   aria-label="Default select example"
                   onChange={changeDeliverySite}
                   className="p-0 ps-1"
-
+                  disabled={editLocation === false}
                 >
                   {deliverySites &&
                     deliverySites.map((site, idx) => {
@@ -219,8 +361,6 @@ const OrderDetailsPageComponent = ({
                     })}
                 </Form.Select>
               </ListGroup.Item>
-
-
               <br />
               <b>Phone</b>: {userInfo.phone}
             </Col>
@@ -239,7 +379,7 @@ const OrderDetailsPageComponent = ({
                 >
                   {isDelivered ? (
                     <>
-                      Delivered at{" "}
+                      Shipped at{" "}
                       {new Date(isDelivered).toLocaleString("en-AU", {
                         day: "numeric",
                         month: "long",
@@ -250,7 +390,7 @@ const OrderDetailsPageComponent = ({
                       })}
                     </>
                   ) : (
-                    <>Not delivered</>
+                    <>Not Sent Yet</>
                   )}
                 </Alert>
               </Col>
@@ -273,6 +413,28 @@ const OrderDetailsPageComponent = ({
                     </>
                   ) : (
                     <>Not paid yet</>
+                  )}
+                </Alert>
+              </Col>
+              <Col>
+                <Alert
+                  className="mt-3 p-0 ps-2"
+                  variant={invoiceSent ? "success" : "danger"}
+                >
+                  {invoiceSent ? (
+                    <>
+                      Inv Sent at{" "}
+                      {new Date(invoiceSent).toLocaleString("en-AU", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                        hour: "numeric",
+                        minute: "numeric",
+                        hour12: true,
+                      })}
+                    </>
+                  ) : (
+                    <>Invoice Not Sent</>
                   )}
                 </Alert>
               </Col>
@@ -405,6 +567,45 @@ const OrderDetailsPageComponent = ({
 
             <ListGroup.Item className="p-1 ps-2">
               <div className="d-grid gap-2">
+                <Button
+                  className="p-0 m-0 w-50"
+                  onClick={handleSentInv}
+                  disabled={sentInvButtonDisabled}
+                  variant="success"
+                  type="button"
+                >
+                  {invSentButton}
+                </Button>
+
+                {/* <SendInvoice invDate={invDate} />
+                <Button
+                  className="p-0 m-0 w-50"
+                  onClick={() =>
+                    sendInv(id)
+                      .then((res) => {
+                        if (res) {
+                          setInvoiceSent(true);
+                        }
+                      })
+                      .catch((er) =>
+                        console.log(
+                          er.response.data.message
+                            ? er.response.data.message
+                            : er.response.data
+                        )
+                      )
+                  }
+                  disabled={sentInvButtonDisabled}
+                  variant="success"
+                  type="button"
+                >
+                  {invSentButton}
+                </Button> */}
+              </div>
+            </ListGroup.Item>
+
+            <ListGroup.Item className="p-1 ps-2">
+              <div className="d-grid gap-2">
                 <PDFDownloadLink
                   document={
                     <DeliveryNotePrint
@@ -454,7 +655,7 @@ const OrderDetailsPageComponent = ({
                 >
                   {({ loading }) =>
                     loading ? (
-                      <Button className="p-0 m-0 pe-2 ps-2" >
+                      <Button className="p-0 m-0 pe-2 ps-2">
                         Loading Invoice...
                       </Button>
                     ) : (

@@ -57,6 +57,7 @@ const CreateDeliveryBookComponent = ({
         const formInputs = {
             companyName: form.companyName.value,
             emailHost: form.emailHost.value,
+            billingEmail: form.billingEmail.value,
             sites: sites,
         };
 
@@ -102,6 +103,10 @@ const CreateDeliveryBookComponent = ({
                             <Form.Group className="mb-3" controlId="formBasicEmailHost">
                                 <Form.Label>Email Host</Form.Label>
                                 <Form.Control name="emailHost" required type="text" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formBasicBillingEmail">
+                                <Form.Label>Billing Email</Form.Label>
+                                <Form.Control name="billingEmail" required type="text" />
                             </Form.Group>
 
 

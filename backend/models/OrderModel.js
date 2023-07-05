@@ -80,6 +80,14 @@ const orderSchema = mongoose.Schema(
     deliveredAt: {
       type: Date,
     },
+    invSent: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    invSentAt: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

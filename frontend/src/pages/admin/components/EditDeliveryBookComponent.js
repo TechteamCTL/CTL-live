@@ -65,6 +65,7 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
         const formInputs = {
             companyName: form.companyName.value,
             emailHost: form.emailHost.value,
+            billingEmail: form.billingEmail.value,
             sites: [...sites, ...sitesNew],
         };
 
@@ -140,6 +141,15 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
                                 required
                                 type="text"
                                 defaultValue={deliveryBook.emailHost}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicBillingEmailt">
+                            <Form.Label>Email Host </Form.Label>
+                            <Form.Control
+                                name="billingEmail"
+                                required
+                                type="text"
+                                defaultValue={deliveryBook.billingEmail}
                             />
                         </Form.Group>
                         <hr

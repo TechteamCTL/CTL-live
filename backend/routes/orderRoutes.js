@@ -12,7 +12,9 @@ const {
   createOrder,
   updateOrderToPaid,
   updateOrderToDelivered,
+  markInvAsSent,
   updateOrderNote,
+  updateDeliverySite,
   getOrders,
   getOrderForAnalysis,
   getOrdersInvNo,
@@ -33,12 +35,14 @@ router.put("/updateOrderNote/:id", updateOrderNote);
 // admin routes
 router.use(verifyIsAdmin);
 router.put("/delivered/:id", updateOrderToDelivered);
+router.put("/sendInv/:id", markInvAsSent);
 router.get("/admin", getOrders);
 router.get("/analysis/:date", getOrderForAnalysis);
 // router.put("/updateBackOrder/:itemId", updateBackOrder);
 router.put("/updateBackOrder/:orderId/:itemId", updateBackOrder);
 router.delete("/removeItem/:orderId/:itemId", deleteOrderItem);
 router.delete("/delete/:orderId", deleteOrder);
+router.put("/deliverySite/:id", updateDeliverySite);
 
 
 module.exports = router;

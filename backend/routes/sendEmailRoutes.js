@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {quoteProduct, quotePrice, managementApproval, newOrderRemind} = require("../controllers/sendEmailController")
+const {quoteProduct, quotePrice, managementApproval, newOrderRemind, sendInvoice} = require("../controllers/sendEmailController")
 const { verifyIsLoggedIn } = require("../middleware/verifyAuthToken")
 
 
@@ -10,6 +10,7 @@ router.post("/quoteproduct", quoteProduct)
 router.post("/quoteprice", quotePrice)
 router.post("/managementApproval", managementApproval)
 router.post("/newOrderRemind", newOrderRemind)
+router.post("/emailInv", sendInvoice)
 
 
 module.exports = router

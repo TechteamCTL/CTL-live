@@ -35,10 +35,12 @@ const adminCreateDeliveryBook = async (req, res, next) => {
         const {
             companyName,
             emailHost,
+            billingEmail,
             sites
         } = req.body;
         deliveryBook.companyName = companyName;
         deliveryBook.emailHost = emailHost;
+        deliveryBook.billingEmail = billingEmail;
         if (sites.length > 0) {
             deliveryBook.sites = [];
             sites.map((item) => {
@@ -69,10 +71,12 @@ const adminUpdateDeliveryBook = async (req, res, next) => {
         const {
             companyName,
             emailHost,
+            billingEmail,
             sites
         } = req.body;
         deliveryBook.companyName = companyName || deliveryBook.companyName;
         deliveryBook.emailHost = emailHost || deliveryBook.emailHost;
+        deliveryBook.billingEmail = billingEmail || deliveryBook.billingEmail;
         if (sites.length > 0) {
             deliveryBook.sites = [];
             sites.map((item) => {

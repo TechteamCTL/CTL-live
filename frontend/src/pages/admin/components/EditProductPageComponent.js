@@ -839,7 +839,6 @@ const AdminEditProductPage = ({
                 <Form.Label>Expire Date (hh:mm:ss 28/06/2023)</Form.Label>
                 <Form.Control
                   name="expireDate"
-                  required
                   type="string"
                   defaultValue={product.expireDate}
                 />

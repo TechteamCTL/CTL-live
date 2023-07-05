@@ -136,26 +136,31 @@ const AdminAnalyticsPage = () => {
   ];
 
   // stock share
-  const [stockData, setStockData] = useState(null);
-  const symbol = 'BHP.AUS';
+  const [stockData, setStockData] = useState([]);
+  const symbol = 'RIO.AX';
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=D4YL0UP08IB4WLBT`);
-        const timeseries = response.data['Time Series (5min)'];
-        const latestTimestamp = Object.keys(timeseries)[0];
-        const latestData = timeseries[latestTimestamp];
-        setStockData(latestData);
+        const response = await axios.get(`/api/stocks/${symbol}`);
+        setStockData(response.data);
       } catch (error) {
         console.error("Error fetching data", error);
       }
     };
     fetchData();
-  }, [symbol]);
+  }, []);
+
+  const stockDataCurrent = stockData.regularMarketPrice?.fmt
+  const stockChangePercent = stockData.regularMarketChangePercent?.fmt
+
+
+
   console.log('====================================');
   console.log(stockData);
   console.log('====================================');
+
+
   return (
     <Row className="m-5">
       <Col md={2}>
@@ -163,7 +168,7 @@ const AdminAnalyticsPage = () => {
       </Col>
       <Col md={10}>
         <div>
-          {stockData && <div>{symbol}: {stockData['1. open']}</div>}
+        {stockData && <div>{symbol}:{stockDataCurrent}-{stockChangePercent}</div>}
         </div>
         <h1>Black Friday Cumulative Revenue 11/26/2022 VS 11/27/2021</h1>
         <Form.Group controlId="firstDateToCompare">

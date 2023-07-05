@@ -121,6 +121,49 @@ const managementApproval = async (req, res, next) => {
   }
 };
 
+const sendInvoice = async (req, res, next) => {
+  try {
+    // 因为 后面可能要改动 base64data 所以要用 let，不能用 const
+    let { totalPrice, billingEmail, invoiceNumber, base64data, purchaseNumber } = req.body;
+    
+    const base64prefix = 'data:application/pdf;base64,';
+    if (base64data.startsWith(base64prefix)) {
+      base64data = base64data.slice(base64prefix.length);
+    }
+
+    const message = {
+      from: process.env.CTLEMAIL,
+      to: `${billingEmail}`,
+      subject: `Invoice ${invoiceNumber} from CTL AUSTRALIA`,
+      text: `
+  Hi There,
+
+  Please find the attached invoice for $${totalPrice}, with the INV#: ${invoiceNumber} corresponding to your P/O#: ${purchaseNumber}.
+      
+  If you have any inquiries, please do not hesitate to contact us at: accounts@ctlservices.com.au
+      
+  Kind Regards,
+  The CTL Australia Team
+    `,
+
+      attachments: [
+        {
+          filename: 'Invoice.pdf',
+          content: Buffer.from(base64data, 'base64'),
+          contentType: 'application/pdf'
+        }
+      ],
+    };
+
+    // Send email
+    await transporter.sendMail(message);
+
+    res.status(200).json({ message: "Email sent successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 
 const newOrderRemind = async (req, res, next) => {
   try {
@@ -149,4 +192,5 @@ module.exports = {
   quotePrice,
   managementApproval,
   newOrderRemind,
+  sendInvoice
 };

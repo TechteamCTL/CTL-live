@@ -113,6 +113,23 @@ const Navb = () => {
       link: POWER_AIR_POWER,
     },
   ];
+  var POWER_AIR_GENERATORS = POWER_AIR + "&subCategoryName=GENERATORS";
+  var POWER_AIR_GENERATORS_SUB = [
+    {
+      label: "GENERATORS",
+      type: 2,
+      link: POWER_AIR_GENERATORS,
+    },
+  ];
+
+  var POWER_AIR_COMPRESSORS = POWER_AIR + "&subCategoryName=COMPRESSORS";
+  var POWER_AIR_COMPRESSORS_SUB = [
+    {
+      label: "COMPRESSORS",
+      type: 2,
+      link: POWER_AIR_COMPRESSORS,
+    },
+  ];
 
   /* PPE */
   var PPE = "/product-list?categoryName=PPE";
@@ -879,10 +896,10 @@ const Navb = () => {
     type: 2,
     link: ELECTRICAL + "&subCategoryName=LIGHTING",
   };
-  var ELECTRICAL_SAFETY = {
-    label: "SAFETY",
+  var ELECTRICAL_SWITCH_GEAR = {
+    label: "SWITCH GEAR",
     type: 2,
-    link: ELECTRICAL + "&subCategoryName=SAFETY",
+    link: ELECTRICAL + "&subCategoryName=SWITCH-GEAR",
   };
 
   var ELECTRICAL_MOTORS = {
@@ -1054,27 +1071,27 @@ const Navb = () => {
     {
       label: "STEEL",
       type: 4,
-      link: ELECTRICAL_ENCLOSURES.link + "&fourCategoryName=STEEL",
+      link: EE_WALL_MOUNTED.link + "&fourCategoryName=STEEL",
     },
     {
       label: "STAINLESS STEEL",
       type: 4,
-      link: ELECTRICAL_ENCLOSURES.link + "&fourCategoryName=STAINLESS-STEEL",
+      link: EE_WALL_MOUNTED.link + "&fourCategoryName=STAINLESS-STEEL",
     },
     {
       label: "ALUMINIUM",
       type: 4,
-      link: ELECTRICAL_ENCLOSURES.link + "&fourCategoryName=ALUMINIUM",
+      link: EE_WALL_MOUNTED.link + "&fourCategoryName=ALUMINIUM",
     },
     {
       label: "GRP",
       type: 4,
-      link: ELECTRICAL_ENCLOSURES.link + "&fourCategoryName=GRP",
+      link: EE_WALL_MOUNTED.link + "&fourCategoryName=GRP",
     },
     {
       label: "ACCESSORIES",
       type: 4,
-      link: ELECTRICAL_ENCLOSURES.link + "&fourCategoryName=ACCESSORIES",
+      link: EE_WALL_MOUNTED.link + "&fourCategoryName=ACCESSORIES",
     },
   ];
 
@@ -1763,7 +1780,16 @@ const Navb = () => {
               </div>
               <div className="dropdown-content">
                 <div className="row">
-                  <ul className="column"></ul>
+                  <ul className="column">
+                    {POWER_AIR_POWER_SUB.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+
+                  </ul>
                   <ul className="column">
                     {POWER_AIR_AIR_SUB.map((item) => {
                       return (
@@ -1774,13 +1800,14 @@ const Navb = () => {
                     })}
                   </ul>
                   <ul className="column">
-                    {POWER_AIR_POWER_SUB.map((item) => {
+                    {POWER_AIR_GENERATORS_SUB.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
                           <a href={item.link}>{item.label} </a>
                         </li>
                       );
                     })}
+
                   </ul>
 
                 </div>
@@ -2010,8 +2037,8 @@ const Navb = () => {
                       </ul>
                     </li>
                     <li className="subCat">
-                      <a href={ELECTRICAL_SAFETY.link}>
-                        {ELECTRICAL_SAFETY.label}
+                      <a href={ELECTRICAL_SWITCH_GEAR.link}>
+                        {ELECTRICAL_SWITCH_GEAR.label}
                       </a>
                     </li>
                   </ul>

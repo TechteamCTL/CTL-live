@@ -22,6 +22,13 @@ const markAsPaid = async (id) => {
     }
 }
 
+const sendInv = async (id) => {
+    const { data } = await axios.put("/api/orders/sendInv/" + id);
+    if (data) {
+        return data;
+    }
+}
+
 
 /* const updateBackOrder = async (orderId, itemId, suppliedQty) => {
     const { data } = await axios.put("/api/orders/updateBackOrder/" + orderId, itemId, suppliedQty);
@@ -49,6 +56,11 @@ const getdeliveryBooks = async (email) => {
 
 };
 
+const updateDeliverySite = async (orderId, deliverySite) => {
+    const { data } = await axios.put("/api/orders/deliverySite/" + orderId, { deliverySite: deliverySite });
+    return data;
+  };
+
 const AdminOrderDetailsPage = () => {
     const userInfo = useSelector((state) => state.userRegisterLogin.userInfo);
 
@@ -57,7 +69,7 @@ const AdminOrderDetailsPage = () => {
         return data;
     };
 
-    return <OrderDetailsPageComponent getOrder={getOrder} getUser={getUser} markAsDelivered={markAsDelivered} markAsPaid={markAsPaid} updateBackOrder={updateBackOrder} removeOrderItem={removeOrderItem} getdeliveryBooks={getdeliveryBooks} />
+    return <OrderDetailsPageComponent getOrder={getOrder} getUser={getUser} markAsDelivered={markAsDelivered} markAsPaid={markAsPaid} sendInv={sendInv} updateBackOrder={updateBackOrder} removeOrderItem={removeOrderItem} getdeliveryBooks={getdeliveryBooks} adminUpdateDeliverySite={updateDeliverySite} />
 };
 
 export default AdminOrderDetailsPage;

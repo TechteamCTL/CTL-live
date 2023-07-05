@@ -48,7 +48,7 @@ const DeliveryBookComponent = ({ fetchDeliveryBooks, deleteDeliveryBook }) => {
                         <tr>
                             <th>#</th>
                             <th width="25%">Company Name</th>
-                            <th width="25%">Email Host</th>
+                            <th width="25%">Billing Email</th>
                             <th width="25%">Sites</th>
                             <th width="20%">Edit/Delete</th>
                         </tr>
@@ -59,7 +59,7 @@ const DeliveryBookComponent = ({ fetchDeliveryBooks, deleteDeliveryBook }) => {
                                 <tr key={idx}>
                                     <td>{idx + 1}</td>
                                     <td>{book.companyName}</td>
-                                    <td>{book.emailHost}</td>
+                                    <td>{book.billingEmail}</td>
                                     <td>{book.sites.map(
                                         (site, idy) => (
                                             <p>{site.name}</p>

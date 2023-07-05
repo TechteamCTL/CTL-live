@@ -23,7 +23,7 @@ const UserOrdersPageComponent = ({ getOrders }) => {
     { name: "No#", field: "index", sortable: false },
     { name: "Date", field: "createdAt", sortable: true },
     { name: "Price", field: "cartSubtotal", sortable: false },
-    { name: "Delivered", field: "isDelivered", sortable: true },
+    { name: "Sent", field: "isDelivered", sortable: true },
     // { name: "Paid", field: "isPaid", sortable: true },
     { name: "PO#", field: "purchaseNumber", sortable: true },
     { name: "Order Name", field: "orderNote", sortable: true },
