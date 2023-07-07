@@ -106,6 +106,7 @@ productSchema.index(
     name: "text",
     "stock.slrsku": "text",
     "stock.ctlsku": "text",
+    "stock.suppliersku": "text",
   },
   {
     name: "TextIndex",
