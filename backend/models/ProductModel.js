@@ -115,6 +115,7 @@ productSchema.index(
       name: 4,
       "stock.slrsku": 1,
       "stock.ctlsku": 1,
+      "stock.suppliersku": 1,
     },
   }
 );
