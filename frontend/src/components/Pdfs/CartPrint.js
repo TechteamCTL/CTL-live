@@ -688,7 +688,7 @@ const CartPrint = (cartItems) => {
                   <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
                     {cartItems.cartSubtotal
-                      ? (cartItems.cartSubtotal / 1.1)
+                      ? (cartItems.cartSubtotal)
                           .toFixed(2)
                           .toLocaleString()
                       : ""}
@@ -703,7 +703,7 @@ const CartPrint = (cartItems) => {
                   <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
                     {cartItems.cartSubtotal
-                      ? ((cartItems.cartSubtotal / 1.1) * 0.1)
+                      ? (cartItems.cartSubtotal * 0.1)
                           .toFixed(2)
                           .toLocaleString()
                       : ""}
@@ -718,7 +718,7 @@ const CartPrint = (cartItems) => {
                   <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
                     {cartItems.cartSubtotal
-                      ? cartItems.cartSubtotal.toFixed(2).toLocaleString()
+                      ? (cartItems.cartSubtotal * 1.1).toFixed(2).toLocaleString()
                       : ""}
                   </Text>
                 </View>
