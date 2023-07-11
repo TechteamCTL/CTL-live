@@ -6,6 +6,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import SplashPage from "../pages/SplashPage";
 import ScrollButton from "./ScrollButton ";
+import MineralPrice from "./MineralPrice";
 // import ScrollToTop from "../utils/ScrollToTop";
 
 
@@ -45,6 +46,7 @@ const ProtectedRoutesComponent = ({ admin }) => {
     return (
       <>
         <HeaderComponent />
+        {/* <MineralPrice/> */}
         <Navb />
         <Outlet />
         <FooterComponent />

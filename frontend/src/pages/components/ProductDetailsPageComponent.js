@@ -8,6 +8,7 @@ import {
   Tabs,
   Form,
   Image,
+  Table
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -83,7 +84,7 @@ const ProductDetailsPageComponent = ({
     stockCode = selectedStock.ctlsku;
   }
 
-  // console.log("selectedStock", stockPrice);
+  console.log("selectedStock", stockPrice);
 
   // console.log(product.description);
   // const description[]=product.description.split('.');
@@ -139,11 +140,13 @@ const ProductDetailsPageComponent = ({
   // const formattedPrice = parseFloat(total).toLocaleString();
   const formattedPrice = price
     ? (price * qty).toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
     : "";
-
+  console.log('====================================');
+  console.log(qty, typeof price);
+  console.log('====================================');
   // const products = useSelector((state) => state.cart.value);
 
   // for the zoomable picture Gallery
@@ -165,13 +168,13 @@ const ProductDetailsPageComponent = ({
       if (product && product.images) {
         for (const image of product.images) {
           let imagePath = image.path;
-        
+
           if (imagePath.includes('http://')) {
             imagePath = imagePath.replace('http://', 'https://');
           }
           const isExists = await fetchImage(imagePath);
           if (isExists.ok) {
-          
+
             imagesArray.push({
               original: imagePath,
               thumbnail: imagePath,
@@ -277,6 +280,10 @@ const ProductDetailsPageComponent = ({
     document.body.removeChild(tempLink);
   }
 
+  // table first letter capitalized
+  function capitalizeFirstLetter(string) {
+    return string ? string.charAt(0).toUpperCase() + string.slice(1).toLowerCase() : '';
+  }
   return (
     <Container className="ms-3 " fluid>
       <BreadcrumbComponent />
@@ -471,7 +478,7 @@ const ProductDetailsPageComponent = ({
                       ) : (
                         <>
                           {product.slrcurrentbuyingprice === 0 ||
-                          diff < 0 ? null : (
+                            diff < 0 ? null : (
                             <h6 hidden={selectedProduct === "Please-Select"}>
                               Quantity :
                             </h6>
@@ -535,15 +542,14 @@ const ProductDetailsPageComponent = ({
                         eventKey="Description"
                         title="Specifications"
                       >
-                        <div
+                        {/* <div
                           style={{
                             whiteSpace: "pre-wrap",
                             textAlign: "justify",
                             width: "97%",
                             overflowWrap: "break-word",
                           }}
-                        >
-                          {/* {product.description} */}
+                        >             
                           {product.description
                             ? product.description
                                 .split("*")
@@ -557,7 +563,7 @@ const ProductDetailsPageComponent = ({
                                         lineHeight: "1.6rem",
                                       }}
                                     >
-                                      <i class="bi bi-dot " />
+                                      <i className="bi bi-dot " />
                                       {item}
                                     </div>
                                   ) : (
@@ -565,7 +571,281 @@ const ProductDetailsPageComponent = ({
                                   );
                                 })
                             : ""}
+                        </div> */}
+
+
+                        {/* <div
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            textAlign: "justify",
+                            width: "97%",
+                            overflowWrap: "break-word",
+                          }}
+                        >
+                          
+                          {product.description
+                            ? product.description
+                              .split("*")
+                              .map((item, index) => {
+                                // ^ to table
+                                if (item.includes('^')) {
+                                  const tableItems = item.split('^').filter(Boolean);
+                                  return (
+                                    <Table striped bordered hover>
+                                      <tbody>
+                                        {tableItems.map((tableItem, tableIndex) => {
+                                          const [key, value] = tableItem.split(':');
+                                          return (
+                                            <tr key={tableIndex}>
+                                              <td>{key}</td>
+                                              <td>{value}</td>
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </Table>
+                                  );
+                                }
+                                // If not, format as before
+                                return index > 0 ? (
+                                  <div
+                                    key={index}
+                                    style={{
+                                      textIndent: "-10px",
+                                      paddingLeft: "15px",
+                                      lineHeight: "1.6rem",
+                                    }}
+                                  >
+                                    <i className="bi bi-dot " />
+                                    {item}
+                                  </div>
+                                ) : (
+                                  <div key={index}>{item}</div>
+                                );
+                              })
+                            : ""}
+                        </div> */}
+
+                        {/* <div
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            textAlign: "justify",
+                            width: "97%",
+                            overflowWrap: "break-word",
+                          }}
+                        >
+                          {product.description
+                            ? product.description
+                              .split("*")
+
+                              .map((item, index) => {
+                                // Check if this item contains "^", which indicates it should be formatted as a table
+                                if (item.includes('^')) {
+                                  const tableItems = item.split('^').filter(Boolean);  // remove empty strings from the array
+                                  return (
+                                    <Table striped bordered hover>
+                                      <tbody>
+                                        {tableItems.map((tableItem, tableIndex) => {
+                                          let [key, value] = tableItem.split(':');
+                                          return (
+                                            <tr key={tableIndex}>
+                                              <td style={{ whiteSpace: 'nowrap' }}>{capitalizeFirstLetter(key)}</td>
+                                              <td style={{ width: '100%' }}>{capitalizeFirstLetter(value)}</td>
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </Table>
+                                  );
+                                }
+                                // If not, format as before
+                                return index > 0 ? (
+                                  <div
+                                    key={index}
+                                    style={{
+                                      textIndent: "-10px",
+                                      paddingLeft: "15px",
+                                      lineHeight: "1.6rem",
+                                    }}
+                                  >
+                                    <i className="bi bi-dot " />
+                                    {item}
+                                  </div>
+                                ) : (
+                                  <div key={index}>{item}</div>
+                                );
+                              })
+                            : ""}
+                        </div> */}
+
+                        {/* <div
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            textAlign: "justify",
+                            width: "97%",
+                            overflowWrap: "break-word",
+                          }}
+                        >
+                          {product.description
+                            ? product.description
+                              .split(">")
+                              .map((item, index) => {
+                                // Check if this item contains "^", which indicates it should be formatted as a table
+                                if (item.includes('^')) {
+                                  const tableItems = item.split('^').filter(Boolean);  // remove empty strings from the array
+                                  return (
+                                    <Table striped bordered hover>
+                                      <tbody>
+                                        {tableItems.map((tableItem, tableIndex) => {
+                                          let [key, value] = tableItem.split(':');
+                                          return (
+                                            <tr key={tableIndex}>
+                                              <td style={{ whiteSpace: 'nowrap' }}>{capitalizeFirstLetter(key)}</td>
+                                              <td style={{ width: '100%' }}>{capitalizeFirstLetter(value)}</td>
+                                            </tr>
+                                          );
+                                        })}
+                                      </tbody>
+                                    </Table>
+                                  );
+                                }
+                                // If the first character is "<", format the string in bold and uppercase, removing the "<"
+                                if (item.charAt(0) === '<') {
+                                  return (
+                                    <div key={index}>
+                                      <strong>
+                                        {item.slice(1).toUpperCase()}
+                                      </strong>
+                                    </div>
+                                  );
+                                }
+                                // If the first character is "*", replace "*" with the bullet icon
+                                if (item.charAt(0) === '*') {
+                                  return (
+                                    <div
+                                      key={index}
+                                      style={{
+                                        textIndent: "-10px",
+                                        paddingLeft: "15px",
+                                        lineHeight: "1.6rem",
+                                      }}
+                                    >
+                                      <i className="bi bi-dot " />
+                                      {item.slice(1)}
+                                    </div>
+                                  );
+                                }
+                                return <div key={index}>{item}</div>;
+                              })
+                            : ""}
+                        </div> */}
+
+                        <div
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            textAlign: "justify",
+                            width: "97%",
+                            overflowWrap: "break-word",
+                          }}
+                        >
+                          {product.description
+                            ? product.description
+                              .split(">")
+                              .map((item, index) => {
+                                console.log("itemmmm", item)
+                                // Check if this item contains "^", which indicates it should be formatted as a table
+                                if (item.includes('^') && item.includes(':')) {
+                                  const tableItems = item.split('^').filter(Boolean);  // remove empty strings from the array
+                                  return (
+                                    <Table striped bordered hover>
+                                      <tbody>
+                                        {tableItems.map((tableItem, tableIndex) => {
+                                          if (tableItem.includes(':')) {
+                                            let [key, value] = tableItem.split(':');
+                                            return (
+                                              <tr key={tableIndex}>
+                                                <td style={{ whiteSpace: 'nowrap' }}>{key.toUpperCase()}{/* {capitalizeFirstLetter(key.trimStart())} */}</td>
+                                                <td style={{ width: '100%' }}>{capitalizeFirstLetter(value.trimStart())}</td>
+                                              </tr>
+                                            );
+                                          }
+                                          else {
+                                            return (
+                                              <div
+                                                key={tableIndex}
+                                                style={{
+                                                  textIndent: "-10px",
+                                                  paddingLeft: "15px",
+                                                  lineHeight: "1.6rem",
+                                                }}
+                                              >
+                                                <i className="bi bi-dot " />
+                                                {tableItem.trimStart()}
+                                              </div>
+                                            );
+                                          }
+                                        })}
+                                      </tbody>
+                                    </Table>
+                                  );
+                                } else if (item.includes('^')) {
+                                  const tableItems = item.split('^').filter(Boolean);  // remove empty strings from the array
+                                  return (
+                                    <>
+                                      {tableItems.map((tableItem, tableIndex) => {
+                                        return (
+                                          <div
+                                            key={tableIndex}
+                                            style={{
+                                              textIndent: "-10px",
+                                              paddingLeft: "15px",
+                                              lineHeight: "1.6rem",
+                                              whiteSpace: "pre-line",
+                                            }}
+                                          >
+                                            <i className="bi bi-dot " />
+                                            {tableItem.trimStart()}
+                                          </div>
+                                        )
+                                      })}
+
+                                    </>
+                                  );
+                                }
+                                // If the first character is "<", format the string in bold and uppercase, removing the "<"
+                                if (item.charAt(0) === '<') {
+                                  return (
+                                    <div key={index}>
+                                      <strong>
+                                        {item.slice(1).toUpperCase()}
+                                      </strong>
+                                    </div>
+                                  );
+                                }
+                                // // If the first character is "*", replace "*" with the bullet icon
+                                // if (item.charAt(0) === '^') {
+                                //   console.log("xxxxxxxxxxxxxxxxxxxxxxxx ^")
+                                //   return (
+                                //     <div
+                                //       key={index}
+                                //       style={{
+                                //         textIndent: "-10px",
+                                //         paddingLeft: "15px",
+                                //         lineHeight: "1.6rem",
+                                //       }}
+                                //     >
+                                //       <i className="bi bi-dot " />
+                                //       {item.slice(1)}
+                                //     </div>
+                                //   );
+                                // }
+                                return <div key={index}>{item}</div>;
+                              })
+                            : ""}
                         </div>
+
+
+
                       </Tab>
                       {/* 看一下，如果pdfs 路径里面 没有值，就显示null，有的话，就map 一下 */}
                       {product.pdfs && product.pdfs.length > 0 ? (

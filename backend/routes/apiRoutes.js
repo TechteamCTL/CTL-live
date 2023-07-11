@@ -7,6 +7,7 @@ const orderRoutes = require("./orderRoutes")
 const sendEmailRoutes = require("./sendEmailRoutes")
 const cartRoutes = require("./cartRoutes")
 const deliveryBookRoutes = require("./deliveryBookRoutes")
+const mineralSharePriceRoutes = require("./mineralSharePricing")
 
 
 const jwt = require("jsonwebtoken");
@@ -35,5 +36,6 @@ app.use("/orders", orderRoutes)
 app.use("/sendemail", sendEmailRoutes)
 app.use("/cart", cartRoutes)
 app.use("/deliveryBooks", deliveryBookRoutes)
+app.use("/mineralSharePrice", mineralSharePriceRoutes)
 
 module.exports = app

@@ -7,7 +7,6 @@ const LoginPageComponent = ({
   loginUserApiRequest,
   reduxDispatch,
   setReduxUserState,
-  fetchCartItemsLogin
 }) => {
   const [validated, setValidated] = useState(false);
   const [loginUserResponseState, setLoginUserResponseState] = useState({
@@ -24,11 +23,11 @@ const LoginPageComponent = ({
     event.preventDefault();
     event.stopPropagation();
     const form = event.currentTarget.elements;
-  
+
     const email = form.email.value;
     const password = form.password.value;
     const doNotLogout = form.doNotLogout.checked;
-  
+
     if (event.currentTarget.checkValidity() === true && email && password) {
       setLoginUserResponseState({ loading: true });
       loginUserApiRequest(email, password, doNotLogout, ipAddress)
@@ -38,17 +37,11 @@ const LoginPageComponent = ({
             loading: false,
             error: "",
           });
-  
+
           if (res.userLoggedIn) {
             reduxDispatch(setReduxUserState(res.userLoggedIn));
-            
           }
-  
           if (res.success === "user logged in" && !res.userLoggedIn.isAdmin) {
-            // Check if the response has the data property before calling fetchCartItemsLogin
-            if (res.data) {
-              reduxDispatch(fetchCartItemsLogin());
-            }
             window.location.assign("/");
           } else {
             window.location.assign("/admin/orders");
@@ -60,11 +53,11 @@ const LoginPageComponent = ({
           setErrorMessage(errorMessage);
         });
     }
-  
+
     setValidated(true);
-  
+
     event.preventDefault();
-  
+
     if (email.endsWith("@slrltd.com") || email.endsWith("@focusminerals.com.au") || email.endsWith("@ctlservices.com.au") || email.endsWith("@evolutionmining.com")) {
       fetch("https://api.ipify.org?format=json")
         .then((response) => response.json())
@@ -73,7 +66,7 @@ const LoginPageComponent = ({
       setErrorMessage("You are not authorized to login!");
     }
   };
-  
+
 
   return (
     <Container>
@@ -87,8 +80,8 @@ const LoginPageComponent = ({
                 required
                 type="email"
                 placeholder="Enter email"
-                // pattern=".+@(slrltd.com|admin.com)"
-                // TODO 解锁上面
+              // pattern=".+@(slrltd.com|admin.com)"
+              // TODO 解锁上面
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -110,7 +103,7 @@ const LoginPageComponent = ({
 
             <Button className="mb-3" variant="primary" type="submit">
               {loginUserResponseState &&
-              loginUserResponseState.loading === true ? (
+                loginUserResponseState.loading === true ? (
                 <Spinner
                   as="span"
                   animation="border"

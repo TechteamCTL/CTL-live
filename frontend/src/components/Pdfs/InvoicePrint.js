@@ -487,7 +487,7 @@ const InvoicePrint = (cartItems) => {
 
               <View style={styles.tableRow}>
                 <View style={styles.tableCellHeaderSide}>
-                  <Text style={styles.tableCellBillBox}>CTLAUS</Text>
+                  <Text style={styles.tableCellBillBox}>SLR-AUS</Text>
                 </View>
                 <View style={styles.tableCellHeader}>
                   <Text style={styles.tableCellBillBox}>
@@ -524,7 +524,7 @@ const InvoicePrint = (cartItems) => {
           <View style={styles.tableItem}>
             <View style={styles.tableBorder}>
               <View style={styles.tableRow1}>
-                <View style={styles.tableColHeaderShort}>
+                <View style={styles.tableColHeaderMedium}>
                   <Text style={styles.tableColBillItemHeader}>Item Code</Text>
                 </View>
                 <View style={styles.tableColHeaderCenter}>
@@ -560,7 +560,7 @@ const InvoicePrint = (cartItems) => {
                 return idx % 2 == 0 ? (
                   <>
                     <View style={styles.tableRowProducts} key={idx}>
-                      <View style={styles.tableColHeaderShort}>
+                      <View style={styles.tableColHeaderMedium}>
                         <Text style={styles.tableColBillItem}>
                           {item.cartProducts[0].ctlsku}
                         </Text>
@@ -643,7 +643,7 @@ const InvoicePrint = (cartItems) => {
                 ) : (
                   <>
                     <View style={styles.tableRowProducts1} key={idx}>
-                      <View style={styles.tableColHeaderShort}>
+                      <View style={styles.tableColHeaderMedium}>
                         <Text style={styles.tableColBillItem}>
                           {item.cartProducts[0].ctlsku}
                         </Text>

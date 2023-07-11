@@ -43,6 +43,7 @@ const UserOrderDetailsPageComponent = ({
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [createdAt, setCreatedAt] = useState("");
   const [deliveredDate, setDeliveredDate] = useState("");
+  const [trackLink, setTrackLink] = useState("");
 
   const [clicked, setClicked] = useState(false);
 
@@ -77,8 +78,9 @@ const UserOrderDetailsPageComponent = ({
         if (data.deliveredAt) {
           setDeliveredDate(data.deliveredAt);
         }
-        setOrderData(data)
+        setOrderData(data);
         setPurchaseNumber(data.purchaseNumber);
+        setTrackLink(data.trackLink);
         setCartItems(data.cartItems);
         setOrderNote(data.orderNote);
         // console.log("praveen", data.cartItems);
@@ -182,7 +184,6 @@ const UserOrderDetailsPageComponent = ({
     hour12: true,
   });
 
-
   const nonGSTPrice = (cartSubtotal / 1.1).toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
@@ -245,7 +246,7 @@ const UserOrderDetailsPageComponent = ({
                   variant={isDelivered ? "success" : "danger"}
                 >
                   {isDelivered ? (
-                    <>Shipped at {shippedAT.split("at")[0]}</>
+                    <>Shipped at {shippedAT.split("at")[0]} </>
                   ) : (
                     <>Not Sent Yet</>
                   )}
@@ -394,7 +395,10 @@ const UserOrderDetailsPageComponent = ({
                   </div>
                 </Col>
                 <Col>
-                  <Button className="p-0 pe-2 ps-2 m-0 button-shadow" variant="light">
+                  <Button
+                    className="p-0 pe-2 ps-2 m-0 button-shadow"
+                    variant="light"
+                  >
                     <a href="/user/my-orders" style={{ color: "#073474" }}>
                       My Orders{" "}
                     </a>
@@ -413,7 +417,9 @@ const UserOrderDetailsPageComponent = ({
                 style={{ cursor: "pointer" }}
               ></i>
             </ListGroup.Item>
-            {orderNote ? <ListGroup.Item className="p-1 ps-2">{orderNote}</ListGroup.Item> : null}
+            {orderNote ? (
+              <ListGroup.Item className="p-1 ps-2">{orderNote}</ListGroup.Item>
+            ) : null}
           </ListGroup>
 
           {/* edit order name modal */}
@@ -477,6 +483,19 @@ const UserOrderDetailsPageComponent = ({
                 )}
               </Alert>
             </ListGroup.Item>
+            {isDelivered ? (
+              <>
+                <ListGroup.Item className="p-1 ps-2">
+
+                    <a href={trackLink} target="_blank" rel="noreferrer" style={{color:"#1e4881"}}>
+                    <i className="bi bi-truck"></i> Track Shipping 
+                    </a>
+
+                </ListGroup.Item>
+              </>
+            ) : (
+              ""
+            )}
           </ListGroup>
         </Col>
       </Row>

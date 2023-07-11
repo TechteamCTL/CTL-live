@@ -4,7 +4,6 @@ import { useEffect, useState, useMemo } from "react";
 import UserLinksComponent from "../../../components/user/UserLinksComponent";
 import { TableHeader, Pagination, Search } from "../../../components/DataTable";
 
-
 const UserOrdersPageComponent = ({ getOrders }) => {
   const [orders, setOrders] = useState([]);
 
@@ -16,7 +15,6 @@ const UserOrdersPageComponent = ({ getOrders }) => {
   // const [sorting, setSorting] = useState({ field: "", order: "" });
   const [sorting, setSorting] = useState({ field: "createdAt", order: "desc" });
 
-
   const ITEMS_PER_PAGE = 20;
 
   const headers = [
@@ -27,17 +25,15 @@ const UserOrdersPageComponent = ({ getOrders }) => {
     // { name: "Paid", field: "isPaid", sortable: true },
     { name: "PO#", field: "purchaseNumber", sortable: true },
     { name: "Order Name", field: "orderNote", sortable: true },
-    { name: "Order details", field: "_id", sortable: false }
-
+    { name: "Order details", field: "_id", sortable: false },
   ];
-
 
   const ordersData = useMemo(() => {
     let computedOrders = orders;
 
     if (search) {
       computedOrders = computedOrders.filter(
-        orders =>
+        (orders) =>
           orders.createdAt.toUpperCase().includes(search.toUpperCase()) ||
           orders.purchaseNumber.toUpperCase().includes(search.toUpperCase()) ||
           orders.orderNote?.toUpperCase().includes(search.toUpperCase())
@@ -73,13 +69,11 @@ const UserOrdersPageComponent = ({ getOrders }) => {
   }, [orders, currentPage, search, sorting]);
   // #endregion
 
-
-
   useEffect(() => {
     getOrders()
-      .then(orders => setOrders(orders))
+      .then((orders) => setOrders(orders))
       .catch((er) => console.log(er));
-  }, [])
+  }, []);
 
   return (
     <Row className="m-5">
@@ -94,12 +88,12 @@ const UserOrdersPageComponent = ({ getOrders }) => {
               total={totalItems}
               itemsPerPage={ITEMS_PER_PAGE}
               currentPage={currentPage}
-              onPageChange={page => setCurrentPage(page)}
+              onPageChange={(page) => setCurrentPage(page)}
             />
           </div>
           <div className="col-md-6 d-flex flex-row-reverse">
             <Search
-              onSearch={value => {
+              onSearch={(value) => {
                 setSearch(value);
                 setCurrentPage(1);
               }}
@@ -109,35 +103,45 @@ const UserOrdersPageComponent = ({ getOrders }) => {
         <table className="table table-striped">
           <TableHeader
             headers={headers}
-            onSorting={(field, order) =>
-              setSorting({ field, order })
-            }
+            onSorting={(field, order) => setSorting({ field, order })}
           />
           <tbody>
-            {ordersData.map(
-              (order, idx) => (
-                <tr key={idx} >
-                  <td>{idx + 1}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.orderTotal.cartSubtotal}</td>
-                  <td>
-                    {order.isDelivered ? <i className="bi bi-check-lg text-success"></i> : <i className="bi bi-x-lg text-danger"></i>}
-                  </td>
-{/*                   <td>
+            {ordersData.map((order, idx) => (
+              <tr key={idx}>
+                <td>{idx + 1}</td>
+                <td>{order.createdAt.substring(0, 10)}</td>
+                <td>{order.orderTotal.cartSubtotal}</td>
+                <td>
+                  {order.isDelivered ? (
+                    <a
+                      href={order.trackLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ color: "green" }}
+                    >
+                      <i className="bi bi-truck"></i>
+                    </a>
+                  ) : (
+                    <i className="bi bi-x-lg text-danger"></i>
+                  )}
+                </td>
+                
+                {/*                   <td>
                     {order.isPaid ? (
                       <i className="bi bi-check-lg text-success"></i>
                     ) : (
                       <i className="bi bi-x-lg text-danger"></i>
                     )}
                   </td> */}
-                  <td>{order.purchaseNumber}</td>
-                  <td>{order.orderNote}</td>
-                  <td>
-                    <Link to={`/user/order-details/${order._id}`}>Go to Order <i className="bi bi-box-arrow-in-right"></i></Link>
-                  </td>
-                </tr>
-              )
-            )}
+                <td>{order.purchaseNumber}</td>
+                <td>{order.orderNote}</td>
+                <td>
+                  <Link to={`/user/order-details/${order._id}`}>
+                    Go to Order <i className="bi bi-box-arrow-in-right"></i>
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <div className="row">
@@ -146,7 +150,7 @@ const UserOrdersPageComponent = ({ getOrders }) => {
               total={totalItems}
               itemsPerPage={ITEMS_PER_PAGE}
               currentPage={currentPage}
-              onPageChange={page => setCurrentPage(page)}
+              onPageChange={(page) => setCurrentPage(page)}
             />
           </div>
         </div>
@@ -187,4 +191,3 @@ const UserOrdersPageComponent = ({ getOrders }) => {
 };
 
 export default UserOrdersPageComponent;
-

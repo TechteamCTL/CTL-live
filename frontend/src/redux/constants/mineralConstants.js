@@ -1,0 +1,1 @@
+export const FETCH_MINERALS = 'FETCH_MINERALS';

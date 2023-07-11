@@ -3,6 +3,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
 import { cartReducer } from "./reducers/cartReducers";
+import { mineralReducer } from "./reducers/mineralReducer";
 import { userRegisterLoginReducer } from "./reducers/userReducers";
 import { getCategoriesReducer } from "./reducers/categoryReducers";
 
@@ -10,6 +11,7 @@ const reducer = combineReducers({
   cart: cartReducer,
   userRegisterLogin: userRegisterLoginReducer,
   getCategories: getCategoriesReducer,
+  minerals: mineralReducer,
 });
 
 const cartItemsInLocalStorage = localStorage.getItem("cart")
@@ -22,6 +24,9 @@ const userInfoInLocalStorage = localStorage.getItem("userInfo")
   : sessionStorage.getItem("userInfo")
   ? JSON.parse(sessionStorage.getItem("userInfo"))
   : {};
+const mineralsInLocalStorage = localStorage.getItem("minerals")
+  ? JSON.parse(localStorage.getItem("minerals"))
+  : [];
 
 const INITIAL_STATE = {
   cart: {
@@ -47,6 +52,7 @@ const INITIAL_STATE = {
       : 0,
   },
   userRegisterLogin: { userInfo: userInfoInLocalStorage },
+  minerals: mineralsInLocalStorage,
 };
 
 // console.log('cartItemsInLocalStorage',cartItemsInLocalStorage);

@@ -805,41 +805,50 @@ const Navb = () => {
       link: HAND_TOOLS + "&subCategoryName=PIPE-TOOLS-WRENCHES",
     },
     {
-      label: "CUTTING TOOLS",
-      type: 3,
-      link: HAND_TOOLS + "&subCategoryName=CUTTING-TOOLS",
-    },
-  ];
-
-  var HAND_TOOLS_2 = [
-    {
       label: "STRIKING DEMOLITION",
       type: 3,
       link: HAND_TOOLS + "&subCategoryName=STRIKING-DEMOLITION",
     },
+
+  ];
+
+  var HAND_TOOLS_CUTTINGTOOLS = HAND_TOOLS + "&subCategoryName=CUTTING-TOOLS";
+  var HAND_TOOLS_CUTTINGTOOLS_SUB = [
+    { label: "CUTTING TOOLS", type: 2, link: HAND_TOOLS_CUTTINGTOOLS },
     {
-      label: "CABLE FEEDING",
+      label: "CABLE CUTTERS",
       type: 3,
-      link: HAND_TOOLS + "&subCategoryName=CABLE-FEEDING",
+      link: HAND_TOOLS_CUTTINGTOOLS + "&childCategoryName=CABLE-CUTTERS",
     },
     {
-      label: "HAND TOOLS KIT",
+      label: "SNIPS & SHEARS",
       type: 3,
-      link: HAND_TOOLS + "&subCategoryName=HAND-TOOLS-KIT",
+      link: HAND_TOOLS_CUTTINGTOOLS + "&childCategoryName=SNIPS-SHEARS",
     },
   ];
+
   var HAND_TOOLS_FASTENING = HAND_TOOLS + "&subCategoryName=FASTENING";
   var HAND_TOOLS_FASTENING_3 = [
     { label: "FASTENING", type: 2, link: HAND_TOOLS_FASTENING },
     {
-      label: "SPANNERS",
+      label: "RATCHET PODGERS",
       type: 3,
-      link: HAND_TOOLS_FASTENING + "&childCategoryName=SPANNERS",
+      link: HAND_TOOLS_FASTENING + "&childCategoryName=RATCHET-PODGERS",
+    },
+    {
+      label: "SLOGGING SPANNERS",
+      type: 3,
+      link: HAND_TOOLS_FASTENING + "&childCategoryName=SLOGGING-SPANNERS",
     },
     {
       label: "SCREW DRIVERS",
       type: 3,
       link: HAND_TOOLS_FASTENING + "&childCategoryName=SCREW-DRIVERS",
+    },
+    {
+      label: "WRENCHES",
+      type: 3,
+      link: HAND_TOOLS_FASTENING + "&childCategoryName=WRENCHES",
     },
   ];
   var HAND_TOOLS_PLIERS = HAND_TOOLS + "&subCategoryName=PLIERS";
@@ -855,6 +864,7 @@ const Navb = () => {
       type: 3,
       link: HAND_TOOLS_PLIERS + "&childCategoryName=PLIERS",
     },
+
     {
       label: "SIDE CUTTERS",
       type: 3,
@@ -881,11 +891,52 @@ const Navb = () => {
       link: HAND_TOOLS_KNIVES + "&childCategoryName=UTILITY-KNIVES",
     },
     {
+      label: "KNIFE",
+      type: 3,
+      link: HAND_TOOLS_KNIVES + "&childCategoryName=KNIFE",
+
+    },
+    {
       label: "BLADE REPLACEMENT",
       type: 3,
       link: HAND_TOOLS_KNIVES + "&childCategoryName=BLADE-REPLACEMENT",
     },
+
   ];
+
+  var HAND_TOOLS_ELECTRICAL = HAND_TOOLS + "&subCategoryName=ELECTRICAL";
+  var HAND_TOOLS_ELECTRICAL_SUB = [
+    { label: "ELECTRICAL", type: 2, link: HAND_TOOLS_ELECTRICAL },
+    {
+      label: "CABLE CUTTING",
+      type: 3,
+      link: HAND_TOOLS_ELECTRICAL + "&childCategoryName=CABLE-CUTTING",
+    },
+    {
+      label: "SCREWDRIVERS",
+      type: 3,
+      link: HAND_TOOLS_ELECTRICAL + "&childCategoryName=SCREWDRIVERS",
+    },
+    {
+      label: "CRIMPERS",
+      type: 3,
+      link: HAND_TOOLS_ELECTRICAL + "&childCategoryName=CRIMPERS",
+    },
+  ];
+
+  var HAND_TOOLS_GASTOOLS = HAND_TOOLS + "&subCategoryName=GAS-TOOLS";
+  var HAND_TOOLS_GASTOOLS_SUB = {
+    label: "GAS TOOLS",
+    type: 2,
+    link: HAND_TOOLS_GASTOOLS,
+  };
+
+  var HAND_TOOLS_MEASURING = HAND_TOOLS + "&subCategoryName=MEASURING";
+  var HAND_TOOLS_MEASURING_SUB = {
+    label: "MEASURING",
+    type: 2,
+    link: HAND_TOOLS_MEASURING,
+  };
   // #endregion
 
   /* ELECTRICAL */
@@ -896,11 +947,41 @@ const Navb = () => {
     type: 2,
     link: ELECTRICAL + "&subCategoryName=LIGHTING",
   };
+
   var ELECTRICAL_SWITCH_GEAR = {
     label: "SWITCH GEAR",
     type: 2,
     link: ELECTRICAL + "&subCategoryName=SWITCH-GEAR",
   };
+  var ELECTRICAL_SWITCH_GEAR_1 = {
+    label: "CIRCUIT PROTECTION",
+    type: 3,
+    link: ELECTRICAL_SWITCH_GEAR.link + "&childCategoryName=CIRCUIT-PROTECTION",
+  };
+
+  var ELECTRICAL_SWITCH_GEAR_2 = [
+    {
+      label: "CIRCUIT BREAKERS",
+      type: 4,
+      link: ELECTRICAL_SWITCH_GEAR_1.link + "&fourCategoryName=CIRCUIT-BREAKERS",
+    },
+    {
+      label: "OVERLOADS",
+      type: 4,
+      link: ELECTRICAL_SWITCH_GEAR_1.link + "&fourCategoryName=OVERLOADS",
+    },
+    {
+      label: "CONTACTORS",
+      type: 4,
+      link: ELECTRICAL_SWITCH_GEAR_1.link + "&fourCategoryName=CONTACTORS",
+    },
+    {
+      label: "RELAYS",
+      type: 4,
+      link: ELECTRICAL_SWITCH_GEAR_1.link + "&fourCategoryName=RELAYS",
+    }
+  ];
+
 
   var ELECTRICAL_MOTORS = {
     label: "MOTORS",
@@ -925,10 +1006,6 @@ const Navb = () => {
     type: 2,
     link: ELECTRICAL + "&subCategoryName=BORE-PUMPS",
   };
-
-
-
-
 
   var ELECTRICAL_WIRING_ACCESSORIES = {
     label: "WIRING ACCESSORIES",
@@ -1824,6 +1901,7 @@ const Navb = () => {
               <div className="dropdown-content">
                 <div className="row">
                   <ul className="column">
+
                     {HAND_TOOLS_1.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
@@ -1834,7 +1912,7 @@ const Navb = () => {
                   </ul>
 
                   <ul className="column">
-                    {HAND_TOOLS_2.map((item) => {
+                    {HAND_TOOLS_CUTTINGTOOLS_SUB.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
                           <a href={item.link}>{item.label} </a>
@@ -1842,6 +1920,13 @@ const Navb = () => {
                       );
                     })}
                     {HAND_TOOLS_FASTENING_3.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                    {HAND_TOOLS_ELECTRICAL_SUB.map((item) => {
                       return (
                         <li key={item.link} className={nav_color[item.type]}>
                           <a href={item.link}>{item.label} </a>
@@ -1865,6 +1950,16 @@ const Navb = () => {
                         </li>
                       );
                     })}
+                    <li className="subCat">
+                      <a href={HAND_TOOLS_GASTOOLS_SUB.link}>
+                        {HAND_TOOLS_GASTOOLS_SUB.label}
+                      </a>
+                    </li>
+                    <li className="subCat">
+                      <a href={HAND_TOOLS_MEASURING_SUB.link}>
+                        {HAND_TOOLS_MEASURING_SUB.label}
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -2040,6 +2135,24 @@ const Navb = () => {
                       <a href={ELECTRICAL_SWITCH_GEAR.link}>
                         {ELECTRICAL_SWITCH_GEAR.label}
                       </a>
+                    </li>
+                    <li className="parent childCat">
+                      <a className="parentA" href={ELECTRICAL_SWITCH_GEAR_1.link}>
+                        {ELECTRICAL_SWITCH_GEAR_1.label}
+                        <span className="expand ms-1"> »</span>
+                      </a>
+                      <ul className="child">
+                        {ELECTRICAL_SWITCH_GEAR_2.map((item) => {
+                          return (
+                            <li
+                              key={item.link}
+                              className={nav_color[item.type]}
+                            >
+                              <a href={item.link}>{item.label} </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
                     </li>
                   </ul>
 

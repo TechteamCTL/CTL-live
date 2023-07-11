@@ -72,6 +72,11 @@ const orderSchema = mongoose.Schema(
     paidAt: {
       type: Date,
     },
+    trackLink: {
+      type: String,
+      required: true,
+      default: false,
+    },
     isDelivered: {
       type: Boolean,
       required: true,

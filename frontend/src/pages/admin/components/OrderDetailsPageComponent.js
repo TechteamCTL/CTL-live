@@ -5,6 +5,7 @@ import {
   Form,
   Alert,
   ListGroup,
+  Modal,
   Button,
 } from "react-bootstrap";
 import CartItemForOrderComponent from "../../../components/CartItemForOrderComponent";
@@ -20,8 +21,6 @@ import { pdf } from "@react-pdf/renderer";
 import SendInvoice from "../../../components/SendEmail/SendInvoice";
 import axios from "axios";
 
-
-// 如果要改markAsPaid的功能，不但需要在这里改，还需要去orderDetailsPage里添加paid的api和功能，因为在backend的order route和controller里面已经写过updateToPaid了，所以可以直接用。
 const OrderDetailsPageComponent = ({
   getOrder,
   getUser,
@@ -52,8 +51,7 @@ const OrderDetailsPageComponent = ({
   const [sentInvButtonDisabled, setSentInvButtonDisabled] = useState(false);
   const [orderDeliveredButton, setorderDeliveredButton] =
     useState("Mark as sent");
-  const [invSentButton, setInvSentButton] =
-    useState("Send Invoice");
+  const [invSentButton, setInvSentButton] = useState("Send Invoice");
   const [orderPaidButton, setorderPaidButton] = useState("Mark as Paid");
   const [cartItems, setCartItems] = useState([]);
   const [orderData, setOrderData] = useState([]);
@@ -61,7 +59,7 @@ const OrderDetailsPageComponent = ({
   const [removed, setRemoved] = useState(false);
   const [selectedDeliverySite, setSelectedDeliverySite] = useState();
   const [editLocation, setEditLocation] = useState(false);
-
+  const [trackLink, setTrackLink] = useState("");
 
   useEffect(() => {
     getUser()
@@ -86,20 +84,19 @@ const OrderDetailsPageComponent = ({
         setInvoiceNumber(order.invoiceNumber);
         setCreatedAt(order.createdAt);
         setPurchaseNumber(order.purchaseNumber);
+        setTrackLink(order.trackLink);
         order.isPaid ? setIsPaid(order.paidAt) : setIsPaid(false);
         order.isDelivered
           ? setIsDelivered(order.deliveredAt)
           : setIsDelivered(false);
-        order.invSent
-          ? setInvoiceSent(order.invSentAt)
-          : setInvoiceSent(false);
+        order.invSent ? setInvoiceSent(order.invSentAt) : setInvoiceSent(false);
         setCartSubtotal(order.orderTotal.cartSubtotal);
         if (order.isDelivered) {
-          setorderDeliveredButton("Order has been sent");
+          setorderDeliveredButton("Update Track");
           setdeliveredButtonDisabled(true);
         }
         if (order.invSent) {
-          setInvSentButton("Invoice has Sent");
+          setInvSentButton("Re-sent Invoice");
           setSentInvButtonDisabled(true);
         }
         if (order.isPaid) {
@@ -188,7 +185,6 @@ const OrderDetailsPageComponent = ({
       });
   };
 
-
   const handleEditLocation = () => setEditLocation(true);
 
   const saveEditLocation = () => {
@@ -229,39 +225,50 @@ const OrderDetailsPageComponent = ({
     }
   };
 
-  const [invDate, setInvDate] = useState()
+  const [invDate, setInvDate] = useState();
   useEffect(() => {
     generatePdf();
-    setInvDate({ sentInvButtonDisabled, billingEmail: deliveryBooks[0]?.billingEmail, invoiceNumber: invoiceNumber, base64data: base64Data.base64data, cartSubtotal, purchaseNumber })
-  }, [orderData, isDelivered, isPaid, invoiceSent, id, edit, removed, editLocation, editLocation, deliveryBooks]);
+    setInvDate({
+      sentInvButtonDisabled,
+      billingEmail: deliveryBooks[0]?.billingEmail,
+      invoiceNumber: invoiceNumber,
+      base64data: base64Data.base64data,
+      cartSubtotal,
+      purchaseNumber,
+    });
+  }, [
+    orderData,
+    isDelivered,
+    isPaid,
+    invoiceSent,
+    id,
+    edit,
+    removed,
+    editLocation,
+    editLocation,
+    deliveryBooks,
+    selectedDeliverySite
+  ]);
 
-  console.log('====================================');
+  console.log("====================================");
   console.log(invDate);
-  console.log('====================================');
+  console.log("====================================");
+
+
+  const [sendingInv, setSendingInv] = useState(false);
 
   const sendInvoiceEmail = async (invDate) => {
+    setSendingInv(true);
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     };
     const formDataToSend = new FormData();
-    formDataToSend.append(
-      "billingEmail",
-      `${deliveryBooks[0]?.billingEmail}`
-    );
-    formDataToSend.append(
-      "purchaseNumber",
-      `${invDate.purchaseNumber}`
-    );
-    formDataToSend.append(
-      "totalPrice",
-      `${(invDate.cartSubtotal).toFixed(2)}`
-    );
-    formDataToSend.append(
-      "invoiceNumber",
-      `${(invDate.invoiceNumber)}`
-    );
+    formDataToSend.append("billingEmail", `${deliveryBooks[0]?.billingEmail}`);
+    formDataToSend.append("purchaseNumber", `${invDate.purchaseNumber}`);
+    formDataToSend.append("totalPrice", `${invDate.cartSubtotal}`);
+    formDataToSend.append("invoiceNumber", `${invDate.invoiceNumber}`);
     formDataToSend.append("base64data", `${invDate.base64data}`);
     try {
       const res = await axios.post(
@@ -270,9 +277,11 @@ const OrderDetailsPageComponent = ({
         config
       );
       console.log(res.data);
+      setSendingInv(false);
       return true;
     } catch (err) {
       console.error(err);
+      setSendingInv(false);
       return false;
     }
   };
@@ -290,13 +299,40 @@ const OrderDetailsPageComponent = ({
             er.response.data.message
               ? er.response.data.message
               : er.response.data
-          ),
-        )
+          )
+        );
     } else {
-      setInvSentButton("Something Went Wrong! Contact Tech Team!!!")
+      setInvSentButton("Something Went Wrong! Contact Tech Team!!!");
     }
   };
 
+  // edite order name modal
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+    setTrackLink(orderData.trackLink);
+  };
+  const handleShow = () => setShow(true);
+
+  const enterTrackLink = (e) => {
+    setTrackLink(e.target.value);
+  };
+
+  const handleMarkAsSent = () => {
+    setShow(false);
+    markAsDelivered(id, trackLink)
+      .then((res) => {
+        if (res) {
+          setIsDelivered(true);
+        }
+      })
+      .catch((er) =>
+        console.log(
+          er.response.data.message ? er.response.data.message : er.response.data
+        )
+      );
+  };
 
   return (
     <Container fluid style={{ width: "80%" }}>
@@ -325,7 +361,7 @@ const OrderDetailsPageComponent = ({
                     <>
                       {" "}
                       <i
-                        class="bi bi-folder-check"
+                        className="bi bi-folder-check"
                         onClick={saveEditLocation}
                         style={{ cursor: "pointer" }}
                       ></i>{" "}
@@ -384,10 +420,15 @@ const OrderDetailsPageComponent = ({
                         day: "numeric",
                         month: "long",
                         year: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
+                        /*                         hour: "numeric",
+                                                minute: "numeric", */
                         hour12: true,
                       })}
+                      <button>
+                        <a href={trackLink} target="_blank" rel="noreferrer">
+                          Track Shipping
+                        </a>
+                      </button>
                     </>
                   ) : (
                     <>Not Sent Yet</>
@@ -514,23 +555,9 @@ const OrderDetailsPageComponent = ({
               <div className="d-grid gap-2">
                 <Button
                   className="p-0 m-0 w-50"
-                  onClick={() =>
-                    markAsDelivered(id)
-                      .then((res) => {
-                        if (res) {
-                          setIsDelivered(true);
-                        }
-                      })
-                      .catch((er) =>
-                        console.log(
-                          er.response.data.message
-                            ? er.response.data.message
-                            : er.response.data
-                        )
-                      )
-                  }
-                  disabled={deliveredButtonDisabled}
-                  variant="success"
+                  onClick={handleShow}
+                  // disabled={deliveredButtonDisabled}
+                  variant={deliveredButtonDisabled ? "secondary" : "success"}
                   type="button"
                 >
                   {orderDeliveredButton}
@@ -557,7 +584,7 @@ const OrderDetailsPageComponent = ({
                       )
                   }
                   disabled={paidButtonDisabled}
-                  variant="success"
+                  variant={sentInvButtonDisabled ? "secondary" : "success"}
                   type="button"
                 >
                   {orderPaidButton}
@@ -569,12 +596,12 @@ const OrderDetailsPageComponent = ({
               <div className="d-grid gap-2">
                 <Button
                   className="p-0 m-0 w-50"
-                  onClick={handleSentInv}
-                  disabled={sentInvButtonDisabled}
-                  variant="success"
+                  onClick={sentInvButtonDisabled ? () => sendInvoiceEmail(invDate) : handleSentInv}
+                  variant={sentInvButtonDisabled ? "secondary" : "success"}
                   type="button"
+                  disabled={sendingInv}
                 >
-                  {invSentButton}
+                  {sendingInv ? 'Sending...' : invSentButton}
                 </Button>
 
                 {/* <SendInvoice invDate={invDate} />
@@ -668,6 +695,41 @@ const OrderDetailsPageComponent = ({
               </div>
             </ListGroup.Item>
           </ListGroup>
+
+          {/* edit Track Link modal */}
+          <Modal show={show} onHide={handleClose} className="edite_order_name">
+            <Modal.Header className="p-1 ps-3 pe-3 m-0" closeButton>
+              <Modal.Title>Enter Tracking Link:</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="p-2 m-0">
+              <Form.Control
+                as="textarea"
+                onChange={enterTrackLink}
+                type="string"
+                name="trackLink"
+                defaultValue={trackLink}
+                required
+                aria-label="track link"
+                aria-describedby="basic-addon2"
+              />
+            </Modal.Body>
+            <Modal.Footer className="p-0 m-0">
+              <Button
+                variant="secondary"
+                onClick={handleClose}
+                className="p-1 pt-0 pb-0 m-1"
+              >
+                Close
+              </Button>
+              <Button
+                variant="success"
+                onClick={handleMarkAsSent}
+                className="p-1 pt-0 pb-0 m-1"
+              >
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
           <label>
             <u>
               <a href="/admin/orders">Go to All Orders </a>

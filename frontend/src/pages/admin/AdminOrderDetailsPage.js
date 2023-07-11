@@ -8,8 +8,8 @@ const getOrder = async (id) => {
     return data
 }
 
-const markAsDelivered = async (id) => {
-    const { data } = await axios.put("/api/orders/delivered/" + id);
+const markAsDelivered = async (id, trackLink) => {
+    const { data } = await axios.put("/api/orders/delivered/" + id, {trackLink:trackLink});
     if (data) {
         return data;
     }

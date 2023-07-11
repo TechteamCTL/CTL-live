@@ -307,7 +307,7 @@ const InvoicePrint = (cartItems) => {
     //const InvAddress = cartItems.userAddress;
     const deliverySite = cartItems.selectedDeliverySite;
     var counter = 0;
-
+    console.log("invcart", InvCartItems)
     console.log("Delivery Note selectedDeliverySite", deliverySite?.name);
 
     function splitArrayIntoChunks(arr, chunkSize) {
@@ -464,7 +464,7 @@ const InvoicePrint = (cartItems) => {
 
                             <View style={styles.tableRow}>
                                 <View style={styles.tableCellHeaderSide}>
-                                    <Text style={styles.tableCellBillBox}>CTLAUS</Text>
+                                    <Text style={styles.tableCellBillBox}>SLR-AUS</Text>
                                 </View>
                                 <View style={styles.tableCellHeader}>
                                     <Text style={styles.tableCellBillBox}>
@@ -500,7 +500,10 @@ const InvoicePrint = (cartItems) => {
                         <View style={styles.tableBorder}>
                             <View style={styles.tableRow1}>
                                 <View style={styles.tableColHeaderShort}>
-                                    <Text style={styles.tableColBillItemHeader}>Item Code</Text>
+                                    <Text style={styles.tableColBillItemHeader}>CTL Item Code</Text>
+                                </View>
+                                <View style={styles.tableColHeaderShort}>
+                                    <Text style={styles.tableColBillItemHeader}>SLR Item Code</Text>
                                 </View>
                                 <View style={styles.tableColHeaderCenter}>
                                     <Text style={styles.tableColBillItemHeader}>Item Description</Text>
@@ -524,6 +527,11 @@ const InvoicePrint = (cartItems) => {
                                                 <View style={styles.tableColHeaderShort}>
                                                     <Text style={styles.tableColBillItem}>
                                                         {item.cartProducts[0].ctlsku}
+                                                    </Text>
+                                                </View>
+                                                <View style={styles.tableColHeaderShort}>
+                                                    <Text style={styles.tableColBillItem}>
+                                                        {item.cartProducts[0].slrsku}
                                                     </Text>
                                                 </View>
                                                 <View style={styles.tableColHeaderCenter}>
@@ -552,6 +560,11 @@ const InvoicePrint = (cartItems) => {
                                                 <View style={styles.tableColHeaderShort}>
                                                     <Text style={styles.tableColBillItem}>
                                                         {item.cartProducts[0].ctlsku}
+                                                    </Text>
+                                                </View>
+                                                <View style={styles.tableColHeaderShort}>
+                                                    <Text style={styles.tableColBillItem}>
+                                                        {item.cartProducts[0].slrsku}
                                                     </Text>
                                                 </View>
                                                 <View style={styles.tableColHeaderCenter}>
@@ -596,7 +609,10 @@ const InvoicePrint = (cartItems) => {
                                     <View style={styles.tableBorder}>
                                         <View style={styles.tableRow1}>
                                             <View style={styles.tableColHeaderShort}>
-                                                <Text style={styles.tableColBillItemHeader}>Item Code</Text>
+                                                <Text style={styles.tableColBillItemHeader}>CTL Item Code</Text>
+                                            </View>
+                                            <View style={styles.tableColHeaderShort}>
+                                                <Text style={styles.tableColBillItemHeader}>SLR Item Code</Text>
                                             </View>
                                             <View style={styles.tableColHeaderCenter}>
                                                 <Text style={styles.tableColBillItemHeader}>
@@ -622,6 +638,11 @@ const InvoicePrint = (cartItems) => {
                                                             <View style={styles.tableColHeaderShort}>
                                                                 <Text style={styles.tableColBillItem}>
                                                                     {item.cartProducts[0].ctlsku}
+                                                                </Text>
+                                                            </View>
+                                                            <View style={styles.tableColHeaderShort}>
+                                                                <Text style={styles.tableColBillItem}>
+                                                                    {item.cartProducts[0].slrsku}
                                                                 </Text>
                                                             </View>
                                                             <View style={styles.tableColHeaderCenter}>
@@ -653,6 +674,11 @@ const InvoicePrint = (cartItems) => {
                                                         <View style={styles.tableColHeaderShort}>
                                                             <Text style={styles.tableColBillItem}>
                                                                 {item.cartProducts[0].ctlsku}
+                                                            </Text>
+                                                        </View>
+                                                        <View style={styles.tableColHeaderShort}>
+                                                            <Text style={styles.tableColBillItem}>
+                                                                {item.cartProducts[0].slrsku}
                                                             </Text>
                                                         </View>
                                                         <View style={styles.tableColHeaderCenter}>

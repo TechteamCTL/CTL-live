@@ -29,7 +29,7 @@ const PaginationComponent = ({
       <Pagination className="ms-4 mb-1 pagination_productlist">
         <LinkContainer to={`${url}pageNum=${Math.max(1, 0)}`}>
           {/* <Pagination.First disabled={pageNum <= 10} /> */}
-          <Pagination.Item disabled={pageNum <= 10}><i class="bi bi-chevron-bar-left"></i></Pagination.Item>
+          <Pagination.Item disabled={pageNum <= 10}><i className="bi bi-chevron-bar-left"></i></Pagination.Item>
         </LinkContainer>
         <LinkContainer to={`${url}pageNum=${Math.max(1, (Math.ceil(pageNum / 10) * 10 - 10))}`}>
           {/* <Pagination.Prev disabled={pageNum <= 10} /> */}
@@ -58,7 +58,7 @@ const PaginationComponent = ({
         </LinkContainer>
         <LinkContainer to={`${url}pageNum=${paginationLinksNumber}`}>
           {/* <Pagination.Last disabled={pageNum > paginationLinksNumber - 10} /> */}
-          <Pagination.Item disabled={Math.ceil(pageNum / 10) === Math.ceil(paginationLinksNumber / 10)} ><i class="bi bi-chevron-bar-right"></i></Pagination.Item>
+          <Pagination.Item disabled={Math.ceil(pageNum / 10) === Math.ceil(paginationLinksNumber / 10)} ><i className="bi bi-chevron-bar-right"></i></Pagination.Item>
         </LinkContainer>
       </Pagination>
     </>

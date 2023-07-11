@@ -26,6 +26,7 @@ import {
 } from "../redux/actions/cartActions";
 import axios from "axios";
 import { fetchCartItemsLogin } from "../redux/actions/cartActions";
+import { getMineralPrices } from "../redux/actions/mineralActions";
 import QuoteComponentHeader from "./SendEmail/QuoteComponentHeader";
 import CartDropDown from "../pages/user/components/CartDropDown";
 
@@ -69,6 +70,7 @@ const HeaderComponent = () => {
     getCart()
       .then((cart) => setUserCart(cart.data.cart))
       .catch((er) => console.log(er));
+    reduxDispatch(getMineralPrices());
     reduxDispatch(fetchCartItemsLogin());
   }, []);
 

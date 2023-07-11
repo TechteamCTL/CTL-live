@@ -26,6 +26,7 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("isAuth");
   localStorage.removeItem("authToken");
   localStorage.removeItem("cart");
+  localStorage.removeItem("minerals");
 
   // Dispatch logout action
   dispatch({ type: LOGOUT_USER });

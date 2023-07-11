@@ -133,6 +133,10 @@ const updateOrderToDelivered = async (req, res, next) => {
       await product.save();
     }
 
+    if (req.body.trackLink) {
+      order.trackLink = req.body.trackLink;
+    }
+
     const updatedOrder = await order.save();
     res.send(updatedOrder);
   } catch (err) {

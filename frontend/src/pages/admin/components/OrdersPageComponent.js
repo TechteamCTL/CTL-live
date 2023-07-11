@@ -27,7 +27,7 @@ const OrdersPageComponent = ({ getOrders, deleteOrder }) => {
     { name: "Customer Name", field: "name", sortable: false },
     { name: "Date", field: "createdAt", sortable: true },
     { name: "Total", field: "orderTotal", sortable: false },
-    { name: "Delivered", field: "isDelivered", sortable: true },
+    { name: "Sent", field: "isDelivered", sortable: true },
     { name: "Paid", field: "isPaid", sortable: true },
     { name: "PO#", field: "purchaseNumber", sortable: true },
     { name: "Order Name", field: "orderNote", sortable: true },
@@ -146,7 +146,14 @@ const OrdersPageComponent = ({ getOrders, deleteOrder }) => {
                 <td>$ {order.orderTotal.cartSubtotal.toLocaleString()}</td>
                 <td>
                   {order.isDelivered ? (
-                    <i className="bi bi-check-lg text-success"></i>
+                    <a
+                      href={order.trackLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ color: "green" }}
+                    >
+                      <i className="bi bi-truck"></i>
+                    </a>
                   ) : (
                     <i className="bi bi-x-lg text-danger"></i>
                   )}

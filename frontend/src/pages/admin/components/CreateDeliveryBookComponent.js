@@ -124,6 +124,61 @@ const CreateDeliveryBookComponent = ({
                                             >
                                                 <Form.Label>Name</Form.Label>
                                                 <Form.Control
+                                                    as="textarea"
+                                                    name={`name-${index}`}
+                                                    required
+                                                />
+                                            </Form.Group>
+
+                                            <Form.Group
+                                                as={Col}
+                                                md="4"
+                                                className="mb-3"
+                                                controlId={`formBasicBillingAddress-${index}`}
+                                            >
+                                                <Form.Label>Billing Address </Form.Label>
+                                                <Form.Control
+                                                    as="textarea"
+                                                    name={`billingAddress-${index}`}
+                                                    required
+                                                />
+                                            </Form.Group>
+
+                                            <Form.Group
+                                                as={Col}
+                                                md="4"
+                                                className="mb-3"
+                                                controlId={`formBasicDeliveryAddress-${index}`}
+                                            >
+                                                <Form.Label>Delivery Address </Form.Label>
+                                                <Form.Control
+                                                    as="textarea"
+                                                    name={`deliveryAddress-${index}`}
+                                                    required
+                                                />
+                                            </Form.Group>
+                                            <Form.Group as={Col} md="1" className="mb-3">
+                                                <i
+                                                    className="bi bi-trash mt-3"
+                                                    onClick={handleRemoveDeliveryBook}
+                                                    style={{
+                                                        cursor: "pointer",
+                                                    }}
+                                                ></i>
+                                            </Form.Group>
+                                        </React.Fragment>
+                                    </Row>
+
+                                    {/* <Row>
+                                        <React.Fragment key={index}>
+                                            <Form.Group
+                                                as={Col}
+                                                md="3"
+                                                className="mb-3"
+                                                controlId={`formBasicName-${index}`}
+                                            >
+                                                <Form.Label>Name</Form.Label>
+                                                <Form.Control
                                                     name={`name-${index}`}
                                                     required
                                                     type="text"
@@ -167,7 +222,7 @@ const CreateDeliveryBookComponent = ({
                                                 ></i>
                                             </Form.Group>
                                         </React.Fragment>
-                                    </Row>
+                                    </Row> */}
                                 </>
                             ))}
                             <hr />

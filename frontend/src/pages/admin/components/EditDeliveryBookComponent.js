@@ -179,6 +179,62 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
                                                 >
                                                     <Form.Label>Name</Form.Label>
                                                     <Form.Control
+                                                        as="textarea"
+                                                        name={`name-${index}`}
+                                                        required
+                                                        defaultValue={book.name}
+                                                    />
+                                                </Form.Group>
+                                                <Form.Group
+                                                    as={Col}
+                                                    md="4"
+                                                    className="mb-3"
+                                                    controlId={`formBasicBillingAddress-${index}`}
+                                                >
+                                                    <Form.Label>Billing Address</Form.Label>
+                                                    <Form.Control
+                                                        as="textarea"
+                                                        name={`billingAddress-${index}`}
+                                                        required
+                                                        defaultValue={book.billingAddress}
+                                                    />
+                                                </Form.Group>
+                                                <Form.Group
+                                                    as={Col}
+                                                    md="4"
+                                                    className="mb-3"
+                                                    controlId={`formBasicDeliveryAddress-${index}`}
+                                                >
+                                                    <Form.Label>Delivery Address</Form.Label>
+                                                    <Form.Control
+                                                        as="textarea"
+                                                        name={`deliveryAddress-${index}`}
+                                                        required
+                                                        defaultValue={book.deliveryAddress}
+                                                    />
+                                                </Form.Group>
+                                                <Form.Group as={Col} md="1" className="mb-3">
+                                                    <i
+                                                        className="bi bi-trash mt-3"
+                                                        onClick={() => handleRemoveSites(index)}
+                                                        style={{
+                                                            cursor: "pointer",
+                                                        }}
+                                                    ></i>
+                                                </Form.Group>
+                                            </React.Fragment>
+                                        </Row>
+
+                                        {/* <Row>
+                                            <React.Fragment>
+                                                <Form.Group
+                                                    as={Col}
+                                                    md="3"
+                                                    className="mb-3"
+                                                    controlId={`formBasicName-${index}`}
+                                                >
+                                                    <Form.Label>Name</Form.Label>
+                                                    <Form.Control
                                                         name={`name-${index}`}
                                                         required
                                                         type="text"
@@ -224,7 +280,7 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
                                                     ></i>
                                                 </Form.Group>
                                             </React.Fragment>
-                                        </Row>
+                                        </Row> */}
 
                                     </>
 
@@ -237,6 +293,59 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
                             <>
                                 <span className="sitesNew text-primary">New Site: {index + 1}</span>
                                 <Row>
+                                    <React.Fragment key={index}>
+                                        <Form.Group
+                                            as={Col}
+                                            md="3"
+                                            className="mb-3"
+                                            controlId={`formBasicNewName-${index}`}
+                                        >
+                                            <Form.Label>Name</Form.Label>
+                                            <Form.Control
+                                                as="textarea"
+                                                name={`newName-${index}`}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group
+                                            as={Col}
+                                            md="4"
+                                            className="mb-3"
+                                            controlId={`formBasicNewBillingAddress-${index}`}
+                                        >
+                                            <Form.Label>Billing Address </Form.Label>
+                                            <Form.Control
+                                                as="textarea"
+                                                name={`newBillingAddress-${index}`}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group
+                                            as={Col}
+                                            md="4"
+                                            className="mb-3"
+                                            controlId={`formBasicNewDeliveryAddress-${index}`}
+                                        >
+                                            <Form.Label>Delivery Address </Form.Label>
+                                            <Form.Control
+                                                as="textarea"
+                                                name={`newDeliveryAddress-${index}`}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group as={Col} md="1" className="mb-3">
+                                            <i
+                                                className="bi bi-trash mt-3"
+                                                onClick={handleRemoveNewSite}
+                                                style={{
+                                                    cursor: "pointer",
+                                                }}
+                                            ></i>
+                                        </Form.Group>
+                                    </React.Fragment>
+                                </Row>
+
+                                {/* <Row>
                                     <React.Fragment key={index}>
                                         <Form.Group
                                             as={Col}
@@ -287,7 +396,7 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
                                             ></i>
                                         </Form.Group>
                                     </React.Fragment>
-                                </Row>
+                                </Row> */}
                             </>
                         ))}
                         <hr />

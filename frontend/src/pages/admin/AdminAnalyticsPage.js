@@ -154,7 +154,7 @@ const AdminAnalyticsPage = () => {
   const stockDataCurrent = stockData.regularMarketPrice?.fmt
   const stockChangePercent = stockData.regularMarketChangePercent?.fmt
 
-
+  // XAU,XAG,XPT,XPD,IRON,ALU,LCO,XCU,LEAD,NI,TIN,ZNC
 
   console.log('====================================');
   console.log(stockData);
