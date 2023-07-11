@@ -136,7 +136,7 @@ const UserCartDetailsPageComponent = ({
 
   }
 
-  // console.log("delivery sites", selectedDeliverySite);
+  console.log("user cart detail", cartItems);
 
   useEffect(() => {
     /* 下方的一系列判定，若有一个不符合，则get your quote的按钮就不可用 */

@@ -22,6 +22,7 @@ const cartSchema = new mongoose.Schema(
             quantity: { type: Number, required: true },
             count: { type: Number, required: true },
             ctlsku: { type: String, required: false },
+            slrsku: { type: String, required: false },
             attrs: { type: String, required: false },
           },
         ],

@@ -77,14 +77,16 @@ const ProductDetailsPageComponent = ({
   let stockCount = null;
   let stockPrice = null;
   let stockCode = null;
+  let clientCode = null;
 
   if (selectedProduct !== "Please-Select" && selectedStock) {
     stockCount = selectedStock.count;
     stockPrice = selectedStock.price;
     stockCode = selectedStock.ctlsku;
+    clientCode = selectedStock.slrsku;
   }
 
-  console.log("selectedStock", stockPrice);
+  console.log("selectedStock", selectedStock);
 
   // console.log(product.description);
   // const description[]=product.description.split('.');
@@ -144,9 +146,7 @@ const ProductDetailsPageComponent = ({
       maximumFractionDigits: 2,
     })
     : "";
-  console.log('====================================');
-  console.log(qty, typeof price);
-  console.log('====================================');
+
   // const products = useSelector((state) => state.cart.value);
 
   // for the zoomable picture Gallery
@@ -182,7 +182,7 @@ const ProductDetailsPageComponent = ({
               title: image.title,
               caption: image.name,
             });
-            console.log(imagesArray);
+            // console.log(imagesArray);
           }
         }
       }
@@ -752,7 +752,7 @@ const ProductDetailsPageComponent = ({
                             ? product.description
                               .split(">")
                               .map((item, index) => {
-                                console.log("itemmmm", item)
+                                // console.log("itemmmm", item)
                                 // Check if this item contains "^", which indicates it should be formatted as a table
                                 if (item.includes('^') && item.includes(':')) {
                                   const tableItems = item.split('^').filter(Boolean);  // remove empty strings from the array

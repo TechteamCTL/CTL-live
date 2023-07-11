@@ -12,15 +12,6 @@ export const getMineralPrices = () => async (dispatch) => {
       } catch (error) {
         console.log(error);
       }
-    
-    
-/*     try {
-        // const minerals = response.data;
-        dispatch({ type: actionTypes.FETCH_MINERALS, payload: data });
-        localStorage.setItem("minerals", JSON.stringify(data));
-    } catch (error) {
-      console.log(error);
-    } */
   };
 
 
