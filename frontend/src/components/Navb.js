@@ -789,11 +789,7 @@ const Navb = () => {
       type: 2,
       link: HAND_TOOLS + "&subCategoryName=HARD-STORAGE",
     },
-    // {
-    //   label: "MEASURING",
-    //   type: 3,
-    //   link: HAND_TOOLS + "&subCategoryName=MEASURING",
-    // },
+
     {
       label: "LAYOUT",
       type: 2,
@@ -908,11 +904,7 @@ const Navb = () => {
       type: 3,
       link: HAND_TOOLS_ELECTRICAL + "&childCategoryName=CABLE-CUTTING",
     },
-    {
-      label: "SCREWDRIVERS",
-      type: 3,
-      link: HAND_TOOLS_ELECTRICAL + "&childCategoryName=SCREWDRIVERS",
-    },
+
     {
       label: "CRIMPERS",
       type: 3,
