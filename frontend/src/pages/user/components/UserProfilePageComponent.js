@@ -27,7 +27,7 @@ const UserProfilePageComponent = ({
   const [user, setUser] = useState({});
   const userInfo = userInfoFromRedux;
   const [deliveryBooks, setDeliveryBooks] = useState();
-  console.log(user)
+  // console.log(user)
   // console.log(deliveryBooks)
 
 

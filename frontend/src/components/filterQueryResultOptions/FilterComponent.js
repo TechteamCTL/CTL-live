@@ -104,6 +104,26 @@ const FilterComponent = () => {
     },
   ];
 
+  var POWER_AIR1 = "/product-list?categoryName=POWER-AIR";
+  var POWER_AIR2 = [
+    {
+      label: "POWER TOOLS",
+      type: 2,
+      link: POWER_AIR1 + "&subCategoryName=POWER"
+    },
+    {
+      label: "AIR TOOLS",
+      type: 2,
+      link: POWER_AIR1 + "&subCategoryName=AIR"
+    },
+    {
+      label: "GENERATORS",
+      type: 2,
+      link: POWER_AIR1 + "&subCategoryName=GENERATORS",
+    },
+  ];
+
+
   var FASTENERS1 = "/product-list?categoryName=FASTENERS";
   var FASTENERS2 = [
     {
@@ -166,20 +186,14 @@ const FilterComponent = () => {
       link: HAND_TOOLS + "&subCategoryName=HARD-STORAGE",
     },
     {
-      label: "MEASURING",
+      label: "LAYOUT",
       type: 2,
-      link: HAND_TOOLS + "&subCategoryName=MEASURING",
+      link: HAND_TOOLS + "&subCategoryName=LAYOUT"
     },
-    { label: "LAYOUT", type: 2, link: HAND_TOOLS + "&subCategoryName=LAYOUT" },
     {
       label: "PIPE TOOLS WRENCHES",
       type: 2,
       link: HAND_TOOLS + "&subCategoryName=PIPE-TOOLS-WRENCHES",
-    },
-    {
-      label: "CUTTING TOOLS",
-      type: 2,
-      link: HAND_TOOLS + "&subCategoryName=CUTTING-TOOLS",
     },
     {
       label: "STRIKING DEMOLITION",
@@ -187,19 +201,19 @@ const FilterComponent = () => {
       link: HAND_TOOLS + "&subCategoryName=STRIKING-DEMOLITION",
     },
     {
-      label: "CABLE FEEDING",
+      label: "CUTTING TOOLS",
       type: 2,
-      link: HAND_TOOLS + "&subCategoryName=CABLE-FEEDING",
-    },
-    {
-      label: "HAND TOOLS KIT",
-      type: 2,
-      link: HAND_TOOLS + "&subCategoryName=HAND-TOOLS-KIT",
+      link: HAND_TOOLS + "&subCategoryName=CUTTING-TOOLS",
     },
     {
       label: "FASTENING",
       type: 2,
       link: HAND_TOOLS + "&subCategoryName=FASTENING",
+    },
+    {
+      label: "ELECTRICAL",
+      type: 2,
+      link: HAND_TOOLS + "&subCategoryName=ELECTRICAL",
     },
     {
       label: "PLIERS",
@@ -211,6 +225,17 @@ const FilterComponent = () => {
       type: 2,
       link: HAND_TOOLS + "&subCategoryName=KNIVES"
     },
+    {
+      label: "GAS TOOLS",
+      type: 2,
+      link: HAND_TOOLS + "&subCategoryName=GAS-TOOLS"
+    },
+    {
+      label: "MEASURING",
+      type: 2,
+      link: HAND_TOOLS + "&subCategoryName=MEASURING"
+    },
+
   ];
 
   var INDUSTRIAL = "/product-list?categoryName=INDUSTRIAL";
@@ -219,11 +244,6 @@ const FilterComponent = () => {
       label: "ABRASIVES & CUTTING",
       type: 2,
       link: INDUSTRIAL + "&subCategoryName=ABRASIVES-CUTTING",
-    },
-    {
-      label: "DRILLING",
-      type: 2,
-      link: INDUSTRIAL + "&subCategoryName=DRILLING",
     },
     {
       label: "LUBRICATION & EQUIPMENT",
@@ -236,6 +256,16 @@ const FilterComponent = () => {
       link: INDUSTRIAL + "&subCategoryName=PAINT-EQUIPMENT-SUPPLIES",
     },
     {
+      label: "DRILLING",
+      type: 2,
+      link: INDUSTRIAL + "&subCategoryName=DRILLING",
+    },
+    {
+      label: "FASTENERS",
+      type: 2,
+      link: INDUSTRIAL + "&subCategoryName=FASTENERS",
+    },
+    {
       label: "PUMPS,VALVES & PARTS",
       type: 2,
       link: INDUSTRIAL + "&subCategoryName=PUMPS-VALVES-PARTS",
@@ -245,24 +275,37 @@ const FilterComponent = () => {
       type: 2,
       link: INDUSTRIAL + "&subCategoryName=HOSES-FITTINGS",
     },
+    {
+      label: "PIPE REPAIR",
+      type: 2,
+      link: INDUSTRIAL + "&subCategoryName=PIPE-REPAIR",
+    },
   ];
-
-  var REAGENTS = "/product-list?categoryName=ELECTRICAL";
-
 
   var ELECTRICAL1 = "/product-list?categoryName=ELECTRICAL";
   var ELECTRICAL2 = [
     { label: "CABLES", type: 2, link: ELECTRICAL1 + "&subCategoryName=CABLES" },
+    { label: "SWITCH GEAR", type: 2, link: ELECTRICAL1 + "&subCategoryName=SWITCH-GEAR" },
     { label: "ENCLOSURES", type: 2, link: ELECTRICAL1 + "&subCategoryName=ENCLOSURES" },
     { label: "LIGHTING", type: 2, link: ELECTRICAL1 + "&subCategoryName=LIGHTING" },
+    { label: "CHARGERS", type: 2, link: ELECTRICAL1 + "&subCategoryName=CHARGERS" },
     { label: "MOTORS", type: 2, link: ELECTRICAL1 + "&subCategoryName=MOTORS" },
+    { label: "BORE PUMPS", type: 2, link: ELECTRICAL1 + "&subCategoryName=BORE-PUMPS" },
     { label: "WIRING ACCESSORIES", type: 2, link: ELECTRICAL1 + "&subCategoryName=WIRING-ACCESSORIES" },
+  ];
+
+  var REAGENTS = "/product-list?categoryName=REAGENTS";
+
+  var LABORATORY1 = "/product-list?categoryName=LABORATORY";
+  var LABORATORY2 = [
+    { label: "LAB EQUIPMENTS", type: 2, link: LABORATORY1 + "&subCategoryName=LAB-EQUIPMENTS" },
+    { label: "LAB CHEMICALS", type: 2, link: LABORATORY1 + "&subCategoryName=LAB-CHEMICALS" },
   ];
 
 
 
-  var testaaa = ELECTRICAL1 + "&subCategoryName=ABCDEFG";
-  // console.log("testaaaa", testaaa.slice(54));
+  //var testaaa = ELECTRICAL1 + "&subCategoryName=ABCDEFG";
+  //console.log("testaaaa", testaaa.slice(54));
 
   const location = useLocation();
   const query = qs.parse(location.search, { ignoreQueryPrefix: true });
@@ -346,7 +389,9 @@ const FilterComponent = () => {
         </div>
       </div>
 
-      {/* FASTENERS */}
+
+
+      {/* POWER AIR */}
       <div className="accordion">
         <div className="accordion-header">
           <a
@@ -354,18 +399,18 @@ const FilterComponent = () => {
             data-bs-toggle="collapse"
             href="#collapseSeven"
           >
-            FASTENERS
+            POWER/AIR
           </a>
         </div>
         <div
           id="collapseSeven"
           className={
-            query.categoryName === "FASTENERS" ? "collapse show" : "collapse"
+            query.categoryName === "POWER-AIR" ? "collapse show" : "collapse"
           }
           data-bs-parent="#accordion"
         >
           <div className="accordion-body">
-            {FASTENERS2.map((item) => {
+            {POWER_AIR2.map((item) => {
               return (
                 <li
                   key={item.link}
@@ -460,6 +505,45 @@ const FilterComponent = () => {
         </div>
       </div>
 
+
+      {/* ELECTRICAL */}
+      <div className="accordion">
+        <div className="accordion-header">
+          <a
+            className="collapsed btn"
+            data-bs-toggle="collapse"
+            href="#collapseNine"
+          >
+            ELECTRICAL
+          </a>
+        </div>
+        <div
+          id="collapseNine"
+          className={
+            query.categoryName === "ELECTRICAL" ? "collapse show" : "collapse"
+          }
+          data-bs-parent="#accordion"
+        >
+          <div className="accordion-body">
+            {ELECTRICAL2.map((item) => {
+              return (
+                <li
+                  key={item.link}
+                  className={
+                    query.subCategoryName === item.link.slice(54)
+                      ? "activeLabel subCatFilter"
+                      : "subCatFilter"
+                  }
+                >
+                  <a href={item.link}>{item.label}</a>
+                  <ColoredLine />
+                </li>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
       {/* REAGENTS */}
       <div className="accordion">
         <div className="accordion-header">
@@ -498,26 +582,27 @@ const FilterComponent = () => {
         </div>
       </div>
 
-      {/* ELECTRICAL */}
+
+      {/* LABORATORY */}
       <div className="accordion">
         <div className="accordion-header">
           <a
             className="collapsed btn"
             data-bs-toggle="collapse"
-            href="#collapseNine"
+            href="#collapseEight"
           >
-            ELECTRICAL
+            LABORATORY
           </a>
         </div>
         <div
-          id="collapseNine"
+          id="collapseEight"
           className={
-            query.categoryName === "ELECTRICAL" ? "collapse show" : "collapse"
+            query.categoryName === "LABORATORY" ? "collapse show" : "collapse"
           }
           data-bs-parent="#accordion"
         >
           <div className="accordion-body">
-            {ELECTRICAL2.map((item) => {
+            {LABORATORY2.map((item) => {
               return (
                 <li
                   key={item.link}

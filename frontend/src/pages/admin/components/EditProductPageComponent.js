@@ -396,7 +396,7 @@ const AdminEditProductPage = ({
     setProduct({ ...product, stock: newStock });
   };
 
-  console.log("ProductStock", product);
+  // console.log("ProductStock", product);
   return (
     <Container fluid>
       <Row className="justify-content-md-center mt-5">

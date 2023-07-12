@@ -37,7 +37,7 @@ const OrdersPageComponent = ({ getOrders, deleteOrder }) => {
 
   const ordersData = useMemo(() => {
     let computedOrders = orders;
-    console.log("örders", orders);
+    // console.log("örders", orders);
     if (search) {
       computedOrders = computedOrders.filter(
         (orders) =>

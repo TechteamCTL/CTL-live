@@ -86,7 +86,7 @@ const ProductDetailsPageComponent = ({
     clientCode = selectedStock.slrsku;
   }
 
-  console.log("selectedStock", selectedStock);
+  // console.log("selectedStock", selectedStock);
 
   // console.log(product.description);
   // const description[]=product.description.split('.');

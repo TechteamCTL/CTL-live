@@ -141,7 +141,7 @@ const ProductListPage = ({
     window.location.href = "/product-list";
   };
 
-  console.log("有木有产品", products);
+  // console.log("有木有产品", products);
 
   useEffect(() => {
     getUser()

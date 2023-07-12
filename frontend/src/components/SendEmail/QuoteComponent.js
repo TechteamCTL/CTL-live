@@ -126,7 +126,7 @@ const QuoteComponent = (userNameEmail) => {
     }
   };
 
-  console.log("formDataformDataformDataformData", formData);
+  // console.log("formDataformDataformDataformData", formData);
   return (
     <>
       <div className="container border w-50 ms-5 p-3 mt-2">

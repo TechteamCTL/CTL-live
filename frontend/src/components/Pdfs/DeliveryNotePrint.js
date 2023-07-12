@@ -307,8 +307,8 @@ const InvoicePrint = (cartItems) => {
     //const InvAddress = cartItems.userAddress;
     const deliverySite = cartItems.selectedDeliverySite;
     var counter = 0;
-    console.log("invcart", InvCartItems)
-    console.log("Delivery Note selectedDeliverySite", deliverySite?.name);
+    // console.log("invcart", InvCartItems)
+    // console.log("Delivery Note selectedDeliverySite", deliverySite?.name);
 
     function splitArrayIntoChunks(arr, chunkSize) {
         const result = [];

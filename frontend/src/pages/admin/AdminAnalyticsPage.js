@@ -156,9 +156,9 @@ const AdminAnalyticsPage = () => {
 
   // XAU,XAG,XPT,XPD,IRON,ALU,LCO,XCU,LEAD,NI,TIN,ZNC
 
-  console.log('====================================');
-  console.log(stockData);
-  console.log('====================================');
+
+  // console.log(stockData);
+
 
 
   return (

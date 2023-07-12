@@ -27,7 +27,7 @@ const getFingerprint = async () => {
   document.cookie = `fingerprint=${fingerprint}; path=/;`
 
   // Log the fingerprint for testing purposes
-  console.log(`Browser fingerprint: ${fingerprint}`)
+  // console.log(`Browser fingerprint: ${fingerprint}`)
 }
 
 // 725445157ef96c91722783e104fe4462

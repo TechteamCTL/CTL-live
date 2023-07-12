@@ -72,9 +72,9 @@ const ProductForListPreviewComponent = ({
     stockCode = selectedStock.ctlsku;
   }
 
-  console.log("selectedStock", selectedStock);
+  // console.log("selectedStock", selectedStock);
 
-  console.log(product);
+  // console.log(product);
 
   const addToCartHandler = () => {
     reduxDispatch(addToCartReduxAction(product._id, qty, selectedStock));
@@ -110,7 +110,7 @@ const ProductForListPreviewComponent = ({
               title: image.title,
               caption: image.name,
             });
-            console.log(imagesArray);
+            // console.log(imagesArray);
           }
         }
       }

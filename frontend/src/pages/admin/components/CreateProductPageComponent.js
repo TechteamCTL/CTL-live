@@ -157,7 +157,7 @@ const CreateProductPageComponent = ({
               : er.response.data,
           });
         });
-      console.log(formInputs);
+      // console.log(formInputs);
     }
 
     setValidated(true);
@@ -256,7 +256,7 @@ const CreateProductPageComponent = ({
   const [selectedCategory, setSelectedCategory] = useState("");
 
 
-  console.log(categoryChoosen);
+  // console.log(categoryChoosen);
 
   return (
     <Container>

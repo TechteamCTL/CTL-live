@@ -68,7 +68,7 @@ const EditUserPageComponent = ({ updateUserApiRequest, fetchUser }) => {
     fetchUser(id)
       .then((data) => {
         setUser(data);
-        console.log("useruseruseruser", data);
+        // console.log("useruseruseruser", data);
         setIsAdminState(data.isAdmin);
         setVerified(data.verified);
       })

@@ -47,8 +47,8 @@ const getProducts = async (categoryName = "", pageNumParam = null, searchQuery =
     const url = `/api/products/${category}${search}${brand}?pageNum=${pageNumParam}${filtersUrl}&sort=${sortOption}&subCategoryName=${subCategoryName}&childCategoryName=${childCategoryName}&fourCategoryName=${fourCategoryName}&brandName=${brandName}`;
     var { data } = await axios.get(url);
 
-    console.log('我是data,ProductListPage', data);
-    console.log('search', categoryName);
+    // console.log('我是data,ProductListPage', data);
+    // console.log('search', categoryName);
 
     return data
 }
@@ -69,7 +69,7 @@ const ProductListPage = () => {
 
     // 这里是useParams 找 route 就是url
     // var { childCategoryName, subCategoryName, categoryName } = useParams();
-    console.log("我是Params,ProductListPage",brandName)
+    // console.log("我是Params,ProductListPage",brandName)
     // 这个就是从redux里面搞出来的所有categories？ 不懂啊
     const { categories } = useSelector((state) => state.getCategories);
     // 有subCategoryName请求的是2级的

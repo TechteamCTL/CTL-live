@@ -89,7 +89,7 @@ export const cartReducer = (state = CART_INITIAL_STATE, action) => {
 
       currentState.itemsCount = itemsCount;
       currentState.cartSubtotal = cartSubtotal;
-      console.log("ADD_TO_CART的数据", currentState);
+      // console.log("ADD_TO_CART的数据", currentState);
 
       return currentState;
 

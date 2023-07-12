@@ -35,7 +35,7 @@ const SendInvoice = (invDate) => {
     return () => clearInterval(interval);
   }, [isSending]);
 
-console.log("Inv Email Date", invDate.invDate?.billingEmail);
+// console.log("Inv Email Date", invDate.invDate?.billingEmail);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const config = {

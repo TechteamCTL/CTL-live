@@ -776,37 +776,37 @@ const Navb = () => {
   var HAND_TOOLS_1 = [
     {
       label: "FASTENING KITS",
-      type: 3,
+      type: 2,
       link: HAND_TOOLS + "&subCategoryName=FASTENING-KITS",
     },
     {
       label: "SOFT STORAGE",
-      type: 3,
+      type: 2,
       link: HAND_TOOLS + "&subCategoryName=SOFT-STORAGE",
     },
     {
       label: "HARD STORAGE",
-      type: 3,
+      type: 2,
       link: HAND_TOOLS + "&subCategoryName=HARD-STORAGE",
     },
-    {
-      label: "MEASURING",
-      type: 3,
-      link: HAND_TOOLS + "&subCategoryName=MEASURING",
-    },
+    // {
+    //   label: "MEASURING",
+    //   type: 3,
+    //   link: HAND_TOOLS + "&subCategoryName=MEASURING",
+    // },
     {
       label: "LAYOUT",
-      type: 3,
+      type: 2,
       link: HAND_TOOLS + "&subCategoryName=LAYOUT",
     },
     {
       label: "PIPE TOOLS WRENCHES",
-      type: 3,
+      type: 2,
       link: HAND_TOOLS + "&subCategoryName=PIPE-TOOLS-WRENCHES",
     },
     {
       label: "STRIKING DEMOLITION",
-      type: 3,
+      type: 2,
       link: HAND_TOOLS + "&subCategoryName=STRIKING-DEMOLITION",
     },
 
@@ -840,11 +840,7 @@ const Navb = () => {
       type: 3,
       link: HAND_TOOLS_FASTENING + "&childCategoryName=SLOGGING-SPANNERS",
     },
-    {
-      label: "SCREW DRIVERS",
-      type: 3,
-      link: HAND_TOOLS_FASTENING + "&childCategoryName=SCREW-DRIVERS",
-    },
+
     {
       label: "WRENCHES",
       type: 3,
@@ -921,6 +917,11 @@ const Navb = () => {
       label: "CRIMPERS",
       type: 3,
       link: HAND_TOOLS_ELECTRICAL + "&childCategoryName=CRIMPERS",
+    },
+    {
+      label: "SCREW DRIVERS",
+      type: 3,
+      link: HAND_TOOLS_ELECTRICAL + "&childCategoryName=SCREW-DRIVERS",
     },
   ];
 

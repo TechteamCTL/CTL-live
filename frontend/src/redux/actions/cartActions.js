@@ -123,7 +123,7 @@ export const editQuantity = (id, qty) => async (dispatch, getState) => {
     
     localStorage.setItem("cart", JSON.stringify(getState().cart.cartItems));
     const { data } = await axios.put("/api/cart/update/" + id, { quantity: qty });
-    console.log("cartAction的 编辑购物车 数据", data);
+    // console.log("cartAction的 编辑购物车 数据", data);
   } catch (error) {
     console.log(error);
   }

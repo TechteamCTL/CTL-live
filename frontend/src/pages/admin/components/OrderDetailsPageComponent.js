@@ -31,6 +31,7 @@ const OrderDetailsPageComponent = ({
   removeOrderItem,
   getdeliveryBooks,
   adminUpdateDeliverySite,
+  sendDeliveryNotice
 }) => {
   const { id } = useParams();
 
@@ -250,9 +251,6 @@ const OrderDetailsPageComponent = ({
     selectedDeliverySite
   ]);
 
-  console.log("====================================");
-  console.log(invDate);
-  console.log("====================================");
 
 
   const [sendingInv, setSendingInv] = useState(false);
@@ -318,10 +316,13 @@ const OrderDetailsPageComponent = ({
   const enterTrackLink = (e) => {
     setTrackLink(e.target.value);
   };
+  
+  // console.log("userInfo", userInfo.email, purchaseNumber, trackLink);
 
   const handleMarkAsSent = () => {
     setShow(false);
-    markAsDelivered(id, trackLink)
+    markAsDelivered(id, trackLink);
+    sendDeliveryNotice( userInfo?.email, purchaseNumber, trackLink)
       .then((res) => {
         if (res) {
           setIsDelivered(true);

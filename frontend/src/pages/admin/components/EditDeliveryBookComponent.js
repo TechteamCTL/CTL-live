@@ -30,7 +30,7 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
         const form = event.currentTarget;
         const sites = [];
 
-        console.log("sites existing", document.querySelectorAll(".sitesExisting").length)
+        // console.log("sites existing", document.querySelectorAll(".sitesExisting").length)
 
         for (
             let i = 0;
@@ -49,7 +49,7 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
         }
 
         const sitesNew = [];
-        console.log("sites new", document.querySelectorAll(".sitesNew").length)
+        // console.log("sites new", document.querySelectorAll(".sitesNew").length)
         for (let i = 0; i < document.querySelectorAll(".sitesNew").length; i++) {
             const name = document.getElementsByName(`newName-${i}`)[0].value;
             const billingAddress = document.getElementsByName(`newBillingAddress-${i}`)[0].value;
@@ -96,7 +96,7 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
         fetchDeliveryBook(id)
             .then((data) => {
                 setDeliveryBook(data);
-                console.log("Delivery Book data", data);
+                // console.log("Delivery Book data", data);
             })
             .catch((er) =>
                 console.log(
