@@ -90,10 +90,11 @@ const adminUpdateMineralsPrice = async (req, res, next) => {
   }
 }
 
-cron.schedule('0 22 09 * * *', adminUpdateMineralsPrice, {
+cron.schedule('0 05 16 * * *', adminUpdateMineralsPrice, {
   scheduled: true,
   timezone: "UTC"
 });
+
 
 
 module.exports = { getMineralPrice, adminCreatePrice, adminUpdateMineralsPrice }
