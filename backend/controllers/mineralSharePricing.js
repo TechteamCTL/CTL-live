@@ -1,5 +1,7 @@
 const MineralSharePrice = require("../models/MineralSharePricingModel");
 const axios = require('axios');
+const cron = require('node-cron');
+
 
 const getMineralPrice = async (req, res, next) => {
   try {
@@ -9,6 +11,7 @@ const getMineralPrice = async (req, res, next) => {
     next(error);
   }
 };
+
 
 const adminCreatePrice = async (req, res, next) => {
   try {
@@ -86,6 +89,12 @@ const adminUpdateMineralsPrice = async (req, res, next) => {
     next(err);
   }
 }
+
+cron.schedule('0 22 09 * * *', adminUpdateMineralsPrice, {
+  scheduled: true,
+  timezone: "UTC"
+});
+
 
 module.exports = { getMineralPrice, adminCreatePrice, adminUpdateMineralsPrice }
 
