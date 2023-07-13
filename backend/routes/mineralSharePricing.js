@@ -5,8 +5,8 @@ const { verifyIsLoggedIn, verifyIsAdmin } = require("../middleware/verifyAuthTok
 
 
 router.use(verifyIsLoggedIn)
-router.use(verifyIsAdmin)
 router.get("/minerals", getMineralPrice)
+router.use(verifyIsAdmin)
 router.put("/updateMineralsPrice", adminUpdateMineralsPrice)
 router.post("/create", adminCreatePrice)
 
