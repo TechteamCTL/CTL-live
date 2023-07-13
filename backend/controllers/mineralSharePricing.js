@@ -96,7 +96,6 @@ cron.schedule('0 05 16 * * *', adminUpdateMineralsPrice, {
 });
 
 
-
 module.exports = { getMineralPrice, adminCreatePrice, adminUpdateMineralsPrice }
 
 

@@ -124,8 +124,8 @@ const UserCartDetailsPageComponent = ({
 
   var deliverySites = deliveryBooks && deliveryBooks[0].sites;
 
-  console.log("company", adminDeliveryBooks);
-  console.log("user Info", userInfo)
+  // console.log("company", adminDeliveryBooks);
+  // console.log("user Info", userInfo)
 
 
   const changeDeliverySite = (e) => {

@@ -8,8 +8,15 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-
-const InvoicePrint = (cartItems) => {
+/* 
+  invoiceNumber,
+  userInfo,
+  purchaseNumber,
+  cartSubtotal,
+  invoiceDate,
+  selectedDeliverySite
+*/
+const InvoicePrint = (invPrintData) => {
   const styles = StyleSheet.create({
     page: {
       padding: 50,
@@ -321,16 +328,16 @@ const InvoicePrint = (cartItems) => {
     },
   });
 
-  const InvCartItems = cartItems.cartItems;
-  const InvUserInfo = cartItems.userInfo;
-  //const InvAddress = cartItems.userAddress;
-  const deliverySite = cartItems.selectedDeliverySite;
+  const InvinvPrintData = invPrintData.cartItems;
+  const InvUserInfo = invPrintData.userInfo;
+  //const InvAddress = invPrintData.userAddress;
+  const deliverySite = invPrintData.selectedDeliverySite;
   var counter = 0;
 
-  // console.log("InvCartItems", InvCartItems);
+  // console.log("InvinvPrintData", invPrintData);
   // console.log("InvUserInfo", InvUserInfo);
   // //console.log("InvAddress", InvAddress);
-  // console.log("cart items", cartItems);
+  // console.log("cart items", invPrintData);
 
   function splitArrayIntoChunks(arr, chunkSize) {
     const result = [];
@@ -340,16 +347,16 @@ const InvoicePrint = (cartItems) => {
     return result;
   }
 
-  function splitCartItems(InvCartItems) {
-    const firstChunk = InvCartItems.slice(0, 16);
-    const remainingItems = InvCartItems.slice(16);
+  function splitinvPrintData(InvinvPrintData) {
+    const firstChunk = InvinvPrintData.slice(0, 16);
+    const remainingItems = InvinvPrintData.slice(16);
     const chunks = splitArrayIntoChunks(remainingItems, 25);
     return [firstChunk, ...chunks];
   }
 
-  const [firstItems, ...otherChunks] = splitCartItems(InvCartItems);
+  const [firstItems, ...otherChunks] = splitinvPrintData(InvinvPrintData);
 
-  const invoiceDate = new Date(cartItems.invoiceDate).toLocaleString("en-AU", {
+  const invPrintDate = new Date(invPrintData.invoiceDate).toLocaleString("en-AU", {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -359,10 +366,10 @@ const InvoicePrint = (cartItems) => {
   });
 
   //Area needs editing in future as we get more clients -- starts here
-  const deliverDate = new Date(cartItems.invoiceDate);
+  const deliverDate = new Date(invPrintData.invoiceDate);
   if (InvUserInfo.email) {
     if (InvUserInfo.email.split("@")[1] === "slrltd.com") {
-      if (cartItems.cartSubtotal < 20000) {
+      if (invPrintData.cartSubtotal < 20000) {
         deliverDate.setDate(deliverDate.getDate() + 7);
       } else {
         deliverDate.setDate(deliverDate.getDate() + 30);
@@ -383,7 +390,7 @@ const InvoicePrint = (cartItems) => {
 
   return (
     <>
-      <Document id={cartItems.invoiceNumber}>
+      <Document id={invPrintData.invoiceNumber}>
         <Page style={styles.body} size="A4" orientation="landscape">
           {/* ******* header ******* */}
           <View style={styles.table}>
@@ -491,12 +498,12 @@ const InvoicePrint = (cartItems) => {
                 </View>
                 <View style={styles.tableCellHeader}>
                   <Text style={styles.tableCellBillBox}>
-                    {cartItems.invoiceNumber}
+                    {invPrintData.invoiceNumber}
                   </Text>
                 </View>
                 <View style={styles.tableCellHeader}>
                   <Text style={styles.tableCellBillBox}>
-                    {invoiceDate.split("at")[0]}
+                    {invPrintDate.split("at")[0]}
                   </Text>
                 </View>
                 <View style={styles.tableCellHeader}>
@@ -509,12 +516,12 @@ const InvoicePrint = (cartItems) => {
                 </View>
                 <View style={styles.tableCellHeader}>
                   <Text style={styles.tableCellBillBox}>
-                    {cartItems.purchaseNumber}
+                    {invPrintData.purchaseNumber}
                   </Text>
                 </View>
                 <View style={styles.tableCellHeader}>
                   <Text style={styles.tableCellBillBox}>
-                    {cartItems.purchaseNumber}
+                    {invPrintData.purchaseNumber}
                   </Text>
                 </View>
               </View>
@@ -749,8 +756,8 @@ const InvoicePrint = (cartItems) => {
                 <View style={styles.tableCellBottom}>
                   <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
-                    {cartItems.cartSubtotal
-                      ? (cartItems.cartSubtotal / 1.1)
+                    {invPrintData.cartSubtotal
+                      ? (invPrintData.cartSubtotal / 1.1)
                         .toFixed(2)
                         .toLocaleString()
                       : ""}
@@ -764,8 +771,8 @@ const InvoicePrint = (cartItems) => {
                 <View style={styles.tableCellBottom}>
                   <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
-                    {cartItems.cartSubtotal
-                      ? ((cartItems.cartSubtotal / 1.1) * 0.1)
+                    {invPrintData.cartSubtotal
+                      ? ((invPrintData.cartSubtotal / 1.1) * 0.1)
                         .toFixed(2)
                         .toLocaleString()
                       : ""}
@@ -779,8 +786,8 @@ const InvoicePrint = (cartItems) => {
                 <View style={styles.tableCellBottom}>
                   <Text style={styles.tableCellBillBoxRight}>
                     ${" "}
-                    {cartItems.cartSubtotal
-                      ? cartItems.cartSubtotal.toFixed(2).toLocaleString()
+                    {invPrintData.cartSubtotal
+                      ? invPrintData.cartSubtotal.toFixed(2).toLocaleString()
                       : ""}
                   </Text>
                 </View>
@@ -1033,8 +1040,8 @@ const InvoicePrint = (cartItems) => {
                       <View style={styles.tableCellBottom}>
                         <Text style={styles.tableCellBillBoxRight}>
                           ${" "}
-                          {cartItems.cartSubtotal
-                            ? (cartItems.cartSubtotal / 1.1)
+                          {invPrintData.cartSubtotal
+                            ? (invPrintData.cartSubtotal / 1.1)
                               .toFixed(2)
                               .toLocaleString()
                             : ""}
@@ -1048,8 +1055,8 @@ const InvoicePrint = (cartItems) => {
                       <View style={styles.tableCellBottom}>
                         <Text style={styles.tableCellBillBoxRight}>
                           ${" "}
-                          {cartItems.cartSubtotal
-                            ? ((cartItems.cartSubtotal / 1.1) * 0.1)
+                          {invPrintData.cartSubtotal
+                            ? ((invPrintData.cartSubtotal / 1.1) * 0.1)
                               .toFixed(2)
                               .toLocaleString()
                             : ""}
@@ -1065,8 +1072,8 @@ const InvoicePrint = (cartItems) => {
                       <View style={styles.tableCellBottom}>
                         <Text style={styles.tableCellBillBoxRight}>
                           ${" "}
-                          {cartItems.cartSubtotal
-                            ? cartItems.cartSubtotal.toFixed(2).toLocaleString()
+                          {invPrintData.cartSubtotal
+                            ? invPrintData.cartSubtotal.toFixed(2).toLocaleString()
                             : ""}
                         </Text>
                       </View>

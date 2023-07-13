@@ -46,7 +46,7 @@ const ProtectedRoutesComponent = ({ admin }) => {
     return (
       <>
         <HeaderComponent />
-        {/* <MineralPrice/> */}
+        <MineralPrice/>
         <Navb />
         <Outlet />
         <FooterComponent />

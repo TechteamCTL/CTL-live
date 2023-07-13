@@ -144,7 +144,7 @@ const EditDeliveryBookComponent = ({ updateDeliveryBookApiRequest, fetchDelivery
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicBillingEmailt">
-                            <Form.Label>Email Host </Form.Label>
+                            <Form.Label>Billing Email </Form.Label>
                             <Form.Control
                                 name="billingEmail"
                                 required

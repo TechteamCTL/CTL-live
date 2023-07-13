@@ -97,7 +97,7 @@ const OrderDetailsPageComponent = ({
           setdeliveredButtonDisabled(true);
         }
         if (order.invSent) {
-          setInvSentButton("Re-sent Invoice");
+          setInvSentButton("Re-send Invoice");
           setSentInvButtonDisabled(true);
         }
         if (order.isPaid) {
@@ -115,15 +115,17 @@ const OrderDetailsPageComponent = ({
   }, [isDelivered, isPaid, invoiceSent, id, edit, removed, editLocation]);
 
   useEffect(() => {
-    getdeliveryBooks(userInfo.email)
-      .then((deliveryBooks) => setDeliveryBooks(deliveryBooks))
-      .catch((err) =>
-        console.log(
-          err.response.data.message
-            ? err.response.data.message
-            : err.response.data
-        )
-      );
+    if (userInfo.email) {
+      getdeliveryBooks(userInfo.email)
+        .then((deliveryBooks) => setDeliveryBooks(deliveryBooks))
+        .catch((err) =>
+          console.log(
+            err.response.data.message
+              ? err.response.data.message
+              : err.response.data
+          )
+        );
+    }
   }, [userInfo]);
 
   const deliverySites = deliveryBooks[0]?.sites;
@@ -215,7 +217,6 @@ const OrderDetailsPageComponent = ({
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64data = reader.result;
-        // console.log(base64data);
         setBase64Data({
           base64data,
         });
@@ -227,8 +228,22 @@ const OrderDetailsPageComponent = ({
   };
 
   const [invDate, setInvDate] = useState();
+  const invBillingAddress = selectedDeliverySite?.billingAddress
+  
   useEffect(() => {
     generatePdf();
+  }, [
+    orderData,
+    id,
+    edit,
+    removed,
+    editLocation,
+    deliveryBooks,
+    selectedDeliverySite,
+    invBillingAddress
+  ]);
+  
+  useEffect(() => {
     setInvDate({
       sentInvButtonDisabled,
       billingEmail: deliveryBooks[0]?.billingEmail,
@@ -237,21 +252,11 @@ const OrderDetailsPageComponent = ({
       cartSubtotal,
       purchaseNumber,
     });
-  }, [
-    orderData,
-    isDelivered,
-    isPaid,
-    invoiceSent,
-    id,
-    edit,
-    removed,
-    editLocation,
-    editLocation,
-    deliveryBooks,
-    selectedDeliverySite
-  ]);
+  }, [base64Data]);
 
-
+  // console.log("invBillingAddress", invBillingAddress);
+  // console.log("invoice data", invDate);
+  // ap@slrltd.com.au
 
   const [sendingInv, setSendingInv] = useState(false);
 
@@ -304,6 +309,7 @@ const OrderDetailsPageComponent = ({
     }
   };
 
+
   // edite order name modal
   const [show, setShow] = useState(false);
 
@@ -317,7 +323,7 @@ const OrderDetailsPageComponent = ({
     setTrackLink(e.target.value);
   };
   
-  // console.log("userInfo", userInfo.email, purchaseNumber, trackLink);
+
 
   const handleMarkAsSent = () => {
     setShow(false);
@@ -585,7 +591,7 @@ const OrderDetailsPageComponent = ({
                       )
                   }
                   disabled={paidButtonDisabled}
-                  variant={sentInvButtonDisabled ? "secondary" : "success"}
+                  variant={paidButtonDisabled ? "secondary" : "success"}
                   type="button"
                 >
                   {orderPaidButton}
