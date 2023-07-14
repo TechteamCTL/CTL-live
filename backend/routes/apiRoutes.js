@@ -7,7 +7,7 @@ const orderRoutes = require("./orderRoutes")
 const sendEmailRoutes = require("./sendEmailRoutes")
 const cartRoutes = require("./cartRoutes")
 const deliveryBookRoutes = require("./deliveryBookRoutes")
-const mineralSharePriceRoutes = require("./mineralSharePricing")
+const mineralSharePriceRoutes = require("./mineralSharePriceRoutes")
 
 
 const jwt = require("jsonwebtoken");

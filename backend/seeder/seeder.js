@@ -7,6 +7,7 @@ const productData = require("./products");
 
 const userData = require("./users")
 const orderData = require("./orders")
+const MineralSharePricingData = require("./stocks")
 
 
 //引用categoryModel的限制
@@ -15,36 +16,37 @@ const Product = require("../models/ProductModel");
 
 const User = require("../models/UserModel")
 const Order = require("../models/OrderModel")
+const MineralSharePricing = require("../models/MineralSharePricingModel")
 
 
 
 const importData = async () => {
     try {
         // remove all existing indexes
-        await Category.collection.dropIndexes()
-        await Product.collection.dropIndexes();
+        // await Category.collection.dropIndexes()
+        // await Product.collection.dropIndexes();
 
 
-        //delete所有的existing categories from category collection
-        await Category.collection.deleteMany({})
-        await Product.collection.deleteMany({});
-
-        await User.collection.deleteMany({})
-        await Order.collection.deleteMany({})
+        // delete所有的existing categories from category collection
+        // await Category.collection.deleteMany({})
+        // await Product.collection.deleteMany({});
+        // await User.collection.deleteMany({})
+        // await Order.collection.deleteMany({})
 
 
 
         if (process.argv[2] !== "-d") {
-            await Category.collection.dropIndexes()
-            await Product.collection.dropIndexes()
+            // await Category.collection.dropIndexes()
+            // await Product.collection.dropIndexes()
     
-            await Category.collection.deleteMany({})
-            await Product.collection.deleteMany({})
+            // await Category.collection.deleteMany({})
+            // await Product.collection.deleteMany({})
     
-            await Category.insertMany(categoryData)
-            await Product.insertMany(productData)
-            await User.insertMany(userData)
-            await Order.insertMany(orderData)
+            // await Category.insertMany(categoryData)
+            // await Product.insertMany(productData)
+            // await User.insertMany(userData)
+            // await Order.insertMany(orderData)
+            await MineralSharePricing.insertMany(MineralSharePricingData)
 
 
 

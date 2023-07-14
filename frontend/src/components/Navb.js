@@ -73,6 +73,300 @@ const Navb = () => {
     4: "fourCat",
   };
 
+  /* FABRICATION */
+  var FABRICATION = "/product-list?categoryName=FABRICATION";
+  var FABRICATION_WELD_HEAT_CUT_BRAZE = PROCESSING + "&subCategoryName=WELD-HEAT-CUT-BRAZE";
+  var FABRICATION_WELD_HEAT_CUT_BRAZE_SUB = [
+    {
+      label: "GAS WELDING, HEATING, CUTTING & BRAZING",
+      type: 2,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE,
+
+    },
+    {
+      label: "BRAZING ALLOYS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=BRAZING-ALLOYS",
+    },
+    {
+      label: "GAS CUTTERS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-CUTTERS",
+    },
+    {
+      label: "FLUX",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=FLUX",
+    },
+    {
+      label: "GAS RODS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-RODS",
+    },
+    {
+      label: "AIR FUEL EQUIPMENT",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=AIR-FUEL-EQUIPMENT",
+    },
+    {
+      label: "FLASHBACK ARRESTORS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=FLASHBACK-ARRESTORS",
+    },
+    {
+      label: "GAS WELDING & CUTTING KITS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-WELDING-CUTTING-KITS",
+    },
+    {
+      label: "GAS EQUIPMENT & ACCESSORIES",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-EQUIPMENT-ACCESSORIES",
+    },
+    {
+      label: "GAS HOSES & FITTINGS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-HOSES-FITTINGS",
+    },
+    {
+      label: "GAS REGULATORS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-REGULATORS",
+    },
+    {
+      label: "GAS REGULATOR ACCESSORIES",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-REGULATOR-ACCESSORIES",
+    },
+    {
+      label: "GAS TORCHES & FITTINGS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-TORCHES-FITTINGS",
+    },
+    {
+      label: "THERMIC LANCES & ACCESSORIES",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=THERMIC-LANCES-ACCESSORIES",
+    },
+    {
+      label: "GAS NOZZLES & TIPS",
+      type: 3,
+      link: FABRICATION_WELD_HEAT_CUT_BRAZE + "&childCategoryName=GAS-NOZZLES-TIPS",
+    },
+
+  ];
+  var FABRICATION_MIG_FLUX_CORED_WELDING = PROCESSING + "&subCategoryName=MIG-FLUX-CORED-WELDING";
+  var FABRICATION_MIG_FLUX_CORED_WELDING_SUB = [
+    {
+      label: "MIG & FLUX-CORED WELDING ",
+      type: 2,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING,
+
+    },
+    {
+      label: "ARC WELDING ACCESSORIES",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=ARC-WELDING-ACCESSORIES",
+    },
+    {
+      label: "FLUX CORE WELDING WIRES",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=FLUX-CORE-WELDING-WIRES",
+    },
+    {
+      label: "MIG/MAG WELDERS",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=MIG-MAG-WELDERS",
+    },
+    {
+      label: "MIG/MAG WELDING EQUIPMENT",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=MIG-MAG-WELDING-EQUIPMENT",
+    },
+    {
+      label: "MIG/MAG WELDING WIRE",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=MIG-MAG-WELDING-WIRE",
+    },
+    {
+      label: "MIG TORCHES",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=MIG-TORCHES",
+    },
+    {
+      label: "MIG TORCH PARTS",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=MIG-TORCH-PARTS",
+    },
+    {
+      label: "MULTIPROCESS WELDERS",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=MULTIPROCESS-WELDERS",
+    },
+    {
+      label: "WELDING FUME EXTRACTION",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=WELDING-FUME-EXTRACTION",
+    },
+    {
+      label: "WIRE FEEDER & WIRE FEEDER PARTS",
+      type: 3,
+      link: FABRICATION_MIG_FLUX_CORED_WELDING + "&childCategoryName=WIRE-FEEDER-WIRE-FEEDER-PARTS",
+    },
+  ];
+  var FABRICATION_TIG_STICK_MMA_WELDING = PROCESSING + "&subCategoryName=TIG-STICK-MMA-WELDING";
+  var FABRICATION_TIG_STICK_MMA_WELDING_SUB = [
+    {
+      label: "TIG, STICK & MMA WELDING",
+      type: 2,
+      link: FABRICATION_TIG_STICK_MMA_WELDING,
+
+    },
+    {
+      label: "GOUGING CARBONS",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=GOUGING-CARBONS",
+    },
+    {
+      label: "MMA/STICK WELDERS",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=MMA-STICK-WELDERS",
+    },
+    {
+      label: "STICK WELDING (MMA) ELECTRODES",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=STICK-WELDING-ELECTRODES",
+    },
+    {
+      label: "STICK WELDING (MMA) EQUIPMENT",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=STICK-WELDING-EQUIPMENT",
+    },
+    {
+      label: "TIG WELDERS",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=TIG-WELDERS",
+    },
+    {
+      label: "TIG FILLER RODS",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=TIG-FILLER-RODS",
+    },
+    {
+      label: "TIG TUNGSTEN ELECTRODES",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=TIG-TUNGSTEN-ELECTRODES",
+    },
+    {
+      label: "TIG TORCHES",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=TIG-TORCHES",
+    },
+    {
+      label: "TIG TORCH PARTS",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=TIG-TORCH-PARTS",
+    },
+    {
+      label: "TIG WELDING ACCESSORIES",
+      type: 3,
+      link: FABRICATION_TIG_STICK_MMA_WELDING + "&childCategoryName=TIG-WELDING-ACCESSORIES",
+    },
+  ];
+
+  /* MINING */
+  var MINING = "/product-list?categoryName=MINING";
+
+  /* PROCESSING */
+  var PROCESSING = "/product-list?categoryName=PROCESSING";
+  var PROCESSING_REAGENTS = PROCESSING + "&subCategoryName=REAGENTS";
+  var PROCESSING_REAGENTS_SUB = [
+    {
+      label: "REAGENTS",
+      type: 2,
+      link: PROCESSING_REAGENTS,
+
+    },
+    {
+      label: "LIME",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=LIME",
+    },
+    {
+      label: "HYDROCHLORIC ACID",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=HYDROCHLORIC-ACID",
+    },
+    {
+      label: "GOLD STANDARDS",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=GOLD-STANDARDS",
+    },
+    {
+      label: "SILVER NITRATE",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=SILVER-NITRATE",
+    },
+    {
+      label: "CAUSTIC",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=CAUSTIC",
+    },
+    {
+      label: "DIBK",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=DIBK",
+    },
+    {
+      label: "SODA",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=SODA",
+    },
+    {
+      label: "ANTISCALANT",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=ANTISCALANT",
+    },
+    {
+      label: "BORAX",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=BORAX",
+    },
+    {
+      label: "SILICA",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=SILICA",
+    },
+    {
+      label: "CARBON",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=CARBON",
+    },
+    {
+      label: "LEACH AID",
+      type: 3,
+      link: PROCESSING_REAGENTS + "&childCategoryName=LEACH-AID",
+    },
+
+  ];
+  var PROCESSING_GRINDING_MEDIA = [{
+    label: "GRINDING MEDIA",
+    type: 2,
+    link: PROCESSING + "&subCategoryName=GRINDING-MEDIA",
+  }];
+  var PROCESSING_LAB_CHEMICALS = [{
+    label: "LAB CHEMICALS",
+    type: 2,
+    link: PROCESSING + "&subCategoryName=LAB-CHEMICALS",
+  }];
+  var PROCESSING_LAB_EQUIPMENTS = [{
+    label: "LAB EQUIPMENTS ",
+    type: 2,
+    link: PROCESSING + "&subCategoryName=LAB-EQUIPMENTS ",
+  }];
+
+
+  /* POWER AIR */
   var POWER_AIR = "/product-list?categoryName=POWER-AIR";
   var POWER_AIR_AIR = POWER_AIR + "&subCategoryName=AIR";
   var POWER_AIR_AIR_SUB = [
@@ -104,7 +398,6 @@ const Navb = () => {
     },
 
   ];
-
   var POWER_AIR_POWER = POWER_AIR + "&subCategoryName=POWER";
   var POWER_AIR_POWER_SUB = [
     {
@@ -121,7 +414,6 @@ const Navb = () => {
       link: POWER_AIR_GENERATORS,
     },
   ];
-
   var POWER_AIR_COMPRESSORS = POWER_AIR + "&subCategoryName=COMPRESSORS";
   var POWER_AIR_COMPRESSORS_SUB = [
     {
@@ -576,200 +868,6 @@ const Navb = () => {
   ];
   //#endregion
 
-  /* FASTENERS */
-  // var FASTENERS = "/product-list?categoryName=FASTENERS";
-  // // #region
-  // var FT_BOLTS = FASTENERS + "&subCategoryName=BOLTS";
-  // var FT_BOLTS_3 = [
-  //   {
-  //     label: "BOLTS",
-  //     type: 2,
-  //     link: FT_BOLTS,
-  //   },
-  //   {
-  //     label: "PLAIN",
-  //     type: 3,
-  //     link: FT_BOLTS + "&childCategoryName=PLAIN",
-  //   },
-  //   {
-  //     label: "ZINC PLATED",
-  //     type: 3,
-  //     link: FT_BOLTS + "&childCategoryName=ZINC-PLATED",
-  //   },
-  //   {
-  //     label: "ZINC YELLOW PASSIVATE",
-  //     type: 3,
-  //     link: FT_BOLTS + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
-  //   },
-  //   {
-  //     label: "STAINLESS STEEL",
-  //     type: 3,
-  //     link: FT_BOLTS + "&childCategoryName=STAINLESS-STEEL",
-  //   },
-  //   {
-  //     label: "HOT DIP GALVANISED",
-  //     type: 3,
-  //     link: FT_BOLTS + "&childCategoryName=HOT-DIP-GALVANISED",
-  //   },
-  //   {
-  //     label: "MECHANICAL GALVANISED",
-  //     type: 3,
-  //     link: FT_BOLTS + "&childCategoryName=MECHANICAL-GALVANISED",
-  //   },
-  // ];
-  // var FT_NUTS = FASTENERS + "&subCategoryName=NUTS";
-  // var FT_NUTS_3 = [
-  //   {
-  //     label: "NUTS",
-  //     type: 2,
-  //     link: FT_NUTS,
-  //   },
-  //   {
-  //     label: "PLAIN",
-  //     type: 3,
-  //     link: FT_NUTS + "&childCategoryName=PLAIN",
-  //   },
-  //   {
-  //     label: "ZINC PLATED",
-  //     type: 3,
-  //     link: FT_NUTS + "&childCategoryName=ZINC-PLATED",
-  //   },
-  //   {
-  //     label: "STAINLESS STEEL",
-  //     type: 3,
-  //     link: FT_NUTS + "&childCategoryName=STAINLESS-STEEL",
-  //   },
-  //   {
-  //     label: "MOLY(1PX1)",
-  //     type: 3,
-  //     link: FT_NUTS + "&childCategoryName=MOLY",
-  //   },
-  // ];
-  // var FT_SCREWS = FASTENERS + "&subCategoryName=SCREWS";
-  // var FT_SCREWS_3 = [
-  //   {
-  //     label: "SCREWS",
-  //     type: 2,
-  //     link: FT_SCREWS,
-  //   },
-  //   {
-  //     label: "PLAIN",
-  //     type: 3,
-  //     link: FT_SCREWS + "&childCategoryName=PLAIN",
-  //   },
-  //   {
-  //     label: "ZINC PLATED",
-  //     type: 3,
-  //     link: FT_SCREWS + "&childCategoryName=ZINC-PLATED",
-  //   },
-  //   {
-  //     label: "ZINC YELLOW PASSIVATE",
-  //     type: 3,
-  //     link: FT_SCREWS + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
-  //   },
-  //   {
-  //     label: "STAINLESS STEEL",
-  //     type: 3,
-  //     link: FT_SCREWS + "&childCategoryName=STAINLESS-STEEL",
-  //   },
-  //   {
-  //     label: "BASALT CL4",
-  //     type: 3,
-  //     link: FT_SCREWS + "&childCategoryName=BASALT-CL4",
-  //   },
-  // ];
-  // var FT_WASHER_FLAT = FASTENERS + "&subCategoryName=WASHER-FLAT";
-  // var FT_WASHER_FLAT_3 = [
-  //   {
-  //     label: "WASHER FLAT",
-  //     type: 2,
-  //     link: FT_WASHER_FLAT,
-  //   },
-  //   {
-  //     label: "PLAIN",
-  //     type: 3,
-  //     link: FT_WASHER_FLAT + "&childCategoryName=PLAIN",
-  //   },
-  //   {
-  //     label: "ZINC PLATED",
-  //     type: 3,
-  //     link: FT_WASHER_FLAT + "&childCategoryName=ZINC-PLATED",
-  //   },
-  //   {
-  //     label: "STAINLESS STEEL",
-  //     type: 3,
-  //     link: FT_WASHER_FLAT + "&childCategoryName=STAINLESS-STEEL",
-  //   },
-  //   {
-  //     label: "BASALT CL4",
-  //     type: 3,
-  //     link: FT_BOLTS + "&childCategoryName=BASALT-CL4",
-  //   },
-  // ];
-  // var FT_WASHER_SPRING = FASTENERS + "&subCategoryName=WASHER-SPRING";
-  // var FT_WASHER_SPRING_3 = [
-  //   {
-  //     label: "WASHER SPRING",
-  //     type: 2,
-  //     link: FT_WASHER_SPRING,
-  //   },
-  //   {
-  //     label: "ZINC PLATED",
-  //     type: 3,
-  //     link: FT_WASHER_SPRING + "&childCategoryName=ZINC-PLATED",
-  //   },
-  //   {
-  //     label: "STAINLESS STEEL",
-  //     type: 3,
-  //     link: FT_WASHER_SPRING + "&childCategoryName=STAINLESS-STEEL",
-  //   },
-  // ];
-  // var FT_ROD = FASTENERS + "&subCategoryName=ROD-THREADED";
-  // var FT_ROD_3 = [
-  //   {
-  //     label: "ROD",
-  //     type: 2,
-  //     link: FT_ROD,
-  //   },
-  //   {
-  //     label: "PLAIN",
-  //     type: 3,
-  //     link: FT_ROD + "&childCategoryName=PLAIN",
-  //   },
-  // ];
-  // var FT_STUD_CHEMSET = FASTENERS + "&subCategoryName=STUD-CHEMSET";
-  // var FT_STUD_CHEMSET_3 = [
-  //   {
-  //     label: "STUD CHEMSET",
-  //     type: 2,
-  //     link: FT_STUD_CHEMSET,
-  //   },
-  //   {
-  //     label: "ZINC YELLOW PASSIVATE",
-  //     type: 3,
-  //     link: FT_STUD_CHEMSET + "&childCategoryName=ZINC-YELLOW-PASSIVATE",
-  //   },
-  // ];
-  // var FT_HARDWARE = FASTENERS + "&subCategoryName=HARDWARE";
-  // var FT_HARDWARE_3 = [
-  //   {
-  //     label: "HARDWARE",
-  //     type: 2,
-  //     link: FT_HARDWARE,
-  //   },
-  //   {
-  //     label: "ANCHORS",
-  //     type: 3,
-  //     link: FT_HARDWARE + "&childCategoryName=ANCHORS",
-  //   },
-  //   {
-  //     label: "TURN BUCKLE",
-  //     type: 3,
-  //     link: FT_HARDWARE + "&childCategoryName=TURN-BUCKLE",
-  //   },
-  // ];
-  //#endregion
-
   /* HAND TOOLS */
   var HAND_TOOLS = "/product-list?categoryName=HAND-TOOLS";
   // #region
@@ -904,7 +1002,6 @@ const Navb = () => {
       type: 3,
       link: HAND_TOOLS_ELECTRICAL + "&childCategoryName=CABLE-CUTTING",
     },
-
     {
       label: "CRIMPERS",
       type: 3,
@@ -974,7 +1071,6 @@ const Navb = () => {
       link: ELECTRICAL_SWITCH_GEAR_1.link + "&fourCategoryName=RELAYS",
     }
   ];
-
 
   var ELECTRICAL_MOTORS = {
     label: "MOTORS",
@@ -1227,95 +1323,6 @@ const Navb = () => {
     link: ELECTRICAL_ENCLOSURES.link + "&childCategoryName=PVC-ADAPTABLE-BOXES",
   };
 
-  // var EE_BATTERY_CABINET = {
-  //   label: "BATTERY CABINET",
-  //   type: 3,
-  //   link: ELECTRICAL_ENCLOSURES.link + "&childCategoryName=BATTERY-CABINET",
-  // };
-  //#endregion
-
-  /* REAGENTS */
-  var REAGENTS = "/product-list?categoryName=REAGENTS";
-  // #region
-  var REAGENTS_1 = [
-    {
-      label: "LIME",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=LIME",
-    },
-    {
-      label: "HYDROCHLORIC ACID",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=HYDROCHLORIC-ACID",
-    },
-    {
-      label: "GOLD STANDARDS",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=GOLD-STANDARDS",
-    },
-    {
-      label: "SILVER NITRATE",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=SILVER-NITRATE",
-    },
-  ];
-  var REAGENTS_2 = [
-    {
-      label: "CAUSTIC",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=CAUSTIC",
-    },
-    {
-      label: "DIBK",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=DIBK",
-    },
-    {
-      label: "SODA",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=SODA",
-    },
-    {
-      label: "ANTISCALANT",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=ANTISCALANT",
-    },
-  ];
-  var REAGENTS_3 = [
-    {
-      label: "BORAX",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=BORAX",
-    },
-    {
-      label: "SILICA",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=SILICA",
-    },
-    {
-      label: "CARBON",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=CARBON",
-    },
-    {
-      label: "LEACH AID",
-      type: 3,
-      link: REAGENTS + "&subCategoryName=LEACH-AID",
-    },
-  ];
-  // var REAGENTS_3 = [
-  //   {
-  //     label: "REAGENTS ONE",
-  //     type: 3,
-  //     link: REAGENTS + "&subCategoryName=REAGENTS ONE",
-  //   },
-  //   {
-  //     label: "REAGENTS TWO",
-  //     type: 3,
-  //     link: REAGENTS + "&subCategoryName=REAGENTS TWO",
-  //   },
-  // ];
-  //#endregion
 
   /* LABORATORY */
   var LABORATORY = "/product-list?categoryName=LABORATORY";
@@ -1610,11 +1617,6 @@ const Navb = () => {
         <Navbar.Collapse id="basic-navbar-nav" className="w-100">
           {/* ************   Mega Menu  ***************  */}
           <Nav className="w3c_nav">
-            {/* home icon              
-            <Nav.Link className="nav_c home_ic" href="/">
-              <i className="bi bi-house-fill"></i>
-            </Nav.Link> */}
-
 
             {/* PPE */}
             <div className="w3c_dropdown">
@@ -1729,7 +1731,6 @@ const Navb = () => {
                       );
                     })}
                   </ul>
-
                   <ul className="column">
                     {SS_SPILL_CONTAINMENT3.map((item) => {
                       return (
@@ -1746,7 +1747,6 @@ const Navb = () => {
                       );
                     })}
                   </ul>
-
                   <ul className="column">
                     {SS_SHORES_EYEWASH3.map((item) => {
                       return (
@@ -1767,82 +1767,6 @@ const Navb = () => {
               </div>
             </div>
 
-
-
-            {/* FASTENERS */}
-            {/* <div className="w3c_dropdown">
-              <div className="dropbtn">
-                <a href={FASTENERS}>FASTENERS</a>
-              </div>
-              <div className="dropdown-content">
-                <div className="row">
-                  <ul className="column">
-                    {FT_BOLTS_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                    {FT_NUTS_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {FT_SCREWS_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                    {FT_WASHER_FLAT_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                    {FT_WASHER_SPRING_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {FT_ROD_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                    {FT_STUD_CHEMSET_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                    {FT_HARDWARE_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </div> */}
-
-
             {/* POWER AIR */}
             <div className="w3c_dropdown">
               <div className="dropbtn">
@@ -1858,7 +1782,6 @@ const Navb = () => {
                         </li>
                       );
                     })}
-
                   </ul>
                   <ul className="column">
                     {POWER_AIR_AIR_SUB.map((item) => {
@@ -1877,14 +1800,10 @@ const Navb = () => {
                         </li>
                       );
                     })}
-
                   </ul>
-
                 </div>
-
               </div>
             </div>
-
 
             {/* HAND TOOLS */}
             <div className="w3c_dropdown">
@@ -1903,7 +1822,6 @@ const Navb = () => {
                       );
                     })}
                   </ul>
-
                   <ul className="column">
                     {HAND_TOOLS_CUTTINGTOOLS_SUB.map((item) => {
                       return (
@@ -1927,7 +1845,6 @@ const Navb = () => {
                       );
                     })}
                   </ul>
-
                   <ul className="column">
                     {HAND_TOOLS_PLIERS_3.map((item) => {
                       return (
@@ -1958,6 +1875,7 @@ const Navb = () => {
               </div>
             </div>
 
+            {/* INDUSTRIAL*/}
             <div className="w3c_dropdown">
               <div className="dropbtn">
                 <a href={INDUSTRIAL}>INDUSTRIAL</a>
@@ -2033,6 +1951,90 @@ const Navb = () => {
                   </ul>
                 </div>
               </div>
+            </div>
+
+            {/* FABRICATION*/}
+            <div className="w3c_dropdown">
+              <div className="dropbtn">
+                <a href={FABRICATION}>FABRICATION</a>
+              </div>
+              <div className="dropdown-content">
+                <div className="row">
+                  <ul className="column">
+                    {FABRICATION_WELD_HEAT_CUT_BRAZE_SUB.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {FABRICATION_MIG_FLUX_CORED_WELDING_SUB.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {FABRICATION_TIG_STICK_MMA_WELDING_SUB.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* PROCESSING */}
+            <div className="w3c_dropdown">
+              <div className="dropbtn">
+                <a href={PROCESSING}>PROCESSING</a>
+              </div>
+              <div className="dropdown-content">
+                <div className="row">
+                  <ul className="column">
+                    {PROCESSING_LAB_CHEMICALS.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                    {PROCESSING_LAB_EQUIPMENTS.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {PROCESSING_GRINDING_MEDIA.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {PROCESSING_REAGENTS_SUB.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+
             </div>
 
             {/* ELECTRICAL */}
@@ -2278,83 +2280,6 @@ const Navb = () => {
                 </div>
               </div>
             </div>
-
-            {/* REAGENTS */}
-            <div className="w3c_dropdown">
-              <div className="dropbtn">
-                <a href={REAGENTS}>REAGENTS</a>
-              </div>
-              <div className="dropdown-content">
-                <div className="row">
-                  <ul className="column">
-                    {REAGENTS_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {REAGENTS_1.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {REAGENTS_2.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            {/* LABORATORY */}
-            <div className="w3c_dropdown">
-              <div className="dropbtn">
-                <a href={LABORATORY}>LABORATORY</a>
-              </div>
-              <div className="dropdown-content">
-                <div className="row">
-                  <ul className="column">
-                    {LABORATORY_1.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {LABORATORY_2.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {/* {LABORATORY_3.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })} */}
-                  </ul>
-                </div>
-              </div>
-            </div>
-
 
             {/* BRANDS */}
             {/*             <div className="w3c_dropdown">

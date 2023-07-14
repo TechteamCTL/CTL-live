@@ -59,7 +59,7 @@ const getProducts = async (req, res, next) => {
       var subCategoryName = req.query.subCategoryName;
       var childCategoryName = req.query.childCategoryName;
       var fourCategoryName = req.query.fourCategoryName;
-      console.log("fffff:", childCategoryName);
+      // console.log("fffff:", childCategoryName);
 
       // 这里是表示如果，subCategoryName有值就返回 a +  subCategoryName ，因为a是maincategory 所以 要加上 subCategoryName 这个subcategories，来组成新的正则表达
       if (fourCategoryName) {
@@ -83,7 +83,7 @@ const getProducts = async (req, res, next) => {
         regEx = new RegExp("^" + a);
       }
       // 在这儿console.log一下， 看一下正则表达式
-      console.log("xxx:", regEx);
+      // console.log("xxx:", regEx);
       categoryQueryCondition = { category: regEx };
     }
 
@@ -127,7 +127,7 @@ const getProducts = async (req, res, next) => {
     //pagination
     // 如果pageNum不exist，就assign 1 to page Number
     const pageNum = Number(req.query.pageNum) || 1;
-    console.log(req.query.pageNum);
+    // console.log(req.query.pageNum);
 
     // sort by name, price etc.
     let sort = {};
@@ -145,7 +145,7 @@ const getProducts = async (req, res, next) => {
     const searchQuery = req.params.searchQuery || "";
     let searchQueryCondition = {};
     let select = {};
-    console.log("我是searchQuery", searchQuery);
+    // console.log("我是searchQuery", searchQuery);
 
     const performSearch = async (query) => {
       const searchWords = query.searchQuery.split(" ");
@@ -159,7 +159,7 @@ const getProducts = async (req, res, next) => {
         };
     
         const results = await Product.find(searchCondition);
-        console.log(`Results of text search for '${query.searchQuery}':`, results);
+        // console.log(`Results of text search for '${query.searchQuery}':`, results);
     
         return searchCondition;
       } else {
@@ -269,7 +269,7 @@ const getProducts = async (req, res, next) => {
       pageNum,
       paginationLinksNumber: Math.ceil(totalProducts / recordsPerPage),
     });
-    console.log(pageNum);
+    // console.log(pageNum);
   } catch (error) {
     next(error);
   }
@@ -580,7 +580,7 @@ cron.schedule('10 13 28 6 *', dailyPriceResetCheck, {
 }); */
 
 const dailyPriceResetCheck = async () => {
-  console.log("1st");
+  console.log("Daily Price Reset Check");
 
   const now = new Date();
   now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -590,8 +590,6 @@ const dailyPriceResetCheck = async () => {
   const [day, month, year] = formatter.format(now).split('/');
   const formattedDate = new Date(`${month}/${day}/${year}`);
   
-  console.log("2nd");
-
   const products = await Product.find();
 
   for (const product of products) {
@@ -608,7 +606,6 @@ const dailyPriceResetCheck = async () => {
       }
     }
   }
-  console.log("3rd");
 };
 
 /* cron.schedule('0 59 07 * * *', dailyPriceResetCheck, {
@@ -793,7 +790,7 @@ const adminUploadPdf = async (req, res, next) => {
       // 再后面的两个 pdf.name 原本应该是 fileName的，但是这里我需要让文件名直接显示，所以就换掉了
       // var fileName = uuidv4() + path.extname(pdf.name);
       var uploadPath = uploadDirectoryPdf + "/" + pdf.name;
-      console.log(pdf);
+      // console.log(pdf);
       product.pdfs.push({ path: "/images/documents/" + pdf.name });
       pdf.mv(uploadPath, function (err) {
         if (err) {
