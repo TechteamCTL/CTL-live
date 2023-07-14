@@ -23,7 +23,7 @@ const MineralPrice = () => {
           <div key={index} style={{ marginLeft: "20px" }}>
            <div style={{ fontWeight: "bold", marginLeft: "10px" }}>
               <span>{mineral.name}</span>
-              <span style={{ color: "green", marginLeft: "5px"  }}>${mineral.latestPrice}</span>
+              <span className="minerals_price" style={{ marginLeft: "5px"  }}>${mineral.latestPrice}</span>
             </div>
           </div>
         ))}
@@ -34,7 +34,7 @@ const MineralPrice = () => {
           <div key={index + sortedMineralPrice.length} style={{ marginLeft: "15px" }}>
             <div  style={{ fontWeight: "bold", marginLeft: "10px" }}>
               <span>{mineral.name}</span>
-              <span style={{ color: "green", marginLeft: "5px"  }}>${mineral.latestPrice}</span>
+              <span className="minerals_price" style={{ marginLeft: "5px"  }}>${mineral.latestPrice}</span>
             </div>
           </div>
         ))}

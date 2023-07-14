@@ -5,6 +5,10 @@
   background-color: #e9f3ff;
 }
 
+.minerals_price {
+  color: #1d69d3;
+}
+
 .scroll_content {
   display: flex;
   width: max-content;

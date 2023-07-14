@@ -1991,52 +1991,6 @@ const Navb = () => {
               </div>
             </div>
 
-            {/* PROCESSING */}
-            <div className="w3c_dropdown">
-              <div className="dropbtn">
-                <a href={PROCESSING}>PROCESSING</a>
-              </div>
-              <div className="dropdown-content">
-                <div className="row">
-                  <ul className="column">
-                    {PROCESSING_LAB_CHEMICALS.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                    {PROCESSING_LAB_EQUIPMENTS.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {PROCESSING_GRINDING_MEDIA.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                  <ul className="column">
-                    {PROCESSING_REAGENTS_SUB.map((item) => {
-                      return (
-                        <li key={item.link} className={nav_color[item.type]}>
-                          <a href={item.link}>{item.label} </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-
-            </div>
-
             {/* ELECTRICAL */}
             <div className="w3c_dropdown">
               <div className="dropbtn">
@@ -2281,6 +2235,51 @@ const Navb = () => {
               </div>
             </div>
 
+            {/* PROCESSING */}
+            <div className="w3c_dropdown">
+              <div className="dropbtn">
+                <a href={PROCESSING}>PROCESSING</a>
+              </div>
+              <div className="dropdown-content">
+                <div className="row">
+                  <ul className="column">
+                    {PROCESSING_LAB_CHEMICALS.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                    {PROCESSING_LAB_EQUIPMENTS.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {PROCESSING_GRINDING_MEDIA.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <ul className="column">
+                    {PROCESSING_REAGENTS_SUB.map((item) => {
+                      return (
+                        <li key={item.link} className={nav_color[item.type]}>
+                          <a href={item.link}>{item.label} </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </div>
+
+            </div>
             {/* BRANDS */}
             {/*             <div className="w3c_dropdown">
               <div className="dropbtn">

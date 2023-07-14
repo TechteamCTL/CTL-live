@@ -99,7 +99,7 @@ const adminUpdateMineralsPrice = async (req, res, next) => {
   }
 }
 
-cron.schedule('0 42 12 * * *', updateMineralPrices, {
+cron.schedule('0 05 16 * * *', updateMineralPrices, {
   scheduled: true,
   timezone: "UTC"
 });
